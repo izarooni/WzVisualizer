@@ -117,11 +117,41 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="floppy-icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\floppy-icon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <metadata name="GridEWeaponsID.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="GridEWeaponsImage.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="GridECapsID.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="GridECapsImages.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAAAQAABMLAAATCwAAAAAAAAAA
+        AAD///8A5NX2AOTV9gDk1fYA5NX2BOTV9grk1fYT5NX2GuTV9iHk1fYi5NX2HeTV9hbk1fYN5NX2B+TV
+        9gLk1fYA////AOTV9gCfr4gOoK+Jl5+viP+fr4j/obCL07C4o4Pk1fZA5NX2Q+TV9jrk1fYt5NX2HeTV
+        9g/k1fYG5NX2Af///wDk1fYAn6+Ils/Xxf///////////+7w6v+mtZL/wIPnyceF8L3k1fZl5NX2UOTV
+        9jbk1fYe5NX2DeTV9gT///8An6+IIq67m///////tcGk/5+viP+fr4j/srOo1MyI7v/diO7/0pHw1t7H
+        9YXk1fZX5NX2M+TV9hnk1fYK////AJ+viES7xq3//////////////////////667m//jnO//3Yj//86Q
+        7vbWlvHR5NX2euTV9kzk1fYo5NX2Ev///wChsIsjrrub//////+1waT/wsy1//n6+P+mtZL/6Yv3/92I
+        ///diP//zpDu9s+k8cTk1fZk5NX2OOTV9hr///8A5NX2AqKwjJzP18X////////////J0b3/xbXB/92I
+        ///diP//7pn///+7///MiO7/5NX2eeTV9kbk1fYi////AOTV9gPEw8Mep7OVqZ+viP+fr4j/uKey/e67
+        ///uqv//7qr//+6q////3f//3Znu/9m18qbk1fZP5NX2Jv///wDk1fYD5NX2E+TV9jDk1fZd1Z7xye7M
+        7v//3f///93////M////zP///93//9ys7vvbvfWY5NX2T+TV9ib///8A5NX2A+TV9hLk1fYu5NX2WNWm
+        8cTdu//////////u////7v///93//+7d///RmfHu3sfzh+TV9knk1fYi////AOTV9gPk1fYO5NX2JuTV
+        9kvewvWNzp/u9f/d7v/////////////u///uzO7/zKDx0OTV9mzk1fY95NX2HP///wDk1fYB5NX2CuTV
+        9hzk1fY55NX2YdSp8q7MnO777sz//+7u////////zpDu9d7I9Yzk1fZV5NX2L+TV9hT///8A5NX2AeTV
+        9gbk1fYS5NX2JuTV9kPk1fZn06jyqMWB4uDeqPDizIju/8qb5r7k1fZg5NX2POTV9iDk1fYN////AOTV
+        9gDk1fYD5NX2CuTV9hbk1fYo5NX2P+TV9lfk1fZn3cj1d9Gg6pDk1fZW5NX2PeTV9iXk1fYT5NX2B///
+        /wDk1fYA5NX2AeTV9gTk1fYK5NX2E+TV9iLk1fYw5NX2OuTV9j7k1fY85NX2MeTV9iLk1fYV5NX2CuTV
+        9gP///8A5NX2AOTV9gDk1fYB5NX2BOTV9gfk1fYO5NX2FeTV9hrk1fYd5NX2HOTV9hfk1fYQ5NX2CuTV
+        9gTk1fYB8AEAAMAAAADAAAAAgAAAAIAAAACAAAAAgAAAAIAAAACAAAAAgAAAAIAAAACAAAAAgAAAAMAA
+        AADAAAAA4AAAAA==
+</value>
   </data>
 </root>
