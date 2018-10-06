@@ -121,7 +121,7 @@ namespace WzVisualizer
             string name = null;
             WzCanvasProperty icon;
 
-            if (wzObject is WzImage image) // for breadcrumb data like: 'ID/info.img/icon'
+            if (wzObject is WzImage image) // for breadcrumb data like: '{ID}.img/info/icon'
             {
                 image.ParseImage();
                 string imgName = Path.GetFileNameWithoutExtension(image.Name);
@@ -156,25 +156,25 @@ namespace WzVisualizer
         private string BuildProperties(object wzObject)
         {
             string properties = "";
-            if (wzObject is WzSubProperty subProperty)
+            WzImageProperty infoRoot = null;
+            if (wzObject is WzSubProperty subProperty) infoRoot = subProperty.GetFromPath("info");
+            else if (wzObject is WzImage wzImage) infoRoot = wzImage.GetFromPath("info");
+            if (infoRoot != null)
             {
-                WzImageProperty infoRoot = subProperty.GetFromPath("info");
-                if (infoRoot != null)
+                foreach (WzImageProperty imgProperties in infoRoot.WzProperties)
                 {
-                    foreach (WzImageProperty imgProperties in infoRoot.WzProperties)
+                    switch (imgProperties.PropertyType)
                     {
-                        switch (imgProperties.PropertyType)
-                        {
-                            default:
-                                properties += string.Format("\r\n{0}={1}", imgProperties.Name, imgProperties.WzValue);
-                                break;
-                            case WzPropertyType.Canvas:
-                            case WzPropertyType.PNG:
-                            case WzPropertyType.Sound:
-                                break;
-                        }
+                        default:
+                            properties += string.Format("\r\n{0}={1}", imgProperties.Name, imgProperties.WzValue);
+                            break;
+                        case WzPropertyType.Canvas:
+                        case WzPropertyType.PNG:
+                        case WzPropertyType.Sound:
+                            break;
                     }
                 }
+
             }
             return properties;
         }
@@ -210,7 +210,7 @@ namespace WzVisualizer
                                     default:
                                         if (selectedTab == 2 && bodyPart >= 130 && bodyPart <= 170) AddGridRow(GridEWeapons, image);
                                         else if (selectedTab == 1 && bodyPart == 2) AddFaceRow(image);
-                                        else if (selectedTab == 0 && bodyPart == 3) AddHairRow(image);
+                                        else if (selectedTab == 0 && bodyPart == 3) AddHairRow(image); 
                                         break;
                                     case 100: // Caps
                                         if (selectedTab == 4) AddGridRow(GridECaps, image);
