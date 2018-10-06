@@ -34,84 +34,46 @@
             this.TabEquips = new System.Windows.Forms.TabControl();
             this.TabEHairs = new System.Windows.Forms.TabPage();
             this.GridEHairs = new System.Windows.Forms.DataGridView();
-            this.ColumnEHairsID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColumnEHairsImage = new System.Windows.Forms.DataGridViewImageColumn();
             this.TabEFaces = new System.Windows.Forms.TabPage();
             this.GridEFaces = new System.Windows.Forms.DataGridView();
-            this.GridEFacesID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.GridEFacesImage = new System.Windows.Forms.DataGridViewImageColumn();
             this.TabsEWeapons = new System.Windows.Forms.TabPage();
             this.GridEWeapons = new System.Windows.Forms.DataGridView();
-            this.GridEWeaponsID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.GridEWeaponsImage = new System.Windows.Forms.DataGridViewImageColumn();
             this.TabEAccessory = new System.Windows.Forms.TabPage();
             this.GridEAccessory = new System.Windows.Forms.DataGridView();
-            this.GridEAccessoryID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.GridEAccessoryImage = new System.Windows.Forms.DataGridViewImageColumn();
             this.TabECaps = new System.Windows.Forms.TabPage();
             this.GridECaps = new System.Windows.Forms.DataGridView();
-            this.GridECapsID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.GridECapsImages = new System.Windows.Forms.DataGridViewImageColumn();
             this.TabEOveralls = new System.Windows.Forms.TabPage();
             this.GridELongcoats = new System.Windows.Forms.DataGridView();
-            this.GridELongcoatsID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.GridELongcoatsImage = new System.Windows.Forms.DataGridViewImageColumn();
             this.TabETops = new System.Windows.Forms.TabPage();
             this.GridETops = new System.Windows.Forms.DataGridView();
-            this.GridETopsID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.GridETopsImage = new System.Windows.Forms.DataGridViewImageColumn();
             this.TabEBottoms = new System.Windows.Forms.TabPage();
             this.GridEBottoms = new System.Windows.Forms.DataGridView();
-            this.GridEBottomsID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.GridEBottomsImage = new System.Windows.Forms.DataGridViewImageColumn();
             this.TabEShoes = new System.Windows.Forms.TabPage();
             this.GridEShoes = new System.Windows.Forms.DataGridView();
-            this.GridEShoesID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.GridEShoesImage = new System.Windows.Forms.DataGridViewImageColumn();
             this.TabECapes = new System.Windows.Forms.TabPage();
             this.GridECapes = new System.Windows.Forms.DataGridView();
-            this.GridECapesID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.GridECapesImage = new System.Windows.Forms.DataGridViewImageColumn();
             this.TabEGloves = new System.Windows.Forms.TabPage();
             this.GridEGloves = new System.Windows.Forms.DataGridView();
-            this.GridEGlovesID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.GridEGlovesImage = new System.Windows.Forms.DataGridViewImageColumn();
             this.TabERings = new System.Windows.Forms.TabPage();
             this.GridERings = new System.Windows.Forms.DataGridView();
-            this.GridERingsID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.GridERingsImage = new System.Windows.Forms.DataGridViewImageColumn();
             this.TabEShields = new System.Windows.Forms.TabPage();
             this.GridEShields = new System.Windows.Forms.DataGridView();
-            this.ColumnEShieldsID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColumnEShieldsImage = new System.Windows.Forms.DataGridViewImageColumn();
             this.TabETames = new System.Windows.Forms.TabPage();
             this.GridETames = new System.Windows.Forms.DataGridView();
-            this.GridETamesID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.GridETamesImage = new System.Windows.Forms.DataGridViewImageColumn();
             this.TabUsePage = new System.Windows.Forms.TabPage();
             this.TabUse = new System.Windows.Forms.TabControl();
             this.TabUConsumes = new System.Windows.Forms.TabPage();
             this.GridUConsumes = new System.Windows.Forms.DataGridView();
-            this.GridUseID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.GridUseImage = new System.Windows.Forms.DataGridViewImageColumn();
             this.TabUScrolls = new System.Windows.Forms.TabPage();
             this.GridUScrolls = new System.Windows.Forms.DataGridView();
-            this.TabUScrollsID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.TabUScrollsImage = new System.Windows.Forms.DataGridViewImageColumn();
             this.TabUProjectiles = new System.Windows.Forms.TabPage();
             this.GridUProjectiles = new System.Windows.Forms.DataGridView();
-            this.GridUProjectilesID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.GridUProjectsImage = new System.Windows.Forms.DataGridViewImageColumn();
             this.TabSetupPage = new System.Windows.Forms.TabPage();
             this.TabSetup = new System.Windows.Forms.TabControl();
             this.TabSChairs = new System.Windows.Forms.TabPage();
             this.GridSChairs = new System.Windows.Forms.DataGridView();
-            this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewImageColumn3 = new System.Windows.Forms.DataGridViewImageColumn();
             this.TabSOther = new System.Windows.Forms.TabPage();
             this.GridSOthers = new System.Windows.Forms.DataGridView();
-            this.GridSOthersID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.GridSOthersImage = new System.Windows.Forms.DataGridViewImageColumn();
             this.TabEtcPage = new System.Windows.Forms.TabPage();
             this.GridEtc = new System.Windows.Forms.DataGridView();
             this.GridEtcID = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -120,13 +82,89 @@
             this.GridEtcProperties = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.TabCashPage = new System.Windows.Forms.TabPage();
             this.GridCash = new System.Windows.Forms.DataGridView();
-            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewImageColumn2 = new System.Windows.Forms.DataGridViewImageColumn();
             this.ComboLoadType = new System.Windows.Forms.ComboBox();
             this.ComboEncType = new System.Windows.Forms.ComboBox();
             this.TextWzPath = new System.Windows.Forms.TextBox();
             this.BtnWzLoad = new System.Windows.Forms.Button();
             this.BtnSave = new System.Windows.Forms.Button();
+            this.GridCashID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.GridCashImage = new System.Windows.Forms.DataGridViewImageColumn();
+            this.GridCashName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.GridCashProperties = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewImageColumn3 = new System.Windows.Forms.DataGridViewImageColumn();
+            this.GridSChairsName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.GridSChairsProperties = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.GridSOthersID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.GridSOthersImage = new System.Windows.Forms.DataGridViewImageColumn();
+            this.GridSOthersName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.GridSOthersProperties = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.GridUConsumesID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.GridUConsumesImage = new System.Windows.Forms.DataGridViewImageColumn();
+            this.GridUConsumesName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.GridUConsumesProperties = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.GridUScrollsID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.GridUScrollsImage = new System.Windows.Forms.DataGridViewImageColumn();
+            this.GridUScrollsName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.GridUScrollsProperties = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.GridUProjectilesID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.GridUProjectilesImage = new System.Windows.Forms.DataGridViewImageColumn();
+            this.GridUProjectilesName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.GridUProjectilesProperties = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.GridELongcoatsID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.GridELongcoatsImage = new System.Windows.Forms.DataGridViewImageColumn();
+            this.GridELongcoatsName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.GridELongcoatsProperties = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.GridEWeaponsID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.GridEWeaponsImage = new System.Windows.Forms.DataGridViewImageColumn();
+            this.GridEWeaponsName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.GridEWeaponsProperties = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.GridEAccessoryID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.GridEAccessoryImage = new System.Windows.Forms.DataGridViewImageColumn();
+            this.GridEAccessoryName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.GridEAccessoryProperties = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.GridECapsID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.GridECapsImages = new System.Windows.Forms.DataGridViewImageColumn();
+            this.GridECapsName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.GridECapsProperties = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.GridETopsID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.GridETopsImage = new System.Windows.Forms.DataGridViewImageColumn();
+            this.GridETopsName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.GridETopsProperties = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.GridEBottomsID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.GridEBottomsImage = new System.Windows.Forms.DataGridViewImageColumn();
+            this.GrudEBottomsName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.GridEBottomsProperties = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.GridEShoesID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.GridEShoesImage = new System.Windows.Forms.DataGridViewImageColumn();
+            this.GridEShoesName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.GridEShoesProperties = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.GridECapesID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.GridECapesImage = new System.Windows.Forms.DataGridViewImageColumn();
+            this.GridECapesName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.GridECapesProperties = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.GridEGlovesID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.GridEGlovesImage = new System.Windows.Forms.DataGridViewImageColumn();
+            this.GridEGlovesName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.GridEGlovesProperties = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.GridERingsID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.GridERingsImage = new System.Windows.Forms.DataGridViewImageColumn();
+            this.GridERingsName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.GridERingsProperties = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnEShieldsID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnEShieldsImage = new System.Windows.Forms.DataGridViewImageColumn();
+            this.GridEShieldsName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.GridEShieldsProperties = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.GridETamesID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.GridETamesImage = new System.Windows.Forms.DataGridViewImageColumn();
+            this.GridETamesName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.GridETamesProperties = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnEHairsID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnEHairsImage = new System.Windows.Forms.DataGridViewImageColumn();
+            this.GridEHairsName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.GridEFacesID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.GridEFacesImage = new System.Windows.Forms.DataGridViewImageColumn();
+            this.GridEFacesName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.TabControlMain.SuspendLayout();
             this.TabEquipsPage.SuspendLayout();
             this.TabEquips.SuspendLayout();
@@ -240,6 +278,7 @@
             this.TabEHairs.Padding = new System.Windows.Forms.Padding(3);
             this.TabEHairs.Size = new System.Drawing.Size(784, 326);
             this.TabEHairs.TabIndex = 9;
+            this.TabEHairs.Tag = "";
             this.TabEHairs.Text = "Hairs";
             this.TabEHairs.UseVisualStyleBackColor = true;
             // 
@@ -250,7 +289,8 @@
             this.GridEHairs.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.GridEHairs.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.ColumnEHairsID,
-            this.ColumnEHairsImage});
+            this.ColumnEHairsImage,
+            this.GridEHairsName});
             this.GridEHairs.Dock = System.Windows.Forms.DockStyle.Fill;
             this.GridEHairs.Location = new System.Drawing.Point(3, 3);
             this.GridEHairs.Name = "GridEHairs";
@@ -258,20 +298,6 @@
             this.GridEHairs.RowTemplate.Height = 40;
             this.GridEHairs.Size = new System.Drawing.Size(778, 320);
             this.GridEHairs.TabIndex = 4;
-            // 
-            // ColumnEHairsID
-            // 
-            this.ColumnEHairsID.HeaderText = "ID";
-            this.ColumnEHairsID.Name = "ColumnEHairsID";
-            this.ColumnEHairsID.ReadOnly = true;
-            // 
-            // ColumnEHairsImage
-            // 
-            this.ColumnEHairsImage.HeaderText = "Image";
-            this.ColumnEHairsImage.Name = "ColumnEHairsImage";
-            this.ColumnEHairsImage.ReadOnly = true;
-            this.ColumnEHairsImage.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.ColumnEHairsImage.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             // 
             // TabEFaces
             // 
@@ -291,7 +317,8 @@
             this.GridEFaces.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.GridEFaces.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.GridEFacesID,
-            this.GridEFacesImage});
+            this.GridEFacesImage,
+            this.GridEFacesName});
             this.GridEFaces.Dock = System.Windows.Forms.DockStyle.Fill;
             this.GridEFaces.Location = new System.Drawing.Point(3, 3);
             this.GridEFaces.Name = "GridEFaces";
@@ -299,20 +326,6 @@
             this.GridEFaces.RowTemplate.Height = 40;
             this.GridEFaces.Size = new System.Drawing.Size(778, 320);
             this.GridEFaces.TabIndex = 3;
-            // 
-            // GridEFacesID
-            // 
-            this.GridEFacesID.HeaderText = "ID";
-            this.GridEFacesID.Name = "GridEFacesID";
-            this.GridEFacesID.ReadOnly = true;
-            // 
-            // GridEFacesImage
-            // 
-            this.GridEFacesImage.HeaderText = "Image";
-            this.GridEFacesImage.Name = "GridEFacesImage";
-            this.GridEFacesImage.ReadOnly = true;
-            this.GridEFacesImage.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.GridEFacesImage.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             // 
             // TabsEWeapons
             // 
@@ -332,7 +345,9 @@
             this.GridEWeapons.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.GridEWeapons.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.GridEWeaponsID,
-            this.GridEWeaponsImage});
+            this.GridEWeaponsImage,
+            this.GridEWeaponsName,
+            this.GridEWeaponsProperties});
             this.GridEWeapons.Dock = System.Windows.Forms.DockStyle.Fill;
             this.GridEWeapons.Location = new System.Drawing.Point(3, 3);
             this.GridEWeapons.Name = "GridEWeapons";
@@ -340,20 +355,6 @@
             this.GridEWeapons.RowTemplate.Height = 40;
             this.GridEWeapons.Size = new System.Drawing.Size(778, 320);
             this.GridEWeapons.TabIndex = 3;
-            // 
-            // GridEWeaponsID
-            // 
-            this.GridEWeaponsID.HeaderText = "ID";
-            this.GridEWeaponsID.Name = "GridEWeaponsID";
-            this.GridEWeaponsID.ReadOnly = true;
-            // 
-            // GridEWeaponsImage
-            // 
-            this.GridEWeaponsImage.HeaderText = "Image";
-            this.GridEWeaponsImage.Name = "GridEWeaponsImage";
-            this.GridEWeaponsImage.ReadOnly = true;
-            this.GridEWeaponsImage.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.GridEWeaponsImage.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             // 
             // TabEAccessory
             // 
@@ -373,27 +374,15 @@
             this.GridEAccessory.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.GridEAccessory.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.GridEAccessoryID,
-            this.GridEAccessoryImage});
+            this.GridEAccessoryImage,
+            this.GridEAccessoryName,
+            this.GridEAccessoryProperties});
             this.GridEAccessory.Location = new System.Drawing.Point(3, 3);
             this.GridEAccessory.Name = "GridEAccessory";
             this.GridEAccessory.ReadOnly = true;
             this.GridEAccessory.RowTemplate.Height = 40;
             this.GridEAccessory.Size = new System.Drawing.Size(778, 320);
             this.GridEAccessory.TabIndex = 6;
-            // 
-            // GridEAccessoryID
-            // 
-            this.GridEAccessoryID.HeaderText = "ID";
-            this.GridEAccessoryID.Name = "GridEAccessoryID";
-            this.GridEAccessoryID.ReadOnly = true;
-            // 
-            // GridEAccessoryImage
-            // 
-            this.GridEAccessoryImage.HeaderText = "Image";
-            this.GridEAccessoryImage.Name = "GridEAccessoryImage";
-            this.GridEAccessoryImage.ReadOnly = true;
-            this.GridEAccessoryImage.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.GridEAccessoryImage.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             // 
             // TabECaps
             // 
@@ -413,7 +402,9 @@
             this.GridECaps.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.GridECaps.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.GridECapsID,
-            this.GridECapsImages});
+            this.GridECapsImages,
+            this.GridECapsName,
+            this.GridECapsProperties});
             this.GridECaps.Dock = System.Windows.Forms.DockStyle.Fill;
             this.GridECaps.Location = new System.Drawing.Point(3, 3);
             this.GridECaps.Name = "GridECaps";
@@ -421,20 +412,6 @@
             this.GridECaps.RowTemplate.Height = 40;
             this.GridECaps.Size = new System.Drawing.Size(778, 320);
             this.GridECaps.TabIndex = 0;
-            // 
-            // GridECapsID
-            // 
-            this.GridECapsID.HeaderText = "ID";
-            this.GridECapsID.Name = "GridECapsID";
-            this.GridECapsID.ReadOnly = true;
-            // 
-            // GridECapsImages
-            // 
-            this.GridECapsImages.HeaderText = "Image";
-            this.GridECapsImages.Name = "GridECapsImages";
-            this.GridECapsImages.ReadOnly = true;
-            this.GridECapsImages.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.GridECapsImages.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             // 
             // TabEOveralls
             // 
@@ -454,7 +431,9 @@
             this.GridELongcoats.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.GridELongcoats.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.GridELongcoatsID,
-            this.GridELongcoatsImage});
+            this.GridELongcoatsImage,
+            this.GridELongcoatsName,
+            this.GridELongcoatsProperties});
             this.GridELongcoats.Dock = System.Windows.Forms.DockStyle.Fill;
             this.GridELongcoats.Location = new System.Drawing.Point(3, 3);
             this.GridELongcoats.Name = "GridELongcoats";
@@ -462,20 +441,6 @@
             this.GridELongcoats.RowTemplate.Height = 40;
             this.GridELongcoats.Size = new System.Drawing.Size(778, 320);
             this.GridELongcoats.TabIndex = 1;
-            // 
-            // GridELongcoatsID
-            // 
-            this.GridELongcoatsID.HeaderText = "ID";
-            this.GridELongcoatsID.Name = "GridELongcoatsID";
-            this.GridELongcoatsID.ReadOnly = true;
-            // 
-            // GridELongcoatsImage
-            // 
-            this.GridELongcoatsImage.HeaderText = "Image";
-            this.GridELongcoatsImage.Name = "GridELongcoatsImage";
-            this.GridELongcoatsImage.ReadOnly = true;
-            this.GridELongcoatsImage.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.GridELongcoatsImage.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             // 
             // TabETops
             // 
@@ -495,7 +460,9 @@
             this.GridETops.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.GridETops.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.GridETopsID,
-            this.GridETopsImage});
+            this.GridETopsImage,
+            this.GridETopsName,
+            this.GridETopsProperties});
             this.GridETops.Dock = System.Windows.Forms.DockStyle.Fill;
             this.GridETops.Location = new System.Drawing.Point(3, 3);
             this.GridETops.Name = "GridETops";
@@ -503,20 +470,6 @@
             this.GridETops.RowTemplate.Height = 40;
             this.GridETops.Size = new System.Drawing.Size(778, 320);
             this.GridETops.TabIndex = 1;
-            // 
-            // GridETopsID
-            // 
-            this.GridETopsID.HeaderText = "ID";
-            this.GridETopsID.Name = "GridETopsID";
-            this.GridETopsID.ReadOnly = true;
-            // 
-            // GridETopsImage
-            // 
-            this.GridETopsImage.HeaderText = "Image";
-            this.GridETopsImage.Name = "GridETopsImage";
-            this.GridETopsImage.ReadOnly = true;
-            this.GridETopsImage.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.GridETopsImage.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             // 
             // TabEBottoms
             // 
@@ -536,7 +489,9 @@
             this.GridEBottoms.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.GridEBottoms.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.GridEBottomsID,
-            this.GridEBottomsImage});
+            this.GridEBottomsImage,
+            this.GrudEBottomsName,
+            this.GridEBottomsProperties});
             this.GridEBottoms.Dock = System.Windows.Forms.DockStyle.Fill;
             this.GridEBottoms.Location = new System.Drawing.Point(3, 3);
             this.GridEBottoms.Name = "GridEBottoms";
@@ -544,20 +499,6 @@
             this.GridEBottoms.RowTemplate.Height = 40;
             this.GridEBottoms.Size = new System.Drawing.Size(778, 320);
             this.GridEBottoms.TabIndex = 1;
-            // 
-            // GridEBottomsID
-            // 
-            this.GridEBottomsID.HeaderText = "ID";
-            this.GridEBottomsID.Name = "GridEBottomsID";
-            this.GridEBottomsID.ReadOnly = true;
-            // 
-            // GridEBottomsImage
-            // 
-            this.GridEBottomsImage.HeaderText = "Image";
-            this.GridEBottomsImage.Name = "GridEBottomsImage";
-            this.GridEBottomsImage.ReadOnly = true;
-            this.GridEBottomsImage.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.GridEBottomsImage.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             // 
             // TabEShoes
             // 
@@ -577,7 +518,9 @@
             this.GridEShoes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.GridEShoes.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.GridEShoesID,
-            this.GridEShoesImage});
+            this.GridEShoesImage,
+            this.GridEShoesName,
+            this.GridEShoesProperties});
             this.GridEShoes.Dock = System.Windows.Forms.DockStyle.Fill;
             this.GridEShoes.Location = new System.Drawing.Point(3, 3);
             this.GridEShoes.Name = "GridEShoes";
@@ -585,20 +528,6 @@
             this.GridEShoes.RowTemplate.Height = 40;
             this.GridEShoes.Size = new System.Drawing.Size(778, 320);
             this.GridEShoes.TabIndex = 2;
-            // 
-            // GridEShoesID
-            // 
-            this.GridEShoesID.HeaderText = "ID";
-            this.GridEShoesID.Name = "GridEShoesID";
-            this.GridEShoesID.ReadOnly = true;
-            // 
-            // GridEShoesImage
-            // 
-            this.GridEShoesImage.HeaderText = "Image";
-            this.GridEShoesImage.Name = "GridEShoesImage";
-            this.GridEShoesImage.ReadOnly = true;
-            this.GridEShoesImage.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.GridEShoesImage.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             // 
             // TabECapes
             // 
@@ -618,7 +547,9 @@
             this.GridECapes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.GridECapes.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.GridECapesID,
-            this.GridECapesImage});
+            this.GridECapesImage,
+            this.GridECapesName,
+            this.GridECapesProperties});
             this.GridECapes.Dock = System.Windows.Forms.DockStyle.Fill;
             this.GridECapes.Location = new System.Drawing.Point(3, 3);
             this.GridECapes.Name = "GridECapes";
@@ -626,20 +557,6 @@
             this.GridECapes.RowTemplate.Height = 40;
             this.GridECapes.Size = new System.Drawing.Size(778, 320);
             this.GridECapes.TabIndex = 3;
-            // 
-            // GridECapesID
-            // 
-            this.GridECapesID.HeaderText = "ID";
-            this.GridECapesID.Name = "GridECapesID";
-            this.GridECapesID.ReadOnly = true;
-            // 
-            // GridECapesImage
-            // 
-            this.GridECapesImage.HeaderText = "Image";
-            this.GridECapesImage.Name = "GridECapesImage";
-            this.GridECapesImage.ReadOnly = true;
-            this.GridECapesImage.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.GridECapesImage.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             // 
             // TabEGloves
             // 
@@ -659,7 +576,9 @@
             this.GridEGloves.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.GridEGloves.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.GridEGlovesID,
-            this.GridEGlovesImage});
+            this.GridEGlovesImage,
+            this.GridEGlovesName,
+            this.GridEGlovesProperties});
             this.GridEGloves.Dock = System.Windows.Forms.DockStyle.Fill;
             this.GridEGloves.Location = new System.Drawing.Point(3, 3);
             this.GridEGloves.Name = "GridEGloves";
@@ -667,20 +586,6 @@
             this.GridEGloves.RowTemplate.Height = 40;
             this.GridEGloves.Size = new System.Drawing.Size(778, 320);
             this.GridEGloves.TabIndex = 3;
-            // 
-            // GridEGlovesID
-            // 
-            this.GridEGlovesID.HeaderText = "ID";
-            this.GridEGlovesID.Name = "GridEGlovesID";
-            this.GridEGlovesID.ReadOnly = true;
-            // 
-            // GridEGlovesImage
-            // 
-            this.GridEGlovesImage.HeaderText = "Image";
-            this.GridEGlovesImage.Name = "GridEGlovesImage";
-            this.GridEGlovesImage.ReadOnly = true;
-            this.GridEGlovesImage.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.GridEGlovesImage.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             // 
             // TabERings
             // 
@@ -700,7 +605,9 @@
             this.GridERings.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.GridERings.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.GridERingsID,
-            this.GridERingsImage});
+            this.GridERingsImage,
+            this.GridERingsName,
+            this.GridERingsProperties});
             this.GridERings.Dock = System.Windows.Forms.DockStyle.Fill;
             this.GridERings.Location = new System.Drawing.Point(3, 3);
             this.GridERings.Name = "GridERings";
@@ -708,20 +615,6 @@
             this.GridERings.RowTemplate.Height = 40;
             this.GridERings.Size = new System.Drawing.Size(778, 320);
             this.GridERings.TabIndex = 3;
-            // 
-            // GridERingsID
-            // 
-            this.GridERingsID.HeaderText = "ID";
-            this.GridERingsID.Name = "GridERingsID";
-            this.GridERingsID.ReadOnly = true;
-            // 
-            // GridERingsImage
-            // 
-            this.GridERingsImage.HeaderText = "Image";
-            this.GridERingsImage.Name = "GridERingsImage";
-            this.GridERingsImage.ReadOnly = true;
-            this.GridERingsImage.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.GridERingsImage.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             // 
             // TabEShields
             // 
@@ -741,7 +634,9 @@
             this.GridEShields.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.GridEShields.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.ColumnEShieldsID,
-            this.ColumnEShieldsImage});
+            this.ColumnEShieldsImage,
+            this.GridEShieldsName,
+            this.GridEShieldsProperties});
             this.GridEShields.Dock = System.Windows.Forms.DockStyle.Fill;
             this.GridEShields.Location = new System.Drawing.Point(3, 3);
             this.GridEShields.Name = "GridEShields";
@@ -749,20 +644,6 @@
             this.GridEShields.RowTemplate.Height = 40;
             this.GridEShields.Size = new System.Drawing.Size(778, 320);
             this.GridEShields.TabIndex = 4;
-            // 
-            // ColumnEShieldsID
-            // 
-            this.ColumnEShieldsID.HeaderText = "ID";
-            this.ColumnEShieldsID.Name = "ColumnEShieldsID";
-            this.ColumnEShieldsID.ReadOnly = true;
-            // 
-            // ColumnEShieldsImage
-            // 
-            this.ColumnEShieldsImage.HeaderText = "Image";
-            this.ColumnEShieldsImage.Name = "ColumnEShieldsImage";
-            this.ColumnEShieldsImage.ReadOnly = true;
-            this.ColumnEShieldsImage.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.ColumnEShieldsImage.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             // 
             // TabETames
             // 
@@ -782,7 +663,9 @@
             this.GridETames.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.GridETames.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.GridETamesID,
-            this.GridETamesImage});
+            this.GridETamesImage,
+            this.GridETamesName,
+            this.GridETamesProperties});
             this.GridETames.Dock = System.Windows.Forms.DockStyle.Fill;
             this.GridETames.Location = new System.Drawing.Point(3, 3);
             this.GridETames.Name = "GridETames";
@@ -790,20 +673,6 @@
             this.GridETames.RowTemplate.Height = 40;
             this.GridETames.Size = new System.Drawing.Size(778, 320);
             this.GridETames.TabIndex = 5;
-            // 
-            // GridETamesID
-            // 
-            this.GridETamesID.HeaderText = "ID";
-            this.GridETamesID.Name = "GridETamesID";
-            this.GridETamesID.ReadOnly = true;
-            // 
-            // GridETamesImage
-            // 
-            this.GridETamesImage.HeaderText = "Image";
-            this.GridETamesImage.Name = "GridETamesImage";
-            this.GridETamesImage.ReadOnly = true;
-            this.GridETamesImage.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.GridETamesImage.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             // 
             // TabUsePage
             // 
@@ -845,8 +714,10 @@
             this.GridUConsumes.AllowUserToDeleteRows = false;
             this.GridUConsumes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.GridUConsumes.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.GridUseID,
-            this.GridUseImage});
+            this.GridUConsumesID,
+            this.GridUConsumesImage,
+            this.GridUConsumesName,
+            this.GridUConsumesProperties});
             this.GridUConsumes.Dock = System.Windows.Forms.DockStyle.Fill;
             this.GridUConsumes.Location = new System.Drawing.Point(3, 3);
             this.GridUConsumes.Name = "GridUConsumes";
@@ -854,20 +725,6 @@
             this.GridUConsumes.RowTemplate.Height = 40;
             this.GridUConsumes.Size = new System.Drawing.Size(772, 339);
             this.GridUConsumes.TabIndex = 5;
-            // 
-            // GridUseID
-            // 
-            this.GridUseID.HeaderText = "ID";
-            this.GridUseID.Name = "GridUseID";
-            this.GridUseID.ReadOnly = true;
-            // 
-            // GridUseImage
-            // 
-            this.GridUseImage.HeaderText = "Image";
-            this.GridUseImage.Name = "GridUseImage";
-            this.GridUseImage.ReadOnly = true;
-            this.GridUseImage.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.GridUseImage.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             // 
             // TabUScrolls
             // 
@@ -886,8 +743,10 @@
             this.GridUScrolls.AllowUserToDeleteRows = false;
             this.GridUScrolls.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.GridUScrolls.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.TabUScrollsID,
-            this.TabUScrollsImage});
+            this.GridUScrollsID,
+            this.GridUScrollsImage,
+            this.GridUScrollsName,
+            this.GridUScrollsProperties});
             this.GridUScrolls.Dock = System.Windows.Forms.DockStyle.Fill;
             this.GridUScrolls.Location = new System.Drawing.Point(3, 3);
             this.GridUScrolls.Name = "GridUScrolls";
@@ -895,20 +754,6 @@
             this.GridUScrolls.RowTemplate.Height = 40;
             this.GridUScrolls.Size = new System.Drawing.Size(772, 339);
             this.GridUScrolls.TabIndex = 6;
-            // 
-            // TabUScrollsID
-            // 
-            this.TabUScrollsID.HeaderText = "ID";
-            this.TabUScrollsID.Name = "TabUScrollsID";
-            this.TabUScrollsID.ReadOnly = true;
-            // 
-            // TabUScrollsImage
-            // 
-            this.TabUScrollsImage.HeaderText = "Image";
-            this.TabUScrollsImage.Name = "TabUScrollsImage";
-            this.TabUScrollsImage.ReadOnly = true;
-            this.TabUScrollsImage.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.TabUScrollsImage.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             // 
             // TabUProjectiles
             // 
@@ -928,7 +773,9 @@
             this.GridUProjectiles.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.GridUProjectiles.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.GridUProjectilesID,
-            this.GridUProjectsImage});
+            this.GridUProjectilesImage,
+            this.GridUProjectilesName,
+            this.GridUProjectilesProperties});
             this.GridUProjectiles.Dock = System.Windows.Forms.DockStyle.Fill;
             this.GridUProjectiles.Location = new System.Drawing.Point(3, 3);
             this.GridUProjectiles.Name = "GridUProjectiles";
@@ -936,20 +783,6 @@
             this.GridUProjectiles.RowTemplate.Height = 40;
             this.GridUProjectiles.Size = new System.Drawing.Size(772, 339);
             this.GridUProjectiles.TabIndex = 6;
-            // 
-            // GridUProjectilesID
-            // 
-            this.GridUProjectilesID.HeaderText = "ID";
-            this.GridUProjectilesID.Name = "GridUProjectilesID";
-            this.GridUProjectilesID.ReadOnly = true;
-            // 
-            // GridUProjectsImage
-            // 
-            this.GridUProjectsImage.HeaderText = "Image";
-            this.GridUProjectsImage.Name = "GridUProjectsImage";
-            this.GridUProjectsImage.ReadOnly = true;
-            this.GridUProjectsImage.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.GridUProjectsImage.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             // 
             // TabSetupPage
             // 
@@ -991,7 +824,9 @@
             this.GridSChairs.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.GridSChairs.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.dataGridViewTextBoxColumn3,
-            this.dataGridViewImageColumn3});
+            this.dataGridViewImageColumn3,
+            this.GridSChairsName,
+            this.GridSChairsProperties});
             this.GridSChairs.Dock = System.Windows.Forms.DockStyle.Fill;
             this.GridSChairs.Location = new System.Drawing.Point(3, 3);
             this.GridSChairs.Name = "GridSChairs";
@@ -999,20 +834,6 @@
             this.GridSChairs.RowTemplate.Height = 40;
             this.GridSChairs.Size = new System.Drawing.Size(772, 339);
             this.GridSChairs.TabIndex = 6;
-            // 
-            // dataGridViewTextBoxColumn3
-            // 
-            this.dataGridViewTextBoxColumn3.HeaderText = "ID";
-            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
-            this.dataGridViewTextBoxColumn3.ReadOnly = true;
-            // 
-            // dataGridViewImageColumn3
-            // 
-            this.dataGridViewImageColumn3.HeaderText = "Image";
-            this.dataGridViewImageColumn3.Name = "dataGridViewImageColumn3";
-            this.dataGridViewImageColumn3.ReadOnly = true;
-            this.dataGridViewImageColumn3.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridViewImageColumn3.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             // 
             // TabSOther
             // 
@@ -1032,7 +853,9 @@
             this.GridSOthers.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.GridSOthers.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.GridSOthersID,
-            this.GridSOthersImage});
+            this.GridSOthersImage,
+            this.GridSOthersName,
+            this.GridSOthersProperties});
             this.GridSOthers.Dock = System.Windows.Forms.DockStyle.Fill;
             this.GridSOthers.Location = new System.Drawing.Point(3, 3);
             this.GridSOthers.Name = "GridSOthers";
@@ -1040,20 +863,6 @@
             this.GridSOthers.RowTemplate.Height = 40;
             this.GridSOthers.Size = new System.Drawing.Size(772, 339);
             this.GridSOthers.TabIndex = 7;
-            // 
-            // GridSOthersID
-            // 
-            this.GridSOthersID.HeaderText = "ID";
-            this.GridSOthersID.Name = "GridSOthersID";
-            this.GridSOthersID.ReadOnly = true;
-            // 
-            // GridSOthersImage
-            // 
-            this.GridSOthersImage.HeaderText = "Image";
-            this.GridSOthersImage.Name = "GridSOthersImage";
-            this.GridSOthersImage.ReadOnly = true;
-            this.GridSOthersImage.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.GridSOthersImage.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             // 
             // TabEtcPage
             // 
@@ -1127,8 +936,10 @@
             this.GridCash.AllowUserToDeleteRows = false;
             this.GridCash.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.GridCash.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.dataGridViewTextBoxColumn2,
-            this.dataGridViewImageColumn2});
+            this.GridCashID,
+            this.GridCashImage,
+            this.GridCashName,
+            this.GridCashProperties});
             this.GridCash.Dock = System.Windows.Forms.DockStyle.Fill;
             this.GridCash.Location = new System.Drawing.Point(3, 3);
             this.GridCash.Name = "GridCash";
@@ -1136,20 +947,6 @@
             this.GridCash.RowTemplate.Height = 40;
             this.GridCash.Size = new System.Drawing.Size(786, 378);
             this.GridCash.TabIndex = 8;
-            // 
-            // dataGridViewTextBoxColumn2
-            // 
-            this.dataGridViewTextBoxColumn2.HeaderText = "ID";
-            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
-            this.dataGridViewTextBoxColumn2.ReadOnly = true;
-            // 
-            // dataGridViewImageColumn2
-            // 
-            this.dataGridViewImageColumn2.HeaderText = "Image";
-            this.dataGridViewImageColumn2.Name = "dataGridViewImageColumn2";
-            this.dataGridViewImageColumn2.ReadOnly = true;
-            this.dataGridViewImageColumn2.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridViewImageColumn2.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             // 
             // ComboLoadType
             // 
@@ -1208,6 +1005,513 @@
             this.BtnSave.TabIndex = 5;
             this.BtnSave.UseVisualStyleBackColor = false;
             this.BtnSave.Click += new System.EventHandler(this.BtnSave_Click);
+            // 
+            // GridCashID
+            // 
+            this.GridCashID.HeaderText = "ID";
+            this.GridCashID.Name = "GridCashID";
+            this.GridCashID.ReadOnly = true;
+            // 
+            // GridCashImage
+            // 
+            this.GridCashImage.HeaderText = "Image";
+            this.GridCashImage.Name = "GridCashImage";
+            this.GridCashImage.ReadOnly = true;
+            this.GridCashImage.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.GridCashImage.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
+            // GridCashName
+            // 
+            this.GridCashName.HeaderText = "Name";
+            this.GridCashName.Name = "GridCashName";
+            this.GridCashName.ReadOnly = true;
+            // 
+            // GridCashProperties
+            // 
+            this.GridCashProperties.HeaderText = "Properties";
+            this.GridCashProperties.Name = "GridCashProperties";
+            this.GridCashProperties.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn3
+            // 
+            this.dataGridViewTextBoxColumn3.HeaderText = "ID";
+            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
+            this.dataGridViewTextBoxColumn3.ReadOnly = true;
+            // 
+            // dataGridViewImageColumn3
+            // 
+            this.dataGridViewImageColumn3.HeaderText = "Image";
+            this.dataGridViewImageColumn3.Name = "dataGridViewImageColumn3";
+            this.dataGridViewImageColumn3.ReadOnly = true;
+            this.dataGridViewImageColumn3.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridViewImageColumn3.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
+            // GridSChairsName
+            // 
+            this.GridSChairsName.HeaderText = "Name";
+            this.GridSChairsName.Name = "GridSChairsName";
+            this.GridSChairsName.ReadOnly = true;
+            // 
+            // GridSChairsProperties
+            // 
+            this.GridSChairsProperties.HeaderText = "Properties";
+            this.GridSChairsProperties.Name = "GridSChairsProperties";
+            this.GridSChairsProperties.ReadOnly = true;
+            // 
+            // GridSOthersID
+            // 
+            this.GridSOthersID.HeaderText = "ID";
+            this.GridSOthersID.Name = "GridSOthersID";
+            this.GridSOthersID.ReadOnly = true;
+            // 
+            // GridSOthersImage
+            // 
+            this.GridSOthersImage.HeaderText = "Image";
+            this.GridSOthersImage.Name = "GridSOthersImage";
+            this.GridSOthersImage.ReadOnly = true;
+            this.GridSOthersImage.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.GridSOthersImage.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
+            // GridSOthersName
+            // 
+            this.GridSOthersName.HeaderText = "Name";
+            this.GridSOthersName.Name = "GridSOthersName";
+            this.GridSOthersName.ReadOnly = true;
+            // 
+            // GridSOthersProperties
+            // 
+            this.GridSOthersProperties.HeaderText = "Properties";
+            this.GridSOthersProperties.Name = "GridSOthersProperties";
+            this.GridSOthersProperties.ReadOnly = true;
+            // 
+            // GridUConsumesID
+            // 
+            this.GridUConsumesID.HeaderText = "ID";
+            this.GridUConsumesID.Name = "GridUConsumesID";
+            this.GridUConsumesID.ReadOnly = true;
+            // 
+            // GridUConsumesImage
+            // 
+            this.GridUConsumesImage.HeaderText = "Image";
+            this.GridUConsumesImage.Name = "GridUConsumesImage";
+            this.GridUConsumesImage.ReadOnly = true;
+            this.GridUConsumesImage.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.GridUConsumesImage.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
+            // GridUConsumesName
+            // 
+            this.GridUConsumesName.HeaderText = "Name";
+            this.GridUConsumesName.Name = "GridUConsumesName";
+            this.GridUConsumesName.ReadOnly = true;
+            // 
+            // GridUConsumesProperties
+            // 
+            this.GridUConsumesProperties.HeaderText = "Properties";
+            this.GridUConsumesProperties.Name = "GridUConsumesProperties";
+            this.GridUConsumesProperties.ReadOnly = true;
+            // 
+            // GridUScrollsID
+            // 
+            this.GridUScrollsID.HeaderText = "ID";
+            this.GridUScrollsID.Name = "GridUScrollsID";
+            this.GridUScrollsID.ReadOnly = true;
+            // 
+            // GridUScrollsImage
+            // 
+            this.GridUScrollsImage.HeaderText = "Image";
+            this.GridUScrollsImage.Name = "GridUScrollsImage";
+            this.GridUScrollsImage.ReadOnly = true;
+            this.GridUScrollsImage.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.GridUScrollsImage.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
+            // GridUScrollsName
+            // 
+            this.GridUScrollsName.HeaderText = "Name";
+            this.GridUScrollsName.Name = "GridUScrollsName";
+            this.GridUScrollsName.ReadOnly = true;
+            // 
+            // GridUScrollsProperties
+            // 
+            this.GridUScrollsProperties.HeaderText = "Properties";
+            this.GridUScrollsProperties.Name = "GridUScrollsProperties";
+            this.GridUScrollsProperties.ReadOnly = true;
+            // 
+            // GridUProjectilesID
+            // 
+            this.GridUProjectilesID.HeaderText = "ID";
+            this.GridUProjectilesID.Name = "GridUProjectilesID";
+            this.GridUProjectilesID.ReadOnly = true;
+            // 
+            // GridUProjectilesImage
+            // 
+            this.GridUProjectilesImage.HeaderText = "Image";
+            this.GridUProjectilesImage.Name = "GridUProjectilesImage";
+            this.GridUProjectilesImage.ReadOnly = true;
+            this.GridUProjectilesImage.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.GridUProjectilesImage.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
+            // GridUProjectilesName
+            // 
+            this.GridUProjectilesName.HeaderText = "Name";
+            this.GridUProjectilesName.Name = "GridUProjectilesName";
+            this.GridUProjectilesName.ReadOnly = true;
+            // 
+            // GridUProjectilesProperties
+            // 
+            this.GridUProjectilesProperties.HeaderText = "Properties";
+            this.GridUProjectilesProperties.Name = "GridUProjectilesProperties";
+            this.GridUProjectilesProperties.ReadOnly = true;
+            // 
+            // GridELongcoatsID
+            // 
+            this.GridELongcoatsID.HeaderText = "ID";
+            this.GridELongcoatsID.Name = "GridELongcoatsID";
+            this.GridELongcoatsID.ReadOnly = true;
+            // 
+            // GridELongcoatsImage
+            // 
+            this.GridELongcoatsImage.HeaderText = "Image";
+            this.GridELongcoatsImage.Name = "GridELongcoatsImage";
+            this.GridELongcoatsImage.ReadOnly = true;
+            this.GridELongcoatsImage.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.GridELongcoatsImage.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
+            // GridELongcoatsName
+            // 
+            this.GridELongcoatsName.HeaderText = "Name";
+            this.GridELongcoatsName.Name = "GridELongcoatsName";
+            this.GridELongcoatsName.ReadOnly = true;
+            // 
+            // GridELongcoatsProperties
+            // 
+            this.GridELongcoatsProperties.HeaderText = "Properties";
+            this.GridELongcoatsProperties.Name = "GridELongcoatsProperties";
+            this.GridELongcoatsProperties.ReadOnly = true;
+            // 
+            // GridEWeaponsID
+            // 
+            this.GridEWeaponsID.HeaderText = "ID";
+            this.GridEWeaponsID.Name = "GridEWeaponsID";
+            this.GridEWeaponsID.ReadOnly = true;
+            // 
+            // GridEWeaponsImage
+            // 
+            this.GridEWeaponsImage.HeaderText = "Image";
+            this.GridEWeaponsImage.Name = "GridEWeaponsImage";
+            this.GridEWeaponsImage.ReadOnly = true;
+            this.GridEWeaponsImage.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.GridEWeaponsImage.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
+            // GridEWeaponsName
+            // 
+            this.GridEWeaponsName.HeaderText = "Name";
+            this.GridEWeaponsName.Name = "GridEWeaponsName";
+            this.GridEWeaponsName.ReadOnly = true;
+            // 
+            // GridEWeaponsProperties
+            // 
+            this.GridEWeaponsProperties.HeaderText = "Properties";
+            this.GridEWeaponsProperties.Name = "GridEWeaponsProperties";
+            this.GridEWeaponsProperties.ReadOnly = true;
+            // 
+            // GridEAccessoryID
+            // 
+            this.GridEAccessoryID.HeaderText = "ID";
+            this.GridEAccessoryID.Name = "GridEAccessoryID";
+            this.GridEAccessoryID.ReadOnly = true;
+            // 
+            // GridEAccessoryImage
+            // 
+            this.GridEAccessoryImage.HeaderText = "Image";
+            this.GridEAccessoryImage.Name = "GridEAccessoryImage";
+            this.GridEAccessoryImage.ReadOnly = true;
+            this.GridEAccessoryImage.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
+            // GridEAccessoryName
+            // 
+            this.GridEAccessoryName.HeaderText = "Name";
+            this.GridEAccessoryName.Name = "GridEAccessoryName";
+            this.GridEAccessoryName.ReadOnly = true;
+            // 
+            // GridEAccessoryProperties
+            // 
+            this.GridEAccessoryProperties.HeaderText = "Properties";
+            this.GridEAccessoryProperties.Name = "GridEAccessoryProperties";
+            this.GridEAccessoryProperties.ReadOnly = true;
+            // 
+            // GridECapsID
+            // 
+            this.GridECapsID.HeaderText = "ID";
+            this.GridECapsID.Name = "GridECapsID";
+            this.GridECapsID.ReadOnly = true;
+            // 
+            // GridECapsImages
+            // 
+            this.GridECapsImages.HeaderText = "Image";
+            this.GridECapsImages.Name = "GridECapsImages";
+            this.GridECapsImages.ReadOnly = true;
+            this.GridECapsImages.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.GridECapsImages.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
+            // GridECapsName
+            // 
+            this.GridECapsName.HeaderText = "Name";
+            this.GridECapsName.Name = "GridECapsName";
+            this.GridECapsName.ReadOnly = true;
+            // 
+            // GridECapsProperties
+            // 
+            this.GridECapsProperties.HeaderText = "Properties";
+            this.GridECapsProperties.Name = "GridECapsProperties";
+            this.GridECapsProperties.ReadOnly = true;
+            // 
+            // GridETopsID
+            // 
+            this.GridETopsID.HeaderText = "ID";
+            this.GridETopsID.Name = "GridETopsID";
+            this.GridETopsID.ReadOnly = true;
+            // 
+            // GridETopsImage
+            // 
+            this.GridETopsImage.HeaderText = "Image";
+            this.GridETopsImage.Name = "GridETopsImage";
+            this.GridETopsImage.ReadOnly = true;
+            this.GridETopsImage.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.GridETopsImage.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
+            // GridETopsName
+            // 
+            this.GridETopsName.HeaderText = "Name";
+            this.GridETopsName.Name = "GridETopsName";
+            this.GridETopsName.ReadOnly = true;
+            // 
+            // GridETopsProperties
+            // 
+            this.GridETopsProperties.HeaderText = "Properties";
+            this.GridETopsProperties.Name = "GridETopsProperties";
+            this.GridETopsProperties.ReadOnly = true;
+            // 
+            // GridEBottomsID
+            // 
+            this.GridEBottomsID.HeaderText = "ID";
+            this.GridEBottomsID.Name = "GridEBottomsID";
+            this.GridEBottomsID.ReadOnly = true;
+            // 
+            // GridEBottomsImage
+            // 
+            this.GridEBottomsImage.HeaderText = "Image";
+            this.GridEBottomsImage.Name = "GridEBottomsImage";
+            this.GridEBottomsImage.ReadOnly = true;
+            this.GridEBottomsImage.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.GridEBottomsImage.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
+            // GrudEBottomsName
+            // 
+            this.GrudEBottomsName.HeaderText = "Name";
+            this.GrudEBottomsName.Name = "GrudEBottomsName";
+            this.GrudEBottomsName.ReadOnly = true;
+            // 
+            // GridEBottomsProperties
+            // 
+            this.GridEBottomsProperties.HeaderText = "Properties";
+            this.GridEBottomsProperties.Name = "GridEBottomsProperties";
+            this.GridEBottomsProperties.ReadOnly = true;
+            // 
+            // GridEShoesID
+            // 
+            this.GridEShoesID.HeaderText = "ID";
+            this.GridEShoesID.Name = "GridEShoesID";
+            this.GridEShoesID.ReadOnly = true;
+            // 
+            // GridEShoesImage
+            // 
+            this.GridEShoesImage.HeaderText = "Image";
+            this.GridEShoesImage.Name = "GridEShoesImage";
+            this.GridEShoesImage.ReadOnly = true;
+            this.GridEShoesImage.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.GridEShoesImage.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
+            // GridEShoesName
+            // 
+            this.GridEShoesName.HeaderText = "Name";
+            this.GridEShoesName.Name = "GridEShoesName";
+            this.GridEShoesName.ReadOnly = true;
+            // 
+            // GridEShoesProperties
+            // 
+            this.GridEShoesProperties.HeaderText = "Properties";
+            this.GridEShoesProperties.Name = "GridEShoesProperties";
+            this.GridEShoesProperties.ReadOnly = true;
+            // 
+            // GridECapesID
+            // 
+            this.GridECapesID.HeaderText = "ID";
+            this.GridECapesID.Name = "GridECapesID";
+            this.GridECapesID.ReadOnly = true;
+            // 
+            // GridECapesImage
+            // 
+            this.GridECapesImage.HeaderText = "Image";
+            this.GridECapesImage.Name = "GridECapesImage";
+            this.GridECapesImage.ReadOnly = true;
+            this.GridECapesImage.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.GridECapesImage.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
+            // GridECapesName
+            // 
+            this.GridECapesName.HeaderText = "Name";
+            this.GridECapesName.Name = "GridECapesName";
+            this.GridECapesName.ReadOnly = true;
+            // 
+            // GridECapesProperties
+            // 
+            this.GridECapesProperties.HeaderText = "Properties";
+            this.GridECapesProperties.Name = "GridECapesProperties";
+            this.GridECapesProperties.ReadOnly = true;
+            // 
+            // GridEGlovesID
+            // 
+            this.GridEGlovesID.HeaderText = "ID";
+            this.GridEGlovesID.Name = "GridEGlovesID";
+            this.GridEGlovesID.ReadOnly = true;
+            // 
+            // GridEGlovesImage
+            // 
+            this.GridEGlovesImage.HeaderText = "Image";
+            this.GridEGlovesImage.Name = "GridEGlovesImage";
+            this.GridEGlovesImage.ReadOnly = true;
+            this.GridEGlovesImage.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.GridEGlovesImage.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
+            // GridEGlovesName
+            // 
+            this.GridEGlovesName.HeaderText = "Name";
+            this.GridEGlovesName.Name = "GridEGlovesName";
+            this.GridEGlovesName.ReadOnly = true;
+            // 
+            // GridEGlovesProperties
+            // 
+            this.GridEGlovesProperties.HeaderText = "Properties";
+            this.GridEGlovesProperties.Name = "GridEGlovesProperties";
+            this.GridEGlovesProperties.ReadOnly = true;
+            // 
+            // GridERingsID
+            // 
+            this.GridERingsID.HeaderText = "ID";
+            this.GridERingsID.Name = "GridERingsID";
+            this.GridERingsID.ReadOnly = true;
+            // 
+            // GridERingsImage
+            // 
+            this.GridERingsImage.HeaderText = "Image";
+            this.GridERingsImage.Name = "GridERingsImage";
+            this.GridERingsImage.ReadOnly = true;
+            this.GridERingsImage.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.GridERingsImage.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
+            // GridERingsName
+            // 
+            this.GridERingsName.HeaderText = "Name";
+            this.GridERingsName.Name = "GridERingsName";
+            this.GridERingsName.ReadOnly = true;
+            // 
+            // GridERingsProperties
+            // 
+            this.GridERingsProperties.HeaderText = "Properties";
+            this.GridERingsProperties.Name = "GridERingsProperties";
+            this.GridERingsProperties.ReadOnly = true;
+            // 
+            // ColumnEShieldsID
+            // 
+            this.ColumnEShieldsID.HeaderText = "ID";
+            this.ColumnEShieldsID.Name = "ColumnEShieldsID";
+            this.ColumnEShieldsID.ReadOnly = true;
+            // 
+            // ColumnEShieldsImage
+            // 
+            this.ColumnEShieldsImage.HeaderText = "Image";
+            this.ColumnEShieldsImage.Name = "ColumnEShieldsImage";
+            this.ColumnEShieldsImage.ReadOnly = true;
+            this.ColumnEShieldsImage.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.ColumnEShieldsImage.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
+            // GridEShieldsName
+            // 
+            this.GridEShieldsName.HeaderText = "Name";
+            this.GridEShieldsName.Name = "GridEShieldsName";
+            this.GridEShieldsName.ReadOnly = true;
+            // 
+            // GridEShieldsProperties
+            // 
+            this.GridEShieldsProperties.HeaderText = "Properties";
+            this.GridEShieldsProperties.Name = "GridEShieldsProperties";
+            this.GridEShieldsProperties.ReadOnly = true;
+            // 
+            // GridETamesID
+            // 
+            this.GridETamesID.HeaderText = "ID";
+            this.GridETamesID.Name = "GridETamesID";
+            this.GridETamesID.ReadOnly = true;
+            // 
+            // GridETamesImage
+            // 
+            this.GridETamesImage.HeaderText = "Image";
+            this.GridETamesImage.Name = "GridETamesImage";
+            this.GridETamesImage.ReadOnly = true;
+            this.GridETamesImage.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.GridETamesImage.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
+            // GridETamesName
+            // 
+            this.GridETamesName.HeaderText = "Name";
+            this.GridETamesName.Name = "GridETamesName";
+            this.GridETamesName.ReadOnly = true;
+            // 
+            // GridETamesProperties
+            // 
+            this.GridETamesProperties.HeaderText = "Properties";
+            this.GridETamesProperties.Name = "GridETamesProperties";
+            this.GridETamesProperties.ReadOnly = true;
+            // 
+            // ColumnEHairsID
+            // 
+            this.ColumnEHairsID.HeaderText = "ID";
+            this.ColumnEHairsID.Name = "ColumnEHairsID";
+            this.ColumnEHairsID.ReadOnly = true;
+            // 
+            // ColumnEHairsImage
+            // 
+            this.ColumnEHairsImage.HeaderText = "Image";
+            this.ColumnEHairsImage.Name = "ColumnEHairsImage";
+            this.ColumnEHairsImage.ReadOnly = true;
+            this.ColumnEHairsImage.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.ColumnEHairsImage.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
+            // GridEHairsName
+            // 
+            this.GridEHairsName.HeaderText = "Name";
+            this.GridEHairsName.Name = "GridEHairsName";
+            this.GridEHairsName.ReadOnly = true;
+            // 
+            // GridEFacesID
+            // 
+            this.GridEFacesID.HeaderText = "ID";
+            this.GridEFacesID.Name = "GridEFacesID";
+            this.GridEFacesID.ReadOnly = true;
+            // 
+            // GridEFacesImage
+            // 
+            this.GridEFacesImage.HeaderText = "Image";
+            this.GridEFacesImage.Name = "GridEFacesImage";
+            this.GridEFacesImage.ReadOnly = true;
+            this.GridEFacesImage.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.GridEFacesImage.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
+            // GridEFacesName
+            // 
+            this.GridEFacesName.HeaderText = "Name";
+            this.GridEFacesName.Name = "GridEFacesName";
+            this.GridEFacesName.ReadOnly = true;
             // 
             // MainForm
             // 
@@ -1317,66 +1621,104 @@
         private System.Windows.Forms.TabControl TabUse;
         private System.Windows.Forms.TabPage TabUConsumes;
         private System.Windows.Forms.DataGridView GridUConsumes;
-        private System.Windows.Forms.DataGridViewTextBoxColumn GridUseID;
-        private System.Windows.Forms.DataGridViewImageColumn GridUseImage;
         private System.Windows.Forms.TabPage TabUScrolls;
         private System.Windows.Forms.DataGridView GridUScrolls;
-        private System.Windows.Forms.DataGridViewTextBoxColumn TabUScrollsID;
-        private System.Windows.Forms.DataGridViewImageColumn TabUScrollsImage;
         private System.Windows.Forms.TabPage TabUProjectiles;
         private System.Windows.Forms.DataGridView GridUProjectiles;
-        private System.Windows.Forms.DataGridViewTextBoxColumn GridUProjectilesID;
-        private System.Windows.Forms.DataGridViewImageColumn GridUProjectsImage;
         private System.Windows.Forms.TabPage TabSetupPage;
         private System.Windows.Forms.TabControl TabSetup;
         private System.Windows.Forms.TabPage TabSChairs;
         private System.Windows.Forms.DataGridView GridSChairs;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
-        private System.Windows.Forms.DataGridViewImageColumn dataGridViewImageColumn3;
         private System.Windows.Forms.DataGridView GridEtc;
         private System.Windows.Forms.DataGridView GridCash;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
-        private System.Windows.Forms.DataGridViewImageColumn dataGridViewImageColumn2;
         private System.Windows.Forms.TabPage TabEAccessory;
         private System.Windows.Forms.TabPage TabETames;
         private System.Windows.Forms.DataGridView GridETames;
-        private System.Windows.Forms.DataGridViewTextBoxColumn GridETamesID;
-        private System.Windows.Forms.DataGridViewImageColumn GridETamesImage;
         private System.Windows.Forms.TabPage TabSOther;
         private System.Windows.Forms.DataGridView GridSOthers;
-        private System.Windows.Forms.DataGridViewTextBoxColumn GridSOthersID;
-        private System.Windows.Forms.DataGridViewImageColumn GridSOthersImage;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnEHairsID;
-        private System.Windows.Forms.DataGridViewImageColumn ColumnEHairsImage;
-        private System.Windows.Forms.DataGridViewTextBoxColumn GridEFacesID;
-        private System.Windows.Forms.DataGridViewImageColumn GridEFacesImage;
-        private System.Windows.Forms.DataGridViewTextBoxColumn GridEWeaponsID;
-        private System.Windows.Forms.DataGridViewImageColumn GridEWeaponsImage;
-        private System.Windows.Forms.DataGridViewTextBoxColumn GridECapsID;
-        private System.Windows.Forms.DataGridViewImageColumn GridECapsImages;
-        private System.Windows.Forms.DataGridViewTextBoxColumn GridELongcoatsID;
-        private System.Windows.Forms.DataGridViewImageColumn GridELongcoatsImage;
-        private System.Windows.Forms.DataGridViewTextBoxColumn GridETopsID;
-        private System.Windows.Forms.DataGridViewImageColumn GridETopsImage;
-        private System.Windows.Forms.DataGridViewTextBoxColumn GridEBottomsID;
-        private System.Windows.Forms.DataGridViewImageColumn GridEBottomsImage;
-        private System.Windows.Forms.DataGridViewTextBoxColumn GridEShoesID;
-        private System.Windows.Forms.DataGridViewImageColumn GridEShoesImage;
-        private System.Windows.Forms.DataGridViewTextBoxColumn GridECapesID;
-        private System.Windows.Forms.DataGridViewImageColumn GridECapesImage;
-        private System.Windows.Forms.DataGridViewTextBoxColumn GridEGlovesID;
-        private System.Windows.Forms.DataGridViewImageColumn GridEGlovesImage;
-        private System.Windows.Forms.DataGridViewTextBoxColumn GridERingsID;
-        private System.Windows.Forms.DataGridViewImageColumn GridERingsImage;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnEShieldsID;
-        private System.Windows.Forms.DataGridViewImageColumn ColumnEShieldsImage;
         private System.Windows.Forms.DataGridViewTextBoxColumn GridEtcID;
         private System.Windows.Forms.DataGridViewImageColumn GridEtcImage;
         private System.Windows.Forms.DataGridViewTextBoxColumn GridEtcName;
         private System.Windows.Forms.DataGridViewTextBoxColumn GridEtcProperties;
         private System.Windows.Forms.DataGridView GridEAccessory;
+        private System.Windows.Forms.DataGridViewTextBoxColumn GridCashID;
+        private System.Windows.Forms.DataGridViewImageColumn GridCashImage;
+        private System.Windows.Forms.DataGridViewTextBoxColumn GridCashName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn GridCashProperties;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
+        private System.Windows.Forms.DataGridViewImageColumn dataGridViewImageColumn3;
+        private System.Windows.Forms.DataGridViewTextBoxColumn GridSChairsName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn GridSChairsProperties;
+        private System.Windows.Forms.DataGridViewTextBoxColumn GridSOthersID;
+        private System.Windows.Forms.DataGridViewImageColumn GridSOthersImage;
+        private System.Windows.Forms.DataGridViewTextBoxColumn GridSOthersName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn GridSOthersProperties;
+        private System.Windows.Forms.DataGridViewTextBoxColumn GridUConsumesID;
+        private System.Windows.Forms.DataGridViewImageColumn GridUConsumesImage;
+        private System.Windows.Forms.DataGridViewTextBoxColumn GridUConsumesName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn GridUConsumesProperties;
+        private System.Windows.Forms.DataGridViewTextBoxColumn GridUScrollsID;
+        private System.Windows.Forms.DataGridViewImageColumn GridUScrollsImage;
+        private System.Windows.Forms.DataGridViewTextBoxColumn GridUScrollsName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn GridUScrollsProperties;
+        private System.Windows.Forms.DataGridViewTextBoxColumn GridUProjectilesID;
+        private System.Windows.Forms.DataGridViewImageColumn GridUProjectilesImage;
+        private System.Windows.Forms.DataGridViewTextBoxColumn GridUProjectilesName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn GridUProjectilesProperties;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnEHairsID;
+        private System.Windows.Forms.DataGridViewImageColumn ColumnEHairsImage;
+        private System.Windows.Forms.DataGridViewTextBoxColumn GridEHairsName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn GridEFacesID;
+        private System.Windows.Forms.DataGridViewImageColumn GridEFacesImage;
+        private System.Windows.Forms.DataGridViewTextBoxColumn GridEFacesName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn GridEWeaponsID;
+        private System.Windows.Forms.DataGridViewImageColumn GridEWeaponsImage;
+        private System.Windows.Forms.DataGridViewTextBoxColumn GridEWeaponsName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn GridEWeaponsProperties;
         private System.Windows.Forms.DataGridViewTextBoxColumn GridEAccessoryID;
         private System.Windows.Forms.DataGridViewImageColumn GridEAccessoryImage;
+        private System.Windows.Forms.DataGridViewTextBoxColumn GridEAccessoryName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn GridEAccessoryProperties;
+        private System.Windows.Forms.DataGridViewTextBoxColumn GridECapsID;
+        private System.Windows.Forms.DataGridViewImageColumn GridECapsImages;
+        private System.Windows.Forms.DataGridViewTextBoxColumn GridECapsName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn GridECapsProperties;
+        private System.Windows.Forms.DataGridViewTextBoxColumn GridELongcoatsID;
+        private System.Windows.Forms.DataGridViewImageColumn GridELongcoatsImage;
+        private System.Windows.Forms.DataGridViewTextBoxColumn GridELongcoatsName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn GridELongcoatsProperties;
+        private System.Windows.Forms.DataGridViewTextBoxColumn GridETopsID;
+        private System.Windows.Forms.DataGridViewImageColumn GridETopsImage;
+        private System.Windows.Forms.DataGridViewTextBoxColumn GridETopsName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn GridETopsProperties;
+        private System.Windows.Forms.DataGridViewTextBoxColumn GridEBottomsID;
+        private System.Windows.Forms.DataGridViewImageColumn GridEBottomsImage;
+        private System.Windows.Forms.DataGridViewTextBoxColumn GrudEBottomsName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn GridEBottomsProperties;
+        private System.Windows.Forms.DataGridViewTextBoxColumn GridEShoesID;
+        private System.Windows.Forms.DataGridViewImageColumn GridEShoesImage;
+        private System.Windows.Forms.DataGridViewTextBoxColumn GridEShoesName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn GridEShoesProperties;
+        private System.Windows.Forms.DataGridViewTextBoxColumn GridECapesID;
+        private System.Windows.Forms.DataGridViewImageColumn GridECapesImage;
+        private System.Windows.Forms.DataGridViewTextBoxColumn GridECapesName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn GridECapesProperties;
+        private System.Windows.Forms.DataGridViewTextBoxColumn GridEGlovesID;
+        private System.Windows.Forms.DataGridViewImageColumn GridEGlovesImage;
+        private System.Windows.Forms.DataGridViewTextBoxColumn GridEGlovesName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn GridEGlovesProperties;
+        private System.Windows.Forms.DataGridViewTextBoxColumn GridERingsID;
+        private System.Windows.Forms.DataGridViewImageColumn GridERingsImage;
+        private System.Windows.Forms.DataGridViewTextBoxColumn GridERingsName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn GridERingsProperties;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnEShieldsID;
+        private System.Windows.Forms.DataGridViewImageColumn ColumnEShieldsImage;
+        private System.Windows.Forms.DataGridViewTextBoxColumn GridEShieldsName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn GridEShieldsProperties;
+        private System.Windows.Forms.DataGridViewTextBoxColumn GridETamesID;
+        private System.Windows.Forms.DataGridViewImageColumn GridETamesImage;
+        private System.Windows.Forms.DataGridViewTextBoxColumn GridETamesName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn GridETamesProperties;
     }
 }
 

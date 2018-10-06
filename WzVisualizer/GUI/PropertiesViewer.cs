@@ -23,8 +23,8 @@ namespace WzVisualizer
         /// <param name="text">The new value of the multi-line text box</param>
         internal void SetProperties(string text)
         {
-            if (text.Length > 4)
-                text = text.Substring(4); // Removes the first linebreak
+            if (text.StartsWith("\r\n"))
+                text = text.Substring(2); // Removes the first linebreak
             PropertiesBox.Text = text;
             PropertiesBox.SelectionStart = 0;
         }

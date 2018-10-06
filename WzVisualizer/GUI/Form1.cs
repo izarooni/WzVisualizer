@@ -98,12 +98,11 @@ namespace WzVisualizer
             int ID = int.Parse(imgName);
             WzObject wzObject = image.GetFromPath("blink/0/face");
             WzCanvasProperty icon;
-            if (wzObject is WzUOLProperty ufo)
-                icon = (WzCanvasProperty)ufo.LinkValue;
-            else
-                icon = (WzCanvasProperty)wzObject;
+            if (wzObject is WzUOLProperty ufo) icon = (WzCanvasProperty)ufo.LinkValue;
+            else icon = (WzCanvasProperty)wzObject;
+            string name = StringUtility.GetEqp(ID);
 
-            GridEFaces.Rows.Add(new object[] { ID, icon?.GetBitmap() });
+            GridEFaces.Rows.Add(new object[] { ID, icon?.GetBitmap(), name });
         }
 
         private void AddHairRow(WzImage image)
@@ -111,7 +110,8 @@ namespace WzVisualizer
             string imgName = Path.GetFileNameWithoutExtension(image.Name);
             int ID = int.Parse(imgName);
             WzCanvasProperty icon = (WzCanvasProperty)image.GetFromPath("default/hairOverHead");
-            GridEHairs.Rows.Add(new object[] { ID, icon?.GetBitmap() });
+            string name = StringUtility.GetEqp(ID);
+            GridEHairs.Rows.Add(new object[] { ID, icon?.GetBitmap(), name });
         }
 
         private void AddGridRow(DataGridView grid, object wzObject)
@@ -127,8 +127,7 @@ namespace WzVisualizer
                 string imgName = Path.GetFileNameWithoutExtension(image.Name);
                 properties = BuildProperties(image);
                 ID = int.Parse(imgName);
-                if (ItemConstants.IsEquip(ID))
-                    name = StringUtility.GetEqp(ID);
+                if (ItemConstants.IsEquip(ID)) name = StringUtility.GetEqp(ID);
 
                 icon = (WzCanvasProperty)image.GetFromPath("info/icon");
             } else if (wzObject is WzSubProperty subProperty) // for breadcrumb data like: 'category.img/{ID}/info/icon'
@@ -136,8 +135,10 @@ namespace WzVisualizer
                 string imgName = subProperty.Name;
                 properties = BuildProperties(subProperty);
                 ID = int.Parse(imgName);
-                if (ItemConstants.IsEtc(ID))
-                    name = StringUtility.GetEtc(ID);
+                if (ItemConstants.IsEtc(ID)) name = StringUtility.GetEtc(ID);
+                else if (ItemConstants.IsCash(ID)) name = StringUtility.GetCash(ID);
+                else if (ItemConstants.IsChair(ID)) name = StringUtility.GetChair(ID);
+                else if (ItemConstants.IsConsume(ID)) name = StringUtility.GetConsume(ID);
 
                 WzImageProperty imgIcon = subProperty.GetFromPath("info/icon");
                 icon = (imgIcon == null) ? null : (imgIcon is WzUOLProperty ufo ? (WzCanvasProperty)ufo.LinkValue : (WzCanvasProperty)imgIcon);
@@ -202,21 +203,17 @@ namespace WzVisualizer
                             string name = Path.GetFileNameWithoutExtension(image.Name);
                             if (int.TryParse(name, out int equip_id))
                             {
+                                int selectedTab = TabEquips.SelectedIndex;
                                 int bodyPart = equip_id / 10000;
                                 switch (bodyPart)
                                 {
                                     default:
-                                        if (bodyPart >= 130 && bodyPart <= 170)
-                                            AddGridRow(GridEWeapons, image);
-                                        else if (bodyPart == 2) // Faces
-                                            AddFaceRow(image);
-                                        else if (bodyPart == 3) // Hairs
-                                            AddHairRow(image);
-                                        else if (bodyPart != 0 && bodyPart != 1) // skins
-                                            Console.WriteLine("Unhandled Character.wz image: " + equip_id + " // " + (bodyPart));
+                                        if (selectedTab == 2 && bodyPart >= 130 && bodyPart <= 170) AddGridRow(GridEWeapons, image);
+                                        else if (selectedTab == 1 && bodyPart == 2) AddFaceRow(image);
+                                        else if (selectedTab == 0 && bodyPart == 3) AddHairRow(image);
                                         break;
                                     case 100: // Caps
-                                        AddGridRow(GridECaps, image);
+                                        if (selectedTab == 4) AddGridRow(GridECaps, image);
                                         break;
                                     case 101:
                                     case 102:
@@ -224,22 +221,22 @@ namespace WzVisualizer
                                     case 112:
                                     case 113:
                                     case 114: // Accessory
-                                        AddGridRow(GridEAccessory, image);
+                                        if (selectedTab == 3) AddGridRow(GridEAccessory, image);
                                         break;
                                     case 110: // Cape
-                                        AddGridRow(GridECapes, image);
+                                        if (selectedTab == 9) AddGridRow(GridECapes, image);
                                         break;
                                     case 104: // Coat
-                                        AddGridRow(GridETops, image);
+                                        if (selectedTab == 6) AddGridRow(GridETops, image);
                                         break;
                                     case 108: // Glove
-                                        AddGridRow(GridEGloves, image);
+                                        if (selectedTab == 10) AddGridRow(GridEGloves, image);
                                         break;
                                     case 105: // Longcoat
-                                        AddGridRow(GridELongcoats, image);
+                                        if (selectedTab == 5) AddGridRow(GridELongcoats, image);
                                         break;
                                     case 106: // Pants
-                                        AddGridRow(GridEBottoms, image);
+                                        if (selectedTab == 7) AddGridRow(GridEBottoms, image);
                                         break;
                                     case 180:
                                     case 181:
@@ -248,18 +245,18 @@ namespace WzVisualizer
                                         // image.ParseImage();
                                         break;
                                     case 111: // Rings
-                                        AddGridRow(GridERings, image);
+                                        if (selectedTab == 11) AddGridRow(GridERings, image);
                                         break;
                                     case 109: // Shield
-                                        AddGridRow(GridEShields, image);
+                                        if (selectedTab == 12) AddGridRow(GridEShields, image);
                                         break;
                                     case 107: // Shoes
-                                        AddGridRow(GridEShoes, image);
+                                        if (selectedTab == 8) AddGridRow(GridEShoes, image);
                                         break;
                                     case 190:
                                     case 191:
                                     case 193: // Taming Mob
-                                        AddGridRow(GridETames, image);
+                                        if (selectedTab == 13) AddGridRow(GridETames, image);
                                         break;
                                 }
                             }
@@ -289,11 +286,11 @@ namespace WzVisualizer
                                 {
                                     default:
                                         image.ParseImage();
-                                        if (selected_tab == 3 && item_id >= 400 && item_id <= 431) // Etc
+                                        if (selected_tab == 3 && ItemConstants.IsEtc(item_id)) // etc
                                             image.WzProperties.ForEach(img => AddGridRow(GridEtc, img));
-                                        if (selected_tab == 4 && item_id >= 501 && item_id <= 599) // Cash
+                                        if (selected_tab == 4 && ItemConstants.IsCash(item_id)) // cash
                                             image.WzProperties.ForEach(img => AddGridRow(GridCash, img));
-                                        if (selected_tab == 1 && item_id >= 200 && item_id <= 245) // consume
+                                        if (selected_tab == 1 && ItemConstants.IsConsume(item_id)) // consume
                                             image.WzProperties.ForEach(img => AddGridRow(GridUConsumes, img));
                                         break;
                                     case 204: // scrolls
@@ -351,7 +348,7 @@ namespace WzVisualizer
         {
             if (e.ColumnIndex == 3 && e.RowIndex != -1)
             {
-                viewer.SetProperties((string)GridEtc.SelectedCells[0].Value);
+                viewer.SetProperties((string)((DataGridView)sender).SelectedCells[0].Value);
                 viewer.Show();
             }
         }
@@ -408,6 +405,17 @@ namespace WzVisualizer
 
         private void BtnSave_Click(object sender, EventArgs e)
         {
+            switch (TabControlMain.SelectedIndex)
+            {
+                case 0: // Equips
+                    switch  (TabEquips.SelectedIndex)
+                    {
+                        case 0: // Faces
+                            
+                            break;
+                    }
+                    break;
+            }
         }
         #endregion
 

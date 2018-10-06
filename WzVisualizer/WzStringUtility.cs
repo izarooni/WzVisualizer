@@ -12,15 +12,18 @@ namespace WzVisualizer
     {
 
         private readonly WzImage EqpImage;
-        private bool EqpParsed = false;
-
         private readonly WzImage EtcImage;
-        private bool EtcParsed = false;
+        private readonly WzImage CashImage;
+        private readonly WzImage InsImage;
+        private readonly WzImage ConsumeImage;
 
         public WzStringUtility(WzFile StringWZ)
         {
             EqpImage = StringWZ.WzDirectory.GetImageByName("Eqp.img");
             EtcImage = StringWZ.WzDirectory.GetImageByName("Etc.img");
+            CashImage = StringWZ.WzDirectory.GetImageByName("Cash.img");
+            InsImage = StringWZ.WzDirectory.GetImageByName("Ins.img");
+            ConsumeImage = StringWZ.WzDirectory.GetImageByName("Consume.img");
         }
 
         private static string LeftPadding(char pad, string input, int count)
@@ -41,6 +44,7 @@ namespace WzVisualizer
             switch (ID / 10000)
             {
                 default: return null;
+                case 2: return "Face";
                 case 3: return "Hair";
                 case 100: return "Cap";
                 case 101: return "Accessory";
@@ -58,16 +62,15 @@ namespace WzVisualizer
             }
         }
 
-        private void SetParsed(WzImage image, ref bool parsed)
+        private void SetParsed(WzImage image)
         {
+            if (image.Parsed) return;
             image.ParseImage();
-            parsed = true;
         }
 
         public string GetEqp(int ID)
         {
-            if (!EqpParsed)
-                SetParsed(EqpImage, ref EqpParsed);
+            SetParsed(EqpImage);
             string category = GetEqpCategory(ID);
             WzImageProperty imgProperty = EqpImage.GetFromPath(string.Format("Eqp/{0}/{1}/name", category, ID));
             return ((WzStringProperty)imgProperty)?.Value;
@@ -75,9 +78,29 @@ namespace WzVisualizer
 
         public string GetEtc(int ID)
         {
-            if (!EtcParsed)
-                SetParsed(EtcImage, ref EtcParsed);
+            SetParsed(EtcImage);
             WzImageProperty imgProperty = EtcImage.GetFromPath(string.Format("Etc/{0}/name", ID));
+            return ((WzStringProperty)imgProperty)?.Value;
+        }
+
+        public string GetCash(int ID)
+        {
+            SetParsed(CashImage);
+            WzImageProperty imgProperty = CashImage.GetFromPath(string.Format("{0}/name", ID));
+            return ((WzStringProperty)imgProperty)?.Value;
+        }
+
+        public string GetChair(int ID)
+        {
+            SetParsed(InsImage);
+            WzImageProperty imgProperty = InsImage.GetFromPath(string.Format("{0}/name", ID));
+            return ((WzStringProperty)imgProperty)?.Value;
+        }
+
+        public string GetConsume(int ID)
+        {
+            SetParsed(ConsumeImage);
+            WzImageProperty imgProperty = ConsumeImage.GetFromPath(string.Format("{0}/name", ID));
             return ((WzStringProperty)imgProperty)?.Value;
         }
     }
