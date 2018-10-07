@@ -33,6 +33,10 @@ namespace WzVisualizer
         {
             InitializeComponent();
 
+            string[] names = Enum.GetNames(typeof(WzMapleVersion));
+            for (int i = 0; i < ((int)WzMapleVersion.GMS == 1 ? 4 : 3); i++)
+                ComboEncType.Items.Add(names[i]);
+
             // Obtain the last used WZ root directory
             this.TextWzPath.Text = Settings.Default.PathCache;
             // Set default values for the ComboBoxes
@@ -388,7 +392,6 @@ namespace WzVisualizer
         /// </summary>
         private void BtnWzLoad_Click(object sender, EventArgs e)
         {
-            Cursor = Cursors.WaitCursor;
             string folderPath = TextWzPath.Text;
             if (folderPath.Length > 0)
             {
@@ -407,7 +410,6 @@ namespace WzVisualizer
                 }
                 LoadWzData(mapleVersion, folderPath);
             }
-            Cursor = Cursors.Default;
         }
 
         /// <summary>

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.TabControlMain = new System.Windows.Forms.TabControl();
             this.TabEquipsPage = new System.Windows.Forms.TabPage();
@@ -56,6 +57,10 @@
             this.GridEAccessoryProperties = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.TabECaps = new System.Windows.Forms.TabPage();
             this.GridECaps = new System.Windows.Forms.DataGridView();
+            this.GridECapsID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.GridECapsImage = new System.Windows.Forms.DataGridViewImageColumn();
+            this.GridECapsName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.GridECapsProperties = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.TabEOveralls = new System.Windows.Forms.TabPage();
             this.GridELongcoats = new System.Windows.Forms.DataGridView();
             this.GridELongcoatsID = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -134,6 +139,10 @@
             this.TabSetup = new System.Windows.Forms.TabControl();
             this.TabSChairs = new System.Windows.Forms.TabPage();
             this.GridSChairs = new System.Windows.Forms.DataGridView();
+            this.GridSChairsID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.GridSChairsImage = new System.Windows.Forms.DataGridViewImageColumn();
+            this.GridSChairsName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.GridSChairsProperties = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.TabSOther = new System.Windows.Forms.TabPage();
             this.GridSOthers = new System.Windows.Forms.DataGridView();
             this.GridSOthersID = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -157,14 +166,7 @@
             this.TextWzPath = new System.Windows.Forms.TextBox();
             this.BtnWzLoad = new System.Windows.Forms.Button();
             this.BtnSave = new System.Windows.Forms.Button();
-            this.GridECapsID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.GridECapsImage = new System.Windows.Forms.DataGridViewImageColumn();
-            this.GridECapsName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.GridECapsProperties = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.GridSChairsID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.GridSChairsImage = new System.Windows.Forms.DataGridViewImageColumn();
-            this.GridSChairsName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.GridSChairsProperties = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.mainFormBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.TabControlMain.SuspendLayout();
             this.TabEquipsPage.SuspendLayout();
             this.TabEquips.SuspendLayout();
@@ -214,6 +216,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.GridEtc)).BeginInit();
             this.TabCashPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.GridCash)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.mainFormBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // TabControlMain
@@ -504,6 +507,32 @@
             this.GridECaps.RowTemplate.Height = 40;
             this.GridECaps.Size = new System.Drawing.Size(778, 320);
             this.GridECaps.TabIndex = 0;
+            // 
+            // GridECapsID
+            // 
+            this.GridECapsID.HeaderText = "ID";
+            this.GridECapsID.Name = "GridECapsID";
+            this.GridECapsID.ReadOnly = true;
+            // 
+            // GridECapsImage
+            // 
+            this.GridECapsImage.HeaderText = "Image";
+            this.GridECapsImage.Name = "GridECapsImage";
+            this.GridECapsImage.ReadOnly = true;
+            this.GridECapsImage.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.GridECapsImage.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
+            // GridECapsName
+            // 
+            this.GridECapsName.HeaderText = "Name";
+            this.GridECapsName.Name = "GridECapsName";
+            this.GridECapsName.ReadOnly = true;
+            // 
+            // GridECapsProperties
+            // 
+            this.GridECapsProperties.HeaderText = "Properties";
+            this.GridECapsProperties.Name = "GridECapsProperties";
+            this.GridECapsProperties.ReadOnly = true;
             // 
             // TabEOveralls
             // 
@@ -1239,6 +1268,32 @@
             this.GridSChairs.Size = new System.Drawing.Size(772, 339);
             this.GridSChairs.TabIndex = 6;
             // 
+            // GridSChairsID
+            // 
+            this.GridSChairsID.HeaderText = "ID";
+            this.GridSChairsID.Name = "GridSChairsID";
+            this.GridSChairsID.ReadOnly = true;
+            // 
+            // GridSChairsImage
+            // 
+            this.GridSChairsImage.HeaderText = "Image";
+            this.GridSChairsImage.Name = "GridSChairsImage";
+            this.GridSChairsImage.ReadOnly = true;
+            this.GridSChairsImage.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.GridSChairsImage.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
+            // GridSChairsName
+            // 
+            this.GridSChairsName.HeaderText = "Name";
+            this.GridSChairsName.Name = "GridSChairsName";
+            this.GridSChairsName.ReadOnly = true;
+            // 
+            // GridSChairsProperties
+            // 
+            this.GridSChairsProperties.HeaderText = "Properties";
+            this.GridSChairsProperties.Name = "GridSChairsProperties";
+            this.GridSChairsProperties.ReadOnly = true;
+            // 
             // TabSOther
             // 
             this.TabSOther.Controls.Add(this.GridSOthers);
@@ -1421,9 +1476,6 @@
             // 
             this.ComboEncType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.ComboEncType.FormattingEnabled = true;
-            this.ComboEncType.Items.AddRange(new object[] {
-            "LucianMS",
-            "GMS"});
             this.ComboEncType.Location = new System.Drawing.Point(67, 5);
             this.ComboEncType.Name = "ComboEncType";
             this.ComboEncType.Size = new System.Drawing.Size(88, 21);
@@ -1462,57 +1514,9 @@
             this.BtnSave.UseVisualStyleBackColor = false;
             this.BtnSave.Click += new System.EventHandler(this.BtnSave_Click);
             // 
-            // GridECapsID
+            // mainFormBindingSource
             // 
-            this.GridECapsID.HeaderText = "ID";
-            this.GridECapsID.Name = "GridECapsID";
-            this.GridECapsID.ReadOnly = true;
-            // 
-            // GridECapsImage
-            // 
-            this.GridECapsImage.HeaderText = "Image";
-            this.GridECapsImage.Name = "GridECapsImage";
-            this.GridECapsImage.ReadOnly = true;
-            this.GridECapsImage.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.GridECapsImage.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            // 
-            // GridECapsName
-            // 
-            this.GridECapsName.HeaderText = "Name";
-            this.GridECapsName.Name = "GridECapsName";
-            this.GridECapsName.ReadOnly = true;
-            // 
-            // GridECapsProperties
-            // 
-            this.GridECapsProperties.HeaderText = "Properties";
-            this.GridECapsProperties.Name = "GridECapsProperties";
-            this.GridECapsProperties.ReadOnly = true;
-            // 
-            // GridSChairsID
-            // 
-            this.GridSChairsID.HeaderText = "ID";
-            this.GridSChairsID.Name = "GridSChairsID";
-            this.GridSChairsID.ReadOnly = true;
-            // 
-            // GridSChairsImage
-            // 
-            this.GridSChairsImage.HeaderText = "Image";
-            this.GridSChairsImage.Name = "GridSChairsImage";
-            this.GridSChairsImage.ReadOnly = true;
-            this.GridSChairsImage.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.GridSChairsImage.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            // 
-            // GridSChairsName
-            // 
-            this.GridSChairsName.HeaderText = "Name";
-            this.GridSChairsName.Name = "GridSChairsName";
-            this.GridSChairsName.ReadOnly = true;
-            // 
-            // GridSChairsProperties
-            // 
-            this.GridSChairsProperties.HeaderText = "Properties";
-            this.GridSChairsProperties.Name = "GridSChairsProperties";
-            this.GridSChairsProperties.ReadOnly = true;
+            this.mainFormBindingSource.DataSource = typeof(WzVisualizer.MainForm);
             // 
             // MainForm
             // 
@@ -1578,6 +1582,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.GridEtc)).EndInit();
             this.TabCashPage.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.GridCash)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.mainFormBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1721,6 +1726,7 @@
         private System.Windows.Forms.DataGridViewImageColumn GridSChairsImage;
         private System.Windows.Forms.DataGridViewTextBoxColumn GridSChairsName;
         private System.Windows.Forms.DataGridViewTextBoxColumn GridSChairsProperties;
+        private System.Windows.Forms.BindingSource mainFormBindingSource;
     }
 }
 
