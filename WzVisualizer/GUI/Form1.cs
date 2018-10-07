@@ -9,6 +9,7 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WzVisualizer.Properties;
@@ -181,14 +182,17 @@ namespace WzVisualizer
 
         private void LoadWzData(WzMapleVersion mapleVersion, string mapleDirectory)
         {
-            int selected_tab = TabControlMain.SelectedIndex; 
-            switch (selected_tab)
+            int selected_root = TabControlMain.SelectedIndex; 
+            switch (selected_root)
             {
                 default:
                     Console.WriteLine("Unable to load WZ data unhandled selected index: " + TabControlMain.SelectedIndex);
                     break;
                 case 0: // Equips
                     {
+                        DataGridView dGrid = (DataGridView)TabEquips.SelectedTab.Controls[0];
+                        dGrid.Rows.Clear();
+
                         if (_CharacterWZ == null)
                         {
                             _CharacterWZ = new WzFile(mapleDirectory + "/Character.wz", 83, mapleVersion);
@@ -268,6 +272,15 @@ namespace WzVisualizer
                 case 3: // Etc
                 case 4: // Cash
                     {
+                        if (selected_root == 1)
+                            ((DataGridView)TabUse.SelectedTab.Controls[0]).Rows.Clear();
+                        else if (selected_root == 2)
+                            ((DataGridView)TabSetup.SelectedTab.Controls[0]).Rows.Clear();
+                        else if (selected_root == 3)
+                            ((DataGridView)TabEtcPage.Controls[0]).Rows.Clear();
+                        else if (selected_root == 4)
+                            ((DataGridView)TabCashPage.Controls[0]).Rows.Clear();
+
                         if (_ItemWZ == null)
                         {
                             _ItemWZ = new WzFile(mapleDirectory + "/Item.wz", 83, mapleVersion);
@@ -286,26 +299,26 @@ namespace WzVisualizer
                                 {
                                     default:
                                         image.ParseImage();
-                                        if (selected_tab == 3 && ItemConstants.IsEtc(item_id)) // etc
+                                        if (selected_root == 3 && ItemConstants.IsEtc(item_id)) // etc
                                             image.WzProperties.ForEach(img => AddGridRow(GridEtc, img));
-                                        if (selected_tab == 4 && ItemConstants.IsCash(item_id)) // cash
+                                        if (selected_root == 4 && ItemConstants.IsCash(item_id)) // cash
                                             image.WzProperties.ForEach(img => AddGridRow(GridCash, img));
-                                        if (selected_tab == 1 && ItemConstants.IsConsume(item_id)) // consume
+                                        if (selected_root == 1 && ItemConstants.IsConsume(item_id)) // consume
                                             image.WzProperties.ForEach(img => AddGridRow(GridUConsumes, img));
                                         break;
                                     case 204: // scrolls
-                                        if (selected_tab == 1)
+                                        if (selected_root == 1)
                                             image.WzProperties.ForEach(img => AddGridRow(GridUScrolls, img));
                                         break;
                                     case 206:
                                     case 207:
                                     case 233: // projectiles
-                                        if (selected_tab == 1)
+                                        if (selected_root == 1)
                                             image.WzProperties.ForEach(img => AddGridRow(GridUProjectiles, img));
                                         break;
                                     case 301: // chairs
                                     case 399: // x-mas characters
-                                        if (selected_tab == 2)
+                                        if (selected_root == 2)
                                             image.WzProperties.ForEach(img => AddGridRow(item_id == 301 ? GridSChairs : GridSOthers, img));
                                         break;
                                 }
@@ -403,21 +416,55 @@ namespace WzVisualizer
             BtnWzLoad.Enabled = enabled;
         }
 
+        /// <summary>
+        /// upon clicking the save button, store data of the current opened grid.
+        /// Some tabs may have another TabControl in which that Control contains a Grid control.
+        /// </summary>
         private void BtnSave_Click(object sender, EventArgs e)
         {
-            switch (TabControlMain.SelectedIndex)
+            var control = TabControlMain.SelectedTab.Controls[0];
+            if (control is DataGridView grid) // no child tabs and contains 1 child Control (DataGridView)
+                GridIOUtility.ExportGrid(grid, TabControlMain.SelectedTab.Text);
+            else if (control is TabControl tab) // sub-categories (e.g. Equips.Hairs, Equips.Faces)
             {
-                case 0: // Equips
-                    switch  (TabEquips.SelectedIndex)
-                    {
-                        case 0: // Faces
-                            
-                            break;
-                    }
-                    break;
+                control = tab.SelectedTab; // The selected child Tab (e.g. Equips.Hairs)
+                GridIOUtility.ExportGrid((DataGridView) control.Controls[0], TabControlMain.SelectedTab.Text); // The DataGridView contained in the TabPage control
             }
         }
-        #endregion
 
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+            #region loading equip data
+            GridIOUtility.ImportGrid("equips/Hairs.bin", GridEHairs);
+            GridIOUtility.ImportGrid("equips/Faces.bin", GridEFaces);
+            GridIOUtility.ImportGrid("equips/Weapons.bin", GridEWeapons);
+            GridIOUtility.ImportGrid("equips/Accessory.bin", GridEAccessory);
+            GridIOUtility.ImportGrid("equips/Caps.bin", GridECaps);
+            GridIOUtility.ImportGrid("equips/Overalls.bin", GridELongcoats);
+            GridIOUtility.ImportGrid("equips/Tops.bin", GridETops);
+            GridIOUtility.ImportGrid("equips/Bottoms.bin", GridEBottoms);
+            GridIOUtility.ImportGrid("equips/Shoes.bin", GridEShoes);
+            GridIOUtility.ImportGrid("equips/Capes.bin", GridECapes);
+            GridIOUtility.ImportGrid("equips/Gloves.bin", GridEGloves);
+            GridIOUtility.ImportGrid("equips/Rings.bin", GridERings);
+            GridIOUtility.ImportGrid("equips/Shields.bin", GridEShields);
+            GridIOUtility.ImportGrid("equips/Mounts.bin", GridETames);
+            #endregion
+
+            #region loading use data
+            GridIOUtility.ImportGrid("use/Consumes.bin", GridUConsumes);
+            GridIOUtility.ImportGrid("use/Scrolls.bin", GridUScrolls);
+            GridIOUtility.ImportGrid("use/Projectiles.bin", GridUProjectiles);
+            #endregion
+
+            #region loading setup data
+            GridIOUtility.ImportGrid("setup/Chairs.bin", GridSChairs);
+            GridIOUtility.ImportGrid("setup/Others.bin", GridSOthers);
+            #endregion
+
+            GridIOUtility.ImportGrid("Etc/Etc.bin", GridEtc);
+            GridIOUtility.ImportGrid("Cash/Cash.bin", GridCash);
+        }
+        #endregion
     }
 }
