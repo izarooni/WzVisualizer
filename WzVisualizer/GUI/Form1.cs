@@ -8,6 +8,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -16,6 +17,9 @@ using WzVisualizer.Properties;
 
 namespace WzVisualizer
 {
+
+    internal delegate void AddGridRowCallBack(DataGridView grid, BinData binData);
+
     public partial class MainForm : Form
     {
         private PropertiesViewer viewer = new PropertiesViewer();
@@ -434,37 +438,51 @@ namespace WzVisualizer
 
         private void MainForm_Load(object sender, EventArgs e)
         {
+            
             #region loading equip data
-            GridIOUtility.ImportGrid("equips/Hairs.bin", GridEHairs);
-            GridIOUtility.ImportGrid("equips/Faces.bin", GridEFaces);
-            GridIOUtility.ImportGrid("equips/Weapons.bin", GridEWeapons);
-            GridIOUtility.ImportGrid("equips/Accessory.bin", GridEAccessory);
-            GridIOUtility.ImportGrid("equips/Caps.bin", GridECaps);
-            GridIOUtility.ImportGrid("equips/Overalls.bin", GridELongcoats);
-            GridIOUtility.ImportGrid("equips/Tops.bin", GridETops);
-            GridIOUtility.ImportGrid("equips/Bottoms.bin", GridEBottoms);
-            GridIOUtility.ImportGrid("equips/Shoes.bin", GridEShoes);
-            GridIOUtility.ImportGrid("equips/Capes.bin", GridECapes);
-            GridIOUtility.ImportGrid("equips/Gloves.bin", GridEGloves);
-            GridIOUtility.ImportGrid("equips/Rings.bin", GridERings);
-            GridIOUtility.ImportGrid("equips/Shields.bin", GridEShields);
-            GridIOUtility.ImportGrid("equips/Mounts.bin", GridETames);
+            GridIOUtility.ImportGrid("equips/Hairs.bin", GridEHairs, AddGridRow);
+            GridIOUtility.ImportGrid("equips/Faces.bin", GridEFaces, AddGridRow);
+            GridIOUtility.ImportGrid("equips/Weapons.bin", GridEWeapons, AddGridRow);
+            GridIOUtility.ImportGrid("equips/Accessory.bin", GridEAccessory, AddGridRow);
+            GridIOUtility.ImportGrid("equips/Caps.bin", GridECaps, AddGridRow);
+            GridIOUtility.ImportGrid("equips/Overalls.bin", GridELongcoats, AddGridRow);
+            GridIOUtility.ImportGrid("equips/Tops.bin", GridETops, AddGridRow);
+            GridIOUtility.ImportGrid("equips/Bottoms.bin", GridEBottoms, AddGridRow);
+            GridIOUtility.ImportGrid("equips/Shoes.bin", GridEShoes, AddGridRow);
+            GridIOUtility.ImportGrid("equips/Capes.bin", GridECapes, AddGridRow);
+            GridIOUtility.ImportGrid("equips/Gloves.bin", GridEGloves, AddGridRow);
+            GridIOUtility.ImportGrid("equips/Rings.bin", GridERings, AddGridRow);
+            GridIOUtility.ImportGrid("equips/Shields.bin", GridEShields, AddGridRow);
+            GridIOUtility.ImportGrid("equips/Mounts.bin", GridETames, AddGridRow);
             #endregion
 
             #region loading use data
-            GridIOUtility.ImportGrid("use/Consumes.bin", GridUConsumes);
-            GridIOUtility.ImportGrid("use/Scrolls.bin", GridUScrolls);
-            GridIOUtility.ImportGrid("use/Projectiles.bin", GridUProjectiles);
+            GridIOUtility.ImportGrid("use/Consumes.bin", GridUConsumes, AddGridRow);
+            GridIOUtility.ImportGrid("use/Scrolls.bin", GridUScrolls, AddGridRow);
+            GridIOUtility.ImportGrid("use/Projectiles.bin", GridUProjectiles, AddGridRow);
             #endregion
 
             #region loading setup data
-            GridIOUtility.ImportGrid("setup/Chairs.bin", GridSChairs);
-            GridIOUtility.ImportGrid("setup/Others.bin", GridSOthers);
+            GridIOUtility.ImportGrid("setup/Chairs.bin", GridSChairs, AddGridRow);
+            GridIOUtility.ImportGrid("setup/Others.bin", GridSOthers, AddGridRow);
             #endregion
 
-            GridIOUtility.ImportGrid("Etc/Etc.bin", GridEtc);
-            GridIOUtility.ImportGrid("Cash/Cash.bin", GridCash);
+            GridIOUtility.ImportGrid("Etc/Etc.bin", GridEtc, AddGridRow);
+            GridIOUtility.ImportGrid("Cash/Cash.bin", GridCash, AddGridRow);
         }
         #endregion
+
+        public void AddGridRow(DataGridView grid, BinData binData)
+        {
+            string allProperties = "";
+            foreach (string prop in binData.properties)
+                allProperties += prop + "\r\n";
+            if (InvokeRequired)
+            {
+                Invoke(new Action(() => {
+                    grid.Rows.Add(new object[] { binData.ID, binData?.image, binData.Name, allProperties });
+                }));
+            }
+        }
     }
 }

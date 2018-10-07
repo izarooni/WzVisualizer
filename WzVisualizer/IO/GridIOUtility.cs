@@ -5,6 +5,7 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -12,14 +13,10 @@ namespace WzVisualizer
 {
     class GridIOUtility
     {
-
         private const string ExportFolder = "exports";
 
-        internal static void ImportGrid(string file, DataGridView grid)
+        private static void ReadFileContents(string path, ref List<BinData> datas)
         {
-            string path = string.Format("{0}/{1}", ExportFolder, file);
-            if (!File.Exists(path))
-                return;
             using (BinaryReader breader = new BinaryReader(new FileStream(path, FileMode.Open)))
             {
                 int rows = breader.ReadInt32();
@@ -41,9 +38,21 @@ namespace WzVisualizer
                     string allProperties = "";
                     foreach (string prop in binData.properties)
                         allProperties += prop + "\r\n";
-                    grid.Rows.Add(new object[] { binData.ID, binData?.image, binData.Name, allProperties });
+                    datas.Add(binData);
                 }
             }
+        }
+
+        internal static void ImportGrid(string file, DataGridView grid, AddGridRowCallBack callbackTask)
+        {
+            string path = string.Format("{0}/{1}", ExportFolder, file);
+            if (!File.Exists(path))
+                return;
+            List<BinData> datas = new List<BinData>();
+            ThreadStart childThread = new ThreadStart(() => ReadFileContents(path, ref datas));
+            childThread += () => datas.ForEach(d => callbackTask(grid, d));
+            Thread thread = new Thread(childThread);
+            thread.Start();
         }
 
         internal static void ExportGrid(DataGridView grid, string folder)

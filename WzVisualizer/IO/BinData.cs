@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace WzVisualizer
 {
-    class BinData
+    public class BinData
     {
         public int ID;
         public Bitmap image;
