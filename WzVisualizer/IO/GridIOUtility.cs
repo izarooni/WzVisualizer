@@ -17,28 +17,33 @@ namespace WzVisualizer
 
         private static void ReadFileContents(string path, ref List<BinData> datas)
         {
-            using (BinaryReader breader = new BinaryReader(new FileStream(path, FileMode.Open)))
+            using (FileStream fstream = new FileStream(path, FileMode.Open))
             {
-                int rows = breader.ReadInt32();
-                for (int i = 0; i < rows; i++)
+                using (BinaryReader breader = new BinaryReader(fstream))
                 {
-                    BinData binData = new BinData();
-                    binData.ID = breader.ReadInt32();
-                    binData.Name = breader.ReadString();
-                    int propCount = breader.ReadInt32();
-                    for (int p = 0; p < propCount; p++)
-                        binData.properties.Add(breader.ReadString());
-                    if (breader.ReadBoolean())
+                    int rows = breader.ReadInt32();
+                    for (int i = 0; i < rows; i++)
                     {
-                        int bufferLength = breader.ReadInt32();
-                        byte[] buffer = breader.ReadBytes(bufferLength);
-                        using (MemoryStream memStream = new MemoryStream(buffer))
-                            binData.image = new Bitmap(memStream);
+                        BinData binData = new BinData();
+                        binData.ID = breader.ReadInt32();
+                        binData.Name = breader.ReadString();
+                        int propCount = breader.ReadInt32();
+                        for (int p = 0; p < propCount; p++)
+                            binData.properties.Add(breader.ReadString());
+                        if (breader.ReadBoolean())
+                        {
+                            int bufferLength = breader.ReadInt32();
+                            byte[] buffer = breader.ReadBytes(bufferLength);
+                            using (MemoryStream memStream = new MemoryStream(buffer))
+                            {
+                                binData.image = Image.FromStream(memStream);
+                            }
+                        }
+                        string allProperties = "";
+                        foreach (string prop in binData.properties)
+                            allProperties += prop + "\r\n";
+                        datas.Add(binData);
                     }
-                    string allProperties = "";
-                    foreach (string prop in binData.properties)
-                        allProperties += prop + "\r\n";
-                    datas.Add(binData);
                 }
             }
         }

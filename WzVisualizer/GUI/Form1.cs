@@ -273,6 +273,8 @@ namespace WzVisualizer
                                 }
                             }
                         }
+                        _CharacterWZ.Dispose();
+                        _CharacterWZ = null;
                         break;
                     }
                 case 1: // Use
@@ -347,6 +349,20 @@ namespace WzVisualizer
             _CharacterWZ = null;
         }
 
+        public void AddGridRow(DataGridView grid, BinData binData)
+        {
+            string allProperties = "";
+            foreach (string prop in binData.properties)
+                allProperties += prop + "\r\n";
+            if (InvokeRequired)
+            {
+                Image image = binData?.image;
+                Invoke(new Action(() => {
+                    grid.Rows.Add(new object[] { binData.ID, image, binData.Name, allProperties });
+                }));
+            }
+        }
+
         #region event handling
         /// <summary>
         /// Update the Window's clipboard when a cell is selected
@@ -397,19 +413,16 @@ namespace WzVisualizer
             {
                 if (!folderPath.Equals(Settings.Default.PathCache))
                 {
-                    DisposeWzFiles();
                     Settings.Default.PathCache = folderPath;
                     Settings.Default.Save();
                 }
                 WzMapleVersion mapleVersion = (WzMapleVersion)ComboEncType.SelectedIndex;
-                if (_StringWZ == null)
-                {
-                    _StringWZ = new WzFile(folderPath + "/String.wz", mapleVersion);
-                    _StringWZ.ParseWzFile();
-                    StringUtility = new WzStringUtility(_StringWZ);
-                }
+                _StringWZ = new WzFile(folderPath + "/String.wz", mapleVersion);
+                _StringWZ.ParseWzFile();
+                StringUtility = new WzStringUtility(_StringWZ);
                 LoadWzData(mapleVersion, folderPath);
             }
+            DisposeWzFiles();
         }
 
         /// <summary>
@@ -440,50 +453,23 @@ namespace WzVisualizer
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            
-            #region loading equip data
             GridIOUtility.ImportGrid("equips/Hairs.bin", GridEHairs, AddGridRow);
-            GridIOUtility.ImportGrid("equips/Faces.bin", GridEFaces, AddGridRow);
-            GridIOUtility.ImportGrid("equips/Weapons.bin", GridEWeapons, AddGridRow);
-            GridIOUtility.ImportGrid("equips/Accessory.bin", GridEAccessory, AddGridRow);
-            GridIOUtility.ImportGrid("equips/Caps.bin", GridECaps, AddGridRow);
-            GridIOUtility.ImportGrid("equips/Overalls.bin", GridELongcoats, AddGridRow);
-            GridIOUtility.ImportGrid("equips/Tops.bin", GridETops, AddGridRow);
-            GridIOUtility.ImportGrid("equips/Bottoms.bin", GridEBottoms, AddGridRow);
-            GridIOUtility.ImportGrid("equips/Shoes.bin", GridEShoes, AddGridRow);
-            GridIOUtility.ImportGrid("equips/Capes.bin", GridECapes, AddGridRow);
-            GridIOUtility.ImportGrid("equips/Gloves.bin", GridEGloves, AddGridRow);
-            GridIOUtility.ImportGrid("equips/Rings.bin", GridERings, AddGridRow);
-            GridIOUtility.ImportGrid("equips/Shields.bin", GridEShields, AddGridRow);
-            GridIOUtility.ImportGrid("equips/Mounts.bin", GridETames, AddGridRow);
-            #endregion
-
-            #region loading use data
-            GridIOUtility.ImportGrid("use/Consumes.bin", GridUConsumes, AddGridRow);
-            GridIOUtility.ImportGrid("use/Scrolls.bin", GridUScrolls, AddGridRow);
-            GridIOUtility.ImportGrid("use/Projectiles.bin", GridUProjectiles, AddGridRow);
-            #endregion
-
-            #region loading setup data
-            GridIOUtility.ImportGrid("setup/Chairs.bin", GridSChairs, AddGridRow);
-            GridIOUtility.ImportGrid("setup/Others.bin", GridSOthers, AddGridRow);
-            #endregion
-
-            GridIOUtility.ImportGrid("Etc/Etc.bin", GridEtc, AddGridRow);
-            GridIOUtility.ImportGrid("Cash/Cash.bin", GridCash, AddGridRow);
         }
         #endregion
 
-        public void AddGridRow(DataGridView grid, BinData binData)
+        private void TabEquips_Selected(object sender, TabControlEventArgs e)
         {
-            string allProperties = "";
-            foreach (string prop in binData.properties)
-                allProperties += prop + "\r\n";
-            if (InvokeRequired)
+            FieldInfo[] fields = GetType().GetFields(BindingFlags.NonPublic | BindingFlags.Instance);
+            foreach (FieldInfo field in fields)
             {
-                Invoke(new Action(() => {
-                    grid.Rows.Add(new object[] { binData.ID, binData?.image, binData.Name, allProperties });
-                }));
+                if (field.Name.StartsWith("Grid") && field.GetValue(this) is DataGridView grid && grid.Rows.Count > 0)
+                {
+                    grid.Rows.Clear();
+                    GC.Collect();
+                    GC.WaitForPendingFinalizers();
+                }
+                if (field.Name.Equals(e.TabPage.Name))
+                    GridIOUtility.ImportGrid(string.Format("equips/{0}.bin", e.TabPage.Text), (DataGridView)e.TabPage.Controls[0], AddGridRow);
             }
         }
     }

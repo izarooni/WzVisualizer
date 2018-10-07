@@ -65,7 +65,7 @@ namespace WzVisualizer.Properties {
         /// </summary>
         internal static System.Drawing.Bitmap floppy_icon {
             get {
-                object obj = ResourceManager.GetObject("floppy-icon", resourceCulture);
+                object obj = ResourceManager.GetObject("floppy_icon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

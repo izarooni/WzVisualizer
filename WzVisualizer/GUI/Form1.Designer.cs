@@ -272,6 +272,7 @@
             this.TabEquips.SelectedIndex = 0;
             this.TabEquips.Size = new System.Drawing.Size(792, 384);
             this.TabEquips.TabIndex = 2;
+            this.TabEquips.Selected += new System.Windows.Forms.TabControlEventHandler(this.TabEquips_Selected);
             // 
             // TabEHairs
             // 
@@ -347,7 +348,7 @@
             this.GridEFaces.Name = "GridEFaces";
             this.GridEFaces.ReadOnly = true;
             this.GridEFaces.RowTemplate.Height = 40;
-            this.GridEFaces.Size = new System.Drawing.Size(778, 320);
+            this.GridEFaces.Size = new System.Drawing.Size(778, 352);
             this.GridEFaces.TabIndex = 3;
             // 
             // GridEFacesID
@@ -396,7 +397,7 @@
             this.GridEWeapons.Name = "GridEWeapons";
             this.GridEWeapons.ReadOnly = true;
             this.GridEWeapons.RowTemplate.Height = 40;
-            this.GridEWeapons.Size = new System.Drawing.Size(778, 320);
+            this.GridEWeapons.Size = new System.Drawing.Size(778, 352);
             this.GridEWeapons.TabIndex = 3;
             // 
             // GridEWeaponsID
@@ -451,7 +452,7 @@
             this.GridEAccessory.Name = "GridEAccessory";
             this.GridEAccessory.ReadOnly = true;
             this.GridEAccessory.RowTemplate.Height = 40;
-            this.GridEAccessory.Size = new System.Drawing.Size(778, 320);
+            this.GridEAccessory.Size = new System.Drawing.Size(778, 352);
             this.GridEAccessory.TabIndex = 6;
             // 
             // GridEAccessoryID
@@ -505,7 +506,7 @@
             this.GridECaps.Name = "GridECaps";
             this.GridECaps.ReadOnly = true;
             this.GridECaps.RowTemplate.Height = 40;
-            this.GridECaps.Size = new System.Drawing.Size(778, 320);
+            this.GridECaps.Size = new System.Drawing.Size(778, 352);
             this.GridECaps.TabIndex = 0;
             // 
             // GridECapsID
@@ -560,7 +561,7 @@
             this.GridELongcoats.Name = "GridELongcoats";
             this.GridELongcoats.ReadOnly = true;
             this.GridELongcoats.RowTemplate.Height = 40;
-            this.GridELongcoats.Size = new System.Drawing.Size(778, 320);
+            this.GridELongcoats.Size = new System.Drawing.Size(778, 352);
             this.GridELongcoats.TabIndex = 1;
             // 
             // GridELongcoatsID
@@ -615,7 +616,7 @@
             this.GridETops.Name = "GridETops";
             this.GridETops.ReadOnly = true;
             this.GridETops.RowTemplate.Height = 40;
-            this.GridETops.Size = new System.Drawing.Size(778, 320);
+            this.GridETops.Size = new System.Drawing.Size(778, 352);
             this.GridETops.TabIndex = 1;
             // 
             // GridETopsID
@@ -670,7 +671,7 @@
             this.GridEBottoms.Name = "GridEBottoms";
             this.GridEBottoms.ReadOnly = true;
             this.GridEBottoms.RowTemplate.Height = 40;
-            this.GridEBottoms.Size = new System.Drawing.Size(778, 320);
+            this.GridEBottoms.Size = new System.Drawing.Size(778, 352);
             this.GridEBottoms.TabIndex = 1;
             // 
             // GridEBottomsID
@@ -725,7 +726,7 @@
             this.GridEShoes.Name = "GridEShoes";
             this.GridEShoes.ReadOnly = true;
             this.GridEShoes.RowTemplate.Height = 40;
-            this.GridEShoes.Size = new System.Drawing.Size(778, 320);
+            this.GridEShoes.Size = new System.Drawing.Size(778, 352);
             this.GridEShoes.TabIndex = 2;
             // 
             // GridEShoesID
@@ -780,7 +781,7 @@
             this.GridECapes.Name = "GridECapes";
             this.GridECapes.ReadOnly = true;
             this.GridECapes.RowTemplate.Height = 40;
-            this.GridECapes.Size = new System.Drawing.Size(778, 320);
+            this.GridECapes.Size = new System.Drawing.Size(778, 352);
             this.GridECapes.TabIndex = 3;
             // 
             // GridECapesID
@@ -835,7 +836,7 @@
             this.GridEGloves.Name = "GridEGloves";
             this.GridEGloves.ReadOnly = true;
             this.GridEGloves.RowTemplate.Height = 40;
-            this.GridEGloves.Size = new System.Drawing.Size(778, 320);
+            this.GridEGloves.Size = new System.Drawing.Size(778, 352);
             this.GridEGloves.TabIndex = 3;
             // 
             // GridEGlovesID
@@ -890,7 +891,7 @@
             this.GridERings.Name = "GridERings";
             this.GridERings.ReadOnly = true;
             this.GridERings.RowTemplate.Height = 40;
-            this.GridERings.Size = new System.Drawing.Size(778, 320);
+            this.GridERings.Size = new System.Drawing.Size(778, 352);
             this.GridERings.TabIndex = 3;
             // 
             // GridERingsID
@@ -945,7 +946,7 @@
             this.GridEShields.Name = "GridEShields";
             this.GridEShields.ReadOnly = true;
             this.GridEShields.RowTemplate.Height = 40;
-            this.GridEShields.Size = new System.Drawing.Size(778, 320);
+            this.GridEShields.Size = new System.Drawing.Size(778, 352);
             this.GridEShields.TabIndex = 4;
             // 
             // ColumnEShieldsID
@@ -1000,7 +1001,7 @@
             this.GridETames.Name = "GridETames";
             this.GridETames.ReadOnly = true;
             this.GridETames.RowTemplate.Height = 40;
-            this.GridETames.Size = new System.Drawing.Size(778, 320);
+            this.GridETames.Size = new System.Drawing.Size(778, 352);
             this.GridETames.TabIndex = 5;
             // 
             // GridETamesID
@@ -1133,7 +1134,7 @@
             this.GridUScrolls.Name = "GridUScrolls";
             this.GridUScrolls.ReadOnly = true;
             this.GridUScrolls.RowTemplate.Height = 40;
-            this.GridUScrolls.Size = new System.Drawing.Size(772, 339);
+            this.GridUScrolls.Size = new System.Drawing.Size(772, 346);
             this.GridUScrolls.TabIndex = 6;
             // 
             // GridUScrollsID
@@ -1188,7 +1189,7 @@
             this.GridUProjectiles.Name = "GridUProjectiles";
             this.GridUProjectiles.ReadOnly = true;
             this.GridUProjectiles.RowTemplate.Height = 40;
-            this.GridUProjectiles.Size = new System.Drawing.Size(772, 339);
+            this.GridUProjectiles.Size = new System.Drawing.Size(772, 346);
             this.GridUProjectiles.TabIndex = 6;
             // 
             // GridUProjectilesID
@@ -1320,7 +1321,7 @@
             this.GridSOthers.Name = "GridSOthers";
             this.GridSOthers.ReadOnly = true;
             this.GridSOthers.RowTemplate.Height = 40;
-            this.GridSOthers.Size = new System.Drawing.Size(772, 339);
+            this.GridSOthers.Size = new System.Drawing.Size(772, 346);
             this.GridSOthers.TabIndex = 7;
             // 
             // GridSOthersID

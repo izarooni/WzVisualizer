@@ -10,7 +10,7 @@ namespace WzVisualizer
     public class BinData
     {
         public int ID;
-        public Bitmap image;
+        public Image image;
         public string _name;
         public List<string> properties = new List<string>();
 
