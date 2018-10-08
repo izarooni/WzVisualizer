@@ -451,13 +451,38 @@ namespace WzVisualizer
             }
         }
 
+        private void TabEquips_Selected(object sender, TabControlEventArgs e)
+        {
+            Tab_Selected(sender, e.TabPage);
+        }
+
+        private void TabUse_Selected(object sender, TabControlEventArgs e)
+        {
+            Tab_Selected(sender, e.TabPage);
+        }
+
+        private void TabSetup_Selected(object sender, TabControlEventArgs e)
+        {
+            Tab_Selected(sender, e.TabPage);
+        }
+
+        private void TabControlMain_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            TabPage root = TabControlMain.SelectedTab;
+            object control = root.Controls[0];
+            if (control is TabControl tab)
+                Tab_Selected(sender, tab.SelectedTab);
+            else
+                Tab_Selected(sender, root);
+        }
+
         private void MainForm_Load(object sender, EventArgs e)
         {
             GridIOUtility.ImportGrid("equips/Hairs.bin", GridEHairs, AddGridRow);
         }
         #endregion
 
-        private void TabEquips_Selected(object sender, TabControlEventArgs e)
+        private void Tab_Selected(object sender, TabPage tab)
         {
             FieldInfo[] fields = GetType().GetFields(BindingFlags.NonPublic | BindingFlags.Instance);
             foreach (FieldInfo field in fields)
@@ -468,8 +493,20 @@ namespace WzVisualizer
                     GC.Collect();
                     GC.WaitForPendingFinalizers();
                 }
-                if (field.Name.Equals(e.TabPage.Name))
-                    GridIOUtility.ImportGrid(string.Format("equips/{0}.bin", e.TabPage.Text), (DataGridView)e.TabPage.Controls[0], AddGridRow);
+                if (field.Name.Equals(tab.Name))
+                {
+                    int mainSelectedIndex = TabControlMain.SelectedIndex;
+                    if (mainSelectedIndex == 0)
+                        GridIOUtility.ImportGrid(string.Format("Equips/{0}.bin", tab.Text), (DataGridView)tab.Controls[0], AddGridRow);
+                    else if (mainSelectedIndex == 1)
+                        GridIOUtility.ImportGrid(string.Format("Use/{0}.bin", tab.Text), (DataGridView)tab.Controls[0], AddGridRow);
+                    else if (mainSelectedIndex == 2)
+                        GridIOUtility.ImportGrid(string.Format("Setup/{0}.bin", tab.Text), (DataGridView)tab.Controls[0], AddGridRow);
+                    else if (mainSelectedIndex == 3)
+                        GridIOUtility.ImportGrid(string.Format("Etc/{0}.bin", tab.Text), (DataGridView)tab.Controls[0], AddGridRow);
+                    else if (mainSelectedIndex == 4)
+                        GridIOUtility.ImportGrid(string.Format("Cash/{0}.bin", tab.Text), (DataGridView)tab.Controls[0], AddGridRow);
+                }
             }
         }
     }

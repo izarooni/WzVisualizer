@@ -237,6 +237,7 @@
             this.TabControlMain.SelectedIndex = 0;
             this.TabControlMain.Size = new System.Drawing.Size(800, 421);
             this.TabControlMain.TabIndex = 0;
+            this.TabControlMain.SelectedIndexChanged += new System.EventHandler(this.TabControlMain_SelectedIndexChanged);
             // 
             // TabEquipsPage
             // 
@@ -1052,6 +1053,7 @@
             this.TabUse.SelectedIndex = 0;
             this.TabUse.Size = new System.Drawing.Size(786, 378);
             this.TabUse.TabIndex = 0;
+            this.TabUse.Selected += new System.Windows.Forms.TabControlEventHandler(this.TabUse_Selected);
             // 
             // TabUConsumes
             // 
@@ -1239,6 +1241,7 @@
             this.TabSetup.SelectedIndex = 0;
             this.TabSetup.Size = new System.Drawing.Size(786, 378);
             this.TabSetup.TabIndex = 1;
+            this.TabSetup.Selected += new System.Windows.Forms.TabControlEventHandler(this.TabSetup_Selected);
             // 
             // TabSChairs
             // 

@@ -36,7 +36,15 @@ namespace WzVisualizer
                             byte[] buffer = breader.ReadBytes(bufferLength);
                             using (MemoryStream memStream = new MemoryStream(buffer))
                             {
-                                binData.image = Image.FromStream(memStream);
+                                Image image = Image.FromStream(memStream);
+                                Bitmap bmp = new Bitmap(image.Width, image.Height, PixelFormat.Format16bppRgb555);
+                                bmp.MakeTransparent();
+                                using (var g = Graphics.FromImage(bmp))
+                                {
+                                    g.DrawImage(image, new Rectangle(0, 0, image.Width, image.Height));
+                                }
+                                image.Dispose();
+                                binData.image = bmp;
                             }
                         }
                         string allProperties = "";
