@@ -18,5 +18,14 @@ namespace WzVisualizer
             get { return _name; }
             set { _name = value ?? "NO-NAME"; }
         }
+
+        public bool Search(string filter)
+        {
+            if (ID.ToString().Contains(filter)) return true;
+            if (Name.ToLower().Contains(filter.ToLower())) return true;
+            foreach (string prop in properties)
+                if (prop.ToLower().Contains(filter.ToLower())) return true;
+            return false;
+        }
     }
 }

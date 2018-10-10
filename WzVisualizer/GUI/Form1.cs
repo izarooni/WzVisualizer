@@ -354,6 +354,11 @@ namespace WzVisualizer
             string allProperties = "";
             foreach (string prop in binData.properties)
                 allProperties += prop + "\r\n";
+
+            string filter = SearchTextBox.Text;
+            if (filter?.Length > 0 && !binData.Search(filter))
+                return;
+
             if (InvokeRequired)
             {
                 Image image = binData?.image;
@@ -451,6 +456,8 @@ namespace WzVisualizer
             }
         }
 
+        #region tab change events
+
         private void TabEquips_Selected(object sender, TabControlEventArgs e)
         {
             Tab_Selected(sender, e.TabPage);
@@ -468,19 +475,8 @@ namespace WzVisualizer
 
         private void TabControlMain_SelectedIndexChanged(object sender, EventArgs e)
         {
-            TabPage root = TabControlMain.SelectedTab;
-            object control = root.Controls[0];
-            if (control is TabControl tab)
-                Tab_Selected(sender, tab.SelectedTab);
-            else
-                Tab_Selected(sender, root);
+            Tab_Selected(sender, GetSelectedTab());
         }
-
-        private void MainForm_Load(object sender, EventArgs e)
-        {
-            GridIOUtility.ImportGrid("equips/Hairs.bin", GridEHairs, AddGridRow);
-        }
-        #endregion
 
         private void Tab_Selected(object sender, TabPage tab)
         {
@@ -508,6 +504,27 @@ namespace WzVisualizer
                         GridIOUtility.ImportGrid(string.Format("Cash/{0}.bin", tab.Text), (DataGridView)tab.Controls[0], AddGridRow);
                 }
             }
+        }
+        #endregion
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+            GridIOUtility.ImportGrid("equips/Hairs.bin", GridEHairs, AddGridRow);
+        }
+
+        private void SearchTextBox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            int keyCode = (int)e.KeyChar;
+            if (keyCode == (int)Keys.Enter)
+                Tab_Selected(sender, GetSelectedTab());
+        }
+        #endregion
+
+        private TabPage GetSelectedTab()
+        {
+            TabPage root = TabControlMain.SelectedTab;
+            object control = root.Controls[0];
+            return (control is TabControl tab) ? tab.SelectedTab : root;
         }
     }
 }
