@@ -28,6 +28,10 @@ namespace WzVisualizer
         private WzFile _StringWZ = null;
         private WzFile _ItemWZ = null;
         private WzFile _CharacterWZ = null;
+        private WzFile _MapWZ = null;
+        private WzFile _MobWZ = null;
+        private WzFile _SkillWZ = null;
+        private WzFile _NpcWZ = null;
 
         public MainForm()
         {
@@ -43,9 +47,9 @@ namespace WzVisualizer
             this.ComboLoadType.SelectedIndex = 0;
             this.ComboEncType.SelectedIndex = 0;
 
-            #region cell events
+            #region grid view cell events
 
-            #region double clicked
+            #region cell double clicked
             this.GridEHairs.CellDoubleClick += Grid_CellDoubleClick;
             this.GridEFaces.CellDoubleClick += Grid_CellDoubleClick;
             this.GridEWeapons.CellDoubleClick += Grid_CellDoubleClick;
@@ -69,9 +73,17 @@ namespace WzVisualizer
             this.GridSOthers.CellDoubleClick += Grid_CellDoubleClick;
             this.GridEtc.CellDoubleClick += Grid_CellDoubleClick;
             this.GridCash.CellDoubleClick += Grid_CellDoubleClick;
+
+            this.GridMaps.CellDoubleClick += Grid_CellDoubleClick;
+
+            this.GridMobs.CellDoubleClick += Grid_CellDoubleClick;
+
+            this.GridSkills.CellDoubleClick += Grid_CellDoubleClick;
+
+            this.GridNPCs.CellDoubleClick += Grid_CellDoubleClick;
             #endregion
 
-            #region state change
+            #region state change (cell selection)
             this.GridEHairs.CellStateChanged += Grid_RowStateChanged;
             this.GridEFaces.CellStateChanged += Grid_RowStateChanged;
             this.GridEWeapons.CellStateChanged += Grid_RowStateChanged;
@@ -95,6 +107,14 @@ namespace WzVisualizer
             this.GridSOthers.CellStateChanged += Grid_RowStateChanged;
             this.GridEtc.CellStateChanged += Grid_RowStateChanged;
             this.GridCash.CellStateChanged += Grid_RowStateChanged;
+
+            this.GridMaps.CellStateChanged += Grid_RowStateChanged;
+
+            this.GridMobs.CellStateChanged += Grid_RowStateChanged;
+
+            this.GridSkills.CellStateChanged += Grid_RowStateChanged;
+            
+            this.GridNPCs.CellStateChanged += Grid_RowStateChanged;
             #endregion
 
             #endregion
@@ -119,6 +139,10 @@ namespace WzVisualizer
             string imgName = Path.GetFileNameWithoutExtension(image.Name);
             int ID = int.Parse(imgName);
             WzCanvasProperty icon = (WzCanvasProperty)image.GetFromPath("default/hairOverHead");
+            if (icon == null)
+            {
+                icon = (WzCanvasProperty)image.GetFromPath("default/hair");
+            }
             string name = StringUtility.GetEqp(ID);
             GridEHairs.Rows.Add(new object[] { ID, icon?.GetBitmap(), name });
         }
@@ -126,31 +150,86 @@ namespace WzVisualizer
         private void AddGridRow(DataGridView grid, object wzObject)
         {
             int ID;
-            string properties;
+            string properties = "";
             string name = null;
             WzCanvasProperty icon;
 
-            if (wzObject is WzImage image) // for breadcrumb data like: '{ID}.img/info/icon'
+            if (wzObject is WzImage image)
             {
-                image.ParseImage();
-                string imgName = Path.GetFileNameWithoutExtension(image.Name);
-                properties = BuildProperties(image);
-                ID = int.Parse(imgName);
-                if (ItemConstants.IsEquip(ID)) name = StringUtility.GetEqp(ID);
+                if (image.WzFileParent.Name == "Npc.wz")
+                {
+                    // NPC icon breadcrumb like: '{ID}/stand/0'
+                    // and also sometimes contains a link STRING property instead of using UOL
+                    image.ParseImage();
+                    string imgName = Path.GetFileNameWithoutExtension(image.Name);
+                    ID = int.Parse(imgName);
+                    name = StringUtility.GetNPC(ID);
 
-                icon = (WzCanvasProperty)image.GetFromPath("info/icon");
-            } else if (wzObject is WzSubProperty subProperty) // for breadcrumb data like: 'category.img/{ID}/info/icon'
+                    WzImageProperty linkProperty = image.GetFromPath("info/link");
+                    if (linkProperty != null)
+                    {
+                        string linkName = ((WzStringProperty)linkProperty).Value;
+                        image = ((WzDirectory)image.Parent).GetChildImages().Find(p => p.Name.Equals(linkName + ".img"));
+                        if (image == null) return;
+                    }
+                    icon = (WzCanvasProperty)image.GetFromPath("stand/0");
+                } else if (image.WzFileParent.Name == "Mob.wz")
+                {
+                    // Mob icon breadcrumb like: '{ID}/(move|stand)/0'
+                    // where the 'move' or 'stand' sub property may not exist
+                    image.ParseImage();
+                    string imgName = Path.GetFileNameWithoutExtension(image.Name);
+                    properties = BuildProperties(image);
+                    ID = int.Parse(imgName);
+                    name = StringUtility.GetMob(ID);
+
+                    WzStringProperty linkProperty = (WzStringProperty)image.GetFromPath("info/link");
+                    if (linkProperty != null)
+                    {
+                        string linkName = ((WzStringProperty)linkProperty).Value;
+                        image = ((WzDirectory)image.Parent).GetChildImages().Find(p => p.Name.Equals(linkName + ".img"));
+                        if (image == null) return;
+                    }
+
+                    // attempt to get image of the monster
+                    WzImageProperty temp = image.GetFromPath("stand/0");
+                    if (temp == null) temp = image.GetFromPath("fly/0");
+                    if (temp == null) temp = image.GetFromPath("move/0");
+                    if (temp is WzUOLProperty uol) icon = (WzCanvasProperty)uol.LinkValue;
+                    else icon = (WzCanvasProperty)temp;
+                }
+                else
+                {  // for breadcrumb like: '{ID}.img/info/icon' (character.wz)
+                    image.ParseImage();
+                    string imgName = Path.GetFileNameWithoutExtension(image.Name);
+                    properties = BuildProperties(image);
+                    ID = int.Parse(imgName);
+                    if (ItemConstants.IsEquip(ID)) name = StringUtility.GetEqp(ID);
+
+                    icon = (WzCanvasProperty)image.GetFromPath("info/icon");
+                }
+            } else if (wzObject is WzSubProperty subProperty)
             {
-                string imgName = subProperty.Name;
-                properties = BuildProperties(subProperty);
-                ID = int.Parse(imgName);
-                if (ItemConstants.IsEtc(ID)) name = StringUtility.GetEtc(ID);
-                else if (ItemConstants.IsCash(ID)) name = StringUtility.GetCash(ID);
-                else if (ItemConstants.IsChair(ID)) name = StringUtility.GetChair(ID);
-                else if (ItemConstants.IsConsume(ID)) name = StringUtility.GetConsume(ID);
+                if (subProperty.WzFileParent.Name == "Skill.wz")
+                {
+                    ID = int.Parse(subProperty.Name);
+                    name = StringUtility.GetSkill(subProperty.Name);
 
-                WzImageProperty imgIcon = subProperty.GetFromPath("info/icon");
-                icon = (imgIcon == null) ? null : (imgIcon is WzUOLProperty ufo ? (WzCanvasProperty)ufo.LinkValue : (WzCanvasProperty)imgIcon);
+                    icon = (WzCanvasProperty)subProperty.GetFromPath("icon");
+                }
+                else
+                { // for breadcrumb like: 'category.img/{ID}/info/icon' (etc.wz)
+                    string imgName = subProperty.Name;
+                    properties = BuildProperties(subProperty);
+                    ID = int.Parse(imgName);
+                    if (ItemConstants.IsEtc(ID)) name = StringUtility.GetEtc(ID);
+                    else if (ItemConstants.IsCash(ID)) name = StringUtility.GetCash(ID);
+                    else if (ItemConstants.IsChair(ID)) name = StringUtility.GetChair(ID);
+                    else if (ItemConstants.IsConsume(ID)) name = StringUtility.GetConsume(ID);
+
+                    WzImageProperty imgIcon = subProperty.GetFromPath("info/icon");
+                    icon = (imgIcon == null) ? null : (imgIcon is WzUOLProperty ufo ? (WzCanvasProperty)ufo.LinkValue : (WzCanvasProperty)imgIcon);
+                }
             } else
                 return;
             grid.Rows.Add(new object[] { ID, icon?.GetBitmap(), name, properties });
@@ -198,15 +277,9 @@ namespace WzVisualizer
                     break;
                 case 0: // Equips
                     {
+                        LoadWzFileIfAbsent(ref _CharacterWZ, mapleDirectory + "/Character.wz", mapleVersion);
                         DataGridView dGrid = (DataGridView)TabEquips.SelectedTab.Controls[0];
                         dGrid.Rows.Clear();
-
-                        if (_CharacterWZ == null)
-                        {
-                            _CharacterWZ = new WzFile(mapleDirectory + "/Character.wz", 83, mapleVersion);
-                            _CharacterWZ.ParseWzFile();
-                        }
-
                         List<WzImage> children = _CharacterWZ.WzDirectory.GetChildImages();
                         children.Sort((a, b) => a.Name.CompareTo(b.Name));
                         for (int i = 0; i < _CharacterWZ.WzDirectory.CountImages(); i++)
@@ -282,6 +355,7 @@ namespace WzVisualizer
                 case 3: // Etc
                 case 4: // Cash
                     {
+                        LoadWzFileIfAbsent(ref _ItemWZ, mapleDirectory + "Item.wz", mapleVersion);
                         if (selected_root == 1)
                             ((DataGridView)TabUse.SelectedTab.Controls[0]).Rows.Clear();
                         else if (selected_root == 2)
@@ -291,12 +365,6 @@ namespace WzVisualizer
                         else if (selected_root == 4)
                             ((DataGridView)TabCashPage.Controls[0]).Rows.Clear();
 
-                        if (_ItemWZ == null)
-                        {
-                            _ItemWZ = new WzFile(mapleDirectory + "/Item.wz", 83, mapleVersion);
-                            _ItemWZ.ParseWzFile();
-                        }
-                        
                         List<WzImage> children = _ItemWZ.WzDirectory.GetChildImages();
                         children.Sort((a, b) => a.Name.CompareTo(b.Name));
                         for (int i = 0; i < _ItemWZ.WzDirectory.CountImages(); i++)
@@ -336,19 +404,124 @@ namespace WzVisualizer
                         }
                         break;
                     }
+                case 5: // Map
+                    {
+                        LoadWzFileIfAbsent(ref _MapWZ, mapleDirectory + "/Map.wz", mapleVersion);
+                        GridMaps.Rows.Clear();
+
+                        List<WzImage> children = _MapWZ.WzDirectory.GetChildImages();
+                        children.Sort((a, b) => a.Name.CompareTo(b.Name));
+                        for (int i = 0; i < _MapWZ.WzDirectory.CountImages(); i++)
+                        {
+                            WzImage image = children[i];
+                            string str_map_id = Path.GetFileNameWithoutExtension(image.Name);
+                            if (int.TryParse(str_map_id, out int map_id))
+                            {
+                                image.ParseImage();
+                                string properties = BuildProperties(image);
+                                WzCanvasProperty icon = (WzCanvasProperty)image.GetFromPath("miniMap/canvas");
+                                string name = StringUtility.GetFieldFullName(map_id);
+
+                                GridMaps.Rows.Add(new object[] { map_id, icon?.GetBitmap(), name, properties });
+                            }
+                        }
+                        break;
+                    }
+                case 6: // Mob
+                    {
+                        LoadWzFileIfAbsent(ref _MobWZ, mapleDirectory + "/Mob.wz", mapleVersion);
+                        GridMobs.Rows.Clear();
+
+                        List<WzImage> children = _MobWZ.WzDirectory.GetChildImages();
+                        children.Sort((a, b) => a.Name.CompareTo(b.Name));
+                        for (int i = 0; i < _MobWZ.WzDirectory.CountImages(); i++)
+                        {
+                            WzImage image = children[i];
+                            AddGridRow(GridMobs, image);
+                        }
+                        _MobWZ.Dispose();
+                        _MobWZ = null;
+                        break;
+                    }
+                case 7: // Skills
+                    {
+                        LoadWzFileIfAbsent(ref _SkillWZ, mapleDirectory + "/Skill.wz", mapleVersion);
+                        GridSkills.Rows.Clear();
+
+                        List<WzImage> children = _SkillWZ.WzDirectory.GetChildImages();
+                        children.Sort((a, b) => a.Name.CompareTo(b.Name));
+                        for (int i = 0; i < _SkillWZ.WzDirectory.CountImages(); i++)
+                        {
+                            WzImage image = children[i];
+                            string name = Path.GetFileNameWithoutExtension(image.Name);
+                            if (int.TryParse(name, out int job_id))
+                            {
+                                WzImageProperty tree = image.GetFromPath("skill");
+                                if (tree is WzSubProperty sub)
+                                {
+                                    List<WzImageProperty> skills = tree.WzProperties;
+                                    skills.ForEach(s => AddGridRow(GridSkills, s));
+                                    skills.Clear();
+                                }
+                            }
+                        }
+                        break;
+                    }
+                case 8: // NPCs
+                    {
+                        LoadWzFileIfAbsent(ref _NpcWZ, mapleDirectory + "/Npc.wz", mapleVersion);                        
+                        GridNPCs.Rows.Clear();
+
+                        List<WzImage> children = _NpcWZ.WzDirectory.GetChildImages();
+                        children.Sort((a, b) => a.Name.CompareTo(b.Name));
+                        for (int i = 0; i < _NpcWZ.WzDirectory.CountImages(); i++)
+                        {
+                            WzImage image = children[i];
+                            AddGridRow(GridNPCs, image);
+                        }
+                        break;
+                    }
             }
         }
 
+        private void LoadWzFileIfAbsent(ref WzFile wzFile, string fileName, WzMapleVersion mapleVersion)
+        {
+            if (wzFile == null)
+            {
+                wzFile = new WzFile(fileName, 83, mapleVersion);
+                wzFile.ParseWzFile();
+            }
+        }
+
+        /// <summary>
+        /// clears all collections, closes underlying file readers 
+        /// then calls the garbage collector for each loaded WZ file
+        /// </summary>
         private void DisposeWzFiles()
         {
             _StringWZ?.Dispose();
             _ItemWZ?.Dispose();
             _CharacterWZ?.Dispose();
+            _MapWZ?.Dispose();
+            _MobWZ?.Dispose();
+            _SkillWZ?.Dispose();
+            _NpcWZ?.Dispose();
+
             _StringWZ = null;
             _ItemWZ = null;
             _CharacterWZ = null;
+            _MapWZ = null;
+            _MobWZ = null;
+            _SkillWZ = null;
+            _NpcWZ = null;
         }
 
+        /// <summary>
+        /// Add a row data to the specified grid view using 
+        /// parsed bin data
+        /// </summary>
+        /// <param name="grid">the grid view to add a row to</param>
+        /// <param name="binData">bin data (wz files that were parsed then saved as a bin file type)</param>
         public void AddGridRow(DataGridView grid, BinData binData)
         {
             string allProperties = "";
@@ -359,7 +532,7 @@ namespace WzVisualizer
             if (filter?.Length > 0 && !binData.Search(filter))
                 return;
 
-            if (InvokeRequired)
+            if (!IsDisposed && InvokeRequired)
             {
                 Image image = binData?.image;
                 Invoke(new Action(() => {
@@ -369,12 +542,14 @@ namespace WzVisualizer
         }
 
         #region event handling
+
         /// <summary>
         /// Update the Window's clipboard when a cell is selected
         /// </summary>
         private void Grid_RowStateChanged(object sender, DataGridViewCellStateChangedEventArgs e)
         {
             object cellValue = e.Cell.Value;
+            if (cellValue == null) return;
             if (cellValue is int)
                 Clipboard.SetText(((int)cellValue).ToString());
             else if (cellValue is string)
@@ -492,16 +667,7 @@ namespace WzVisualizer
                 if (field.Name.Equals(tab.Name))
                 {
                     int mainSelectedIndex = TabControlMain.SelectedIndex;
-                    if (mainSelectedIndex == 0)
-                        GridIOUtility.ImportGrid(string.Format("Equips/{0}.bin", tab.Text), (DataGridView)tab.Controls[0], AddGridRow);
-                    else if (mainSelectedIndex == 1)
-                        GridIOUtility.ImportGrid(string.Format("Use/{0}.bin", tab.Text), (DataGridView)tab.Controls[0], AddGridRow);
-                    else if (mainSelectedIndex == 2)
-                        GridIOUtility.ImportGrid(string.Format("Setup/{0}.bin", tab.Text), (DataGridView)tab.Controls[0], AddGridRow);
-                    else if (mainSelectedIndex == 3)
-                        GridIOUtility.ImportGrid(string.Format("Etc/{0}.bin", tab.Text), (DataGridView)tab.Controls[0], AddGridRow);
-                    else if (mainSelectedIndex == 4)
-                        GridIOUtility.ImportGrid(string.Format("Cash/{0}.bin", tab.Text), (DataGridView)tab.Controls[0], AddGridRow);
+                    GridIOUtility.ImportGrid(string.Format("{0}/{1}.bin", TabControlMain.SelectedTab.Text, tab.Text), (DataGridView)tab.Controls[0], AddGridRow);
                 }
             }
         }

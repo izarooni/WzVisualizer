@@ -16,6 +16,10 @@ namespace WzVisualizer
         private readonly WzImage CashImage;
         private readonly WzImage InsImage;
         private readonly WzImage ConsumeImage;
+        private readonly WzImage MapImage;
+        private readonly WzImage MobImage;
+        private readonly WzImage SkillImage;
+        private readonly WzImage NPCImage;
 
         public WzStringUtility(WzFile StringWZ)
         {
@@ -24,6 +28,10 @@ namespace WzVisualizer
             CashImage = StringWZ.WzDirectory.GetImageByName("Cash.img");
             InsImage = StringWZ.WzDirectory.GetImageByName("Ins.img");
             ConsumeImage = StringWZ.WzDirectory.GetImageByName("Consume.img");
+            MapImage = StringWZ.WzDirectory.GetImageByName("Map.img");
+            MobImage = StringWZ.WzDirectory.GetImageByName("Mob.img");
+            SkillImage = StringWZ.WzDirectory.GetImageByName("Skill.img");
+            NPCImage = StringWZ.WzDirectory.GetImageByName("Npc.img");
         }
 
         private static string LeftPadding(char pad, string input, int count)
@@ -62,10 +70,59 @@ namespace WzVisualizer
             }
         }
 
+        public string GetFieldFullName(int map_id)
+        {
+            string path;
+            int section = map_id / 10000000;
+
+            if (section <= 9) path = "maple";
+            else if (section >= 10 && section <= 19) path = "victoria";
+            else if (section >= 20 && section <= 28) path = "ossyria";
+            else if (section >= 50 && section <= 55) path = "singapore";
+            else if (section >= 60 && section <= 61) path = "MasteriaGL";
+            else if (section >= 67 && section <= 68) path = "weddingGL";
+            else path = "etc";
+            path += "/" + map_id;
+            WzSubProperty subProperty = (WzSubProperty)MapImage.GetFromPath(path);
+            Console.WriteLine((subProperty != null) + " / " + path);
+            if (subProperty != null)
+            {
+                string retName = "";
+                WzStringProperty mapName = (WzStringProperty)subProperty.GetFromPath("mapName");
+                WzStringProperty streetName = (WzStringProperty)subProperty.GetFromPath("streetName");
+                if (mapName != null) retName += mapName.Value;
+                if (mapName != null && streetName != null) retName += " - "; // x fucking d
+                if (streetName != null) retName += streetName.Value;
+                return retName;
+            }
+            return "NO-NAME";
+        }
+
         private void SetParsed(WzImage image)
         {
             if (image.Parsed) return;
             image.ParseImage();
+        }
+
+        public string GetNPC(int ID)
+        {
+            SetParsed(NPCImage);
+            WzImageProperty imgProperty = (WzStringProperty)NPCImage.GetFromPath(string.Format("{0}/name", ID));
+            return ((WzStringProperty)imgProperty)?.Value;
+        }
+
+        public string GetSkill(string ID)
+        {
+            SetParsed(SkillImage);
+            WzImageProperty imgProperty = (WzStringProperty)SkillImage.GetFromPath(string.Format("{0}/name", ID));
+            return ((WzStringProperty)imgProperty)?.Value;
+        }
+
+        public string GetMob(int ID)
+        {
+            SetParsed(MobImage);
+            WzImageProperty imgProperty = (WzStringProperty)MobImage.GetFromPath(string.Format("{0}/name", ID));
+            return ((WzStringProperty)imgProperty)?.Value;
         }
 
         public string GetEqp(int ID)
