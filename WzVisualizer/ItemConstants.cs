@@ -17,7 +17,7 @@ namespace WzVisualizer
 
         public static bool IsChair(int ID)
         {
-            return ID == 301 || ID / 10000 == 301;
+            return ID == 301 || ID / 10000 == 301 || ID / 10000 == 399;
         }
 
         public static bool IsCash(int ID)

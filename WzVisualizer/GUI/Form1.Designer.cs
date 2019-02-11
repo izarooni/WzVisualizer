@@ -35,8 +35,14 @@
             this.TabEquips = new System.Windows.Forms.TabControl();
             this.TabEHairs = new System.Windows.Forms.TabPage();
             this.GridEHairs = new System.Windows.Forms.DataGridView();
+            this.ColumnEHairsID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnEHairsImage = new System.Windows.Forms.DataGridViewImageColumn();
+            this.GridEHairsName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.TabEFaces = new System.Windows.Forms.TabPage();
             this.GridEFaces = new System.Windows.Forms.DataGridView();
+            this.GridEFacesID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.GridEFacesImage = new System.Windows.Forms.DataGridViewImageColumn();
+            this.GridEFacesName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.TabsEWeapons = new System.Windows.Forms.TabPage();
             this.GridEWeapons = new System.Windows.Forms.DataGridView();
             this.GridEWeaponsID = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -185,13 +191,9 @@
             this.BtnWzLoad = new System.Windows.Forms.Button();
             this.BtnSave = new System.Windows.Forms.Button();
             this.SearchTextBox = new System.Windows.Forms.TextBox();
+            this.MapleVersion = new System.Windows.Forms.NumericUpDown();
+            this.MapleVersionLabel = new System.Windows.Forms.Label();
             this.mainFormBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.ColumnEHairsID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColumnEHairsImage = new System.Windows.Forms.DataGridViewImageColumn();
-            this.GridEHairsName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.GridEFacesID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.GridEFacesImage = new System.Windows.Forms.DataGridViewImageColumn();
-            this.GridEFacesName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.TabControlMain.SuspendLayout();
             this.TabEquipsPage.SuspendLayout();
             this.TabEquips.SuspendLayout();
@@ -249,6 +251,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.GridSkills)).BeginInit();
             this.TabNPCsPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.GridNPCs)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.MapleVersion)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.mainFormBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
@@ -266,7 +269,7 @@
             this.TabControlMain.Controls.Add(this.TabMobsPage);
             this.TabControlMain.Controls.Add(this.TabSkillsPage);
             this.TabControlMain.Controls.Add(this.TabNPCsPage);
-            this.TabControlMain.Font = new System.Drawing.Font("Meiryo", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TabControlMain.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TabControlMain.Location = new System.Drawing.Point(0, 29);
             this.TabControlMain.Margin = new System.Windows.Forms.Padding(0);
             this.TabControlMain.Name = "TabControlMain";
@@ -279,10 +282,10 @@
             // TabEquipsPage
             // 
             this.TabEquipsPage.Controls.Add(this.TabEquips);
-            this.TabEquipsPage.Location = new System.Drawing.Point(4, 33);
+            this.TabEquipsPage.Location = new System.Drawing.Point(4, 29);
             this.TabEquipsPage.Margin = new System.Windows.Forms.Padding(0);
             this.TabEquipsPage.Name = "TabEquipsPage";
-            this.TabEquipsPage.Size = new System.Drawing.Size(856, 459);
+            this.TabEquipsPage.Size = new System.Drawing.Size(856, 463);
             this.TabEquipsPage.TabIndex = 0;
             this.TabEquipsPage.Text = "Equips";
             this.TabEquipsPage.UseVisualStyleBackColor = true;
@@ -308,17 +311,17 @@
             this.TabEquips.Multiline = true;
             this.TabEquips.Name = "TabEquips";
             this.TabEquips.SelectedIndex = 0;
-            this.TabEquips.Size = new System.Drawing.Size(856, 459);
+            this.TabEquips.Size = new System.Drawing.Size(856, 463);
             this.TabEquips.TabIndex = 2;
             this.TabEquips.Selected += new System.Windows.Forms.TabControlEventHandler(this.TabEquips_Selected);
             // 
             // TabEHairs
             // 
             this.TabEHairs.Controls.Add(this.GridEHairs);
-            this.TabEHairs.Location = new System.Drawing.Point(4, 54);
+            this.TabEHairs.Location = new System.Drawing.Point(4, 25);
             this.TabEHairs.Name = "TabEHairs";
             this.TabEHairs.Padding = new System.Windows.Forms.Padding(3);
-            this.TabEHairs.Size = new System.Drawing.Size(848, 401);
+            this.TabEHairs.Size = new System.Drawing.Size(848, 434);
             this.TabEHairs.TabIndex = 9;
             this.TabEHairs.Tag = "";
             this.TabEHairs.Text = "Hairs";
@@ -338,16 +341,37 @@
             this.GridEHairs.Name = "GridEHairs";
             this.GridEHairs.ReadOnly = true;
             this.GridEHairs.RowTemplate.Height = 40;
-            this.GridEHairs.Size = new System.Drawing.Size(842, 395);
+            this.GridEHairs.Size = new System.Drawing.Size(842, 428);
             this.GridEHairs.TabIndex = 4;
+            // 
+            // ColumnEHairsID
+            // 
+            this.ColumnEHairsID.HeaderText = "ID";
+            this.ColumnEHairsID.Name = "ColumnEHairsID";
+            this.ColumnEHairsID.ReadOnly = true;
+            // 
+            // ColumnEHairsImage
+            // 
+            this.ColumnEHairsImage.HeaderText = "Image";
+            this.ColumnEHairsImage.Name = "ColumnEHairsImage";
+            this.ColumnEHairsImage.ReadOnly = true;
+            this.ColumnEHairsImage.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.ColumnEHairsImage.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
+            // GridEHairsName
+            // 
+            this.GridEHairsName.HeaderText = "Name";
+            this.GridEHairsName.Name = "GridEHairsName";
+            this.GridEHairsName.ReadOnly = true;
+            this.GridEHairsName.Width = 150;
             // 
             // TabEFaces
             // 
             this.TabEFaces.Controls.Add(this.GridEFaces);
-            this.TabEFaces.Location = new System.Drawing.Point(4, 54);
+            this.TabEFaces.Location = new System.Drawing.Point(4, 25);
             this.TabEFaces.Name = "TabEFaces";
             this.TabEFaces.Padding = new System.Windows.Forms.Padding(3);
-            this.TabEFaces.Size = new System.Drawing.Size(848, 401);
+            this.TabEFaces.Size = new System.Drawing.Size(848, 434);
             this.TabEFaces.TabIndex = 10;
             this.TabEFaces.Text = "Faces";
             this.TabEFaces.UseVisualStyleBackColor = true;
@@ -366,16 +390,37 @@
             this.GridEFaces.Name = "GridEFaces";
             this.GridEFaces.ReadOnly = true;
             this.GridEFaces.RowTemplate.Height = 40;
-            this.GridEFaces.Size = new System.Drawing.Size(842, 395);
+            this.GridEFaces.Size = new System.Drawing.Size(842, 431);
             this.GridEFaces.TabIndex = 3;
+            // 
+            // GridEFacesID
+            // 
+            this.GridEFacesID.HeaderText = "ID";
+            this.GridEFacesID.Name = "GridEFacesID";
+            this.GridEFacesID.ReadOnly = true;
+            // 
+            // GridEFacesImage
+            // 
+            this.GridEFacesImage.HeaderText = "Image";
+            this.GridEFacesImage.Name = "GridEFacesImage";
+            this.GridEFacesImage.ReadOnly = true;
+            this.GridEFacesImage.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.GridEFacesImage.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
+            // GridEFacesName
+            // 
+            this.GridEFacesName.HeaderText = "Name";
+            this.GridEFacesName.Name = "GridEFacesName";
+            this.GridEFacesName.ReadOnly = true;
+            this.GridEFacesName.Width = 150;
             // 
             // TabsEWeapons
             // 
             this.TabsEWeapons.Controls.Add(this.GridEWeapons);
-            this.TabsEWeapons.Location = new System.Drawing.Point(4, 54);
+            this.TabsEWeapons.Location = new System.Drawing.Point(4, 25);
             this.TabsEWeapons.Name = "TabsEWeapons";
             this.TabsEWeapons.Padding = new System.Windows.Forms.Padding(3);
-            this.TabsEWeapons.Size = new System.Drawing.Size(848, 401);
+            this.TabsEWeapons.Size = new System.Drawing.Size(848, 434);
             this.TabsEWeapons.TabIndex = 0;
             this.TabsEWeapons.Text = "Weapons";
             this.TabsEWeapons.UseVisualStyleBackColor = true;
@@ -395,7 +440,7 @@
             this.GridEWeapons.Name = "GridEWeapons";
             this.GridEWeapons.ReadOnly = true;
             this.GridEWeapons.RowTemplate.Height = 40;
-            this.GridEWeapons.Size = new System.Drawing.Size(842, 395);
+            this.GridEWeapons.Size = new System.Drawing.Size(842, 431);
             this.GridEWeapons.TabIndex = 3;
             // 
             // GridEWeaponsID
@@ -427,10 +472,10 @@
             // TabEAccessory
             // 
             this.TabEAccessory.Controls.Add(this.GridEAccessory);
-            this.TabEAccessory.Location = new System.Drawing.Point(4, 54);
+            this.TabEAccessory.Location = new System.Drawing.Point(4, 25);
             this.TabEAccessory.Name = "TabEAccessory";
             this.TabEAccessory.Padding = new System.Windows.Forms.Padding(3);
-            this.TabEAccessory.Size = new System.Drawing.Size(848, 401);
+            this.TabEAccessory.Size = new System.Drawing.Size(848, 434);
             this.TabEAccessory.TabIndex = 12;
             this.TabEAccessory.Text = "Accessory";
             this.TabEAccessory.UseVisualStyleBackColor = true;
@@ -450,7 +495,7 @@
             this.GridEAccessory.Name = "GridEAccessory";
             this.GridEAccessory.ReadOnly = true;
             this.GridEAccessory.RowTemplate.Height = 40;
-            this.GridEAccessory.Size = new System.Drawing.Size(842, 427);
+            this.GridEAccessory.Size = new System.Drawing.Size(842, 431);
             this.GridEAccessory.TabIndex = 6;
             // 
             // GridEAccessoryID
@@ -481,10 +526,10 @@
             // TabECaps
             // 
             this.TabECaps.Controls.Add(this.GridECaps);
-            this.TabECaps.Location = new System.Drawing.Point(4, 54);
+            this.TabECaps.Location = new System.Drawing.Point(4, 25);
             this.TabECaps.Name = "TabECaps";
             this.TabECaps.Padding = new System.Windows.Forms.Padding(3);
-            this.TabECaps.Size = new System.Drawing.Size(848, 401);
+            this.TabECaps.Size = new System.Drawing.Size(848, 434);
             this.TabECaps.TabIndex = 1;
             this.TabECaps.Text = "Caps";
             this.TabECaps.UseVisualStyleBackColor = true;
@@ -504,7 +549,7 @@
             this.GridECaps.Name = "GridECaps";
             this.GridECaps.ReadOnly = true;
             this.GridECaps.RowTemplate.Height = 40;
-            this.GridECaps.Size = new System.Drawing.Size(842, 427);
+            this.GridECaps.Size = new System.Drawing.Size(842, 431);
             this.GridECaps.TabIndex = 0;
             // 
             // GridECapsID
@@ -536,10 +581,10 @@
             // TabEOveralls
             // 
             this.TabEOveralls.Controls.Add(this.GridELongcoats);
-            this.TabEOveralls.Location = new System.Drawing.Point(4, 54);
+            this.TabEOveralls.Location = new System.Drawing.Point(4, 25);
             this.TabEOveralls.Name = "TabEOveralls";
             this.TabEOveralls.Padding = new System.Windows.Forms.Padding(3);
-            this.TabEOveralls.Size = new System.Drawing.Size(848, 401);
+            this.TabEOveralls.Size = new System.Drawing.Size(848, 434);
             this.TabEOveralls.TabIndex = 2;
             this.TabEOveralls.Text = "Overalls";
             this.TabEOveralls.UseVisualStyleBackColor = true;
@@ -559,7 +604,7 @@
             this.GridELongcoats.Name = "GridELongcoats";
             this.GridELongcoats.ReadOnly = true;
             this.GridELongcoats.RowTemplate.Height = 40;
-            this.GridELongcoats.Size = new System.Drawing.Size(842, 427);
+            this.GridELongcoats.Size = new System.Drawing.Size(842, 431);
             this.GridELongcoats.TabIndex = 1;
             // 
             // GridELongcoatsID
@@ -591,10 +636,10 @@
             // TabETops
             // 
             this.TabETops.Controls.Add(this.GridETops);
-            this.TabETops.Location = new System.Drawing.Point(4, 54);
+            this.TabETops.Location = new System.Drawing.Point(4, 25);
             this.TabETops.Name = "TabETops";
             this.TabETops.Padding = new System.Windows.Forms.Padding(3);
-            this.TabETops.Size = new System.Drawing.Size(848, 401);
+            this.TabETops.Size = new System.Drawing.Size(848, 434);
             this.TabETops.TabIndex = 3;
             this.TabETops.Text = "Tops";
             this.TabETops.UseVisualStyleBackColor = true;
@@ -614,7 +659,7 @@
             this.GridETops.Name = "GridETops";
             this.GridETops.ReadOnly = true;
             this.GridETops.RowTemplate.Height = 40;
-            this.GridETops.Size = new System.Drawing.Size(842, 427);
+            this.GridETops.Size = new System.Drawing.Size(842, 431);
             this.GridETops.TabIndex = 1;
             // 
             // GridETopsID
@@ -646,10 +691,10 @@
             // TabEBottoms
             // 
             this.TabEBottoms.Controls.Add(this.GridEBottoms);
-            this.TabEBottoms.Location = new System.Drawing.Point(4, 54);
+            this.TabEBottoms.Location = new System.Drawing.Point(4, 25);
             this.TabEBottoms.Name = "TabEBottoms";
             this.TabEBottoms.Padding = new System.Windows.Forms.Padding(3);
-            this.TabEBottoms.Size = new System.Drawing.Size(848, 401);
+            this.TabEBottoms.Size = new System.Drawing.Size(848, 434);
             this.TabEBottoms.TabIndex = 4;
             this.TabEBottoms.Text = "Bottoms";
             this.TabEBottoms.UseVisualStyleBackColor = true;
@@ -669,7 +714,7 @@
             this.GridEBottoms.Name = "GridEBottoms";
             this.GridEBottoms.ReadOnly = true;
             this.GridEBottoms.RowTemplate.Height = 40;
-            this.GridEBottoms.Size = new System.Drawing.Size(842, 427);
+            this.GridEBottoms.Size = new System.Drawing.Size(842, 431);
             this.GridEBottoms.TabIndex = 1;
             // 
             // GridEBottomsID
@@ -701,10 +746,10 @@
             // TabEShoes
             // 
             this.TabEShoes.Controls.Add(this.GridEShoes);
-            this.TabEShoes.Location = new System.Drawing.Point(4, 54);
+            this.TabEShoes.Location = new System.Drawing.Point(4, 25);
             this.TabEShoes.Name = "TabEShoes";
             this.TabEShoes.Padding = new System.Windows.Forms.Padding(3);
-            this.TabEShoes.Size = new System.Drawing.Size(848, 401);
+            this.TabEShoes.Size = new System.Drawing.Size(848, 434);
             this.TabEShoes.TabIndex = 5;
             this.TabEShoes.Text = "Shoes";
             this.TabEShoes.UseVisualStyleBackColor = true;
@@ -724,7 +769,7 @@
             this.GridEShoes.Name = "GridEShoes";
             this.GridEShoes.ReadOnly = true;
             this.GridEShoes.RowTemplate.Height = 40;
-            this.GridEShoes.Size = new System.Drawing.Size(842, 427);
+            this.GridEShoes.Size = new System.Drawing.Size(842, 431);
             this.GridEShoes.TabIndex = 2;
             // 
             // GridEShoesID
@@ -756,10 +801,10 @@
             // TabECapes
             // 
             this.TabECapes.Controls.Add(this.GridECapes);
-            this.TabECapes.Location = new System.Drawing.Point(4, 54);
+            this.TabECapes.Location = new System.Drawing.Point(4, 25);
             this.TabECapes.Name = "TabECapes";
             this.TabECapes.Padding = new System.Windows.Forms.Padding(3);
-            this.TabECapes.Size = new System.Drawing.Size(848, 401);
+            this.TabECapes.Size = new System.Drawing.Size(848, 434);
             this.TabECapes.TabIndex = 6;
             this.TabECapes.Text = "Capes";
             this.TabECapes.UseVisualStyleBackColor = true;
@@ -779,7 +824,7 @@
             this.GridECapes.Name = "GridECapes";
             this.GridECapes.ReadOnly = true;
             this.GridECapes.RowTemplate.Height = 40;
-            this.GridECapes.Size = new System.Drawing.Size(842, 427);
+            this.GridECapes.Size = new System.Drawing.Size(842, 431);
             this.GridECapes.TabIndex = 3;
             // 
             // GridECapesID
@@ -811,10 +856,10 @@
             // TabEGloves
             // 
             this.TabEGloves.Controls.Add(this.GridEGloves);
-            this.TabEGloves.Location = new System.Drawing.Point(4, 54);
+            this.TabEGloves.Location = new System.Drawing.Point(4, 25);
             this.TabEGloves.Name = "TabEGloves";
             this.TabEGloves.Padding = new System.Windows.Forms.Padding(3);
-            this.TabEGloves.Size = new System.Drawing.Size(848, 401);
+            this.TabEGloves.Size = new System.Drawing.Size(848, 434);
             this.TabEGloves.TabIndex = 7;
             this.TabEGloves.Text = "Gloves";
             this.TabEGloves.UseVisualStyleBackColor = true;
@@ -834,7 +879,7 @@
             this.GridEGloves.Name = "GridEGloves";
             this.GridEGloves.ReadOnly = true;
             this.GridEGloves.RowTemplate.Height = 40;
-            this.GridEGloves.Size = new System.Drawing.Size(842, 427);
+            this.GridEGloves.Size = new System.Drawing.Size(842, 431);
             this.GridEGloves.TabIndex = 3;
             // 
             // GridEGlovesID
@@ -866,10 +911,10 @@
             // TabERings
             // 
             this.TabERings.Controls.Add(this.GridERings);
-            this.TabERings.Location = new System.Drawing.Point(4, 54);
+            this.TabERings.Location = new System.Drawing.Point(4, 25);
             this.TabERings.Name = "TabERings";
             this.TabERings.Padding = new System.Windows.Forms.Padding(3);
-            this.TabERings.Size = new System.Drawing.Size(848, 401);
+            this.TabERings.Size = new System.Drawing.Size(848, 434);
             this.TabERings.TabIndex = 8;
             this.TabERings.Text = "Rings";
             this.TabERings.UseVisualStyleBackColor = true;
@@ -889,7 +934,7 @@
             this.GridERings.Name = "GridERings";
             this.GridERings.ReadOnly = true;
             this.GridERings.RowTemplate.Height = 40;
-            this.GridERings.Size = new System.Drawing.Size(842, 395);
+            this.GridERings.Size = new System.Drawing.Size(842, 431);
             this.GridERings.TabIndex = 3;
             // 
             // GridERingsID
@@ -921,10 +966,10 @@
             // TabEShields
             // 
             this.TabEShields.Controls.Add(this.GridEShields);
-            this.TabEShields.Location = new System.Drawing.Point(4, 54);
+            this.TabEShields.Location = new System.Drawing.Point(4, 25);
             this.TabEShields.Name = "TabEShields";
             this.TabEShields.Padding = new System.Windows.Forms.Padding(3);
-            this.TabEShields.Size = new System.Drawing.Size(848, 401);
+            this.TabEShields.Size = new System.Drawing.Size(848, 434);
             this.TabEShields.TabIndex = 11;
             this.TabEShields.Text = "Shields";
             this.TabEShields.UseVisualStyleBackColor = true;
@@ -944,7 +989,7 @@
             this.GridEShields.Name = "GridEShields";
             this.GridEShields.ReadOnly = true;
             this.GridEShields.RowTemplate.Height = 40;
-            this.GridEShields.Size = new System.Drawing.Size(842, 427);
+            this.GridEShields.Size = new System.Drawing.Size(842, 431);
             this.GridEShields.TabIndex = 4;
             // 
             // ColumnEShieldsID
@@ -976,10 +1021,10 @@
             // TabETames
             // 
             this.TabETames.Controls.Add(this.GridETames);
-            this.TabETames.Location = new System.Drawing.Point(4, 54);
+            this.TabETames.Location = new System.Drawing.Point(4, 25);
             this.TabETames.Name = "TabETames";
             this.TabETames.Padding = new System.Windows.Forms.Padding(3);
-            this.TabETames.Size = new System.Drawing.Size(848, 401);
+            this.TabETames.Size = new System.Drawing.Size(848, 434);
             this.TabETames.TabIndex = 13;
             this.TabETames.Text = "Mounts";
             this.TabETames.UseVisualStyleBackColor = true;
@@ -999,7 +1044,7 @@
             this.GridETames.Name = "GridETames";
             this.GridETames.ReadOnly = true;
             this.GridETames.RowTemplate.Height = 40;
-            this.GridETames.Size = new System.Drawing.Size(842, 427);
+            this.GridETames.Size = new System.Drawing.Size(842, 431);
             this.GridETames.TabIndex = 5;
             // 
             // GridETamesID
@@ -1031,10 +1076,10 @@
             // TabUsePage
             // 
             this.TabUsePage.Controls.Add(this.TabUse);
-            this.TabUsePage.Location = new System.Drawing.Point(4, 33);
+            this.TabUsePage.Location = new System.Drawing.Point(4, 29);
             this.TabUsePage.Name = "TabUsePage";
             this.TabUsePage.Padding = new System.Windows.Forms.Padding(3);
-            this.TabUsePage.Size = new System.Drawing.Size(856, 459);
+            this.TabUsePage.Size = new System.Drawing.Size(856, 463);
             this.TabUsePage.TabIndex = 1;
             this.TabUsePage.Text = "Use";
             this.TabUsePage.UseVisualStyleBackColor = true;
@@ -1048,17 +1093,17 @@
             this.TabUse.Location = new System.Drawing.Point(3, 3);
             this.TabUse.Name = "TabUse";
             this.TabUse.SelectedIndex = 0;
-            this.TabUse.Size = new System.Drawing.Size(850, 453);
+            this.TabUse.Size = new System.Drawing.Size(850, 457);
             this.TabUse.TabIndex = 0;
             this.TabUse.Selected += new System.Windows.Forms.TabControlEventHandler(this.TabUse_Selected);
             // 
             // TabUConsumes
             // 
             this.TabUConsumes.Controls.Add(this.GridUConsumes);
-            this.TabUConsumes.Location = new System.Drawing.Point(4, 29);
+            this.TabUConsumes.Location = new System.Drawing.Point(4, 25);
             this.TabUConsumes.Name = "TabUConsumes";
             this.TabUConsumes.Padding = new System.Windows.Forms.Padding(3);
-            this.TabUConsumes.Size = new System.Drawing.Size(842, 420);
+            this.TabUConsumes.Size = new System.Drawing.Size(842, 428);
             this.TabUConsumes.TabIndex = 0;
             this.TabUConsumes.Text = "Consumes";
             this.TabUConsumes.UseVisualStyleBackColor = true;
@@ -1078,7 +1123,7 @@
             this.GridUConsumes.Name = "GridUConsumes";
             this.GridUConsumes.ReadOnly = true;
             this.GridUConsumes.RowTemplate.Height = 40;
-            this.GridUConsumes.Size = new System.Drawing.Size(836, 414);
+            this.GridUConsumes.Size = new System.Drawing.Size(836, 422);
             this.GridUConsumes.TabIndex = 5;
             // 
             // GridUConsumesID
@@ -1110,10 +1155,10 @@
             // TabUScrolls
             // 
             this.TabUScrolls.Controls.Add(this.GridUScrolls);
-            this.TabUScrolls.Location = new System.Drawing.Point(4, 29);
+            this.TabUScrolls.Location = new System.Drawing.Point(4, 25);
             this.TabUScrolls.Name = "TabUScrolls";
             this.TabUScrolls.Padding = new System.Windows.Forms.Padding(3);
-            this.TabUScrolls.Size = new System.Drawing.Size(842, 420);
+            this.TabUScrolls.Size = new System.Drawing.Size(842, 428);
             this.TabUScrolls.TabIndex = 1;
             this.TabUScrolls.Text = "Scrolls";
             this.TabUScrolls.UseVisualStyleBackColor = true;
@@ -1133,7 +1178,7 @@
             this.GridUScrolls.Name = "GridUScrolls";
             this.GridUScrolls.ReadOnly = true;
             this.GridUScrolls.RowTemplate.Height = 40;
-            this.GridUScrolls.Size = new System.Drawing.Size(836, 421);
+            this.GridUScrolls.Size = new System.Drawing.Size(836, 425);
             this.GridUScrolls.TabIndex = 6;
             // 
             // GridUScrollsID
@@ -1165,10 +1210,10 @@
             // TabUProjectiles
             // 
             this.TabUProjectiles.Controls.Add(this.GridUProjectiles);
-            this.TabUProjectiles.Location = new System.Drawing.Point(4, 29);
+            this.TabUProjectiles.Location = new System.Drawing.Point(4, 25);
             this.TabUProjectiles.Name = "TabUProjectiles";
             this.TabUProjectiles.Padding = new System.Windows.Forms.Padding(3);
-            this.TabUProjectiles.Size = new System.Drawing.Size(842, 420);
+            this.TabUProjectiles.Size = new System.Drawing.Size(842, 428);
             this.TabUProjectiles.TabIndex = 2;
             this.TabUProjectiles.Text = "Projectiles";
             this.TabUProjectiles.UseVisualStyleBackColor = true;
@@ -1188,7 +1233,7 @@
             this.GridUProjectiles.Name = "GridUProjectiles";
             this.GridUProjectiles.ReadOnly = true;
             this.GridUProjectiles.RowTemplate.Height = 40;
-            this.GridUProjectiles.Size = new System.Drawing.Size(836, 421);
+            this.GridUProjectiles.Size = new System.Drawing.Size(836, 425);
             this.GridUProjectiles.TabIndex = 6;
             // 
             // GridUProjectilesID
@@ -1220,10 +1265,10 @@
             // TabSetupPage
             // 
             this.TabSetupPage.Controls.Add(this.TabSetup);
-            this.TabSetupPage.Location = new System.Drawing.Point(4, 33);
+            this.TabSetupPage.Location = new System.Drawing.Point(4, 29);
             this.TabSetupPage.Name = "TabSetupPage";
             this.TabSetupPage.Padding = new System.Windows.Forms.Padding(3);
-            this.TabSetupPage.Size = new System.Drawing.Size(856, 459);
+            this.TabSetupPage.Size = new System.Drawing.Size(856, 463);
             this.TabSetupPage.TabIndex = 2;
             this.TabSetupPage.Text = "Setup";
             this.TabSetupPage.UseVisualStyleBackColor = true;
@@ -1236,17 +1281,17 @@
             this.TabSetup.Location = new System.Drawing.Point(3, 3);
             this.TabSetup.Name = "TabSetup";
             this.TabSetup.SelectedIndex = 0;
-            this.TabSetup.Size = new System.Drawing.Size(850, 453);
+            this.TabSetup.Size = new System.Drawing.Size(850, 457);
             this.TabSetup.TabIndex = 1;
             this.TabSetup.Selected += new System.Windows.Forms.TabControlEventHandler(this.TabSetup_Selected);
             // 
             // TabSChairs
             // 
             this.TabSChairs.Controls.Add(this.GridSChairs);
-            this.TabSChairs.Location = new System.Drawing.Point(4, 29);
+            this.TabSChairs.Location = new System.Drawing.Point(4, 25);
             this.TabSChairs.Name = "TabSChairs";
             this.TabSChairs.Padding = new System.Windows.Forms.Padding(3);
-            this.TabSChairs.Size = new System.Drawing.Size(842, 420);
+            this.TabSChairs.Size = new System.Drawing.Size(842, 428);
             this.TabSChairs.TabIndex = 1;
             this.TabSChairs.Text = "Chairs";
             this.TabSChairs.UseVisualStyleBackColor = true;
@@ -1266,7 +1311,7 @@
             this.GridSChairs.Name = "GridSChairs";
             this.GridSChairs.ReadOnly = true;
             this.GridSChairs.RowTemplate.Height = 40;
-            this.GridSChairs.Size = new System.Drawing.Size(836, 414);
+            this.GridSChairs.Size = new System.Drawing.Size(836, 422);
             this.GridSChairs.TabIndex = 6;
             // 
             // GridSChairsID
@@ -1298,10 +1343,10 @@
             // TabSOther
             // 
             this.TabSOther.Controls.Add(this.GridSOthers);
-            this.TabSOther.Location = new System.Drawing.Point(4, 29);
+            this.TabSOther.Location = new System.Drawing.Point(4, 25);
             this.TabSOther.Name = "TabSOther";
             this.TabSOther.Padding = new System.Windows.Forms.Padding(3);
-            this.TabSOther.Size = new System.Drawing.Size(842, 420);
+            this.TabSOther.Size = new System.Drawing.Size(842, 428);
             this.TabSOther.TabIndex = 2;
             this.TabSOther.Text = "Others";
             this.TabSOther.UseVisualStyleBackColor = true;
@@ -1321,7 +1366,7 @@
             this.GridSOthers.Name = "GridSOthers";
             this.GridSOthers.ReadOnly = true;
             this.GridSOthers.RowTemplate.Height = 40;
-            this.GridSOthers.Size = new System.Drawing.Size(836, 421);
+            this.GridSOthers.Size = new System.Drawing.Size(836, 425);
             this.GridSOthers.TabIndex = 7;
             // 
             // GridSOthersID
@@ -1353,10 +1398,10 @@
             // TabEtcPage
             // 
             this.TabEtcPage.Controls.Add(this.GridEtc);
-            this.TabEtcPage.Location = new System.Drawing.Point(4, 33);
+            this.TabEtcPage.Location = new System.Drawing.Point(4, 29);
             this.TabEtcPage.Name = "TabEtcPage";
             this.TabEtcPage.Padding = new System.Windows.Forms.Padding(3);
-            this.TabEtcPage.Size = new System.Drawing.Size(856, 459);
+            this.TabEtcPage.Size = new System.Drawing.Size(856, 463);
             this.TabEtcPage.TabIndex = 4;
             this.TabEtcPage.Text = "Etc";
             this.TabEtcPage.UseVisualStyleBackColor = true;
@@ -1376,7 +1421,7 @@
             this.GridEtc.Name = "GridEtc";
             this.GridEtc.ReadOnly = true;
             this.GridEtc.RowTemplate.Height = 40;
-            this.GridEtc.Size = new System.Drawing.Size(850, 453);
+            this.GridEtc.Size = new System.Drawing.Size(850, 457);
             this.GridEtc.TabIndex = 7;
             // 
             // GridEtcID
@@ -1408,10 +1453,10 @@
             // TabCashPage
             // 
             this.TabCashPage.Controls.Add(this.GridCash);
-            this.TabCashPage.Location = new System.Drawing.Point(4, 33);
+            this.TabCashPage.Location = new System.Drawing.Point(4, 29);
             this.TabCashPage.Name = "TabCashPage";
             this.TabCashPage.Padding = new System.Windows.Forms.Padding(3);
-            this.TabCashPage.Size = new System.Drawing.Size(856, 459);
+            this.TabCashPage.Size = new System.Drawing.Size(856, 463);
             this.TabCashPage.TabIndex = 5;
             this.TabCashPage.Text = "Cash";
             this.TabCashPage.UseVisualStyleBackColor = true;
@@ -1431,7 +1476,7 @@
             this.GridCash.Name = "GridCash";
             this.GridCash.ReadOnly = true;
             this.GridCash.RowTemplate.Height = 40;
-            this.GridCash.Size = new System.Drawing.Size(850, 453);
+            this.GridCash.Size = new System.Drawing.Size(850, 457);
             this.GridCash.TabIndex = 8;
             // 
             // GridCashID
@@ -1463,10 +1508,10 @@
             // TabMapsPage
             // 
             this.TabMapsPage.Controls.Add(this.GridMaps);
-            this.TabMapsPage.Location = new System.Drawing.Point(4, 33);
+            this.TabMapsPage.Location = new System.Drawing.Point(4, 29);
             this.TabMapsPage.Name = "TabMapsPage";
             this.TabMapsPage.Padding = new System.Windows.Forms.Padding(3);
-            this.TabMapsPage.Size = new System.Drawing.Size(856, 459);
+            this.TabMapsPage.Size = new System.Drawing.Size(856, 463);
             this.TabMapsPage.TabIndex = 6;
             this.TabMapsPage.Text = "Maps";
             this.TabMapsPage.UseVisualStyleBackColor = true;
@@ -1486,7 +1531,7 @@
             this.GridMaps.Name = "GridMaps";
             this.GridMaps.ReadOnly = true;
             this.GridMaps.RowTemplate.Height = 40;
-            this.GridMaps.Size = new System.Drawing.Size(850, 453);
+            this.GridMaps.Size = new System.Drawing.Size(850, 457);
             this.GridMaps.TabIndex = 9;
             // 
             // GridMapsID
@@ -1520,10 +1565,10 @@
             // TabMobsPage
             // 
             this.TabMobsPage.Controls.Add(this.GridMobs);
-            this.TabMobsPage.Location = new System.Drawing.Point(4, 33);
+            this.TabMobsPage.Location = new System.Drawing.Point(4, 29);
             this.TabMobsPage.Name = "TabMobsPage";
             this.TabMobsPage.Padding = new System.Windows.Forms.Padding(3);
-            this.TabMobsPage.Size = new System.Drawing.Size(856, 459);
+            this.TabMobsPage.Size = new System.Drawing.Size(856, 463);
             this.TabMobsPage.TabIndex = 7;
             this.TabMobsPage.Text = "Mobs";
             this.TabMobsPage.UseVisualStyleBackColor = true;
@@ -1543,7 +1588,7 @@
             this.GridMobs.Name = "GridMobs";
             this.GridMobs.ReadOnly = true;
             this.GridMobs.RowTemplate.Height = 60;
-            this.GridMobs.Size = new System.Drawing.Size(850, 453);
+            this.GridMobs.Size = new System.Drawing.Size(850, 457);
             this.GridMobs.TabIndex = 10;
             // 
             // GridMobsID
@@ -1577,10 +1622,10 @@
             // TabSkillsPage
             // 
             this.TabSkillsPage.Controls.Add(this.GridSkills);
-            this.TabSkillsPage.Location = new System.Drawing.Point(4, 33);
+            this.TabSkillsPage.Location = new System.Drawing.Point(4, 29);
             this.TabSkillsPage.Name = "TabSkillsPage";
             this.TabSkillsPage.Padding = new System.Windows.Forms.Padding(3);
-            this.TabSkillsPage.Size = new System.Drawing.Size(856, 459);
+            this.TabSkillsPage.Size = new System.Drawing.Size(856, 463);
             this.TabSkillsPage.TabIndex = 8;
             this.TabSkillsPage.Text = "Skills";
             this.TabSkillsPage.UseVisualStyleBackColor = true;
@@ -1600,7 +1645,7 @@
             this.GridSkills.Name = "GridSkills";
             this.GridSkills.ReadOnly = true;
             this.GridSkills.RowTemplate.Height = 40;
-            this.GridSkills.Size = new System.Drawing.Size(850, 453);
+            this.GridSkills.Size = new System.Drawing.Size(850, 457);
             this.GridSkills.TabIndex = 9;
             // 
             // GridSkillsID
@@ -1633,10 +1678,10 @@
             // TabNPCsPage
             // 
             this.TabNPCsPage.Controls.Add(this.GridNPCs);
-            this.TabNPCsPage.Location = new System.Drawing.Point(4, 33);
+            this.TabNPCsPage.Location = new System.Drawing.Point(4, 29);
             this.TabNPCsPage.Name = "TabNPCsPage";
             this.TabNPCsPage.Padding = new System.Windows.Forms.Padding(3);
-            this.TabNPCsPage.Size = new System.Drawing.Size(856, 459);
+            this.TabNPCsPage.Size = new System.Drawing.Size(856, 463);
             this.TabNPCsPage.TabIndex = 9;
             this.TabNPCsPage.Text = "NPCs";
             this.TabNPCsPage.UseVisualStyleBackColor = true;
@@ -1656,7 +1701,7 @@
             this.GridNPCs.Name = "GridNPCs";
             this.GridNPCs.ReadOnly = true;
             this.GridNPCs.RowTemplate.Height = 60;
-            this.GridNPCs.Size = new System.Drawing.Size(850, 453);
+            this.GridNPCs.Size = new System.Drawing.Size(850, 457);
             this.GridNPCs.TabIndex = 9;
             // 
             // GridNPCsID
@@ -1742,64 +1787,49 @@
             // 
             // SearchTextBox
             // 
+            this.SearchTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.SearchTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.SearchTextBox.Location = new System.Drawing.Point(641, 5);
+            this.SearchTextBox.Location = new System.Drawing.Point(706, 6);
             this.SearchTextBox.Name = "SearchTextBox";
             this.SearchTextBox.Size = new System.Drawing.Size(147, 20);
             this.SearchTextBox.TabIndex = 6;
             this.SearchTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.SearchTextBox_KeyPress);
             // 
+            // MapleVersion
+            // 
+            this.MapleVersion.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.MapleVersion.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.MapleVersion.Location = new System.Drawing.Point(580, 5);
+            this.MapleVersion.Name = "MapleVersion";
+            this.MapleVersion.Size = new System.Drawing.Size(120, 20);
+            this.MapleVersion.TabIndex = 7;
+            // 
+            // MapleVersionLabel
+            // 
+            this.MapleVersionLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.MapleVersionLabel.AutoSize = true;
+            this.MapleVersionLabel.Location = new System.Drawing.Point(511, 8);
+            this.MapleVersionLabel.Name = "MapleVersionLabel";
+            this.MapleVersionLabel.Size = new System.Drawing.Size(63, 13);
+            this.MapleVersionLabel.TabIndex = 8;
+            this.MapleVersionLabel.Text = "WZ Version";
+            this.MapleVersionLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // mainFormBindingSource
             // 
             this.mainFormBindingSource.DataSource = typeof(WzVisualizer.MainForm);
-            // 
-            // ColumnEHairsID
-            // 
-            this.ColumnEHairsID.HeaderText = "ID";
-            this.ColumnEHairsID.Name = "ColumnEHairsID";
-            this.ColumnEHairsID.ReadOnly = true;
-            // 
-            // ColumnEHairsImage
-            // 
-            this.ColumnEHairsImage.HeaderText = "Image";
-            this.ColumnEHairsImage.Name = "ColumnEHairsImage";
-            this.ColumnEHairsImage.ReadOnly = true;
-            this.ColumnEHairsImage.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.ColumnEHairsImage.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            // 
-            // GridEHairsName
-            // 
-            this.GridEHairsName.HeaderText = "Name";
-            this.GridEHairsName.Name = "GridEHairsName";
-            this.GridEHairsName.ReadOnly = true;
-            this.GridEHairsName.Width = 150;
-            // 
-            // GridEFacesID
-            // 
-            this.GridEFacesID.HeaderText = "ID";
-            this.GridEFacesID.Name = "GridEFacesID";
-            this.GridEFacesID.ReadOnly = true;
-            // 
-            // GridEFacesImage
-            // 
-            this.GridEFacesImage.HeaderText = "Image";
-            this.GridEFacesImage.Name = "GridEFacesImage";
-            this.GridEFacesImage.ReadOnly = true;
-            this.GridEFacesImage.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.GridEFacesImage.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            // 
-            // GridEFacesName
-            // 
-            this.GridEFacesName.HeaderText = "Name";
-            this.GridEFacesName.Name = "GridEFacesName";
-            this.GridEFacesName.ReadOnly = true;
-            this.GridEFacesName.Width = 150;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(864, 525);
+            this.Controls.Add(this.MapleVersionLabel);
+            this.Controls.Add(this.MapleVersion);
             this.Controls.Add(this.SearchTextBox);
             this.Controls.Add(this.BtnSave);
             this.Controls.Add(this.BtnWzLoad);
@@ -1868,6 +1898,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.GridSkills)).EndInit();
             this.TabNPCsPage.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.GridNPCs)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.MapleVersion)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.mainFormBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -2038,6 +2069,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn GridEFacesID;
         private System.Windows.Forms.DataGridViewImageColumn GridEFacesImage;
         private System.Windows.Forms.DataGridViewTextBoxColumn GridEFacesName;
+        private System.Windows.Forms.NumericUpDown MapleVersion;
+        private System.Windows.Forms.Label MapleVersionLabel;
     }
 }
 

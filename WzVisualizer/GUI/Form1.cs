@@ -38,11 +38,15 @@ namespace WzVisualizer
             InitializeComponent();
 
             string[] names = Enum.GetNames(typeof(WzMapleVersion));
-            for (int i = 0; i < ((int)WzMapleVersion.GMS == 1 ? 4 : 3); i++)
+            for (int i = 0; i < names.Length; i++)
+            {
+                if (i == (int) WzMapleVersion.GENERATE) break;
                 ComboEncType.Items.Add(names[i]);
+            }
 
             // Obtain the last used WZ root directory
             this.TextWzPath.Text = Settings.Default.PathCache;
+            this.MapleVersion.Value = Settings.Default.MapleVersion;
             // Set default values for the ComboBoxes
             this.ComboLoadType.SelectedIndex = 0;
             this.ComboEncType.SelectedIndex = 0;
@@ -130,8 +134,9 @@ namespace WzVisualizer
             if (wzObject is WzUOLProperty ufo) icon = (WzCanvasProperty)ufo.LinkValue;
             else icon = (WzCanvasProperty)wzObject;
             string name = StringUtility.GetEqp(ID);
-
-            GridEFaces.Rows.Add(new object[] { ID, icon?.GetBitmap(), name });
+            Bitmap bitmap = null;
+            try { bitmap = icon?.GetBitmap(); } catch { }
+            GridEFaces.Rows.Add(new object[] { ID, bitmap, name });
         }
 
         private void AddHairRow(WzImage image)
@@ -152,7 +157,7 @@ namespace WzVisualizer
             int ID;
             string properties = "";
             string name = null;
-            WzCanvasProperty icon;
+            WzCanvasProperty icon = null;
 
             if (wzObject is WzImage image)
             {
@@ -162,6 +167,7 @@ namespace WzVisualizer
                     // and also sometimes contains a link STRING property instead of using UOL
                     image.ParseImage();
                     string imgName = Path.GetFileNameWithoutExtension(image.Name);
+                    properties = BuildProperties(image) ?? "";
                     ID = int.Parse(imgName);
                     name = StringUtility.GetNPC(ID);
 
@@ -228,11 +234,15 @@ namespace WzVisualizer
                     else if (ItemConstants.IsConsume(ID)) name = StringUtility.GetConsume(ID);
 
                     WzImageProperty imgIcon = subProperty.GetFromPath("info/icon");
-                    icon = (imgIcon == null) ? null : (imgIcon is WzUOLProperty ufo ? (WzCanvasProperty)ufo.LinkValue : (WzCanvasProperty)imgIcon);
+                    if (imgIcon is WzUOLProperty ufo) imgIcon = (WzCanvasProperty)ufo.LinkValue;
+                    else if (imgIcon is WzCanvasProperty canvas) imgIcon = canvas;
+                    if (imgIcon != null) icon = (WzCanvasProperty)imgIcon;
                 }
             } else
                 return;
-            grid.Rows.Add(new object[] { ID, icon?.GetBitmap(), name, properties });
+            Bitmap bitmap = null;
+            try { bitmap = icon?.GetBitmap(); } catch (Exception) { }
+            grid.Rows.Add(new object[] { ID, bitmap, name, properties });
         }
         #endregion
 
@@ -247,7 +257,7 @@ namespace WzVisualizer
             WzImageProperty infoRoot = null;
             if (wzObject is WzSubProperty subProperty) infoRoot = subProperty.GetFromPath("info");
             else if (wzObject is WzImage wzImage) infoRoot = wzImage.GetFromPath("info");
-            if (infoRoot != null)
+            if (infoRoot != null && infoRoot.WzProperties != null)
             {
                 foreach (WzImageProperty imgProperties in infoRoot.WzProperties)
                 {
@@ -277,7 +287,7 @@ namespace WzVisualizer
                     break;
                 case 0: // Equips
                     {
-                        LoadWzFileIfAbsent(ref _CharacterWZ, mapleDirectory + "/Character.wz", mapleVersion);
+                        LoadWzFileIfAbsent(ref _CharacterWZ, mapleDirectory + "/Character", mapleVersion);
                         DataGridView dGrid = (DataGridView)TabEquips.SelectedTab.Controls[0];
                         dGrid.Rows.Clear();
                         List<WzImage> children = _CharacterWZ.WzDirectory.GetChildImages();
@@ -355,7 +365,7 @@ namespace WzVisualizer
                 case 3: // Etc
                 case 4: // Cash
                     {
-                        LoadWzFileIfAbsent(ref _ItemWZ, mapleDirectory + "Item.wz", mapleVersion);
+                        LoadWzFileIfAbsent(ref _ItemWZ, mapleDirectory + "/Item", mapleVersion);
                         if (selected_root == 1)
                             ((DataGridView)TabUse.SelectedTab.Controls[0]).Rows.Clear();
                         else if (selected_root == 2)
@@ -406,7 +416,7 @@ namespace WzVisualizer
                     }
                 case 5: // Map
                     {
-                        LoadWzFileIfAbsent(ref _MapWZ, mapleDirectory + "/Map.wz", mapleVersion);
+                        LoadWzFileIfAbsent(ref _MapWZ, mapleDirectory + "/Map", mapleVersion);
                         GridMaps.Rows.Clear();
 
                         List<WzImage> children = _MapWZ.WzDirectory.GetChildImages();
@@ -429,7 +439,7 @@ namespace WzVisualizer
                     }
                 case 6: // Mob
                     {
-                        LoadWzFileIfAbsent(ref _MobWZ, mapleDirectory + "/Mob.wz", mapleVersion);
+                        LoadWzFileIfAbsent(ref _MobWZ, mapleDirectory + "/Mob", mapleVersion);
                         GridMobs.Rows.Clear();
 
                         List<WzImage> children = _MobWZ.WzDirectory.GetChildImages();
@@ -445,7 +455,7 @@ namespace WzVisualizer
                     }
                 case 7: // Skills
                     {
-                        LoadWzFileIfAbsent(ref _SkillWZ, mapleDirectory + "/Skill.wz", mapleVersion);
+                        LoadWzFileIfAbsent(ref _SkillWZ, mapleDirectory + "/Skill", mapleVersion);
                         GridSkills.Rows.Clear();
 
                         List<WzImage> children = _SkillWZ.WzDirectory.GetChildImages();
@@ -469,7 +479,7 @@ namespace WzVisualizer
                     }
                 case 8: // NPCs
                     {
-                        LoadWzFileIfAbsent(ref _NpcWZ, mapleDirectory + "/Npc.wz", mapleVersion);                        
+                        LoadWzFileIfAbsent(ref _NpcWZ, mapleDirectory + "/Npc", mapleVersion);                        
                         GridNPCs.Rows.Clear();
 
                         List<WzImage> children = _NpcWZ.WzDirectory.GetChildImages();
@@ -486,10 +496,36 @@ namespace WzVisualizer
 
         private void LoadWzFileIfAbsent(ref WzFile wzFile, string fileName, WzMapleVersion mapleVersion)
         {
-            if (wzFile == null)
+            if (wzFile != null) return;
+            if (File.Exists(fileName + ".wz"))
             {
-                wzFile = new WzFile(fileName, 83, mapleVersion);
+                wzFile = new WzFile(fileName + ".wz", (short) MapleVersion.Value, mapleVersion);
                 wzFile.ParseWzFile();
+            } else
+            { // KMS
+                wzFile = new WzFile(fileName, mapleVersion);
+                WzDirectory dir = new WzDirectory(fileName, wzFile);
+                wzFile.WzDirectory = dir;
+                RecursivelyLoadDirectory(dir, fileName, mapleVersion);
+            }
+        }
+
+        private void RecursivelyLoadDirectory(WzDirectory dir, string directoryPath, WzMapleVersion mapleVersion)
+        {
+            if (!Directory.Exists(directoryPath)) return;
+            string[] files = Directory.GetFiles(directoryPath);
+            foreach (string file in files)
+            {
+                FileStream stream = new FileStream(file, FileMode.Open, FileAccess.Read);
+                WzImage img = new WzImage(Path.GetFileName(file), stream, mapleVersion);
+                dir.AddImage(img);
+            }
+            files = Directory.GetDirectories(directoryPath);
+            foreach (string sub in files)
+            {
+                WzDirectory subDir = new WzDirectory(Path.GetFileNameWithoutExtension(sub));
+                RecursivelyLoadDirectory(subDir, sub, mapleVersion);
+                dir.AddDirectory(subDir);
             }
         }
 
@@ -552,8 +588,8 @@ namespace WzVisualizer
             if (cellValue == null) return;
             if (cellValue is int)
                 Clipboard.SetText(((int)cellValue).ToString());
-            else if (cellValue is string)
-                Clipboard.SetText((string)cellValue);
+            else if (cellValue is string str && str.Length > 0)
+                Clipboard.SetText(str);
             else
                 Clipboard.Clear();
         }
@@ -593,12 +629,22 @@ namespace WzVisualizer
             {
                 if (!folderPath.Equals(Settings.Default.PathCache))
                 {
+                    Settings.Default.MapleVersion = MapleVersion.Value;
                     Settings.Default.PathCache = folderPath;
                     Settings.Default.Save();
                 }
                 WzMapleVersion mapleVersion = (WzMapleVersion)ComboEncType.SelectedIndex;
-                _StringWZ = new WzFile(folderPath + "/String.wz", mapleVersion);
-                _StringWZ.ParseWzFile();
+                string stringWzPath = folderPath + @"/String";
+                if (File.Exists(stringWzPath + ".wz"))
+                {
+                    _StringWZ = new WzFile(stringWzPath + ".wz", mapleVersion);
+                    _StringWZ.ParseWzFile();
+                } else if (Directory.Exists(stringWzPath))
+                { // KMS
+                    WzDirectory dir = new WzDirectory("String", _StringWZ);
+                    _StringWZ.WzDirectory = dir;
+                    RecursivelyLoadDirectory(dir, stringWzPath, mapleVersion);
+                }
                 StringUtility = new WzStringUtility(_StringWZ);
                 LoadWzData(mapleVersion, folderPath);
             }
@@ -629,6 +675,7 @@ namespace WzVisualizer
                 control = tab.SelectedTab; // The selected child Tab (e.g. Equips.Hairs)
                 GridIOUtility.ExportGrid((DataGridView) control.Controls[0], TabControlMain.SelectedTab.Text); // The DataGridView contained in the TabPage control
             }
+            MessageBox.Show("Save complete!");
         }
 
         #region tab change events

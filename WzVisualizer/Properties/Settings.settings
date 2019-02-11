@@ -5,5 +5,8 @@
     <Setting Name="PathCache" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
+    <Setting Name="MapleVersion" Type="System.Decimal" Scope="User">
+      <Value Profile="(Default)">83</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
