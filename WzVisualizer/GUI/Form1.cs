@@ -287,7 +287,7 @@ namespace WzVisualizer
                     break;
                 case 0: // Equips
                     {
-                        LoadWzFileIfAbsent(ref _CharacterWZ, mapleDirectory + "/Character", mapleVersion);
+                        if (!LoadWzFileIfAbsent(ref _CharacterWZ, mapleDirectory + "/Character", mapleVersion)) return;
                         DataGridView dGrid = (DataGridView)TabEquips.SelectedTab.Controls[0];
                         dGrid.Rows.Clear();
                         List<WzImage> children = _CharacterWZ.WzDirectory.GetChildImages();
@@ -365,7 +365,7 @@ namespace WzVisualizer
                 case 3: // Etc
                 case 4: // Cash
                     {
-                        LoadWzFileIfAbsent(ref _ItemWZ, mapleDirectory + "/Item", mapleVersion);
+                        if (!LoadWzFileIfAbsent(ref _ItemWZ, mapleDirectory + "/Item", mapleVersion)) return;
                         if (selected_root == 1)
                             ((DataGridView)TabUse.SelectedTab.Controls[0]).Rows.Clear();
                         else if (selected_root == 2)
@@ -416,7 +416,7 @@ namespace WzVisualizer
                     }
                 case 5: // Map
                     {
-                        LoadWzFileIfAbsent(ref _MapWZ, mapleDirectory + "/Map", mapleVersion);
+                        if (!LoadWzFileIfAbsent(ref _MapWZ, mapleDirectory + "/Map", mapleVersion)) return;
                         GridMaps.Rows.Clear();
 
                         List<WzImage> children = _MapWZ.WzDirectory.GetChildImages();
@@ -439,7 +439,7 @@ namespace WzVisualizer
                     }
                 case 6: // Mob
                     {
-                        LoadWzFileIfAbsent(ref _MobWZ, mapleDirectory + "/Mob", mapleVersion);
+                        if (!LoadWzFileIfAbsent(ref _MobWZ, mapleDirectory + "/Mob", mapleVersion)) return;
                         GridMobs.Rows.Clear();
 
                         List<WzImage> children = _MobWZ.WzDirectory.GetChildImages();
@@ -455,7 +455,7 @@ namespace WzVisualizer
                     }
                 case 7: // Skills
                     {
-                        LoadWzFileIfAbsent(ref _SkillWZ, mapleDirectory + "/Skill", mapleVersion);
+                        if (!LoadWzFileIfAbsent(ref _SkillWZ, mapleDirectory + "/Skill", mapleVersion)) return;
                         GridSkills.Rows.Clear();
 
                         List<WzImage> children = _SkillWZ.WzDirectory.GetChildImages();
@@ -479,7 +479,7 @@ namespace WzVisualizer
                     }
                 case 8: // NPCs
                     {
-                        LoadWzFileIfAbsent(ref _NpcWZ, mapleDirectory + "/Npc", mapleVersion);                        
+                        if (!LoadWzFileIfAbsent(ref _NpcWZ, mapleDirectory + "/Npc", mapleVersion)) return;
                         GridNPCs.Rows.Clear();
 
                         List<WzImage> children = _NpcWZ.WzDirectory.GetChildImages();
@@ -494,20 +494,28 @@ namespace WzVisualizer
             }
         }
 
-        private void LoadWzFileIfAbsent(ref WzFile wzFile, string fileName, WzMapleVersion mapleVersion)
+        private bool LoadWzFileIfAbsent(ref WzFile wzFile, string fileName, WzMapleVersion mapleVersion)
         {
-            if (wzFile != null) return;
+            if (wzFile != null) return false;
             if (File.Exists(fileName + ".wz"))
             {
-                wzFile = new WzFile(fileName + ".wz", (short) MapleVersion.Value, mapleVersion);
-                wzFile.ParseWzFile();
+                wzFile = new WzFile(fileName + ".wz", (short)MapleVersion.Value, mapleVersion);
+                try {
+                    wzFile.ParseWzFile();
+                    return true;
+                } catch (EndOfStreamException)
+                {
+                    MessageBox.Show("Failed to parse the WZ file. Perhaps an invalid WZ version was specified?", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             } else
             { // KMS
                 wzFile = new WzFile(fileName, mapleVersion);
                 WzDirectory dir = new WzDirectory(fileName, wzFile);
                 wzFile.WzDirectory = dir;
                 RecursivelyLoadDirectory(dir, fileName, mapleVersion);
+                return true;
             }
+            return false;
         }
 
         private void RecursivelyLoadDirectory(WzDirectory dir, string directoryPath, WzMapleVersion mapleVersion)

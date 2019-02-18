@@ -90,7 +90,7 @@ namespace MapleLib.WzLib
 
 		public override void Dispose()
 		{
-            if (wzDir.reader == null) return;
+            if (wzDir == null || wzDir.reader == null) return;
 			wzDir.reader.Close();
 			Header = null;
 			path = null;
