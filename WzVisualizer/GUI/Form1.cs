@@ -161,7 +161,7 @@ namespace WzVisualizer
 
             if (wzObject is WzImage image)
             {
-                if (image.WzFileParent.Name == "Npc.wz")
+                if (image.WzFileParent.Name.StartsWith("Npc"))
                 {
                     // NPC icon breadcrumb like: '{ID}/stand/0'
                     // and also sometimes contains a link STRING property instead of using UOL
@@ -179,7 +179,7 @@ namespace WzVisualizer
                         if (image == null) return;
                     }
                     icon = (WzCanvasProperty)image.GetFromPath("stand/0");
-                } else if (image.WzFileParent.Name == "Mob.wz")
+                } else if (image.WzFileParent.Name.StartsWith("Mob"))
                 {
                     // Mob icon breadcrumb like: '{ID}/(move|stand)/0'
                     // where the 'move' or 'stand' sub property may not exist
@@ -216,7 +216,7 @@ namespace WzVisualizer
                 }
             } else if (wzObject is WzSubProperty subProperty)
             {
-                if (subProperty.WzFileParent.Name == "Skill.wz")
+                if (subProperty.WzFileParent.Name.StartsWith("Skill"))
                 {
                     ID = int.Parse(subProperty.Name);
                     name = StringUtility.GetSkill(subProperty.Name);
@@ -639,11 +639,19 @@ namespace WzVisualizer
                 {
                     _StringWZ = new WzFile(stringWzPath + ".wz", mapleVersion);
                     _StringWZ.ParseWzFile();
-                } else if (Directory.Exists(stringWzPath))
+                }
+                else if (Directory.Exists(stringWzPath))
                 { // KMS
+                    _StringWZ = new WzFile(stringWzPath, mapleVersion);
                     WzDirectory dir = new WzDirectory("String", _StringWZ);
                     _StringWZ.WzDirectory = dir;
                     RecursivelyLoadDirectory(dir, stringWzPath, mapleVersion);
+                }
+                else
+                {
+                    MessageBox.Show("Failed to load String data in the specified directory", "File not found", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    DisposeWzFiles();
+                    return;
                 }
                 StringUtility = new WzStringUtility(_StringWZ);
                 LoadWzData(mapleVersion, folderPath);
@@ -665,17 +673,37 @@ namespace WzVisualizer
         /// upon clicking the save button, store data of the current opened grid.
         /// Some tabs may have another TabControl in which that Control contains a Grid control.
         /// </summary>
-        private void BtnSave_Click(object sender, EventArgs e)
+        private void BtnSave_Click(object sender, EventArgs ev)
         {
-            var control = TabControlMain.SelectedTab.Controls[0];
-            if (control is DataGridView grid) // no child tabs and contains 1 child Control (DataGridView)
-                GridIOUtility.ExportGrid(grid, TabControlMain.SelectedTab.Text);
-            else if (control is TabControl tab) // sub-categories (e.g. Equips.Hairs, Equips.Faces)
-            {
-                control = tab.SelectedTab; // The selected child Tab (e.g. Equips.Hairs)
-                GridIOUtility.ExportGrid((DataGridView) control.Controls[0], TabControlMain.SelectedTab.Text); // The DataGridView contained in the TabPage control
+            MouseEventArgs e = (MouseEventArgs)ev;
+            switch (e.Button) {
+                case MouseButtons.Left:
+                    {
+                        var control = TabControlMain.SelectedTab.Controls[0];
+                        if (control is DataGridView grid) // no child tabs and contains 1 child Control (DataGridView)
+                            GridIOUtility.ExportGrid(grid, TabControlMain.SelectedTab.Text);
+                        else if (control is TabControl tab) // sub-categories (e.g. Equips.Hairs, Equips.Faces)
+                        {
+                            control = tab.SelectedTab; // The selected child Tab (e.g. Equips.Hairs)
+                            GridIOUtility.ExportGrid((DataGridView)control.Controls[0], TabControlMain.SelectedTab.Text); // The DataGridView contained in the TabPage control
+                        }
+                        MessageBox.Show("Bin save complete!");
+                        break;
+                    }
+                case MouseButtons.Right:
+                    {
+                        var control = TabControlMain.SelectedTab.Controls[0];
+                        if (control is DataGridView grid) // no child tabs and contains 1 child Control (DataGridView)
+                            GridIOUtility.ExportGridImages(grid, TabControlMain.SelectedTab.Text);
+                        else if (control is TabControl tab) // sub-categories (e.g. Equips.Hairs, Equips.Faces)
+                        {
+                            control = tab.SelectedTab; // The selected child Tab (e.g. Equips.Hairs)
+                            GridIOUtility.ExportGridImages((DataGridView)control.Controls[0], TabControlMain.SelectedTab.Text); // The DataGridView contained in the TabPage control
+                        }
+                        MessageBox.Show("Image save complete!");
+                        break;
+                    }
             }
-            MessageBox.Show("Save complete!");
         }
 
         #region tab change events

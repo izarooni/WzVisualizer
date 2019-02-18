@@ -14,6 +14,7 @@ namespace WzVisualizer
     class GridIOUtility
     {
         private const string ExportFolder = "exports";
+        private const string ImagesFolder = "images";
 
         private static void ReadFileContents(string path, ref List<BinData> datas)
         {
@@ -58,7 +59,7 @@ namespace WzVisualizer
 
         internal static void ImportGrid(string file, DataGridView grid, AddGridRowCallBack callbackTask)
         {
-            string path = string.Format("{0}/{1}", ExportFolder, file);
+            string path = string.Format("{0}/{1}", ImagesFolder, file);
             if (!File.Exists(path))
                 return;
             List<BinData> datas = new List<BinData>();
@@ -68,11 +69,33 @@ namespace WzVisualizer
             thread.Start();
         }
 
+        internal static void ExportGridImages(DataGridView grid, string folder)
+        {
+            string directory = string.Format("{0}/{1}", ImagesFolder, folder);
+            Directory.CreateDirectory(directory);
+            var rows = grid.Rows;
+            for (int a = 0; a < rows.Count; a++)
+            {
+                var cells = rows[a].Cells;
+                Bitmap bitmap = null;
+                string fileName = null;
+                for (int b = 0; b < cells.Count; b++)
+                {
+                    var cell = cells[b];
+                    string ownColumnName = cell.OwningColumn.Name;
+                    if (ownColumnName.EndsWith("Image")) bitmap = (Bitmap)cell.Value;
+                    if (ownColumnName.EndsWith("ID")) fileName = (int)cell.Value + ".png";
+                }
+                if (bitmap == null || fileName == null) continue;
+                bitmap.Save(string.Format("{0}/{1}", directory, fileName), ImageFormat.Png);
+            }
+        }
+
         internal static void ExportGrid(DataGridView grid, string folder)
         {
             string directory = string.Format("{0}/{1}", ExportFolder, folder);
             Directory.CreateDirectory(directory);
-            string path = string.Format("{0}/{2}.bin", directory, folder, ((TabPage)grid.Parent).Text);
+            string path = string.Format("{0}/{1}.bin", directory, ((TabPage)grid.Parent).Text);
             using (BinaryWriter bwriter = new BinaryWriter(new FileStream(path, FileMode.Create)))
             {
                 var rows = grid.Rows;
