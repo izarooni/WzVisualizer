@@ -178,7 +178,9 @@ namespace WzVisualizer
                         image = ((WzDirectory)image.Parent).GetChildImages().Find(p => p.Name.Equals(linkName + ".img"));
                         if (image == null) return;
                     }
-                    icon = (WzCanvasProperty)image.GetFromPath("stand/0");
+                    WzImageProperty temp = image.GetFromPath("stand/0");
+                    if (temp is WzUOLProperty uol) icon = (WzCanvasProperty)uol.LinkValue;
+                    else icon = (WzCanvasProperty)temp;
                 } else if (image.WzFileParent.Name.StartsWith("Mob"))
                 {
                     // Mob icon breadcrumb like: '{ID}/(move|stand)/0'
