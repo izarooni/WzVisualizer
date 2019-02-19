@@ -59,7 +59,7 @@ namespace WzVisualizer
 
         internal static void ImportGrid(string file, DataGridView grid, AddGridRowCallBack callbackTask)
         {
-            string path = string.Format("{0}/{1}", ImagesFolder, file);
+            string path = string.Format("{0}/{1}", ExportFolder, file);
             if (!File.Exists(path))
                 return;
             List<BinData> datas = new List<BinData>();
