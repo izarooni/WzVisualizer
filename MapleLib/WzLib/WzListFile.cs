@@ -32,7 +32,7 @@ namespace MapleLib.WzLib
 		/// <param name="filePath">Path to the wz file</param>
         public static List<string> ParseListFile(string filePath, WzMapleVersion version)
         {
-            return ParseListFile(filePath, WzTool.GetIvByMapleVersion(version));
+            return ParseListFile(filePath, version.EncryptionKey());
         }
 
         /// <summary>
@@ -63,7 +63,7 @@ namespace MapleLib.WzLib
 
         public static void SaveToDisk(string path, WzMapleVersion version, List<string> listEntries)
         {
-            SaveToDisk(path, WzTool.GetIvByMapleVersion(version), listEntries);
+            SaveToDisk(path, version.EncryptionKey(), listEntries);
         }
 
 		public static void SaveToDisk(string path, byte[] WzIv, List<string> listEntries)

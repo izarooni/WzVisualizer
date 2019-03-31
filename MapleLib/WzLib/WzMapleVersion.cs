@@ -21,12 +21,28 @@ using System.Text;
 
 namespace MapleLib.WzLib
 {
+    public static class WzVersionData
+    {
+        public static byte[] EncryptionKey(this WzMapleVersion mapleVersion)
+        {
+            switch (mapleVersion)
+            {
+                case WzMapleVersion.GMS: return new byte[4] { 0x4D, 0x23, 0xC7, 0x2B };
+                case WzMapleVersion.EMS: return new byte[4] { 0xB9, 0x7D, 0x63, 0xE9 };
+                default: return new byte[4];
+
+            }
+            throw new NullReferenceException();
+        }
+    }
+
 	public enum WzMapleVersion
 	{
 		GMS,
 		EMS,
 		BMS,
-		CLASSIC,
+		CLASSIC, // used for haha01haha01's programs
+
 		GENERATE,
         GETFROMZLZ
 	}

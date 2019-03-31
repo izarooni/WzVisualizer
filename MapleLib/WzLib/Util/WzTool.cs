@@ -97,21 +97,6 @@ namespace MapleLib.WzLib.Util
 			}
 		}
 
-		public static byte[] GetIvByMapleVersion(WzMapleVersion ver)
-		{
-			switch (ver)
-			{
-				case WzMapleVersion.EMS:
-					return CryptoConstants.WZ_MSEAIV;//?
-				case WzMapleVersion.GMS:
-					return CryptoConstants.WZ_GMSIV;
-                case WzMapleVersion.BMS:
-				case WzMapleVersion.CLASSIC:
-				default:
-					return new byte[4];
-			}
-		}
-
         private static int GetRecognizedCharacters(string source)
         {
             int result = 0;
@@ -134,7 +119,6 @@ namespace MapleLib.WzLib.Util
             int totalChars = 0;
             foreach (WzDirectory wzdir in wzf.WzDirectory.WzDirectories)
             {
-                Console.WriteLine(wzdir.name + " / " + encVersion);
                 recognizedChars += GetRecognizedCharacters(wzdir.Name);
                 totalChars += wzdir.Name.Length;
             }

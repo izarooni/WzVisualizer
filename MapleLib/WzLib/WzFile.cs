@@ -106,7 +106,7 @@ namespace MapleLib.WzLib
 			this.Header = WzHeader.GetDefault();
 			fileVersion = gameVersion;
 			mapleVersion = version;
-			WzIv = WzTool.GetIvByMapleVersion(version);
+			WzIv = version.EncryptionKey();
 			wzDir.WzIv = WzIv;
 		}
 
@@ -126,7 +126,7 @@ namespace MapleLib.WzLib
                 WzIv = Util.WzKeyGenerator.GetIvFromZlz(zlzStream);
                 zlzStream.Close();
             }
-			else WzIv = WzTool.GetIvByMapleVersion(version);
+            else WzIv = version.EncryptionKey();
 		}
 
 		/// <summary>
@@ -145,7 +145,7 @@ namespace MapleLib.WzLib
                 WzIv = Util.WzKeyGenerator.GetIvFromZlz(zlzStream);
                 zlzStream.Close();
             }
-            else WzIv = WzTool.GetIvByMapleVersion(version);
+            else WzIv = version.EncryptionKey();
 		}
 
 		/// <summary>
@@ -301,7 +301,7 @@ namespace MapleLib.WzLib
 		/// <param name="path">Path to the output wz file</param>
 		public void SaveToDisk(string path)
 		{
-            WzIv = WzTool.GetIvByMapleVersion(mapleVersion);
+            WzIv = mapleVersion.EncryptionKey();
 			CreateVersionHash();
 			wzDir.SetHash(versionHash);
 			string tempFile = Path.GetFileNameWithoutExtension(path) + ".TEMP";

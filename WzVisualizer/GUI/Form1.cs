@@ -640,16 +640,17 @@ namespace WzVisualizer
                 string stringWzPath = folderPath + @"/String";
                 WzMapleVersion mapleVersion;
 
-                if (ComboEncType.SelectedIndex == 0)
-                    mapleVersion = WzTool.DetectMapleVersion(stringWzPath + ".wz", out short detectVersion);
-                else mapleVersion = (WzMapleVersion)
-                    ComboEncType.SelectedIndex - 1;
-
                 if (File.Exists(stringWzPath + ".wz"))
                 {
+
+                    if (ComboEncType.SelectedIndex == 0)
+                        mapleVersion = WzTool.DetectMapleVersion(stringWzPath + ".wz", out short detectVersion);
+                    else mapleVersion = (WzMapleVersion)
+                        ComboEncType.SelectedIndex - 1;
+
                     _StringWZ = new WzFile(stringWzPath + ".wz", mapleVersion);
                     _StringWZ.ParseWzFile();
-
+                    Console.WriteLine(_StringWZ.Version);
                     short? version = _StringWZ.Version;
                     if (WzTool.GetDecryptionSuccessRate(stringWzPath + ".wz", mapleVersion, ref version) < 0.8)
                     {
@@ -657,8 +658,9 @@ namespace WzVisualizer
                         return;
                     }
                 }
-                else if (Directory.Exists(stringWzPath))
-                { // KMS
+                else if (Directory.Exists(stringWzPath)) // KMS
+                {
+                    mapleVersion = WzMapleVersion.EMS;
                     _StringWZ = new WzFile(stringWzPath, mapleVersion);
                     WzDirectory dir = new WzDirectory("String", _StringWZ);
                     _StringWZ.WzDirectory = dir;

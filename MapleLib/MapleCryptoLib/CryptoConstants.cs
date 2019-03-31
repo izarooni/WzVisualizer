@@ -25,7 +25,7 @@ namespace MapleLib.MapleCryptoLib
 		/// <summary>
 		/// AES UserKey used by MapleStory
 		/// </summary>
-		public static byte[] UserKey = new byte[128] { //16 * 8
+		public static byte[] bMapleWZAESKey = new byte[128] { //16 * 8
             0x13, 0x00, 0x00, 0x00, 0x52, 0x00, 0x00, 0x00, 0x2A, 0x00, 0x00, 0x00, 0x5B, 0x00, 0x00, 0x00,
             0x08, 0x00, 0x00, 0x00, 0x02, 0x00, 0x00, 0x00, 0x10, 0x00, 0x00, 0x00, 0x60, 0x00, 0x00, 0x00,
             0x06, 0x00, 0x00, 0x00, 0x02, 0x00, 0x00, 0x00, 0x43, 0x00, 0x00, 0x00, 0x0F, 0x00, 0x00, 0x00,
@@ -66,16 +66,6 @@ namespace MapleLib.MapleCryptoLib
         };
 
 		/// <summary>
-		/// IV used to create the WzKey for GMS
-		/// </summary>
-		public static byte[] WZ_GMSIV = new byte[4] { 0x4D, 0x23, 0xC7, 0x2B };
-
-		/// <summary>
-		/// IV used to create the WzKey for MSEA
-		/// </summary>
-		public static byte[] WZ_MSEAIV = new byte[4] { 0xB9, 0x7D, 0x63, 0xE9 };
-
-		/// <summary>
 		/// Constant used in WZ offset encryption
 		/// </summary>
 		public static uint WZ_OffsetConstant = 0x581C3F6D;
@@ -88,7 +78,7 @@ namespace MapleLib.MapleCryptoLib
 			byte[] key = new byte[32];
 			for (int i = 0; i < 128; i += 16)
 			{
-				key[i / 4] = UserKey[i];
+				key[i / 4] = bMapleWZAESKey[i];
 			}
 			return key;
 		}

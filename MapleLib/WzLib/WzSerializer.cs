@@ -286,7 +286,7 @@ namespace MapleLib.WzLib.Serialization
 
         public WzImage WzImageFromIMGBytes(byte[] bytes, WzMapleVersion version, string name, bool freeResources)
         {
-            byte[] iv = WzTool.GetIvByMapleVersion(version);
+            byte[] iv = version.EncryptionKey();
             MemoryStream stream = new MemoryStream(bytes);
             WzBinaryReader wzReader = new WzBinaryReader(stream, iv);
             WzImage img = new WzImage(name, wzReader);
