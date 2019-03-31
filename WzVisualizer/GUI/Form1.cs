@@ -1,4 +1,5 @@
 ﻿using MapleLib.WzLib;
+using MapleLib.WzLib.Util;
 using MapleLib.WzLib.WzProperties;
 using System;
 using System.Collections.Generic;
@@ -38,6 +39,7 @@ namespace WzVisualizer
             InitializeComponent();
 
             string[] names = Enum.GetNames(typeof(WzMapleVersion));
+            ComboEncType.Items.Add("AUTO-DETECT");
             for (int i = 0; i < names.Length; i++)
             {
                 if (i == (int) WzMapleVersion.GENERATE) break;
@@ -46,7 +48,6 @@ namespace WzVisualizer
 
             // Obtain the last used WZ root directory
             this.TextWzPath.Text = Settings.Default.PathCache;
-            this.MapleVersion.Value = Settings.Default.MapleVersion;
             // Set default values for the ComboBoxes
             this.ComboLoadType.SelectedIndex = 0;
             this.ComboEncType.SelectedIndex = 0;
@@ -501,14 +502,9 @@ namespace WzVisualizer
             if (wzFile != null) return false;
             if (File.Exists(fileName + ".wz"))
             {
-                wzFile = new WzFile(fileName + ".wz", (short)MapleVersion.Value, mapleVersion);
-                try {
-                    wzFile.ParseWzFile();
-                    return true;
-                } catch (EndOfStreamException)
-                {
-                    MessageBox.Show("Failed to parse the WZ file. Perhaps an invalid WZ version was specified?", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+                wzFile = new WzFile(fileName + ".wz", mapleVersion);
+                wzFile.ParseWzFile();
+                return true;
             } else
             { // KMS
                 wzFile = new WzFile(fileName, mapleVersion);
@@ -517,7 +513,6 @@ namespace WzVisualizer
                 RecursivelyLoadDirectory(dir, fileName, mapleVersion);
                 return true;
             }
-            return false;
         }
 
         private void RecursivelyLoadDirectory(WzDirectory dir, string directoryPath, WzMapleVersion mapleVersion)
@@ -639,16 +634,28 @@ namespace WzVisualizer
             {
                 if (!folderPath.Equals(Settings.Default.PathCache))
                 {
-                    Settings.Default.MapleVersion = MapleVersion.Value;
                     Settings.Default.PathCache = folderPath;
                     Settings.Default.Save();
                 }
-                WzMapleVersion mapleVersion = (WzMapleVersion)ComboEncType.SelectedIndex;
                 string stringWzPath = folderPath + @"/String";
+                WzMapleVersion mapleVersion;
+
+                if (ComboEncType.SelectedIndex == 0)
+                    mapleVersion = WzTool.DetectMapleVersion(stringWzPath + ".wz", out short detectVersion);
+                else mapleVersion = (WzMapleVersion)
+                    ComboEncType.SelectedIndex - 1;
+
                 if (File.Exists(stringWzPath + ".wz"))
                 {
                     _StringWZ = new WzFile(stringWzPath + ".wz", mapleVersion);
                     _StringWZ.ParseWzFile();
+
+                    short? version = _StringWZ.Version;
+                    if (WzTool.GetDecryptionSuccessRate(stringWzPath + ".wz", mapleVersion, ref version) < 0.8)
+                    {
+                        MessageBox.Show("Failed to parse the WZ file. Perhaps the wrong WZ encryption is being used?", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
                 }
                 else if (Directory.Exists(stringWzPath))
                 { // KMS

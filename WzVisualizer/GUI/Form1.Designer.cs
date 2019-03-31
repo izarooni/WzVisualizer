@@ -191,8 +191,6 @@
             this.BtnWzLoad = new System.Windows.Forms.Button();
             this.BtnSave = new System.Windows.Forms.Button();
             this.SearchTextBox = new System.Windows.Forms.TextBox();
-            this.MapleVersion = new System.Windows.Forms.NumericUpDown();
-            this.MapleVersionLabel = new System.Windows.Forms.Label();
             this.mainFormBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.TabControlMain.SuspendLayout();
             this.TabEquipsPage.SuspendLayout();
@@ -251,7 +249,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.GridSkills)).BeginInit();
             this.TabNPCsPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.GridNPCs)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.MapleVersion)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.mainFormBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
@@ -390,7 +387,7 @@
             this.GridEFaces.Name = "GridEFaces";
             this.GridEFaces.ReadOnly = true;
             this.GridEFaces.RowTemplate.Height = 40;
-            this.GridEFaces.Size = new System.Drawing.Size(842, 428);
+            this.GridEFaces.Size = new System.Drawing.Size(842, 431);
             this.GridEFaces.TabIndex = 3;
             // 
             // GridEFacesID
@@ -440,7 +437,7 @@
             this.GridEWeapons.Name = "GridEWeapons";
             this.GridEWeapons.ReadOnly = true;
             this.GridEWeapons.RowTemplate.Height = 40;
-            this.GridEWeapons.Size = new System.Drawing.Size(842, 428);
+            this.GridEWeapons.Size = new System.Drawing.Size(842, 431);
             this.GridEWeapons.TabIndex = 3;
             // 
             // GridEWeaponsID
@@ -495,7 +492,7 @@
             this.GridEAccessory.Name = "GridEAccessory";
             this.GridEAccessory.ReadOnly = true;
             this.GridEAccessory.RowTemplate.Height = 40;
-            this.GridEAccessory.Size = new System.Drawing.Size(842, 428);
+            this.GridEAccessory.Size = new System.Drawing.Size(842, 431);
             this.GridEAccessory.TabIndex = 6;
             // 
             // GridEAccessoryID
@@ -549,7 +546,7 @@
             this.GridECaps.Name = "GridECaps";
             this.GridECaps.ReadOnly = true;
             this.GridECaps.RowTemplate.Height = 40;
-            this.GridECaps.Size = new System.Drawing.Size(842, 428);
+            this.GridECaps.Size = new System.Drawing.Size(842, 431);
             this.GridECaps.TabIndex = 0;
             // 
             // GridECapsID
@@ -604,7 +601,7 @@
             this.GridELongcoats.Name = "GridELongcoats";
             this.GridELongcoats.ReadOnly = true;
             this.GridELongcoats.RowTemplate.Height = 40;
-            this.GridELongcoats.Size = new System.Drawing.Size(842, 428);
+            this.GridELongcoats.Size = new System.Drawing.Size(842, 431);
             this.GridELongcoats.TabIndex = 1;
             // 
             // GridELongcoatsID
@@ -659,7 +656,7 @@
             this.GridETops.Name = "GridETops";
             this.GridETops.ReadOnly = true;
             this.GridETops.RowTemplate.Height = 40;
-            this.GridETops.Size = new System.Drawing.Size(842, 428);
+            this.GridETops.Size = new System.Drawing.Size(842, 431);
             this.GridETops.TabIndex = 1;
             // 
             // GridETopsID
@@ -714,7 +711,7 @@
             this.GridEBottoms.Name = "GridEBottoms";
             this.GridEBottoms.ReadOnly = true;
             this.GridEBottoms.RowTemplate.Height = 40;
-            this.GridEBottoms.Size = new System.Drawing.Size(842, 428);
+            this.GridEBottoms.Size = new System.Drawing.Size(842, 431);
             this.GridEBottoms.TabIndex = 1;
             // 
             // GridEBottomsID
@@ -769,7 +766,7 @@
             this.GridEShoes.Name = "GridEShoes";
             this.GridEShoes.ReadOnly = true;
             this.GridEShoes.RowTemplate.Height = 40;
-            this.GridEShoes.Size = new System.Drawing.Size(842, 428);
+            this.GridEShoes.Size = new System.Drawing.Size(842, 431);
             this.GridEShoes.TabIndex = 2;
             // 
             // GridEShoesID
@@ -824,7 +821,7 @@
             this.GridECapes.Name = "GridECapes";
             this.GridECapes.ReadOnly = true;
             this.GridECapes.RowTemplate.Height = 40;
-            this.GridECapes.Size = new System.Drawing.Size(842, 428);
+            this.GridECapes.Size = new System.Drawing.Size(842, 431);
             this.GridECapes.TabIndex = 3;
             // 
             // GridECapesID
@@ -879,7 +876,7 @@
             this.GridEGloves.Name = "GridEGloves";
             this.GridEGloves.ReadOnly = true;
             this.GridEGloves.RowTemplate.Height = 40;
-            this.GridEGloves.Size = new System.Drawing.Size(842, 428);
+            this.GridEGloves.Size = new System.Drawing.Size(842, 431);
             this.GridEGloves.TabIndex = 3;
             // 
             // GridEGlovesID
@@ -934,7 +931,7 @@
             this.GridERings.Name = "GridERings";
             this.GridERings.ReadOnly = true;
             this.GridERings.RowTemplate.Height = 40;
-            this.GridERings.Size = new System.Drawing.Size(842, 428);
+            this.GridERings.Size = new System.Drawing.Size(842, 431);
             this.GridERings.TabIndex = 3;
             // 
             // GridERingsID
@@ -989,7 +986,7 @@
             this.GridEShields.Name = "GridEShields";
             this.GridEShields.ReadOnly = true;
             this.GridEShields.RowTemplate.Height = 40;
-            this.GridEShields.Size = new System.Drawing.Size(842, 428);
+            this.GridEShields.Size = new System.Drawing.Size(842, 431);
             this.GridEShields.TabIndex = 4;
             // 
             // ColumnEShieldsID
@@ -1044,7 +1041,7 @@
             this.GridETames.Name = "GridETames";
             this.GridETames.ReadOnly = true;
             this.GridETames.RowTemplate.Height = 40;
-            this.GridETames.Size = new System.Drawing.Size(842, 428);
+            this.GridETames.Size = new System.Drawing.Size(842, 431);
             this.GridETames.TabIndex = 5;
             // 
             // GridETamesID
@@ -1178,7 +1175,7 @@
             this.GridUScrolls.Name = "GridUScrolls";
             this.GridUScrolls.ReadOnly = true;
             this.GridUScrolls.RowTemplate.Height = 40;
-            this.GridUScrolls.Size = new System.Drawing.Size(836, 422);
+            this.GridUScrolls.Size = new System.Drawing.Size(836, 425);
             this.GridUScrolls.TabIndex = 6;
             // 
             // GridUScrollsID
@@ -1233,7 +1230,7 @@
             this.GridUProjectiles.Name = "GridUProjectiles";
             this.GridUProjectiles.ReadOnly = true;
             this.GridUProjectiles.RowTemplate.Height = 40;
-            this.GridUProjectiles.Size = new System.Drawing.Size(836, 422);
+            this.GridUProjectiles.Size = new System.Drawing.Size(836, 425);
             this.GridUProjectiles.TabIndex = 6;
             // 
             // GridUProjectilesID
@@ -1366,7 +1363,7 @@
             this.GridSOthers.Name = "GridSOthers";
             this.GridSOthers.ReadOnly = true;
             this.GridSOthers.RowTemplate.Height = 40;
-            this.GridSOthers.Size = new System.Drawing.Size(836, 422);
+            this.GridSOthers.Size = new System.Drawing.Size(836, 425);
             this.GridSOthers.TabIndex = 7;
             // 
             // GridSOthersID
@@ -1749,13 +1746,13 @@
             this.ComboEncType.FormattingEnabled = true;
             this.ComboEncType.Location = new System.Drawing.Point(67, 5);
             this.ComboEncType.Name = "ComboEncType";
-            this.ComboEncType.Size = new System.Drawing.Size(88, 21);
+            this.ComboEncType.Size = new System.Drawing.Size(111, 21);
             this.ComboEncType.TabIndex = 2;
             // 
             // TextWzPath
             // 
             this.TextWzPath.Enabled = false;
-            this.TextWzPath.Location = new System.Drawing.Point(162, 5);
+            this.TextWzPath.Location = new System.Drawing.Point(184, 5);
             this.TextWzPath.Name = "TextWzPath";
             this.TextWzPath.Size = new System.Drawing.Size(227, 20);
             this.TextWzPath.TabIndex = 3;
@@ -1764,7 +1761,7 @@
             // BtnWzLoad
             // 
             this.BtnWzLoad.Enabled = false;
-            this.BtnWzLoad.Location = new System.Drawing.Point(396, 5);
+            this.BtnWzLoad.Location = new System.Drawing.Point(418, 5);
             this.BtnWzLoad.Name = "BtnWzLoad";
             this.BtnWzLoad.Size = new System.Drawing.Size(75, 23);
             this.BtnWzLoad.TabIndex = 4;
@@ -1778,7 +1775,7 @@
             this.BtnSave.FlatAppearance.BorderSize = 0;
             this.BtnSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BtnSave.Image = global::WzVisualizer.Properties.Resources.floppy_icon;
-            this.BtnSave.Location = new System.Drawing.Point(478, 5);
+            this.BtnSave.Location = new System.Drawing.Point(500, 5);
             this.BtnSave.Name = "BtnSave";
             this.BtnSave.Size = new System.Drawing.Size(23, 23);
             this.BtnSave.TabIndex = 5;
@@ -1796,29 +1793,6 @@
             this.SearchTextBox.TabIndex = 6;
             this.SearchTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.SearchTextBox_KeyPress);
             // 
-            // MapleVersion
-            // 
-            this.MapleVersion.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.MapleVersion.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.MapleVersion.Location = new System.Drawing.Point(580, 5);
-            this.MapleVersion.Name = "MapleVersion";
-            this.MapleVersion.Size = new System.Drawing.Size(120, 20);
-            this.MapleVersion.TabIndex = 7;
-            // 
-            // MapleVersionLabel
-            // 
-            this.MapleVersionLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.MapleVersionLabel.AutoSize = true;
-            this.MapleVersionLabel.Location = new System.Drawing.Point(511, 8);
-            this.MapleVersionLabel.Name = "MapleVersionLabel";
-            this.MapleVersionLabel.Size = new System.Drawing.Size(63, 13);
-            this.MapleVersionLabel.TabIndex = 8;
-            this.MapleVersionLabel.Text = "WZ Version";
-            this.MapleVersionLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
             // mainFormBindingSource
             // 
             this.mainFormBindingSource.DataSource = typeof(WzVisualizer.MainForm);
@@ -1828,8 +1802,6 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(864, 525);
-            this.Controls.Add(this.MapleVersionLabel);
-            this.Controls.Add(this.MapleVersion);
             this.Controls.Add(this.SearchTextBox);
             this.Controls.Add(this.BtnSave);
             this.Controls.Add(this.BtnWzLoad);
@@ -1898,7 +1870,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.GridSkills)).EndInit();
             this.TabNPCsPage.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.GridNPCs)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.MapleVersion)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.mainFormBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -2069,8 +2040,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn GridEFacesID;
         private System.Windows.Forms.DataGridViewImageColumn GridEFacesImage;
         private System.Windows.Forms.DataGridViewTextBoxColumn GridEFacesName;
-        private System.Windows.Forms.NumericUpDown MapleVersion;
-        private System.Windows.Forms.Label MapleVersionLabel;
     }
 }
 

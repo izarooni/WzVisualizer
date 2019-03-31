@@ -121,7 +121,7 @@ namespace MapleLib.WzLib.Util
             return result;
         }
 
-        private static double GetDecryptionSuccessRate(string wzPath, WzMapleVersion encVersion, ref short? version)
+        public static double GetDecryptionSuccessRate(string wzPath, WzMapleVersion encVersion, ref short? version)
         {
             WzFile wzf;
             if (version == null)
@@ -134,6 +134,7 @@ namespace MapleLib.WzLib.Util
             int totalChars = 0;
             foreach (WzDirectory wzdir in wzf.WzDirectory.WzDirectories)
             {
+                Console.WriteLine(wzdir.name + " / " + encVersion);
                 recognizedChars += GetRecognizedCharacters(wzdir.Name);
                 totalChars += wzdir.Name.Length;
             }
