@@ -82,6 +82,8 @@ namespace WzVisualizer {
             this.GridSkills.CellDoubleClick += Grid_CellDoubleClick;
 
             this.GridNPCs.CellDoubleClick += Grid_CellDoubleClick;
+
+            this.GridPets.CellDoubleClick += Grid_CellDoubleClick;
             #endregion
 
             #region state change (cell selection)
@@ -116,6 +118,8 @@ namespace WzVisualizer {
             this.GridSkills.CellStateChanged += Grid_RowStateChanged;
 
             this.GridNPCs.CellStateChanged += Grid_RowStateChanged;
+
+            this.GridPets.CellStateChanged += Grid_RowStateChanged;
             #endregion
 
             #endregion
