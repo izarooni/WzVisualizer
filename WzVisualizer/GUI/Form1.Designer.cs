@@ -185,6 +185,8 @@
             this.GridNPCsImage = new System.Windows.Forms.DataGridViewImageColumn();
             this.GridNPCsName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.GridNPCsProperties = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.TabPetsPage = new System.Windows.Forms.TabPage();
+            this.GridPets = new System.Windows.Forms.DataGridView();
             this.ComboLoadType = new System.Windows.Forms.ComboBox();
             this.ComboEncType = new System.Windows.Forms.ComboBox();
             this.TextWzPath = new System.Windows.Forms.TextBox();
@@ -192,12 +194,10 @@
             this.BtnSave = new System.Windows.Forms.Button();
             this.SearchTextBox = new System.Windows.Forms.TextBox();
             this.mainFormBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.TabPetsPage = new System.Windows.Forms.TabPage();
-            this.GridPets = new System.Windows.Forms.DataGridView();
-            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewImageColumn1 = new System.Windows.Forms.DataGridViewImageColumn();
-            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.GridPetsID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.GridPetsImage = new System.Windows.Forms.DataGridViewImageColumn();
+            this.GridPetsName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.GridPetsProperties = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.TabControlMain.SuspendLayout();
             this.TabEquipsPage.SuspendLayout();
             this.TabEquips.SuspendLayout();
@@ -255,9 +255,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.GridSkills)).BeginInit();
             this.TabNPCsPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.GridNPCs)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.mainFormBindingSource)).BeginInit();
             this.TabPetsPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.GridPets)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.mainFormBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // TabControlMain
@@ -1736,6 +1736,35 @@
             this.GridNPCsProperties.Name = "GridNPCsProperties";
             this.GridNPCsProperties.ReadOnly = true;
             // 
+            // TabPetsPage
+            // 
+            this.TabPetsPage.Controls.Add(this.GridPets);
+            this.TabPetsPage.Location = new System.Drawing.Point(4, 29);
+            this.TabPetsPage.Name = "TabPetsPage";
+            this.TabPetsPage.Padding = new System.Windows.Forms.Padding(3);
+            this.TabPetsPage.Size = new System.Drawing.Size(856, 463);
+            this.TabPetsPage.TabIndex = 10;
+            this.TabPetsPage.Text = "Pets";
+            this.TabPetsPage.UseVisualStyleBackColor = true;
+            // 
+            // GridPets
+            // 
+            this.GridPets.AllowUserToAddRows = false;
+            this.GridPets.AllowUserToDeleteRows = false;
+            this.GridPets.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.GridPets.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.GridPetsID,
+            this.GridPetsImage,
+            this.GridPetsName,
+            this.GridPetsProperties});
+            this.GridPets.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.GridPets.Location = new System.Drawing.Point(3, 3);
+            this.GridPets.Name = "GridPets";
+            this.GridPets.ReadOnly = true;
+            this.GridPets.RowTemplate.Height = 60;
+            this.GridPets.Size = new System.Drawing.Size(850, 457);
+            this.GridPets.TabIndex = 10;
+            // 
             // ComboLoadType
             // 
             this.ComboLoadType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -1806,60 +1835,31 @@
             // 
             this.mainFormBindingSource.DataSource = typeof(WzVisualizer.MainForm);
             // 
-            // TabPetsPage
+            // GridPetsID
             // 
-            this.TabPetsPage.Controls.Add(this.GridPets);
-            this.TabPetsPage.Location = new System.Drawing.Point(4, 29);
-            this.TabPetsPage.Name = "TabPetsPage";
-            this.TabPetsPage.Padding = new System.Windows.Forms.Padding(3);
-            this.TabPetsPage.Size = new System.Drawing.Size(856, 463);
-            this.TabPetsPage.TabIndex = 10;
-            this.TabPetsPage.Text = "Pets";
-            this.TabPetsPage.UseVisualStyleBackColor = true;
+            this.GridPetsID.HeaderText = "ID";
+            this.GridPetsID.Name = "GridPetsID";
+            this.GridPetsID.ReadOnly = true;
             // 
-            // GridPets
+            // GridPetsImage
             // 
-            this.GridPets.AllowUserToAddRows = false;
-            this.GridPets.AllowUserToDeleteRows = false;
-            this.GridPets.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.GridPets.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.dataGridViewTextBoxColumn1,
-            this.dataGridViewImageColumn1,
-            this.dataGridViewTextBoxColumn2,
-            this.dataGridViewTextBoxColumn3});
-            this.GridPets.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.GridPets.Location = new System.Drawing.Point(3, 3);
-            this.GridPets.Name = "GridPets";
-            this.GridPets.ReadOnly = true;
-            this.GridPets.RowTemplate.Height = 60;
-            this.GridPets.Size = new System.Drawing.Size(850, 457);
-            this.GridPets.TabIndex = 10;
+            this.GridPetsImage.HeaderText = "Image";
+            this.GridPetsImage.Name = "GridPetsImage";
+            this.GridPetsImage.ReadOnly = true;
+            this.GridPetsImage.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.GridPetsImage.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             // 
-            // dataGridViewTextBoxColumn1
+            // GridPetsName
             // 
-            this.dataGridViewTextBoxColumn1.HeaderText = "ID";
-            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
-            this.dataGridViewTextBoxColumn1.ReadOnly = true;
+            this.GridPetsName.HeaderText = "Name";
+            this.GridPetsName.Name = "GridPetsName";
+            this.GridPetsName.ReadOnly = true;
             // 
-            // dataGridViewImageColumn1
+            // GridPetsProperties
             // 
-            this.dataGridViewImageColumn1.HeaderText = "Image";
-            this.dataGridViewImageColumn1.Name = "dataGridViewImageColumn1";
-            this.dataGridViewImageColumn1.ReadOnly = true;
-            this.dataGridViewImageColumn1.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridViewImageColumn1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            // 
-            // dataGridViewTextBoxColumn2
-            // 
-            this.dataGridViewTextBoxColumn2.HeaderText = "Name";
-            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
-            this.dataGridViewTextBoxColumn2.ReadOnly = true;
-            // 
-            // dataGridViewTextBoxColumn3
-            // 
-            this.dataGridViewTextBoxColumn3.HeaderText = "Properties";
-            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
-            this.dataGridViewTextBoxColumn3.ReadOnly = true;
+            this.GridPetsProperties.HeaderText = "Properties";
+            this.GridPetsProperties.Name = "GridPetsProperties";
+            this.GridPetsProperties.ReadOnly = true;
             // 
             // MainForm
             // 
@@ -1934,9 +1934,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.GridSkills)).EndInit();
             this.TabNPCsPage.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.GridNPCs)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.mainFormBindingSource)).EndInit();
             this.TabPetsPage.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.GridPets)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.mainFormBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -2108,10 +2108,10 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn GridEFacesName;
         private System.Windows.Forms.TabPage TabPetsPage;
         private System.Windows.Forms.DataGridView GridPets;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewImageColumn dataGridViewImageColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
+        private System.Windows.Forms.DataGridViewTextBoxColumn GridPetsID;
+        private System.Windows.Forms.DataGridViewImageColumn GridPetsImage;
+        private System.Windows.Forms.DataGridViewTextBoxColumn GridPetsName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn GridPetsProperties;
     }
 }
 
