@@ -192,6 +192,12 @@
             this.BtnSave = new System.Windows.Forms.Button();
             this.SearchTextBox = new System.Windows.Forms.TextBox();
             this.mainFormBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.TabPetsPage = new System.Windows.Forms.TabPage();
+            this.GridPets = new System.Windows.Forms.DataGridView();
+            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewImageColumn1 = new System.Windows.Forms.DataGridViewImageColumn();
+            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.TabControlMain.SuspendLayout();
             this.TabEquipsPage.SuspendLayout();
             this.TabEquips.SuspendLayout();
@@ -250,6 +256,8 @@
             this.TabNPCsPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.GridNPCs)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.mainFormBindingSource)).BeginInit();
+            this.TabPetsPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.GridPets)).BeginInit();
             this.SuspendLayout();
             // 
             // TabControlMain
@@ -266,6 +274,7 @@
             this.TabControlMain.Controls.Add(this.TabMobsPage);
             this.TabControlMain.Controls.Add(this.TabSkillsPage);
             this.TabControlMain.Controls.Add(this.TabNPCsPage);
+            this.TabControlMain.Controls.Add(this.TabPetsPage);
             this.TabControlMain.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TabControlMain.Location = new System.Drawing.Point(0, 29);
             this.TabControlMain.Margin = new System.Windows.Forms.Padding(0);
@@ -387,7 +396,7 @@
             this.GridEFaces.Name = "GridEFaces";
             this.GridEFaces.ReadOnly = true;
             this.GridEFaces.RowTemplate.Height = 40;
-            this.GridEFaces.Size = new System.Drawing.Size(842, 431);
+            this.GridEFaces.Size = new System.Drawing.Size(842, 428);
             this.GridEFaces.TabIndex = 3;
             // 
             // GridEFacesID
@@ -437,7 +446,7 @@
             this.GridEWeapons.Name = "GridEWeapons";
             this.GridEWeapons.ReadOnly = true;
             this.GridEWeapons.RowTemplate.Height = 40;
-            this.GridEWeapons.Size = new System.Drawing.Size(842, 431);
+            this.GridEWeapons.Size = new System.Drawing.Size(842, 428);
             this.GridEWeapons.TabIndex = 3;
             // 
             // GridEWeaponsID
@@ -492,7 +501,7 @@
             this.GridEAccessory.Name = "GridEAccessory";
             this.GridEAccessory.ReadOnly = true;
             this.GridEAccessory.RowTemplate.Height = 40;
-            this.GridEAccessory.Size = new System.Drawing.Size(842, 431);
+            this.GridEAccessory.Size = new System.Drawing.Size(842, 428);
             this.GridEAccessory.TabIndex = 6;
             // 
             // GridEAccessoryID
@@ -546,7 +555,7 @@
             this.GridECaps.Name = "GridECaps";
             this.GridECaps.ReadOnly = true;
             this.GridECaps.RowTemplate.Height = 40;
-            this.GridECaps.Size = new System.Drawing.Size(842, 431);
+            this.GridECaps.Size = new System.Drawing.Size(842, 428);
             this.GridECaps.TabIndex = 0;
             // 
             // GridECapsID
@@ -601,7 +610,7 @@
             this.GridELongcoats.Name = "GridELongcoats";
             this.GridELongcoats.ReadOnly = true;
             this.GridELongcoats.RowTemplate.Height = 40;
-            this.GridELongcoats.Size = new System.Drawing.Size(842, 431);
+            this.GridELongcoats.Size = new System.Drawing.Size(842, 428);
             this.GridELongcoats.TabIndex = 1;
             // 
             // GridELongcoatsID
@@ -656,7 +665,7 @@
             this.GridETops.Name = "GridETops";
             this.GridETops.ReadOnly = true;
             this.GridETops.RowTemplate.Height = 40;
-            this.GridETops.Size = new System.Drawing.Size(842, 431);
+            this.GridETops.Size = new System.Drawing.Size(842, 428);
             this.GridETops.TabIndex = 1;
             // 
             // GridETopsID
@@ -711,7 +720,7 @@
             this.GridEBottoms.Name = "GridEBottoms";
             this.GridEBottoms.ReadOnly = true;
             this.GridEBottoms.RowTemplate.Height = 40;
-            this.GridEBottoms.Size = new System.Drawing.Size(842, 431);
+            this.GridEBottoms.Size = new System.Drawing.Size(842, 428);
             this.GridEBottoms.TabIndex = 1;
             // 
             // GridEBottomsID
@@ -766,7 +775,7 @@
             this.GridEShoes.Name = "GridEShoes";
             this.GridEShoes.ReadOnly = true;
             this.GridEShoes.RowTemplate.Height = 40;
-            this.GridEShoes.Size = new System.Drawing.Size(842, 431);
+            this.GridEShoes.Size = new System.Drawing.Size(842, 428);
             this.GridEShoes.TabIndex = 2;
             // 
             // GridEShoesID
@@ -821,7 +830,7 @@
             this.GridECapes.Name = "GridECapes";
             this.GridECapes.ReadOnly = true;
             this.GridECapes.RowTemplate.Height = 40;
-            this.GridECapes.Size = new System.Drawing.Size(842, 431);
+            this.GridECapes.Size = new System.Drawing.Size(842, 428);
             this.GridECapes.TabIndex = 3;
             // 
             // GridECapesID
@@ -876,7 +885,7 @@
             this.GridEGloves.Name = "GridEGloves";
             this.GridEGloves.ReadOnly = true;
             this.GridEGloves.RowTemplate.Height = 40;
-            this.GridEGloves.Size = new System.Drawing.Size(842, 431);
+            this.GridEGloves.Size = new System.Drawing.Size(842, 428);
             this.GridEGloves.TabIndex = 3;
             // 
             // GridEGlovesID
@@ -931,7 +940,7 @@
             this.GridERings.Name = "GridERings";
             this.GridERings.ReadOnly = true;
             this.GridERings.RowTemplate.Height = 40;
-            this.GridERings.Size = new System.Drawing.Size(842, 431);
+            this.GridERings.Size = new System.Drawing.Size(842, 428);
             this.GridERings.TabIndex = 3;
             // 
             // GridERingsID
@@ -986,7 +995,7 @@
             this.GridEShields.Name = "GridEShields";
             this.GridEShields.ReadOnly = true;
             this.GridEShields.RowTemplate.Height = 40;
-            this.GridEShields.Size = new System.Drawing.Size(842, 431);
+            this.GridEShields.Size = new System.Drawing.Size(842, 428);
             this.GridEShields.TabIndex = 4;
             // 
             // ColumnEShieldsID
@@ -1041,7 +1050,7 @@
             this.GridETames.Name = "GridETames";
             this.GridETames.ReadOnly = true;
             this.GridETames.RowTemplate.Height = 40;
-            this.GridETames.Size = new System.Drawing.Size(842, 431);
+            this.GridETames.Size = new System.Drawing.Size(842, 428);
             this.GridETames.TabIndex = 5;
             // 
             // GridETamesID
@@ -1175,7 +1184,7 @@
             this.GridUScrolls.Name = "GridUScrolls";
             this.GridUScrolls.ReadOnly = true;
             this.GridUScrolls.RowTemplate.Height = 40;
-            this.GridUScrolls.Size = new System.Drawing.Size(836, 425);
+            this.GridUScrolls.Size = new System.Drawing.Size(836, 422);
             this.GridUScrolls.TabIndex = 6;
             // 
             // GridUScrollsID
@@ -1230,7 +1239,7 @@
             this.GridUProjectiles.Name = "GridUProjectiles";
             this.GridUProjectiles.ReadOnly = true;
             this.GridUProjectiles.RowTemplate.Height = 40;
-            this.GridUProjectiles.Size = new System.Drawing.Size(836, 425);
+            this.GridUProjectiles.Size = new System.Drawing.Size(836, 422);
             this.GridUProjectiles.TabIndex = 6;
             // 
             // GridUProjectilesID
@@ -1363,7 +1372,7 @@
             this.GridSOthers.Name = "GridSOthers";
             this.GridSOthers.ReadOnly = true;
             this.GridSOthers.RowTemplate.Height = 40;
-            this.GridSOthers.Size = new System.Drawing.Size(836, 425);
+            this.GridSOthers.Size = new System.Drawing.Size(836, 422);
             this.GridSOthers.TabIndex = 7;
             // 
             // GridSOthersID
@@ -1797,6 +1806,61 @@
             // 
             this.mainFormBindingSource.DataSource = typeof(WzVisualizer.MainForm);
             // 
+            // TabPetsPage
+            // 
+            this.TabPetsPage.Controls.Add(this.GridPets);
+            this.TabPetsPage.Location = new System.Drawing.Point(4, 29);
+            this.TabPetsPage.Name = "TabPetsPage";
+            this.TabPetsPage.Padding = new System.Windows.Forms.Padding(3);
+            this.TabPetsPage.Size = new System.Drawing.Size(856, 463);
+            this.TabPetsPage.TabIndex = 10;
+            this.TabPetsPage.Text = "Pets";
+            this.TabPetsPage.UseVisualStyleBackColor = true;
+            // 
+            // GridPets
+            // 
+            this.GridPets.AllowUserToAddRows = false;
+            this.GridPets.AllowUserToDeleteRows = false;
+            this.GridPets.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.GridPets.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dataGridViewTextBoxColumn1,
+            this.dataGridViewImageColumn1,
+            this.dataGridViewTextBoxColumn2,
+            this.dataGridViewTextBoxColumn3});
+            this.GridPets.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.GridPets.Location = new System.Drawing.Point(3, 3);
+            this.GridPets.Name = "GridPets";
+            this.GridPets.ReadOnly = true;
+            this.GridPets.RowTemplate.Height = 60;
+            this.GridPets.Size = new System.Drawing.Size(850, 457);
+            this.GridPets.TabIndex = 10;
+            // 
+            // dataGridViewTextBoxColumn1
+            // 
+            this.dataGridViewTextBoxColumn1.HeaderText = "ID";
+            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+            this.dataGridViewTextBoxColumn1.ReadOnly = true;
+            // 
+            // dataGridViewImageColumn1
+            // 
+            this.dataGridViewImageColumn1.HeaderText = "Image";
+            this.dataGridViewImageColumn1.Name = "dataGridViewImageColumn1";
+            this.dataGridViewImageColumn1.ReadOnly = true;
+            this.dataGridViewImageColumn1.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridViewImageColumn1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
+            // dataGridViewTextBoxColumn2
+            // 
+            this.dataGridViewTextBoxColumn2.HeaderText = "Name";
+            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
+            this.dataGridViewTextBoxColumn2.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn3
+            // 
+            this.dataGridViewTextBoxColumn3.HeaderText = "Properties";
+            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
+            this.dataGridViewTextBoxColumn3.ReadOnly = true;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1871,6 +1935,8 @@
             this.TabNPCsPage.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.GridNPCs)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.mainFormBindingSource)).EndInit();
+            this.TabPetsPage.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.GridPets)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -2040,6 +2106,12 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn GridEFacesID;
         private System.Windows.Forms.DataGridViewImageColumn GridEFacesImage;
         private System.Windows.Forms.DataGridViewTextBoxColumn GridEFacesName;
+        private System.Windows.Forms.TabPage TabPetsPage;
+        private System.Windows.Forms.DataGridView GridPets;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
+        private System.Windows.Forms.DataGridViewImageColumn dataGridViewImageColumn1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
     }
 }
 

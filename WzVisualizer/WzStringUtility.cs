@@ -20,6 +20,7 @@ namespace WzVisualizer
         private readonly WzImage MobImage;
         private readonly WzImage SkillImage;
         private readonly WzImage NPCImage;
+        private readonly WzImage PetImage;
 
         public WzStringUtility(WzFile StringWZ)
         {
@@ -32,6 +33,7 @@ namespace WzVisualizer
             MobImage = StringWZ.WzDirectory.GetImageByName("Mob.img");
             SkillImage = StringWZ.WzDirectory.GetImageByName("Skill.img");
             NPCImage = StringWZ.WzDirectory.GetImageByName("Npc.img");
+            PetImage = StringWZ.WzDirectory.GetImageByName("Pet.img");
         }
 
         private static string LeftPadding(char pad, string input, int count)
@@ -158,6 +160,12 @@ namespace WzVisualizer
         {
             SetParsed(ConsumeImage);
             WzImageProperty imgProperty = ConsumeImage.GetFromPath(string.Format("{0}/name", ID));
+            return ((WzStringProperty)imgProperty)?.Value;
+        }
+
+        public string GetPet(int ID) {
+            SetParsed(PetImage);
+            WzImageProperty imgProperty = PetImage.GetFromPath(string.Format("{0}/name", ID));
             return ((WzStringProperty)imgProperty)?.Value;
         }
     }

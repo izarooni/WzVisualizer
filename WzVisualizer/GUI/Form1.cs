@@ -16,13 +16,11 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using WzVisualizer.Properties;
 
-namespace WzVisualizer
-{
+namespace WzVisualizer {
 
     internal delegate void AddGridRowCallBack(DataGridView grid, BinData binData);
 
-    public partial class MainForm : Form
-    {
+    public partial class MainForm : Form {
         private PropertiesViewer viewer = new PropertiesViewer();
         private FolderBrowserDialog FB = new FolderBrowserDialog();
         private WzStringUtility StringUtility = null;
@@ -34,15 +32,13 @@ namespace WzVisualizer
         private WzFile _SkillWZ = null;
         private WzFile _NpcWZ = null;
 
-        public MainForm()
-        {
+        public MainForm() {
             InitializeComponent();
 
             string[] names = Enum.GetNames(typeof(WzMapleVersion));
             ComboEncType.Items.Add("AUTO-DETECT");
-            for (int i = 0; i < names.Length; i++)
-            {
-                if (i == (int) WzMapleVersion.GENERATE) break;
+            for (int i = 0; i < names.Length; i++) {
+                if (i == (int)WzMapleVersion.GENERATE) break;
                 ComboEncType.Items.Add(names[i]);
             }
 
@@ -118,7 +114,7 @@ namespace WzVisualizer
             this.GridMobs.CellStateChanged += Grid_RowStateChanged;
 
             this.GridSkills.CellStateChanged += Grid_RowStateChanged;
-            
+
             this.GridNPCs.CellStateChanged += Grid_RowStateChanged;
             #endregion
 
@@ -126,8 +122,7 @@ namespace WzVisualizer
         }
 
         #region row append
-        private void AddFaceRow(WzImage image)
-        {
+        private void AddFaceRow(WzImage image) {
             string imgName = Path.GetFileNameWithoutExtension(image.Name);
             int ID = int.Parse(imgName);
             WzObject wzObject = image.GetFromPath("blink/0/face");
@@ -140,30 +135,25 @@ namespace WzVisualizer
             GridEFaces.Rows.Add(new object[] { ID, bitmap, name });
         }
 
-        private void AddHairRow(WzImage image)
-        {
+        private void AddHairRow(WzImage image) {
             string imgName = Path.GetFileNameWithoutExtension(image.Name);
             int ID = int.Parse(imgName);
             WzCanvasProperty icon = (WzCanvasProperty)image.GetFromPath("default/hairOverHead");
-            if (icon == null)
-            {
+            if (icon == null) {
                 icon = (WzCanvasProperty)image.GetFromPath("default/hair");
             }
             string name = StringUtility.GetEqp(ID);
             GridEHairs.Rows.Add(new object[] { ID, icon?.GetBitmap(), name });
         }
 
-        private void AddGridRow(DataGridView grid, object wzObject)
-        {
+        private void AddGridRow(DataGridView grid, object wzObject) {
             int ID;
             string properties = "";
             string name = null;
             WzCanvasProperty icon = null;
 
-            if (wzObject is WzImage image)
-            {
-                if (image.WzFileParent.Name.StartsWith("Npc"))
-                {
+            if (wzObject is WzImage image) {
+                if (image.WzFileParent.Name.StartsWith("Npc")) {
                     // NPC icon breadcrumb like: '{ID}/stand/0'
                     // and also sometimes contains a link STRING property instead of using UOL
                     image.ParseImage();
@@ -173,8 +163,7 @@ namespace WzVisualizer
                     name = StringUtility.GetNPC(ID);
 
                     WzImageProperty linkProperty = image.GetFromPath("info/link");
-                    if (linkProperty != null)
-                    {
+                    if (linkProperty != null) {
                         string linkName = ((WzStringProperty)linkProperty).Value;
                         image = ((WzDirectory)image.Parent).GetChildImages().Find(p => p.Name.Equals(linkName + ".img"));
                         if (image == null) return;
@@ -182,8 +171,7 @@ namespace WzVisualizer
                     WzImageProperty temp = image.GetFromPath("stand/0");
                     if (temp is WzUOLProperty uol) icon = (WzCanvasProperty)uol.LinkValue;
                     else icon = (WzCanvasProperty)temp;
-                } else if (image.WzFileParent.Name.StartsWith("Mob"))
-                {
+                } else if (image.WzFileParent.Name.StartsWith("Mob")) {
                     // Mob icon breadcrumb like: '{ID}/(move|stand)/0'
                     // where the 'move' or 'stand' sub property may not exist
                     image.ParseImage();
@@ -193,8 +181,7 @@ namespace WzVisualizer
                     name = StringUtility.GetMob(ID);
 
                     WzStringProperty linkProperty = (WzStringProperty)image.GetFromPath("info/link");
-                    if (linkProperty != null)
-                    {
+                    if (linkProperty != null) {
                         string linkName = ((WzStringProperty)linkProperty).Value;
                         image = ((WzDirectory)image.Parent).GetChildImages().Find(p => p.Name.Equals(linkName + ".img"));
                         if (image == null) return;
@@ -206,28 +193,23 @@ namespace WzVisualizer
                     if (temp == null) temp = image.GetFromPath("move/0");
                     if (temp is WzUOLProperty uol) icon = (WzCanvasProperty)uol.LinkValue;
                     else icon = (WzCanvasProperty)temp;
-                }
-                else
-                {  // for breadcrumb like: '{ID}.img/info/icon' (character.wz)
+                } else {  // for breadcrumb like: '{ID}.img/info/icon'
                     image.ParseImage();
                     string imgName = Path.GetFileNameWithoutExtension(image.Name);
                     properties = BuildProperties(image);
                     ID = int.Parse(imgName);
                     if (ItemConstants.IsEquip(ID)) name = StringUtility.GetEqp(ID);
+                    else if (ItemConstants.IsPet(ID)) name = StringUtility.GetPet(ID);
 
                     icon = (WzCanvasProperty)image.GetFromPath("info/icon");
                 }
-            } else if (wzObject is WzSubProperty subProperty)
-            {
-                if (subProperty.WzFileParent.Name.StartsWith("Skill"))
-                {
+            } else if (wzObject is WzSubProperty subProperty) {
+                if (subProperty.WzFileParent.Name.StartsWith("Skill")) {
                     ID = int.Parse(subProperty.Name);
                     name = StringUtility.GetSkill(subProperty.Name);
 
                     icon = (WzCanvasProperty)subProperty.GetFromPath("icon");
-                }
-                else
-                { // for breadcrumb like: 'category.img/{ID}/info/icon' (etc.wz)
+                } else { // for breadcrumb like: 'category.img/{ID}/info/icon' (etc.wz)
                     string imgName = subProperty.Name;
                     properties = BuildProperties(subProperty);
                     ID = int.Parse(imgName);
@@ -254,18 +236,14 @@ namespace WzVisualizer
         /// </summary>
         /// <param name="wzObject">a WzSubProperty or WzImage</param>
         /// <returns></returns>
-        private string BuildProperties(object wzObject)
-        {
+        private string BuildProperties(object wzObject) {
             string properties = "";
             WzImageProperty infoRoot = null;
             if (wzObject is WzSubProperty subProperty) infoRoot = subProperty.GetFromPath("info");
             else if (wzObject is WzImage wzImage) infoRoot = wzImage.GetFromPath("info");
-            if (infoRoot != null && infoRoot.WzProperties != null)
-            {
-                foreach (WzImageProperty imgProperties in infoRoot.WzProperties)
-                {
-                    switch (imgProperties.PropertyType)
-                    {
+            if (infoRoot != null && infoRoot.WzProperties != null) {
+                foreach (WzImageProperty imgProperties in infoRoot.WzProperties) {
+                    switch (imgProperties.PropertyType) {
                         default:
                             properties += string.Format("\r\n{0}={1}", imgProperties.Name, imgProperties.WzValue);
                             break;
@@ -280,233 +258,220 @@ namespace WzVisualizer
             return properties;
         }
 
-        private void LoadWzData(WzMapleVersion mapleVersion, string mapleDirectory)
-        {
-            int selected_root = TabControlMain.SelectedIndex; 
-            switch (selected_root)
-            {
+        private void LoadWzData(WzMapleVersion mapleVersion, string mapleDirectory) {
+            int selected_root = TabControlMain.SelectedIndex;
+            switch (selected_root) {
                 default:
                     Console.WriteLine("Unable to load WZ data unhandled selected index: " + TabControlMain.SelectedIndex);
                     break;
                 case 0: // Equips
                     {
-                        if (!LoadWzFileIfAbsent(ref _CharacterWZ, mapleDirectory + "/Character", mapleVersion)) return;
-                        DataGridView dGrid = (DataGridView)TabEquips.SelectedTab.Controls[0];
-                        dGrid.Rows.Clear();
-                        List<WzImage> children = _CharacterWZ.WzDirectory.GetChildImages();
-                        children.Sort((a, b) => a.Name.CompareTo(b.Name));
-                        for (int i = 0; i < _CharacterWZ.WzDirectory.CountImages(); i++)
-                        {
-                            WzImage image = children[i];
-                            string name = Path.GetFileNameWithoutExtension(image.Name);
-                            if (int.TryParse(name, out int equip_id))
-                            {
-                                int selectedTab = TabEquips.SelectedIndex;
-                                int bodyPart = equip_id / 10000;
-                                switch (bodyPart)
-                                {
-                                    default:
-                                        if (selectedTab == 2 && bodyPart >= 130 && bodyPart <= 170) AddGridRow(GridEWeapons, image);
-                                        else if (selectedTab == 1 && bodyPart == 2) AddFaceRow(image);
-                                        else if (selectedTab == 0 && bodyPart == 3) AddHairRow(image); 
-                                        break;
-                                    case 100: // Caps
-                                        if (selectedTab == 4) AddGridRow(GridECaps, image);
-                                        break;
-                                    case 101:
-                                    case 102:
-                                    case 103:
-                                    case 112:
-                                    case 113:
-                                    case 114: // Accessory
-                                        if (selectedTab == 3) AddGridRow(GridEAccessory, image);
-                                        break;
-                                    case 110: // Cape
-                                        if (selectedTab == 9) AddGridRow(GridECapes, image);
-                                        break;
-                                    case 104: // Coat
-                                        if (selectedTab == 6) AddGridRow(GridETops, image);
-                                        break;
-                                    case 108: // Glove
-                                        if (selectedTab == 10) AddGridRow(GridEGloves, image);
-                                        break;
-                                    case 105: // Longcoat
-                                        if (selectedTab == 5) AddGridRow(GridELongcoats, image);
-                                        break;
-                                    case 106: // Pants
-                                        if (selectedTab == 7) AddGridRow(GridEBottoms, image);
-                                        break;
-                                    case 180:
-                                    case 181:
-                                    case 182:
-                                    case 183: // Pet Equips
-                                        // image.ParseImage();
-                                        break;
-                                    case 111: // Rings
-                                        if (selectedTab == 11) AddGridRow(GridERings, image);
-                                        break;
-                                    case 109: // Shield
-                                        if (selectedTab == 12) AddGridRow(GridEShields, image);
-                                        break;
-                                    case 107: // Shoes
-                                        if (selectedTab == 8) AddGridRow(GridEShoes, image);
-                                        break;
-                                    case 190:
-                                    case 191:
-                                    case 193: // Taming Mob
-                                        if (selectedTab == 13) AddGridRow(GridETames, image);
-                                        break;
-                                }
+                    if (!LoadWzFileIfAbsent(ref _CharacterWZ, mapleDirectory + "/Character", mapleVersion)) return;
+                    DataGridView dGrid = (DataGridView)TabEquips.SelectedTab.Controls[0];
+                    dGrid.Rows.Clear();
+                    List<WzImage> children = _CharacterWZ.WzDirectory.GetChildImages();
+                    children.Sort((a, b) => a.Name.CompareTo(b.Name));
+                    for (int i = 0; i < _CharacterWZ.WzDirectory.CountImages(); i++) {
+                        WzImage image = children[i];
+                        string name = Path.GetFileNameWithoutExtension(image.Name);
+                        if (int.TryParse(name, out int equip_id)) {
+                            int selectedTab = TabEquips.SelectedIndex;
+                            int bodyPart = equip_id / 10000;
+                            switch (bodyPart) {
+                                default:
+                                    if (selectedTab == 2 && bodyPart >= 130 && bodyPart <= 170) AddGridRow(GridEWeapons, image);
+                                    else if (selectedTab == 1 && bodyPart == 2) AddFaceRow(image);
+                                    else if (selectedTab == 0 && bodyPart == 3) AddHairRow(image);
+                                    break;
+                                case 100: // Caps
+                                    if (selectedTab == 4) AddGridRow(GridECaps, image);
+                                    break;
+                                case 101:
+                                case 102:
+                                case 103:
+                                case 112:
+                                case 113:
+                                case 114: // Accessory
+                                    if (selectedTab == 3) AddGridRow(GridEAccessory, image);
+                                    break;
+                                case 110: // Cape
+                                    if (selectedTab == 9) AddGridRow(GridECapes, image);
+                                    break;
+                                case 104: // Coat
+                                    if (selectedTab == 6) AddGridRow(GridETops, image);
+                                    break;
+                                case 108: // Glove
+                                    if (selectedTab == 10) AddGridRow(GridEGloves, image);
+                                    break;
+                                case 105: // Longcoat
+                                    if (selectedTab == 5) AddGridRow(GridELongcoats, image);
+                                    break;
+                                case 106: // Pants
+                                    if (selectedTab == 7) AddGridRow(GridEBottoms, image);
+                                    break;
+                                case 180:
+                                case 181:
+                                case 182:
+                                case 183: // Pet Equips
+                                          // image.ParseImage();
+                                    break;
+                                case 111: // Rings
+                                    if (selectedTab == 11) AddGridRow(GridERings, image);
+                                    break;
+                                case 109: // Shield
+                                    if (selectedTab == 12) AddGridRow(GridEShields, image);
+                                    break;
+                                case 107: // Shoes
+                                    if (selectedTab == 8) AddGridRow(GridEShoes, image);
+                                    break;
+                                case 190:
+                                case 191:
+                                case 193: // Taming Mob
+                                    if (selectedTab == 13) AddGridRow(GridETames, image);
+                                    break;
                             }
                         }
-                        _CharacterWZ.Dispose();
-                        _CharacterWZ = null;
-                        break;
                     }
+                    _CharacterWZ.Dispose();
+                    _CharacterWZ = null;
+                    break;
+                }
                 case 1: // Use
                 case 2: // Setup
                 case 3: // Etc
                 case 4: // Cash
+                case 9: // Pets
                     {
-                        if (!LoadWzFileIfAbsent(ref _ItemWZ, mapleDirectory + "/Item", mapleVersion)) return;
-                        if (selected_root == 1)
-                            ((DataGridView)TabUse.SelectedTab.Controls[0]).Rows.Clear();
-                        else if (selected_root == 2)
-                            ((DataGridView)TabSetup.SelectedTab.Controls[0]).Rows.Clear();
-                        else if (selected_root == 3)
-                            ((DataGridView)TabEtcPage.Controls[0]).Rows.Clear();
-                        else if (selected_root == 4)
-                            ((DataGridView)TabCashPage.Controls[0]).Rows.Clear();
+                    if (!LoadWzFileIfAbsent(ref _ItemWZ, mapleDirectory + "/Item", mapleVersion)) return;
+                    if (selected_root == 1)
+                        ((DataGridView)TabUse.SelectedTab.Controls[0]).Rows.Clear();
+                    else if (selected_root == 2)
+                        ((DataGridView)TabSetup.SelectedTab.Controls[0]).Rows.Clear();
+                    else if (selected_root == 3)
+                        ((DataGridView)TabEtcPage.Controls[0]).Rows.Clear();
+                    else if (selected_root == 4)
+                        ((DataGridView)TabCashPage.Controls[0]).Rows.Clear();
+                    else if (selected_root == 9)
+                        ((DataGridView)TabPetsPage.Controls[0]).Rows.Clear();
 
-                        List<WzImage> children = _ItemWZ.WzDirectory.GetChildImages();
-                        children.Sort((a, b) => a.Name.CompareTo(b.Name));
-                        for (int i = 0; i < _ItemWZ.WzDirectory.CountImages(); i++)
-                        {
-                            WzImage image = children[i];
-                            string name = Path.GetFileNameWithoutExtension(image.Name);
-                            if (int.TryParse(name, out int item_id))
-                            {
-                                switch (item_id)
-                                {
-                                    default:
-                                        image.ParseImage();
-                                        if (selected_root == 3 && ItemConstants.IsEtc(item_id)) // etc
-                                            image.WzProperties.ForEach(img => AddGridRow(GridEtc, img));
-                                        if (selected_root == 4 && ItemConstants.IsCash(item_id)) // cash
-                                            image.WzProperties.ForEach(img => AddGridRow(GridCash, img));
-                                        if (selected_root == 1 && ItemConstants.IsConsume(item_id)) // consume
-                                            image.WzProperties.ForEach(img => AddGridRow(GridUConsumes, img));
-                                        break;
-                                    case 204: // scrolls
-                                        if (selected_root == 1)
-                                            image.WzProperties.ForEach(img => AddGridRow(GridUScrolls, img));
-                                        break;
-                                    case 206:
-                                    case 207:
-                                    case 233: // projectiles
-                                        if (selected_root == 1)
-                                            image.WzProperties.ForEach(img => AddGridRow(GridUProjectiles, img));
-                                        break;
-                                    case 301: // chairs
-                                    case 399: // x-mas characters
-                                        if (selected_root == 2)
-                                            image.WzProperties.ForEach(img => AddGridRow(item_id == 301 ? GridSChairs : GridSOthers, img));
-                                        break;
-                                }
+                    List<WzImage> children = _ItemWZ.WzDirectory.GetChildImages();
+                    children.Sort((a, b) => a.Name.CompareTo(b.Name));
+                    for (int i = 0; i < _ItemWZ.WzDirectory.CountImages(); i++) {
+                        WzImage image = children[i];
+                        string name = Path.GetFileNameWithoutExtension(image.Name);
+                        if (int.TryParse(name, out int item_id)) {
+                            switch (item_id) {
+                                default:
+                                    image.ParseImage();
+                                    if (selected_root == 9 && ItemConstants.IsPet(item_id)) // pet
+                                        AddGridRow(GridPets, image);
+                                    if (selected_root == 3 && ItemConstants.IsEtc(item_id)) // etc
+                                        image.WzProperties.ForEach(img => AddGridRow(GridEtc, img));
+                                    if (selected_root == 4 && ItemConstants.IsCash(item_id)) // cash
+                                        image.WzProperties.ForEach(img => AddGridRow(GridCash, img));
+                                    if (selected_root == 1 && ItemConstants.IsConsume(item_id)) // consume
+                                        image.WzProperties.ForEach(img => AddGridRow(GridUConsumes, img));
+                                    break;
+                                case 204: // scrolls
+                                    if (selected_root == 1)
+                                        image.WzProperties.ForEach(img => AddGridRow(GridUScrolls, img));
+                                    break;
+                                case 206:
+                                case 207:
+                                case 233: // projectiles
+                                    if (selected_root == 1)
+                                        image.WzProperties.ForEach(img => AddGridRow(GridUProjectiles, img));
+                                    break;
+                                case 301: // chairs
+                                case 399: // x-mas characters
+                                    if (selected_root == 2)
+                                        image.WzProperties.ForEach(img => AddGridRow(item_id == 301 ? GridSChairs : GridSOthers, img));
+                                    break;
                             }
                         }
-                        break;
                     }
+                    break;
+                }
                 case 5: // Map
                     {
-                        if (!LoadWzFileIfAbsent(ref _MapWZ, mapleDirectory + "/Map", mapleVersion)) return;
-                        GridMaps.Rows.Clear();
+                    if (!LoadWzFileIfAbsent(ref _MapWZ, mapleDirectory + "/Map", mapleVersion)) return;
+                    GridMaps.Rows.Clear();
 
-                        List<WzImage> children = _MapWZ.WzDirectory.GetChildImages();
-                        children.Sort((a, b) => a.Name.CompareTo(b.Name));
-                        for (int i = 0; i < _MapWZ.WzDirectory.CountImages(); i++)
-                        {
-                            WzImage image = children[i];
-                            string str_map_id = Path.GetFileNameWithoutExtension(image.Name);
-                            if (int.TryParse(str_map_id, out int map_id))
-                            {
-                                image.ParseImage();
-                                string properties = BuildProperties(image);
-                                WzCanvasProperty icon = (WzCanvasProperty)image.GetFromPath("miniMap/canvas");
-                                string name = StringUtility.GetFieldFullName(map_id);
+                    List<WzImage> children = _MapWZ.WzDirectory.GetChildImages();
+                    children.Sort((a, b) => a.Name.CompareTo(b.Name));
+                    for (int i = 0; i < _MapWZ.WzDirectory.CountImages(); i++) {
+                        WzImage image = children[i];
+                        string str_map_id = Path.GetFileNameWithoutExtension(image.Name);
+                        if (int.TryParse(str_map_id, out int map_id)) {
+                            image.ParseImage();
+                            string properties = BuildProperties(image);
+                            WzCanvasProperty icon = (WzCanvasProperty)image.GetFromPath("miniMap/canvas");
+                            string name = StringUtility.GetFieldFullName(map_id);
 
-                                GridMaps.Rows.Add(new object[] { map_id, icon?.GetBitmap(), name, properties });
-                            }
+                            GridMaps.Rows.Add(new object[] { map_id, icon?.GetBitmap(), name, properties });
                         }
-                        break;
                     }
+                    break;
+                }
                 case 6: // Mob
                     {
-                        if (!LoadWzFileIfAbsent(ref _MobWZ, mapleDirectory + "/Mob", mapleVersion)) return;
-                        GridMobs.Rows.Clear();
+                    if (!LoadWzFileIfAbsent(ref _MobWZ, mapleDirectory + "/Mob", mapleVersion)) return;
+                    GridMobs.Rows.Clear();
 
-                        List<WzImage> children = _MobWZ.WzDirectory.GetChildImages();
-                        children.Sort((a, b) => a.Name.CompareTo(b.Name));
-                        for (int i = 0; i < _MobWZ.WzDirectory.CountImages(); i++)
-                        {
-                            WzImage image = children[i];
-                            AddGridRow(GridMobs, image);
-                        }
-                        _MobWZ.Dispose();
-                        _MobWZ = null;
-                        break;
+                    List<WzImage> children = _MobWZ.WzDirectory.GetChildImages();
+                    children.Sort((a, b) => a.Name.CompareTo(b.Name));
+                    for (int i = 0; i < _MobWZ.WzDirectory.CountImages(); i++) {
+                        WzImage image = children[i];
+                        AddGridRow(GridMobs, image);
                     }
+                    _MobWZ.Dispose();
+                    _MobWZ = null;
+                    break;
+                }
                 case 7: // Skills
                     {
-                        if (!LoadWzFileIfAbsent(ref _SkillWZ, mapleDirectory + "/Skill", mapleVersion)) return;
-                        GridSkills.Rows.Clear();
+                    if (!LoadWzFileIfAbsent(ref _SkillWZ, mapleDirectory + "/Skill", mapleVersion)) return;
+                    GridSkills.Rows.Clear();
 
-                        List<WzImage> children = _SkillWZ.WzDirectory.GetChildImages();
-                        children.Sort((a, b) => a.Name.CompareTo(b.Name));
-                        for (int i = 0; i < _SkillWZ.WzDirectory.CountImages(); i++)
-                        {
-                            WzImage image = children[i];
-                            string name = Path.GetFileNameWithoutExtension(image.Name);
-                            if (int.TryParse(name, out int job_id))
-                            {
-                                WzImageProperty tree = image.GetFromPath("skill");
-                                if (tree is WzSubProperty sub)
-                                {
-                                    List<WzImageProperty> skills = tree.WzProperties;
-                                    skills.ForEach(s => AddGridRow(GridSkills, s));
-                                    skills.Clear();
-                                }
+                    List<WzImage> children = _SkillWZ.WzDirectory.GetChildImages();
+                    children.Sort((a, b) => a.Name.CompareTo(b.Name));
+                    for (int i = 0; i < _SkillWZ.WzDirectory.CountImages(); i++) {
+                        WzImage image = children[i];
+                        string name = Path.GetFileNameWithoutExtension(image.Name);
+                        if (int.TryParse(name, out int job_id)) {
+                            WzImageProperty tree = image.GetFromPath("skill");
+                            if (tree is WzSubProperty sub) {
+                                List<WzImageProperty> skills = tree.WzProperties;
+                                skills.ForEach(s => AddGridRow(GridSkills, s));
+                                skills.Clear();
                             }
                         }
-                        break;
                     }
+                    break;
+                }
                 case 8: // NPCs
                     {
-                        if (!LoadWzFileIfAbsent(ref _NpcWZ, mapleDirectory + "/Npc", mapleVersion)) return;
-                        GridNPCs.Rows.Clear();
+                    if (!LoadWzFileIfAbsent(ref _NpcWZ, mapleDirectory + "/Npc", mapleVersion)) return;
+                    GridNPCs.Rows.Clear();
 
-                        List<WzImage> children = _NpcWZ.WzDirectory.GetChildImages();
-                        children.Sort((a, b) => a.Name.CompareTo(b.Name));
-                        for (int i = 0; i < _NpcWZ.WzDirectory.CountImages(); i++)
-                        {
-                            WzImage image = children[i];
-                            AddGridRow(GridNPCs, image);
-                        }
-                        break;
+                    List<WzImage> children = _NpcWZ.WzDirectory.GetChildImages();
+                    children.Sort((a, b) => a.Name.CompareTo(b.Name));
+                    for (int i = 0; i < _NpcWZ.WzDirectory.CountImages(); i++) {
+                        WzImage image = children[i];
+                        AddGridRow(GridNPCs, image);
                     }
+                    break;
+                }
             }
         }
 
-        private bool LoadWzFileIfAbsent(ref WzFile wzFile, string fileName, WzMapleVersion mapleVersion)
-        {
+        private bool LoadWzFileIfAbsent(ref WzFile wzFile, string fileName, WzMapleVersion mapleVersion) {
             if (wzFile != null) return false;
-            if (File.Exists(fileName + ".wz"))
-            {
+            if (File.Exists(fileName + ".wz")) {
                 wzFile = new WzFile(fileName + ".wz", mapleVersion);
                 wzFile.ParseWzFile();
                 return true;
-            } else
-            { // KMS
+            } else { // KMS
                 wzFile = new WzFile(fileName, mapleVersion);
                 WzDirectory dir = new WzDirectory(fileName, wzFile);
                 wzFile.WzDirectory = dir;
@@ -515,19 +480,16 @@ namespace WzVisualizer
             }
         }
 
-        private void RecursivelyLoadDirectory(WzDirectory dir, string directoryPath, WzMapleVersion mapleVersion)
-        {
+        private void RecursivelyLoadDirectory(WzDirectory dir, string directoryPath, WzMapleVersion mapleVersion) {
             if (!Directory.Exists(directoryPath)) return;
             string[] files = Directory.GetFiles(directoryPath);
-            foreach (string file in files)
-            {
+            foreach (string file in files) {
                 FileStream stream = new FileStream(file, FileMode.Open, FileAccess.Read);
                 WzImage img = new WzImage(Path.GetFileName(file), stream, mapleVersion);
                 dir.AddImage(img);
             }
             files = Directory.GetDirectories(directoryPath);
-            foreach (string sub in files)
-            {
+            foreach (string sub in files) {
                 WzDirectory subDir = new WzDirectory(Path.GetFileNameWithoutExtension(sub));
                 RecursivelyLoadDirectory(subDir, sub, mapleVersion);
                 dir.AddDirectory(subDir);
@@ -538,8 +500,7 @@ namespace WzVisualizer
         /// clears all collections, closes underlying file readers 
         /// then calls the garbage collector for each loaded WZ file
         /// </summary>
-        private void DisposeWzFiles()
-        {
+        private void DisposeWzFiles() {
             _StringWZ?.Dispose();
             _ItemWZ?.Dispose();
             _CharacterWZ?.Dispose();
@@ -563,8 +524,7 @@ namespace WzVisualizer
         /// </summary>
         /// <param name="grid">the grid view to add a row to</param>
         /// <param name="binData">bin data (wz files that were parsed then saved as a bin file type)</param>
-        public void AddGridRow(DataGridView grid, BinData binData)
-        {
+        public void AddGridRow(DataGridView grid, BinData binData) {
             string allProperties = "";
             foreach (string prop in binData.properties)
                 allProperties += prop + "\r\n";
@@ -573,8 +533,7 @@ namespace WzVisualizer
             if (filter?.Length > 0 && !binData.Search(filter))
                 return;
 
-            if (!IsDisposed && InvokeRequired)
-            {
+            if (!IsDisposed && InvokeRequired) {
                 Image image = binData?.image;
                 Invoke(new Action(() => {
                     grid.Rows.Add(new object[] { binData.ID, image, binData.Name, allProperties });
@@ -587,8 +546,7 @@ namespace WzVisualizer
         /// <summary>
         /// Update the Window's clipboard when a cell is selected
         /// </summary>
-        private void Grid_RowStateChanged(object sender, DataGridViewCellStateChangedEventArgs e)
-        {
+        private void Grid_RowStateChanged(object sender, DataGridViewCellStateChangedEventArgs e) {
             object cellValue = e.Cell.Value;
             if (cellValue == null) return;
             if (cellValue is int)
@@ -602,10 +560,8 @@ namespace WzVisualizer
         /// <summary>
         /// Display the PropertiesViewer Form when a Properties column cell is double clicked
         /// </summary>
-        private void Grid_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.ColumnIndex == 3 && e.RowIndex != -1)
-            {
+        private void Grid_CellDoubleClick(object sender, DataGridViewCellEventArgs e) {
+            if (e.ColumnIndex == 3 && e.RowIndex != -1) {
                 viewer.SetProperties((string)((DataGridView)sender).SelectedCells[0].Value);
                 viewer.Show();
             }
@@ -615,10 +571,8 @@ namespace WzVisualizer
         /// Open the FolderBrowser dialog window when the text box is clicked and set the selected
         /// directory as the root folder containing WZ files
         /// </summary>
-        private void TextWzPath_Click(object sender, EventArgs e)
-        {
-            if (FB.ShowDialog() == DialogResult.OK && !string.IsNullOrWhiteSpace(FB.SelectedPath))
-            {
+        private void TextWzPath_Click(object sender, EventArgs e) {
+            if (FB.ShowDialog() == DialogResult.OK && !string.IsNullOrWhiteSpace(FB.SelectedPath)) {
                 string[] files = Directory.GetFiles(FB.SelectedPath);
                 TextWzPath.Text = FB.SelectedPath;
             }
@@ -627,21 +581,17 @@ namespace WzVisualizer
         /// <summary>
         /// Begin loading WZ data corresponding to the selected tab
         /// </summary>
-        private void BtnWzLoad_Click(object sender, EventArgs e)
-        {
+        private void BtnWzLoad_Click(object sender, EventArgs e) {
             string folderPath = TextWzPath.Text;
-            if (folderPath.Length > 0)
-            {
-                if (!folderPath.Equals(Settings.Default.PathCache))
-                {
+            if (folderPath.Length > 0) {
+                if (!folderPath.Equals(Settings.Default.PathCache)) {
                     Settings.Default.PathCache = folderPath;
                     Settings.Default.Save();
                 }
                 string stringWzPath = folderPath + @"/String";
                 WzMapleVersion mapleVersion;
 
-                if (File.Exists(stringWzPath + ".wz"))
-                {
+                if (File.Exists(stringWzPath + ".wz")) {
 
                     if (ComboEncType.SelectedIndex == 0)
                         mapleVersion = WzTool.DetectMapleVersion(stringWzPath + ".wz", out short detectVersion);
@@ -652,22 +602,18 @@ namespace WzVisualizer
                     _StringWZ.ParseWzFile();
                     Console.WriteLine(_StringWZ.Version);
                     short? version = _StringWZ.Version;
-                    if (WzTool.GetDecryptionSuccessRate(stringWzPath + ".wz", mapleVersion, ref version) < 0.8)
-                    {
+                    if (WzTool.GetDecryptionSuccessRate(stringWzPath + ".wz", mapleVersion, ref version) < 0.8) {
                         MessageBox.Show("Failed to parse the WZ file. Perhaps the wrong WZ encryption is being used?", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;
                     }
-                }
-                else if (Directory.Exists(stringWzPath)) // KMS
-                {
+                } else if (Directory.Exists(stringWzPath)) // KMS
+                  {
                     mapleVersion = WzMapleVersion.EMS;
                     _StringWZ = new WzFile(stringWzPath, mapleVersion);
                     WzDirectory dir = new WzDirectory("String", _StringWZ);
                     _StringWZ.WzDirectory = dir;
                     RecursivelyLoadDirectory(dir, stringWzPath, mapleVersion);
-                }
-                else
-                {
+                } else {
                     MessageBox.Show("Failed to load String data in the specified directory", "File not found", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     DisposeWzFiles();
                     return;
@@ -681,8 +627,7 @@ namespace WzVisualizer
         /// <summary>
         /// Enable or disable the WZ path controls if BIN loading is selected
         /// </summary>
-        private void ComboLoadType_SelectedIndexChanged(object sender, EventArgs e)
-        {
+        private void ComboLoadType_SelectedIndexChanged(object sender, EventArgs e) {
             bool enabled = (ComboLoadType.SelectedIndex == 1);
             TextWzPath.Enabled = enabled;
             BtnWzLoad.Enabled = enabled;
@@ -692,74 +637,63 @@ namespace WzVisualizer
         /// upon clicking the save button, store data of the current opened grid.
         /// Some tabs may have another TabControl in which that Control contains a Grid control.
         /// </summary>
-        private void BtnSave_Click(object sender, EventArgs ev)
-        {
+        private void BtnSave_Click(object sender, EventArgs ev) {
             MouseEventArgs e = (MouseEventArgs)ev;
             switch (e.Button) {
-                case MouseButtons.Left:
+                case MouseButtons.Left: {
+                    var control = TabControlMain.SelectedTab.Controls[0];
+                    if (control is DataGridView grid) // no child tabs and contains 1 child Control (DataGridView)
+                        GridIOUtility.ExportGrid(grid, TabControlMain.SelectedTab.Text);
+                    else if (control is TabControl tab) // sub-categories (e.g. Equips.Hairs, Equips.Faces)
                     {
-                        var control = TabControlMain.SelectedTab.Controls[0];
-                        if (control is DataGridView grid) // no child tabs and contains 1 child Control (DataGridView)
-                            GridIOUtility.ExportGrid(grid, TabControlMain.SelectedTab.Text);
-                        else if (control is TabControl tab) // sub-categories (e.g. Equips.Hairs, Equips.Faces)
-                        {
-                            control = tab.SelectedTab; // The selected child Tab (e.g. Equips.Hairs)
-                            GridIOUtility.ExportGrid((DataGridView)control.Controls[0], TabControlMain.SelectedTab.Text); // The DataGridView contained in the TabPage control
-                        }
-                        MessageBox.Show("Bin save complete!");
-                        break;
+                        control = tab.SelectedTab; // The selected child Tab (e.g. Equips.Hairs)
+                        GridIOUtility.ExportGrid((DataGridView)control.Controls[0], TabControlMain.SelectedTab.Text); // The DataGridView contained in the TabPage control
                     }
-                case MouseButtons.Right:
+                    MessageBox.Show("Bin save complete!");
+                    break;
+                }
+                case MouseButtons.Right: {
+                    var control = TabControlMain.SelectedTab.Controls[0];
+                    if (control is DataGridView grid) // no child tabs and contains 1 child Control (DataGridView)
+                        GridIOUtility.ExportGridImages(grid, TabControlMain.SelectedTab.Text);
+                    else if (control is TabControl tab) // sub-categories (e.g. Equips.Hairs, Equips.Faces)
                     {
-                        var control = TabControlMain.SelectedTab.Controls[0];
-                        if (control is DataGridView grid) // no child tabs and contains 1 child Control (DataGridView)
-                            GridIOUtility.ExportGridImages(grid, TabControlMain.SelectedTab.Text);
-                        else if (control is TabControl tab) // sub-categories (e.g. Equips.Hairs, Equips.Faces)
-                        {
-                            control = tab.SelectedTab; // The selected child Tab (e.g. Equips.Hairs)
-                            GridIOUtility.ExportGridImages((DataGridView)control.Controls[0], TabControlMain.SelectedTab.Text); // The DataGridView contained in the TabPage control
-                        }
-                        MessageBox.Show("Image save complete!");
-                        break;
+                        control = tab.SelectedTab; // The selected child Tab (e.g. Equips.Hairs)
+                        GridIOUtility.ExportGridImages((DataGridView)control.Controls[0], TabControlMain.SelectedTab.Text); // The DataGridView contained in the TabPage control
                     }
+                    MessageBox.Show("Image save complete!");
+                    break;
+                }
             }
         }
 
         #region tab change events
 
-        private void TabEquips_Selected(object sender, TabControlEventArgs e)
-        {
+        private void TabEquips_Selected(object sender, TabControlEventArgs e) {
             Tab_Selected(sender, e.TabPage);
         }
 
-        private void TabUse_Selected(object sender, TabControlEventArgs e)
-        {
+        private void TabUse_Selected(object sender, TabControlEventArgs e) {
             Tab_Selected(sender, e.TabPage);
         }
 
-        private void TabSetup_Selected(object sender, TabControlEventArgs e)
-        {
+        private void TabSetup_Selected(object sender, TabControlEventArgs e) {
             Tab_Selected(sender, e.TabPage);
         }
 
-        private void TabControlMain_SelectedIndexChanged(object sender, EventArgs e)
-        {
+        private void TabControlMain_SelectedIndexChanged(object sender, EventArgs e) {
             Tab_Selected(sender, GetSelectedTab());
         }
 
-        private void Tab_Selected(object sender, TabPage tab)
-        {
+        private void Tab_Selected(object sender, TabPage tab) {
             FieldInfo[] fields = GetType().GetFields(BindingFlags.NonPublic | BindingFlags.Instance);
-            foreach (FieldInfo field in fields)
-            {
-                if (field.Name.StartsWith("Grid") && field.GetValue(this) is DataGridView grid && grid.Rows.Count > 0)
-                {
+            foreach (FieldInfo field in fields) {
+                if (field.Name.StartsWith("Grid") && field.GetValue(this) is DataGridView grid && grid.Rows.Count > 0) {
                     grid.Rows.Clear();
                     GC.Collect();
                     GC.WaitForPendingFinalizers();
                 }
-                if (field.Name.Equals(tab.Name))
-                {
+                if (field.Name.Equals(tab.Name)) {
                     int mainSelectedIndex = TabControlMain.SelectedIndex;
                     GridIOUtility.ImportGrid(string.Format("{0}/{1}.bin", TabControlMain.SelectedTab.Text, tab.Text), (DataGridView)tab.Controls[0], AddGridRow);
                 }
@@ -767,21 +701,18 @@ namespace WzVisualizer
         }
         #endregion
 
-        private void MainForm_Load(object sender, EventArgs e)
-        {
+        private void MainForm_Load(object sender, EventArgs e) {
             GridIOUtility.ImportGrid("equips/Hairs.bin", GridEHairs, AddGridRow);
         }
 
-        private void SearchTextBox_KeyPress(object sender, KeyPressEventArgs e)
-        {
+        private void SearchTextBox_KeyPress(object sender, KeyPressEventArgs e) {
             int keyCode = (int)e.KeyChar;
             if (keyCode == (int)Keys.Enter)
                 Tab_Selected(sender, GetSelectedTab());
         }
         #endregion
 
-        private TabPage GetSelectedTab()
-        {
+        private TabPage GetSelectedTab() {
             TabPage root = TabControlMain.SelectedTab;
             object control = root.Controls[0];
             return (control is TabControl tab) ? tab.SelectedTab : root;
