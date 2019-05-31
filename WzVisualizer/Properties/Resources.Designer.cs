@@ -19,7 +19,7 @@ namespace WzVisualizer.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
@@ -61,12 +61,75 @@ namespace WzVisualizer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Failed to parse the WZ file. Perhaps the wrong WZ encryption is being used?.
+        /// </summary>
+        internal static string BadEncryption {
+            get {
+                return ResourceManager.GetString("BadEncryption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to BIN save complete.
+        /// </summary>
+        internal static string CompleteSaveBIN {
+            get {
+                return ResourceManager.GetString("CompleteSaveBIN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Images save complete.
+        /// </summary>
+        internal static string CompleteSaveImages {
+            get {
+                return ResourceManager.GetString("CompleteSaveImages", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error.
+        /// </summary>
+        internal static string Error {
+            get {
+                return ResourceManager.GetString("Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .wz.
+        /// </summary>
+        internal static string FileExtension {
+            get {
+                return ResourceManager.GetString("FileExtension", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File Not Found.
+        /// </summary>
+        internal static string FIleNotFound {
+            get {
+                return ResourceManager.GetString("FIleNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap floppy_icon {
+        internal static System.Drawing.Bitmap FloppyIcon {
             get {
-                object obj = ResourceManager.GetObject("floppy_icon", resourceCulture);
+                object obj = ResourceManager.GetObject("FloppyIcon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to load String data in the specified directory.
+        /// </summary>
+        internal static string MissingStringFile {
+            get {
+                return ResourceManager.GetString("MissingStringFile", resourceCulture);
             }
         }
     }
