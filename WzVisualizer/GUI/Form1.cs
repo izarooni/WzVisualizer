@@ -223,7 +223,7 @@ namespace WzVisualizer {
                                 default:
                                     if (selectedTab == 2 && bodyPart >= 130 && bodyPart <= 170) AddGridRow(EquipWeaponsView.GridView, image);
                                     else if (selectedTab == 1 && bodyPart == 2) AddFaceRow(image);
-                                    else if (selectedTab == 0 && bodyPart == 3) AddHairRow(image);
+                                    else if (selectedTab == 0 && (bodyPart == 3 || bodyPart == 4)) AddHairRow(image);
                                     break;
                                 case 100: // Caps
                                     if (selectedTab == 4) AddGridRow(EquipCapsView.GridView, image);
