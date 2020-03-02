@@ -50,7 +50,12 @@ namespace WzVisualizer {
                 case 2: return "Face";
                 case 3: return "Hair";
                 case 100: return "Cap";
-                case 101: return "Accessory";
+                case 101:
+                case 102:
+                case 103:
+                case 112:
+                case 113:
+                case 114: return "Accessory";
                 case 104: return "Coat";
                 case 105: return "Longcoat";
                 case 106: return "Pants";
