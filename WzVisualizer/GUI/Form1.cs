@@ -98,7 +98,7 @@ namespace WzVisualizer {
 
         private void AddGridRow(DataGridView grid, object wzObject) {
             int id;
-            string properties = "";
+            string properties = BuildProperties(wzObject);
             string name = null;
             WzCanvasProperty icon = null;
 
@@ -144,7 +144,6 @@ namespace WzVisualizer {
                     icon = (WzCanvasProperty)subProperty.GetFromPath("icon");
                 } else { // for breadcrumb like: 'category.img/{ID}/info/icon' (etc.wz)
                     string imgName = subProperty.Name;
-                    properties = BuildProperties(subProperty);
                     id = int.Parse(imgName);
                     if (ItemConstants.IsEtc(id)) name = StringUtility.GetEtc(id);
                     else if (ItemConstants.IsCash(id)) name = StringUtility.GetCash(id);
@@ -170,23 +169,27 @@ namespace WzVisualizer {
         /// <param name="wzObject">a WzSubProperty or WzImage</param>
         /// <returns></returns>
         private string BuildProperties(object wzObject) {
-            string properties = "";
             WzImageProperty infoRoot = null;
-            if (wzObject is WzSubProperty subProperty) infoRoot = subProperty.GetFromPath("info");
+            if (wzObject is WzSubProperty subProperty) infoRoot = subProperty.GetFromPath("info") ?? subProperty.GetFromPath("level");
             else if (wzObject is WzImage wzImage) infoRoot = wzImage.GetFromPath("info");
-            if (infoRoot?.WzProperties != null) {
-                foreach (WzImageProperty imgProperties in infoRoot.WzProperties) {
-                    switch (imgProperties.PropertyType) {
-                        default:
-                            properties += $"\r\n{imgProperties.Name}={imgProperties.WzValue}";
-                            break;
-                        case WzPropertyType.Canvas:
-                        case WzPropertyType.PNG:
-                        case WzPropertyType.Sound:
-                            break;
-                    }
-                }
 
+            return ExtractProperties(infoRoot, "");
+        }
+
+        private string ExtractProperties(WzImageProperty p, string prefix) {
+            if (p?.WzProperties == null) return "";
+            string properties = "";
+            foreach (WzImageProperty imgProperties in p.WzProperties) {
+                switch (imgProperties.PropertyType) {
+                    default:
+                        properties += $"\r\n{prefix}{imgProperties.Name}={imgProperties.WzValue}";
+                        if (imgProperties.PropertyType == WzPropertyType.SubProperty) properties += ExtractProperties(imgProperties, "\t" + prefix);
+                        break;
+                    case WzPropertyType.Canvas:
+                    case WzPropertyType.PNG:
+                    case WzPropertyType.Sound:
+                        break;
+                }
             }
             return properties;
         }
@@ -643,7 +646,7 @@ namespace WzVisualizer {
                     break;
                 }
                 case TabControl childTab: {
-                    DataViewer view = (DataViewer) childTab.SelectedTab.Controls[0];
+                    DataViewer view = (DataViewer)childTab.SelectedTab.Controls[0];
                     GridIOUtility.ImportGrid($"{TabControlMain.SelectedTab.Text}/{tab.Text}.bin", view.GridView,
                         AddGridRow);
                     break;
