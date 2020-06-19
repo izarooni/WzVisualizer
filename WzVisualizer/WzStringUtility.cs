@@ -101,59 +101,54 @@ namespace WzVisualizer {
             image.ParseImage();
         }
 
+        private string GetStringValue(WzImageProperty img) {
+            return img != null && img is WzStringProperty str ? str.Value : null;
+        }
+
         public string GetNPC(int ID) {
             SetParsed(NPCImage);
-            WzImageProperty imgProperty = (WzStringProperty)NPCImage.GetFromPath($"{ID}/name");
-            return ((WzStringProperty)imgProperty)?.Value;
+            return GetStringValue(NPCImage.GetFromPath($"{ID}/name"));
         }
 
         public string GetSkill(string ID) {
             SetParsed(SkillImage);
-            WzImageProperty imgProperty = (WzStringProperty)SkillImage.GetFromPath($"{ID}/name");
-            return ((WzStringProperty)imgProperty)?.Value;
+            return GetStringValue(SkillImage.GetFromPath($"{ID}/name"));
         }
 
         public string GetMob(int ID) {
             SetParsed(MobImage);
-            WzImageProperty imgProperty = (WzStringProperty)MobImage.GetFromPath($"{ID}/name");
-            return ((WzStringProperty)imgProperty)?.Value;
+            return GetStringValue(MobImage.GetFromPath($"{ID}/name"));
         }
 
         public string GetEqp(int ID) {
             SetParsed(EqpImage);
             string category = GetEqpCategory(ID);
-            WzImageProperty imgProperty = EqpImage.GetFromPath($"Eqp/{category}/{ID}/name");
-            return ((WzStringProperty)imgProperty)?.Value;
+            return GetStringValue(EqpImage.GetFromPath($"Eqp/{category}/{ID}/name"));
         }
 
         public string GetEtc(int ID) {
             SetParsed(EtcImage);
-            WzImageProperty imgProperty = EtcImage.GetFromPath($"Etc/{ID}/name");
-            return ((WzStringProperty)imgProperty)?.Value;
+            return GetStringValue(EtcImage.GetFromPath($"Etc/{ID}/name"));
         }
 
         public string GetCash(int ID) {
             SetParsed(CashImage);
-            WzImageProperty imgProperty = CashImage.GetFromPath($"{ID}/name");
-            return ((WzStringProperty)imgProperty)?.Value;
+            return GetStringValue(CashImage.GetFromPath($"{ID}/name"));
         }
 
         public string GetChair(int ID) {
             SetParsed(InsImage);
-            WzImageProperty imgProperty = InsImage.GetFromPath($"{ID}/name");
-            return ((WzStringProperty)imgProperty)?.Value;
+            return GetStringValue(InsImage.GetFromPath($"{ID}/name"));
         }
 
         public string GetConsume(int ID) {
             SetParsed(ConsumeImage);
-            WzImageProperty imgProperty = ConsumeImage.GetFromPath($"{ID}/name");
-            return ((WzStringProperty)imgProperty)?.Value;
+            return GetStringValue(ConsumeImage.GetFromPath($"{ID}/name"));
         }
 
         public string GetPet(int ID) {
             SetParsed(PetImage);
-            WzImageProperty imgProperty = PetImage.GetFromPath($"{ID}/name");
-            return ((WzStringProperty)imgProperty)?.Value;
+            return GetStringValue(PetImage.GetFromPath($"{ID}/name"));
         }
     }
 }
