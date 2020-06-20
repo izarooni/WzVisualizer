@@ -56,7 +56,6 @@ namespace WzVisualizer {
             foreach (var c in page.Controls) {
                 switch (c) {
                     case DataViewer view: {
-                        Debug.WriteLine($"Added event handler for view: {view.Name}");
                         view.GridView.CellDoubleClick += Grid_CellDoubleClick;
                         view.GridView.CellStateChanged += Grid_RowStateChanged;
                         break;
@@ -100,7 +99,7 @@ namespace WzVisualizer {
             int id;
             string properties = BuildProperties(wzObject);
             string name = null;
-            WzCanvasProperty icon = null;
+            WzImageProperty icon = null;
 
             if (wzObject is WzImage image) {
                 image.ParseImage();
@@ -116,32 +115,27 @@ namespace WzVisualizer {
                 }
 
                 if (image.WzFileParent.Name.StartsWith("Npc")) { // icon path like: '{ID}/stand/0'
-                    // and also sometimes contains a link STRING property instead of using UOL
                     name = StringUtility.GetNPC(id);
-                } else if (image.WzFileParent.Name.StartsWith("Mob")) {
-                    // icon path like: '{ID}/(move|stand|fly)/0'
+                } else if (image.WzFileParent.Name.StartsWith("Mob")) { // icon path like: '{ID}/(move|stand|fly)/0'
                     name = StringUtility.GetMob(id);
-                    // attempt to get image of the monster
-                    entityIcon = image.GetFromPath("fly/0") ?? image.GetFromPath("move/0");
+                    entityIcon = image.GetFromPath("fly/0") ?? image.GetFromPath("move/0"); // attempt to get image of the monster
                 } else if (image.WzFileParent.Name.StartsWith("Reactor")) {
                     name = image.GetFromPath("action")?.WzValue.ToString();
                     entityIcon = image.GetFromPath("0/0");
                 } else {  // for breadcrumb like: '{ID}.img/info/icon'
                     if (ItemConstants.IsEquip(id)) name = StringUtility.GetEqp(id);
                     else if (ItemConstants.IsPet(id)) name = StringUtility.GetPet(id);
-                    icon = (WzCanvasProperty)image.GetFromPath("info/icon");
+                    icon = image.GetFromPath("info/icon");
                 }
 
                 if (icon == null) {
-                    if (entityIcon is WzUOLProperty uol) icon = (WzCanvasProperty)uol.LinkValue;
-                    else icon = (WzCanvasProperty)entityIcon;
+                    icon = (WzImageProperty)(entityIcon is WzUOLProperty link ? link.LinkValue : entityIcon);
                 }
             } else if (wzObject is WzSubProperty subProperty) {
                 if (subProperty.WzFileParent.Name.StartsWith("Skill")) {
                     id = int.Parse(subProperty.Name);
                     name = StringUtility.GetSkill(subProperty.Name);
-
-                    icon = (WzCanvasProperty)subProperty.GetFromPath("icon");
+                    icon = subProperty.GetFromPath("icon");
                 } else { // for breadcrumb like: 'category.img/{ID}/info/icon' (etc.wz)
                     string imgName = subProperty.Name;
                     id = int.Parse(imgName);
@@ -150,15 +144,19 @@ namespace WzVisualizer {
                     else if (ItemConstants.IsChair(id)) name = StringUtility.GetChair(id);
                     else if (ItemConstants.IsConsume(id)) name = StringUtility.GetConsume(id);
 
-                    WzImageProperty imgIcon = subProperty.GetFromPath("info/icon");
-                    if (imgIcon is WzUOLProperty ufo) imgIcon = (WzCanvasProperty)ufo.LinkValue;
-                    else if (imgIcon is WzCanvasProperty canvas) imgIcon = canvas;
-                    if (imgIcon != null) icon = (WzCanvasProperty)imgIcon;
+                    icon = subProperty.GetFromPath("info/icon");
                 }
             } else
                 return;
+
+            if (icon is WzUOLProperty uol && uol.LinkValue is WzCanvasProperty) {
+                icon = (WzCanvasProperty)uol.LinkValue;
+            }
+
             Bitmap bitmap = null;
-            try { bitmap = icon?.GetBitmap(); } catch (Exception) { }
+            try {
+                bitmap = icon is WzCanvasProperty canvas ? canvas.GetBitmap() : null;
+            } catch (Exception) { }
             grid.Rows.Add(id, bitmap, name, properties);
         }
         #endregion
@@ -197,11 +195,11 @@ namespace WzVisualizer {
         private void LoadWzData(WzMapleVersion mapleVersion, string mapleDirectory) {
             int selectedRoot = TabControlMain.SelectedIndex;
             switch (TabControlMain.SelectedTab.Controls[0]) {
-                case DataViewer view: {
+                case DataViewer view: { // contains just the grid table
                     view.GridView.Rows.Clear();
                     break;
                 }
-                case TabControl ctrl: {
+                case TabControl ctrl: { // contains sub-categories
                     if (ctrl.SelectedTab.Controls[0] is DataViewer view) view.GridView.Rows.Clear();
                     break;
                 }
@@ -214,6 +212,7 @@ namespace WzVisualizer {
                 case 0: // Equips
                     {
                     if (!LoadWzFileIfAbsent(ref characterWz, mapleDirectory + "/Character", mapleVersion)) return;
+
                     List<WzImage> children = characterWz.WzDirectory.GetChildImages();
                     children.Sort((a, b) => a.Name.CompareTo(b.Name));
                     for (int i = 0; i < characterWz.WzDirectory.CountImages(); i++) {

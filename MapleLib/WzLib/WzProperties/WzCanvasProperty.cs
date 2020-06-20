@@ -252,6 +252,35 @@ namespace MapleLib.WzLib.WzProperties
 
         public override Bitmap GetBitmap()
         {
+			if (this["_inlink"] is WzStringProperty inlink) {
+				WzObject currentWzObj = this; // first object to work with
+				while ((currentWzObj = currentWzObj.Parent) != null) {
+					if (!(currentWzObj is WzImage))  // keep looping if its not a WzImage
+						continue;
+
+					WzImage wzImageParent = (WzImage)currentWzObj;
+					WzImageProperty foundProperty = wzImageParent.GetFromPath(inlink.Value);
+					if (foundProperty != null && foundProperty is WzImageProperty) {
+						return ((WzImageProperty)foundProperty).GetBitmap();
+					}
+				}
+			} else if (this["_outlink"] is WzStringProperty outlink) {
+				WzObject wzObject = WzFileParent.GetObjectFromPath(outlink.Value);
+				if (wzObject is WzImageProperty imgProperty) {
+					return imgProperty.GetBitmap();
+                }
+				//WzObject currentWzObj = this; // first object to work with
+				//while ((currentWzObj = currentWzObj.Parent) != null) {
+				//	if (!(currentWzObj is WzDirectory))  // keep looping if its not a WzImage
+				//		continue;
+
+				//	WzFile wzFileParent = ((WzDirectory)currentWzObj).wzFile;
+				//	WzObject foundProperty = wzFileParent.GetObjectFromPath(outlink.Value);
+				//	if (foundProperty != null && foundProperty is WzImageProperty) {
+				//		return ((WzImageProperty)foundProperty).GetBitmap();
+				//	}
+				//}
+			}
             return imageProp.GetPNG(false);
         }
         #endregion
