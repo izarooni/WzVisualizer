@@ -6,5 +6,6 @@ Target framework .NET 4.5.1 using [MapleLib](https://github.com/haha01haha01/Map
 - Select multiple cells, rows or columns
 - Double click 'Properties' cells to view formatted data
 - Read straight from WZ files and save as BIN to save disk space and load times
+- Right click the save button to save all images into a folder
 
 ![application screenshot](https://raw.githubusercontent.com/izarooni/WzVisualizer/master/WzVisualizer/Resources/screenshot1.png)

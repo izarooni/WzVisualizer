@@ -585,8 +585,8 @@ namespace WzVisualizer {
                 }
                 case MouseButtons.Right: {
                     var control = TabControlMain.SelectedTab.Controls[0];
-                    if (control is DataGridView grid) // no child tabs and contains 1 child Control (DataGridView)
-                        GridIOUtility.ExportGridImages(grid, TabControlMain.SelectedTab.Text);
+                    if (control is DataViewer dataViewer) // no child tabs and contains 1 child Control (DataGridView)
+                        GridIOUtility.ExportGridImages(dataViewer.GridView, TabControlMain.SelectedTab.Text);
                     else if (control is TabControl tab) { // contains child controls (e.g. Equips.Hairs, Equips.Faces)
                         control = tab.SelectedTab; // The selected child Tab (e.g. Equips.Hairs)
                         GridIOUtility.ExportGridImages((DataGridView)control.Controls[0], TabControlMain.SelectedTab.Text); // The DataGridView contained in the TabPage control
