@@ -114,7 +114,7 @@ namespace MapleLib.WzLib.Util
             else
                 wzf = new WzFile(wzPath, (short)version, encVersion);
             wzf.ParseWzFile();
-            if (version == null) version = wzf.Version;
+            if (version == null) version = wzf.FileVersion;
             int recognizedChars = 0;
             int totalChars = 0;
             foreach (WzDirectory wzdir in wzf.WzDirectory.WzDirectories)

@@ -130,9 +130,10 @@ namespace MapleLib.WzLib.WzProperties
         /// Creates a blank WzPngProperty
         /// </summary>
         public WzPngProperty() { }
-        internal WzPngProperty(WzBinaryReader reader, bool parseNow)
+        internal WzPngProperty(WzBinaryReader reader, bool parsePng)
         {
             // Read compressed bytes
+            wzReader = reader;
             width = reader.ReadCompressedInt();
             height = reader.ReadCompressedInt();
             format = reader.ReadCompressedInt();
@@ -144,7 +145,7 @@ namespace MapleLib.WzLib.WzProperties
 
             if (len > 0)
             {
-                if (parseNow)
+                if (parsePng)
                 {
                     compressedBytes = wzReader.ReadBytes(len);
                     ParsePng();
@@ -152,7 +153,6 @@ namespace MapleLib.WzLib.WzProperties
                 else 
                     reader.BaseStream.Position += len;
             }
-            wzReader = reader;
         }
         #endregion
 
@@ -185,7 +185,7 @@ namespace MapleLib.WzLib.WzProperties
             CompressPng(png);
         }
 
-        public Bitmap GetPNG(bool saveInMemory)
+        public Bitmap GetPNG(bool cache)
         {
             if (png == null)
             {
@@ -197,7 +197,7 @@ namespace MapleLib.WzLib.WzProperties
                     compressedBytes = wzReader.ReadBytes(len);
                 ParsePng();
                 wzReader.BaseStream.Position = pos;
-                if (!saveInMemory)
+                if (!cache)
                 {
                     Bitmap pngImage = png;
                     png = null;

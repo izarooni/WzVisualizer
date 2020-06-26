@@ -3,6 +3,7 @@ using MapleLib.WzLib.Util;
 using MapleLib.WzLib.WzProperties;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
@@ -20,14 +21,14 @@ namespace WzVisualizer {
         private readonly PropertiesViewer viewer = new PropertiesViewer();
         private readonly FolderBrowserDialog folderBrowser = new FolderBrowserDialog();
         private WzStringUtility StringUtility;
-        private WzFile stringWz;
-        private WzFile itemWz;
-        private WzFile characterWz;
-        private WzFile mapWz;
-        private WzFile mobWz;
-        private WzFile skillWz;
-        private WzFile npcWz;
-        private WzFile reactorWz;
+        private WzFile StringWz;
+        private WzFile ItemWz;
+        private WzFile CharacterWz;
+        private WzFile MapWz;
+        private WzFile MobWz;
+        private WzFile SkillWz;
+        private WzFile NpcWz;
+        private WzFile ReactorWz;
 
         public MainForm() {
             InitializeComponent();
@@ -95,18 +96,23 @@ namespace WzVisualizer {
             EquipHairsView.GridView.Rows.Add(id, icon?.GetBitmap(), name, "");
         }
 
+        private void AddSkillRow(WzImageProperty s) {
+            int id = int.Parse(s.Name);
+            string name = StringUtility.GetSkill(s.Name);
+            string properties = BuildProperties(s);
+            WzObject icon = s.GetFromPath("icon");
+            SkillsView.GridView.Rows.Add(id, icon?.GetBitmap(), name, properties);
+        }
+
         private void AddGridRow(DataGridView grid, object wzObject) {
             int id;
             string properties = BuildProperties(wzObject);
             string name = null;
-            WzImageProperty icon = null;
+            WzObject icon = null;
 
             if (wzObject is WzImage image) {
-                image.ParseImage();
-                string imgName = Path.GetFileNameWithoutExtension(image.Name);
+                id = int.Parse(Path.GetFileNameWithoutExtension(image.Name));
                 properties = BuildProperties(image) ?? "";
-                id = int.Parse(imgName);
-                WzImageProperty entityIcon = image.GetFromPath("stand/0");
                 WzImageProperty linkProperty = image.GetFromPath("info/link");
                 if (linkProperty != null) {
                     string linkName = ((WzStringProperty)linkProperty).Value;
@@ -114,11 +120,12 @@ namespace WzVisualizer {
                     if (image == null) return;
                 }
 
+                WzObject entityIcon = image.GetFromPath("stand/0");
                 if (image.WzFileParent.Name.StartsWith("Npc")) { // icon path like: '{ID}/stand/0'
                     name = StringUtility.GetNPC(id);
                 } else if (image.WzFileParent.Name.StartsWith("Mob")) { // icon path like: '{ID}/(move|stand|fly)/0'
                     name = StringUtility.GetMob(id);
-                    entityIcon = image.GetFromPath("fly/0") ?? image.GetFromPath("move/0"); // attempt to get image of the monster
+                    entityIcon = (entityIcon == null) ? image.GetFromPath("fly/0") ?? image.GetFromPath("move/0") : null; // attempt to get image of the monster
                 } else if (image.WzFileParent.Name.StartsWith("Reactor")) {
                     name = image.GetFromPath("action")?.WzValue.ToString();
                     entityIcon = image.GetFromPath("0/0");
@@ -128,36 +135,21 @@ namespace WzVisualizer {
                     icon = image.GetFromPath("info/icon");
                 }
 
-                if (icon == null) {
-                    icon = (WzImageProperty)(entityIcon is WzUOLProperty link ? link.LinkValue : entityIcon);
-                }
+                if (icon == null) icon = entityIcon;
             } else if (wzObject is WzSubProperty subProperty) {
-                if (subProperty.WzFileParent.Name.StartsWith("Skill")) {
-                    id = int.Parse(subProperty.Name);
-                    name = StringUtility.GetSkill(subProperty.Name);
-                    icon = subProperty.GetFromPath("icon");
-                } else { // for breadcrumb like: 'category.img/{ID}/info/icon' (etc.wz)
-                    string imgName = subProperty.Name;
-                    id = int.Parse(imgName);
-                    if (ItemConstants.IsEtc(id)) name = StringUtility.GetEtc(id);
-                    else if (ItemConstants.IsCash(id)) name = StringUtility.GetCash(id);
-                    else if (ItemConstants.IsChair(id)) name = StringUtility.GetChair(id);
-                    else if (ItemConstants.IsConsume(id)) name = StringUtility.GetConsume(id);
+                // for path like: 'category.img/{ID}/info/icon' (Etc.wz)
+                string imgName = subProperty.Name;
+                id = int.Parse(imgName);
+                if (ItemConstants.IsEtc(id)) name = StringUtility.GetEtc(id);
+                else if (ItemConstants.IsCash(id)) name = StringUtility.GetCash(id);
+                else if (ItemConstants.IsChair(id)) name = StringUtility.GetChair(id);
+                else if (ItemConstants.IsConsume(id)) name = StringUtility.GetConsume(id);
 
-                    icon = subProperty.GetFromPath("info/icon");
-                }
+                icon = subProperty.GetFromPath("info/icon");
             } else
                 return;
 
-            if (icon is WzUOLProperty uol && uol.LinkValue is WzCanvasProperty) {
-                icon = (WzCanvasProperty)uol.LinkValue;
-            }
-
-            Bitmap bitmap = null;
-            try {
-                bitmap = icon is WzCanvasProperty canvas ? canvas.GetBitmap() : null;
-            } catch (Exception) { }
-            grid.Rows.Add(id, bitmap, name, properties);
+            grid.Rows.Add(id, icon?.GetBitmap(), name, properties);
         }
         #endregion
 
@@ -211,11 +203,11 @@ namespace WzVisualizer {
                     break;
                 case 0: // Equips
                     {
-                    if (!LoadWzFileIfAbsent(ref characterWz, mapleDirectory + "/Character", mapleVersion)) return;
+                    if (!LoadWzFileIfAbsent(ref CharacterWz, mapleDirectory + "/Character", mapleVersion)) return;
 
-                    List<WzImage> children = characterWz.WzDirectory.GetChildImages();
+                    List<WzImage> children = CharacterWz.WzDirectory.GetChildImages();
                     children.Sort((a, b) => a.Name.CompareTo(b.Name));
-                    for (int i = 0; i < characterWz.WzDirectory.CountImages(); i++) {
+                    for (int i = 0; i < CharacterWz.WzDirectory.CountImages(); i++) {
                         WzImage image = children[i];
                         string name = Path.GetFileNameWithoutExtension(image.Name);
                         if (int.TryParse(name, out int equipId)) {
@@ -284,10 +276,10 @@ namespace WzVisualizer {
                 case 4: // Cash
                 case 9: // Pets
                     {
-                    if (!LoadWzFileIfAbsent(ref itemWz, mapleDirectory + "/Item", mapleVersion)) return;
-                    List<WzImage> children = itemWz.WzDirectory.GetChildImages();
+                    if (!LoadWzFileIfAbsent(ref ItemWz, mapleDirectory + "/Item", mapleVersion)) return;
+                    List<WzImage> children = ItemWz.WzDirectory.GetChildImages();
                     children.Sort((a, b) => a.Name.CompareTo(b.Name));
-                    for (int i = 0; i < itemWz.WzDirectory.CountImages(); i++) {
+                    for (int i = 0; i < ItemWz.WzDirectory.CountImages(); i++) {
                         WzImage image = children[i];
                         string name = Path.GetFileNameWithoutExtension(image.Name);
                         if (int.TryParse(name, out int itemId)) {
@@ -325,10 +317,10 @@ namespace WzVisualizer {
                 }
                 case 5: // Map
                     {
-                    if (!LoadWzFileIfAbsent(ref mapWz, mapleDirectory + "/Map", mapleVersion)) return;
-                    List<WzImage> children = mapWz.WzDirectory.GetChildImages();
+                    if (!LoadWzFileIfAbsent(ref MapWz, mapleDirectory + "/Map", mapleVersion)) return;
+                    List<WzImage> children = MapWz.WzDirectory.GetChildImages();
                     children.Sort((a, b) => a.Name.CompareTo(b.Name));
-                    for (int i = 0; i < mapWz.WzDirectory.CountImages(); i++) {
+                    for (int i = 0; i < MapWz.WzDirectory.CountImages(); i++) {
                         WzImage image = children[i];
                         string sMapId = Path.GetFileNameWithoutExtension(image.Name);
                         if (int.TryParse(sMapId, out int mapId)) {
@@ -344,12 +336,12 @@ namespace WzVisualizer {
                 }
                 case 6: // Mob
                     {
-                    if (!LoadWzFileIfAbsent(ref mobWz, mapleDirectory + "/Mob", mapleVersion)) return;
+                    if (!LoadWzFileIfAbsent(ref MobWz, mapleDirectory + "/Mob", mapleVersion)) return;
                     MobsView.GridView.Rows.Clear();
 
-                    List<WzImage> children = mobWz.WzDirectory.GetChildImages();
+                    List<WzImage> children = MobWz.WzDirectory.GetChildImages();
                     children.Sort((a, b) => a.Name.CompareTo(b.Name));
-                    for (int i = 0; i < mobWz.WzDirectory.CountImages(); i++) {
+                    for (int i = 0; i < MobWz.WzDirectory.CountImages(); i++) {
                         WzImage image = children[i];
                         AddGridRow(MobsView.GridView, image);
                     }
@@ -357,20 +349,19 @@ namespace WzVisualizer {
                 }
                 case 7: // Skills
                     {
-                    if (!LoadWzFileIfAbsent(ref skillWz, mapleDirectory + "/Skill", mapleVersion)) return;
+                    if (!LoadWzFileIfAbsent(ref SkillWz, mapleDirectory + "/Skill", mapleVersion)) return;
                     SkillsView.GridView.Rows.Clear();
 
-                    List<WzImage> children = skillWz.WzDirectory.GetChildImages();
-                    children.Sort((a, b) => a.Name.CompareTo(b.Name));
-                    for (int i = 0; i < skillWz.WzDirectory.CountImages(); i++) {
+                    SkillWz.WzDirectory.ParseImages();
+                    List<WzImage> children = SkillWz.WzDirectory.GetChildImages();
+                    for (int i = 0; i < SkillWz.WzDirectory.CountImages(); i++) {
                         WzImage image = children[i];
                         string name = Path.GetFileNameWithoutExtension(image.Name);
                         if (int.TryParse(name, out _)) {
                             WzImageProperty tree = image.GetFromPath("skill");
                             if (tree is WzSubProperty) {
                                 List<WzImageProperty> skills = tree.WzProperties;
-                                skills.ForEach(s => AddGridRow(SkillsView.GridView, s));
-                                skills.Clear();
+                                skills.ForEach(s => AddSkillRow(s));
                             }
                         }
                     }
@@ -378,12 +369,12 @@ namespace WzVisualizer {
                 }
                 case 8: // NPCs
                 {
-                    if (!LoadWzFileIfAbsent(ref npcWz, mapleDirectory + "/Npc", mapleVersion)) return;
+                    if (!LoadWzFileIfAbsent(ref NpcWz, mapleDirectory + "/Npc", mapleVersion)) return;
                     NPCView.GridView.Rows.Clear();
 
-                    List<WzImage> children = npcWz.WzDirectory.GetChildImages();
+                    List<WzImage> children = NpcWz.WzDirectory.GetChildImages();
                     children.Sort((a, b) => a.Name.CompareTo(b.Name));
-                    for (int i = 0; i < npcWz.WzDirectory.CountImages(); i++) {
+                    for (int i = 0; i < NpcWz.WzDirectory.CountImages(); i++) {
                         WzImage image = children[i];
                         AddGridRow(NPCView.GridView, image);
                     }
@@ -391,12 +382,12 @@ namespace WzVisualizer {
                 }
                 case 10: // Reactors
                 {
-                    if (!LoadWzFileIfAbsent(ref reactorWz, mapleDirectory + "/Reactor", mapleVersion)) return;
+                    if (!LoadWzFileIfAbsent(ref ReactorWz, mapleDirectory + "/Reactor", mapleVersion)) return;
                     ReactorView.GridView.Rows.Clear();
 
-                    List<WzImage> children = reactorWz.WzDirectory.GetChildImages();
+                    List<WzImage> children = ReactorWz.WzDirectory.GetChildImages();
                     children.Sort((a, b) => a.Name.CompareTo(b.Name));
-                    for (int i = 0; i < reactorWz.WzDirectory.CountImages(); i++) {
+                    for (int i = 0; i < ReactorWz.WzDirectory.CountImages(); i++) {
                         WzImage image = children[i];
                         AddGridRow(ReactorView.GridView, image);
                     }
@@ -441,21 +432,21 @@ namespace WzVisualizer {
         /// then calls the garbage collector for each loaded WZ file
         /// </summary>
         private void DisposeWzFiles() {
-            stringWz?.Dispose();
-            itemWz?.Dispose();
-            characterWz?.Dispose();
-            mapWz?.Dispose();
-            mobWz?.Dispose();
-            skillWz?.Dispose();
-            npcWz?.Dispose();
+            StringWz?.Dispose();
+            ItemWz?.Dispose();
+            CharacterWz?.Dispose();
+            MapWz?.Dispose();
+            MobWz?.Dispose();
+            SkillWz?.Dispose();
+            NpcWz?.Dispose();
 
-            stringWz = null;
-            itemWz = null;
-            characterWz = null;
-            mapWz = null;
-            mobWz = null;
-            skillWz = null;
-            npcWz = null;
+            StringWz = null;
+            ItemWz = null;
+            CharacterWz = null;
+            MapWz = null;
+            MobWz = null;
+            SkillWz = null;
+            NpcWz = null;
         }
 
         /// <summary>
@@ -540,25 +531,25 @@ namespace WzVisualizer {
                     else mapleVersion = (WzMapleVersion)
                         ComboEncType.SelectedIndex - 1;
 
-                    stringWz = new WzFile(stringWzPath + Resources.FileExtension, mapleVersion);
-                    stringWz.ParseWzFile();
-                    short? version = stringWz.Version;
+                    StringWz = new WzFile(stringWzPath + Resources.FileExtension, mapleVersion);
+                    StringWz.ParseWzFile();
+                    short? version = StringWz.FileVersion;
                     if (WzTool.GetDecryptionSuccessRate(stringWzPath + Resources.FileExtension, mapleVersion, ref version) < 0.8) {
                         MessageBox.Show(Resources.BadEncryption, Resources.Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;
                     }
                 } else if (Directory.Exists(stringWzPath)) { // KMS
                     mapleVersion = WzMapleVersion.EMS;
-                    stringWz = new WzFile(stringWzPath, mapleVersion);
-                    WzDirectory dir = new WzDirectory("String", stringWz);
-                    stringWz.WzDirectory = dir;
+                    StringWz = new WzFile(stringWzPath, mapleVersion);
+                    WzDirectory dir = new WzDirectory("String", StringWz);
+                    StringWz.WzDirectory = dir;
                     RecursivelyLoadDirectory(dir, stringWzPath, mapleVersion);
                 } else {
                     MessageBox.Show(Resources.MissingStringFile, Resources.FIleNotFound, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     DisposeWzFiles();
                     return;
                 }
-                StringUtility = new WzStringUtility(stringWz);
+                StringUtility = new WzStringUtility(StringWz);
                 LoadWzData(mapleVersion, folderPath);
             }
             DisposeWzFiles();

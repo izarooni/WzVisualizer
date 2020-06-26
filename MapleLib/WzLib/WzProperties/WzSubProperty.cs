@@ -26,7 +26,6 @@ namespace MapleLib.WzLib.WzProperties
     public class WzSubProperty : WzExtended, IPropertyContainer
 	{
 		#region Fields
-		internal List<WzImageProperty> properties = new List<WzImageProperty>();
 		internal string name;
 		internal WzObject parent;
 		//internal WzImage imgParent;
@@ -41,7 +40,7 @@ namespace MapleLib.WzLib.WzProperties
         public override WzImageProperty DeepClone()
         {
             WzSubProperty clone = new WzSubProperty(name);
-            foreach (WzImageProperty prop in properties)
+            foreach (WzImageProperty prop in WzProperties)
                 clone.AddProperty(prop.DeepClone());
             return clone;
         }
@@ -61,13 +60,7 @@ namespace MapleLib.WzLib.WzProperties
 		/// <summary>
 		/// The wz properties contained in the property
 		/// </summary>
-		public override List<WzImageProperty> WzProperties
-		{
-			get
-			{
-                return properties;
-            }
-		}
+		public override List<WzImageProperty> WzProperties { get; } = new List<WzImageProperty>();
 		/// <summary>
 		/// The name of the property
 		/// </summary>
@@ -82,7 +75,7 @@ namespace MapleLib.WzLib.WzProperties
 			get
 			{
 
-                foreach (WzImageProperty iwp in properties)
+                foreach (WzImageProperty iwp in WzProperties)
                     if (iwp.Name.ToLower() == name.ToLower())
                         return iwp;
 				//throw new KeyNotFoundException("A wz property with the specified name was not found");
@@ -133,7 +126,7 @@ namespace MapleLib.WzLib.WzProperties
 		public override void WriteValue(MapleLib.WzLib.Util.WzBinaryWriter writer)
 		{
 			writer.WriteStringValue("Property", 0x73, 0x1B);
-			WzImageProperty.WritePropertyList(writer, properties);
+			WzImageProperty.WritePropertyList(writer, WzProperties);
 		}
 		public override void ExportXml(StreamWriter writer, int level)
 		{
@@ -141,16 +134,20 @@ namespace MapleLib.WzLib.WzProperties
 			WzImageProperty.DumpPropertyList(writer, level, WzProperties);
 			writer.WriteLine(XmlUtil.Indentation(level) + XmlUtil.CloseTag("WzSub")); 
 		}
-		/// <summary>
-		/// Disposes the object
-		/// </summary>
-		public override void Dispose()
+
+        public override string ToString() {
+			return string.Format("WzSubProperty('{0}')", Name);
+        }
+
+        /// <summary>
+        /// Disposes the object
+        /// </summary>
+        public override void Dispose()
 		{
 			name = null;
-			foreach (WzImageProperty prop in properties)
+			foreach (WzImageProperty prop in WzProperties)
 				prop.Dispose();
-			properties.Clear();
-			properties = null;
+			WzProperties.Clear();
 		}
 		#endregion
 
@@ -174,7 +171,7 @@ namespace MapleLib.WzLib.WzProperties
 		public void AddProperty(WzImageProperty prop)
 		{
             prop.Parent = this;
-            properties.Add(prop);
+            WzProperties.Add(prop);
 		}
 		public void AddProperties(List<WzImageProperty> props)
 		{
@@ -186,15 +183,15 @@ namespace MapleLib.WzLib.WzProperties
         public void RemoveProperty(WzImageProperty prop)
 		{
             prop.Parent = null;
-            properties.Remove(prop);
+            WzProperties.Remove(prop);
 		}
 		/// <summary>
 		/// Clears the list of properties
 		/// </summary>
 		public void ClearProperties()
 		{
-            foreach (WzImageProperty prop in properties) prop.Parent = null;
-			properties.Clear();
+            foreach (WzImageProperty prop in WzProperties) prop.Parent = null;
+			WzProperties.Clear();
 		}
 		#endregion
 	}

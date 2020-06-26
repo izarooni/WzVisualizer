@@ -58,10 +58,14 @@ namespace MapleLib.WzLib
             get { return wzFile; }
         }
 
-		/// <summary>
-		/// Disposes the obejct
-		/// </summary>
-		public override void Dispose()
+        public override string ToString() {
+			return string.Format("WzDirectory('{0}')", Name);
+        }
+
+        /// <summary>
+        /// Disposes the obejct
+        /// </summary>
+        public override void Dispose()
 		{
 			name = null;
 			reader = null;
@@ -107,12 +111,12 @@ namespace MapleLib.WzLib
 			get
 			{
 				foreach (WzImage i in images)
-					if (i.Name.ToLower() == name.ToLower())
+					if (i.Name.ToLower() == name.ToLower() 
+						|| Path.GetFileNameWithoutExtension(i.Name.ToLower()) == Path.GetFileNameWithoutExtension(name.ToLower()))
 						return i;
 				foreach (WzDirectory d in subDirs)
 					if (d.Name.ToLower() == name.ToLower())
 						return d;
-				//throw new KeyNotFoundException("No wz image or directory was found with the specified name");
 				return null;
 			}
             set

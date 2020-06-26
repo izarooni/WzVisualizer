@@ -46,7 +46,7 @@ namespace MapleLib.WzLib.WzStructure
             this.strStreetName = strStreetName;
             this.strCategoryName = strCategoryName;
             WzFile file = (WzFile)image.WzFileParent;
-            string loggerSuffix = ", map " + image.Name + ((file != null) ? (" of version " + Enum.GetName(typeof(WzMapleVersion), file.MapleVersion) + ", v" + file.Version.ToString()) : "");
+            string loggerSuffix = ", map " + image.Name + ((file != null) ? (" of version " + Enum.GetName(typeof(WzMapleVersion), file.MapleVersion) + ", v" + file.FileVersion.ToString()) : "");
             foreach (WzImageProperty prop in image["info"].WzProperties) 
             {
                 switch (prop.Name)
