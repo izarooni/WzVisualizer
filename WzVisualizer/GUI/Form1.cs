@@ -263,7 +263,7 @@ namespace WzVisualizer {
                                 case 190:
                                 case 191:
                                 case 193: // Taming Mob
-                                    //if (selectedTab == 13) AddGridRow(, image);
+                                    if (selectedTab == 13) AddGridRow(EquipMountsView.GridView, image);
                                     break;
                             }
                         }
