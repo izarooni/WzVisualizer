@@ -125,7 +125,7 @@ namespace WzVisualizer {
                     name = StringUtility.GetNPC(id);
                 } else if (image.WzFileParent.Name.StartsWith("Mob")) { // icon path like: '{ID}/(move|stand|fly)/0'
                     name = StringUtility.GetMob(id);
-                    entityIcon = (entityIcon == null) ? image.GetFromPath("fly/0") ?? image.GetFromPath("move/0") : null; // attempt to get image of the monster
+                    if (entityIcon == null) entityIcon = image.GetFromPath("fly/0") ?? image.GetFromPath("move/0"); // attempt to get image of the monster
                 } else if (image.WzFileParent.Name.StartsWith("Reactor")) {
                     name = image.GetFromPath("action")?.WzValue.ToString();
                     entityIcon = image.GetFromPath("0/0");
