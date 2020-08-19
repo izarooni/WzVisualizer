@@ -47,8 +47,8 @@ namespace WzVisualizer {
         private static string GetEqpCategory(int ID) {
             switch (ID / 10000) {
                 default: return null;
-                case 2: case 5: return "Face";
-                case 3: case 4: return "Hair";
+                case 2: return "Face";
+                case 3: return "Hair";
                 case 100: return "Cap";
                 case 101:
                 case 102:
