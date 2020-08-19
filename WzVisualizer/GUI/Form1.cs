@@ -88,7 +88,16 @@ namespace WzVisualizer {
         private void AddHairRow(WzImage image) {
             string imgName = Path.GetFileNameWithoutExtension(image.Name);
             int id = int.Parse(imgName);
-            WzCanvasProperty icon = (WzCanvasProperty)image.GetFromPath("default/hairOverHead");
+            WzCanvasProperty icon = null;
+            WzImageProperty hairOverHeadProperty = image.GetFromPath("default/hairOverHead");
+            if (hairOverHeadProperty is WzCanvasProperty wcp)
+            {
+                icon = wcp;
+            }
+            else if (hairOverHeadProperty is WzUOLProperty wup)
+            {
+                icon = (WzCanvasProperty)wup.LinkValue;
+            }
             if (icon == null) {
                 icon = (WzCanvasProperty)image.GetFromPath("default/hair");
             }
@@ -216,7 +225,7 @@ namespace WzVisualizer {
                             switch (bodyPart) {
                                 default:
                                     if (selectedTab == 2 && bodyPart >= 130 && bodyPart <= 170) AddGridRow(EquipWeaponsView.GridView, image);
-                                    else if (selectedTab == 1 && bodyPart == 2) AddFaceRow(image);
+                                    else if (selectedTab == 1 && (bodyPart == 2 || bodyPart == 5)) AddFaceRow(image);
                                     else if (selectedTab == 0 && (bodyPart == 3 || bodyPart == 4)) AddHairRow(image);
                                     break;
                                 case 100: // Caps
