@@ -79,8 +79,8 @@ namespace WzVisualizer {
                 for (int b = 0; b < cells.Count; b++) {
                     var cell = cells[b];
                     string ownColumnName = cell.OwningColumn.Name;
-                    if (ownColumnName.EndsWith("Image")) bitmap = (Bitmap)cell.Value;
-                    if (ownColumnName.EndsWith("ID")) fileName = (int)cell.Value + ".png";
+                    if (ownColumnName.Contains("Bitmap")) bitmap = (Bitmap)cell.Value;
+                    if (ownColumnName.Contains("ID")) fileName = (int)cell.Value + ".png";
                 }
                 if (bitmap == null || fileName == null) continue;
                 bitmap.Save($"{directory}/{fileName}", ImageFormat.Png);
@@ -100,16 +100,15 @@ namespace WzVisualizer {
                     for (int b = 0; b < cells.Count; b++) {
                         var cell = cells[b];
                         string ownColumnName = cell.OwningColumn.Name;
-                        if (ownColumnName.EndsWith("ID")) binData.ID = (int)cell.Value;
-                        else if (ownColumnName.EndsWith("Image")) binData.image = (Bitmap)cell.Value;
-                        else if (ownColumnName.EndsWith("Name")) binData.Name = (string)cell.Value;
-                        else if (ownColumnName.EndsWith("Properties")) {
+                        if (ownColumnName.Contains("ID")) binData.ID = (int)cell.Value;
+                        else if (ownColumnName.Contains("Bitmap")) binData.image = (Bitmap)cell.Value;
+                        else if (ownColumnName.Contains("Name")) binData.Name = (string)cell.Value;
+                        else if (ownColumnName.Contains("Properties")) {
                             string[] properties = ((string)cell.Value).Split(new[] { "\r\n" }, StringSplitOptions.None);
                             foreach (string prop in properties)
                                 binData.properties.Add(prop);
                         } else {
-                            Debug.WriteLine($"Unhandled column '{ownColumnName}'");
-                            continue;
+                            throw new Exception($"unhandled column '{ownColumnName}'");
                         }
                     }
                     bwriter.Write(binData.ID);

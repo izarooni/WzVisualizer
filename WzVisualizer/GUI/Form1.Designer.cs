@@ -92,8 +92,8 @@
             this.BtnWzLoad = new System.Windows.Forms.Button();
             this.BtnSave = new System.Windows.Forms.Button();
             this.SearchTextBox = new System.Windows.Forms.TextBox();
-            this.mainFormBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.SearchBoxLabel = new System.Windows.Forms.Label();
+            this.mainFormBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.TabControlMain.SuspendLayout();
             this.TabEquipsPage.SuspendLayout();
             this.EquipTab.SuspendLayout();
@@ -128,14 +128,12 @@
             this.TabNPCsPage.SuspendLayout();
             this.TabPetsPage.SuspendLayout();
             this.TabReactors.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.mainFormBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize) (this.mainFormBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // TabControlMain
             // 
-            this.TabControlMain.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.TabControlMain.Anchor = ((System.Windows.Forms.AnchorStyles) ((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right)));
             this.TabControlMain.Controls.Add(this.TabEquipsPage);
             this.TabControlMain.Controls.Add(this.TabUsePage);
             this.TabControlMain.Controls.Add(this.TabSetupPage);
@@ -147,7 +145,7 @@
             this.TabControlMain.Controls.Add(this.TabNPCsPage);
             this.TabControlMain.Controls.Add(this.TabPetsPage);
             this.TabControlMain.Controls.Add(this.TabReactors);
-            this.TabControlMain.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TabControlMain.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
             this.TabControlMain.Location = new System.Drawing.Point(0, 29);
             this.TabControlMain.Margin = new System.Windows.Forms.Padding(0);
             this.TabControlMain.Name = "TabControlMain";
@@ -785,9 +783,7 @@
             // 
             this.ComboLoadType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.ComboLoadType.FormattingEnabled = true;
-            this.ComboLoadType.Items.AddRange(new object[] {
-            "BIN",
-            "WZ"});
+            this.ComboLoadType.Items.AddRange(new object[] {"BIN", "WZ"});
             this.ComboLoadType.Location = new System.Drawing.Point(5, 5);
             this.ComboLoadType.Name = "ComboLoadType";
             this.ComboLoadType.Size = new System.Drawing.Size(55, 21);
@@ -808,14 +804,14 @@
             this.TextWzPath.Enabled = false;
             this.TextWzPath.Location = new System.Drawing.Point(184, 5);
             this.TextWzPath.Name = "TextWzPath";
-            this.TextWzPath.Size = new System.Drawing.Size(227, 20);
+            this.TextWzPath.Size = new System.Drawing.Size(196, 20);
             this.TextWzPath.TabIndex = 3;
             this.TextWzPath.Click += new System.EventHandler(this.TextWzPath_Click);
             // 
             // BtnWzLoad
             // 
             this.BtnWzLoad.Enabled = false;
-            this.BtnWzLoad.Location = new System.Drawing.Point(418, 5);
+            this.BtnWzLoad.Location = new System.Drawing.Point(386, 3);
             this.BtnWzLoad.Name = "BtnWzLoad";
             this.BtnWzLoad.Size = new System.Drawing.Size(75, 23);
             this.BtnWzLoad.TabIndex = 4;
@@ -828,8 +824,7 @@
             this.BtnSave.BackColor = System.Drawing.Color.Transparent;
             this.BtnSave.FlatAppearance.BorderSize = 0;
             this.BtnSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BtnSave.Image = global::WzVisualizer.Properties.Resources.FloppyIcon;
-            this.BtnSave.Location = new System.Drawing.Point(500, 5);
+            this.BtnSave.Location = new System.Drawing.Point(467, 2);
             this.BtnSave.Name = "BtnSave";
             this.BtnSave.Size = new System.Drawing.Size(23, 23);
             this.BtnSave.TabIndex = 5;
@@ -838,27 +833,27 @@
             // 
             // SearchTextBox
             // 
-            this.SearchTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
+            this.SearchTextBox.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.SearchTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.SearchTextBox.Location = new System.Drawing.Point(706, 6);
+            this.SearchTextBox.Location = new System.Drawing.Point(702, 6);
             this.SearchTextBox.Name = "SearchTextBox";
-            this.SearchTextBox.Size = new System.Drawing.Size(147, 20);
+            this.SearchTextBox.Size = new System.Drawing.Size(158, 20);
             this.SearchTextBox.TabIndex = 6;
             this.SearchTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.SearchTextBox_KeyPress);
             // 
-            // mainFormBindingSource
-            // 
-            this.mainFormBindingSource.DataSource = typeof(WzVisualizer.MainForm);
-            // 
             // SearchBoxLabel
             // 
+            this.SearchBoxLabel.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.SearchBoxLabel.AutoSize = true;
             this.SearchBoxLabel.Location = new System.Drawing.Point(659, 9);
             this.SearchBoxLabel.Name = "SearchBoxLabel";
             this.SearchBoxLabel.Size = new System.Drawing.Size(41, 13);
             this.SearchBoxLabel.TabIndex = 7;
             this.SearchBoxLabel.Text = "Search";
+            // 
+            // mainFormBindingSource
+            // 
+            this.mainFormBindingSource.DataSource = typeof(WzVisualizer.MainForm);
             // 
             // MainForm
             // 
@@ -873,7 +868,7 @@
             this.Controls.Add(this.ComboEncType);
             this.Controls.Add(this.ComboLoadType);
             this.Controls.Add(this.TabControlMain);
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Icon = ((System.Drawing.Icon) (resources.GetObject("$this.Icon")));
             this.Name = "MainForm";
             this.Text = "WzVisualizer";
             this.Load += new System.EventHandler(this.MainForm_Load);
@@ -911,83 +906,82 @@
             this.TabNPCsPage.ResumeLayout(false);
             this.TabPetsPage.ResumeLayout(false);
             this.TabReactors.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.mainFormBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize) (this.mainFormBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
-
         }
 
-        #endregion
-
-        private System.Windows.Forms.TabControl TabControlMain;
-        private System.Windows.Forms.TabPage TabUsePage;
-        private System.Windows.Forms.TabPage TabEtcPage;
-        private System.Windows.Forms.ComboBox ComboLoadType;
-        private System.Windows.Forms.TabPage TabCashPage;
-        private System.Windows.Forms.ComboBox ComboEncType;
-        private System.Windows.Forms.TextBox TextWzPath;
-        private System.Windows.Forms.Button BtnWzLoad;
         private System.Windows.Forms.Button BtnSave;
-        private System.Windows.Forms.TabPage TabEquipsPage;
+        private System.Windows.Forms.Button BtnWzLoad;
+        private WzVisualizer.GUI.Controls.DataViewer CashView;
+        private System.Windows.Forms.ComboBox ComboEncType;
+        private System.Windows.Forms.ComboBox ComboLoadType;
+        private WzVisualizer.GUI.Controls.DataViewer EquipAccessoryView;
+        private WzVisualizer.GUI.Controls.DataViewer EquipCapesView;
+        private WzVisualizer.GUI.Controls.DataViewer EquipCapsView;
+        private WzVisualizer.GUI.Controls.DataViewer EquipFacesView;
+        private WzVisualizer.GUI.Controls.DataViewer EquipGlovesView;
+        private WzVisualizer.GUI.Controls.DataViewer EquipHairsView;
+        private WzVisualizer.GUI.Controls.DataViewer EquipMountsView;
+        private WzVisualizer.GUI.Controls.DataViewer EquipPantsView;
+        private WzVisualizer.GUI.Controls.DataViewer EquipRingsView;
+        private WzVisualizer.GUI.Controls.DataViewer EquipShieldsView;
+        private WzVisualizer.GUI.Controls.DataViewer EquipShoesView;
+        private WzVisualizer.GUI.Controls.DataViewer EquipsOverallsView;
         private System.Windows.Forms.TabControl EquipTab;
-        private System.Windows.Forms.TabPage TabEFaces;
-        private System.Windows.Forms.TabPage TabsEWeapons;
-        private System.Windows.Forms.TabPage TabECaps;
-        private System.Windows.Forms.TabPage TabEOveralls;
-        private System.Windows.Forms.TabPage TabETops;
+        private WzVisualizer.GUI.Controls.DataViewer EquipTopsView;
+        private WzVisualizer.GUI.Controls.DataViewer EquipWeaponsView;
+        private WzVisualizer.GUI.Controls.DataViewer EtcView;
+        private System.Windows.Forms.BindingSource mainFormBindingSource;
+        private WzVisualizer.GUI.Controls.DataViewer MapsView;
+        private WzVisualizer.GUI.Controls.DataViewer MobsView;
+        private WzVisualizer.GUI.Controls.DataViewer NPCView;
+        private WzVisualizer.GUI.Controls.DataViewer PetsView;
+        private WzVisualizer.GUI.Controls.DataViewer ReactorView;
+        private System.Windows.Forms.Label SearchBoxLabel;
+        private System.Windows.Forms.TextBox SearchTextBox;
+        private WzVisualizer.GUI.Controls.DataViewer SetupChairsView;
+        private WzVisualizer.GUI.Controls.DataViewer SetupOthersView;
+        private WzVisualizer.GUI.Controls.DataViewer SkillsView;
+        private System.Windows.Forms.TabPage TabCashPage;
+        private System.Windows.Forms.TabControl TabControlMain;
+        private System.Windows.Forms.TabPage TabEAccessory;
         private System.Windows.Forms.TabPage TabEBottoms;
-        private System.Windows.Forms.TabPage TabEShoes;
         private System.Windows.Forms.TabPage TabECapes;
+        private System.Windows.Forms.TabPage TabECaps;
+        private System.Windows.Forms.TabPage TabEFaces;
         private System.Windows.Forms.TabPage TabEGloves;
+        private System.Windows.Forms.TabPage TabEHairs;
+        private System.Windows.Forms.TabPage TabEOveralls;
+        private System.Windows.Forms.TabPage TabEquipsPage;
         private System.Windows.Forms.TabPage TabERings;
         private System.Windows.Forms.TabPage TabEShields;
-        private System.Windows.Forms.TabControl TabUse;
-        private System.Windows.Forms.TabPage TabUConsumes;
-        private System.Windows.Forms.TabPage TabUScrolls;
-        private System.Windows.Forms.TabPage TabUProjectiles;
-        private System.Windows.Forms.TabPage TabSetupPage;
-        private System.Windows.Forms.TabControl TabSetup;
-        private System.Windows.Forms.TabPage TabSChairs;
-        private System.Windows.Forms.TabPage TabEAccessory;
+        private System.Windows.Forms.TabPage TabEShoes;
         private System.Windows.Forms.TabPage TabETames;
-        private System.Windows.Forms.TabPage TabSOther;
-        private System.Windows.Forms.BindingSource mainFormBindingSource;
-        private System.Windows.Forms.TextBox SearchTextBox;
+        private System.Windows.Forms.TabPage TabEtcPage;
+        private System.Windows.Forms.TabPage TabETops;
         private System.Windows.Forms.TabPage TabMapsPage;
         private System.Windows.Forms.TabPage TabMobsPage;
-        private System.Windows.Forms.TabPage TabSkillsPage;
         private System.Windows.Forms.TabPage TabNPCsPage;
         private System.Windows.Forms.TabPage TabPetsPage;
         private System.Windows.Forms.TabPage TabReactors;
-        private GUI.Controls.DataViewer ReactorView;
-        private GUI.Controls.DataViewer PetsView;
-        private GUI.Controls.DataViewer EtcView;
-        private GUI.Controls.DataViewer CashView;
-        private GUI.Controls.DataViewer MapsView;
-        private GUI.Controls.DataViewer MobsView;
-        private GUI.Controls.DataViewer SkillsView;
-        private GUI.Controls.DataViewer NPCView;
-        private GUI.Controls.DataViewer EquipFacesView;
-        private GUI.Controls.DataViewer EquipWeaponsView;
-        private GUI.Controls.DataViewer EquipAccessoryView;
-        private GUI.Controls.DataViewer EquipCapsView;
-        private GUI.Controls.DataViewer EquipsOverallsView;
-        private GUI.Controls.DataViewer EquipTopsView;
-        private GUI.Controls.DataViewer EquipPantsView;
-        private GUI.Controls.DataViewer EquipShoesView;
-        private GUI.Controls.DataViewer EquipCapesView;
-        private GUI.Controls.DataViewer EquipGlovesView;
-        private GUI.Controls.DataViewer EquipRingsView;
-        private GUI.Controls.DataViewer EquipShieldsView;
-        private GUI.Controls.DataViewer EquipMountsView;
-        private GUI.Controls.DataViewer UseConsumeView;
-        private GUI.Controls.DataViewer UseScrollsView;
-        private GUI.Controls.DataViewer UseProjectileView;
-        private GUI.Controls.DataViewer SetupChairsView;
-        private GUI.Controls.DataViewer SetupOthersView;
-        private System.Windows.Forms.TabPage TabEHairs;
-        private GUI.Controls.DataViewer EquipHairsView;
-        private System.Windows.Forms.Label SearchBoxLabel;
+        private System.Windows.Forms.TabPage TabSChairs;
+        private System.Windows.Forms.TabControl TabSetup;
+        private System.Windows.Forms.TabPage TabSetupPage;
+        private System.Windows.Forms.TabPage TabsEWeapons;
+        private System.Windows.Forms.TabPage TabSkillsPage;
+        private System.Windows.Forms.TabPage TabSOther;
+        private System.Windows.Forms.TabPage TabUConsumes;
+        private System.Windows.Forms.TabPage TabUProjectiles;
+        private System.Windows.Forms.TabPage TabUScrolls;
+        private System.Windows.Forms.TabControl TabUse;
+        private System.Windows.Forms.TabPage TabUsePage;
+        private System.Windows.Forms.TextBox TextWzPath;
+        private WzVisualizer.GUI.Controls.DataViewer UseConsumeView;
+        private WzVisualizer.GUI.Controls.DataViewer UseProjectileView;
+        private WzVisualizer.GUI.Controls.DataViewer UseScrollsView;
+
+        #endregion
     }
 }
 
