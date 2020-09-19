@@ -62,7 +62,7 @@ namespace WzVisualizer {
                 case 109: return "Shield";
                 case 110: return "Cape";
                 case 111: return "Ring";
-                case 130: return "Weapon";
+                case int n when n >= 130 && n <= 170: return "Weapon";
                 case 180: return "PetEquip";
                 case 190: return "Taming";
             }

@@ -45,14 +45,14 @@
             this.GridView.Size = new System.Drawing.Size(150, 150);
             this.GridView.TabIndex = 0;
             // 
-            // ID
+            // propID
             // 
             this.propID.DataPropertyName = "IDProperty";
             this.propID.HeaderText = "ID";
             this.propID.Name = "propID";
             this.propID.ReadOnly = true;
             // 
-            // Image
+            // propBitmap
             // 
             this.propBitmap.DataPropertyName = "ImageProperty";
             this.propBitmap.HeaderText = "Image";
@@ -60,14 +60,14 @@
             this.propBitmap.ReadOnly = true;
             this.propBitmap.Width = 150;
             // 
-            // Name
+            // propName
             // 
             this.propName.DataPropertyName = "NameProperty";
             this.propName.HeaderText = "Name";
             this.propName.Name = "propName";
             this.propName.ReadOnly = true;
             // 
-            // Properties
+            // propProperties
             // 
             this.propProperties.DataPropertyName = "PropertiesProperty";
             this.propProperties.HeaderText = "Properties";
@@ -85,8 +85,8 @@
         }
 
         internal System.Windows.Forms.DataGridView GridView;
-        private System.Windows.Forms.DataGridViewTextBoxColumn propID;
         private System.Windows.Forms.DataGridViewImageColumn propBitmap;
+        private System.Windows.Forms.DataGridViewTextBoxColumn propID;
         private System.Windows.Forms.DataGridViewTextBoxColumn propName;
         private System.Windows.Forms.DataGridViewTextBoxColumn propProperties;
 

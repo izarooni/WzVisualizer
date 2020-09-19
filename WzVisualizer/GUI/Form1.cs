@@ -496,9 +496,14 @@ namespace WzVisualizer {
             foreach (string prop in binData.properties)
                 allProperties += prop + "\r\n";
 
-            string filter = SearchTextBox.Text;
-            if (filter?.Length > 0 && !binData.Search(filter))
-                return;
+            string queries = SearchTextBox.Text;
+            if (!string.IsNullOrEmpty(queries)) {
+                string[] lines = queries.Split(new[] { "\r\n" }, StringSplitOptions.None);
+                foreach (var query in lines) {
+                    // all queries must match
+                    if (!binData.Search(query)) return;
+                }
+            }
 
             if (!IsDisposed && InvokeRequired) {
                 Image image = binData?.image;
@@ -695,11 +700,14 @@ namespace WzVisualizer {
         private void MainForm_Load(object sender, EventArgs e) {
             GridIOUtility.ImportGrid("equips/Hairs.bin", EquipHairsView.GridView, AddGridRow);
         }
+        private void BtnSearch_Click(object sender, EventArgs e) {
+            // re-load the tab, but this time we should have a seach query
+            Tab_Selected(sender, GetSelectedTab());
+        }
 
-        private void SearchTextBox_KeyPress(object sender, KeyPressEventArgs e) {
-            int keyCode = (int) e.KeyChar;
-            if (keyCode == (int) Keys.Enter)
-                Tab_Selected(sender, GetSelectedTab());
+        private void SearchTextBox_TextChanged(object sender, EventArgs e) {
+            string[] lines = SearchTextBox.Text.Split(new[] { "\r\n" }, StringSplitOptions.None);
+            SearchTextBox.Height = 15 * Math.Max(1, lines.Length);
         }
 
         #endregion

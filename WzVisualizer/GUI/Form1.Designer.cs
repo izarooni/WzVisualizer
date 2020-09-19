@@ -92,8 +92,8 @@
             this.BtnWzLoad = new System.Windows.Forms.Button();
             this.BtnSave = new System.Windows.Forms.Button();
             this.SearchTextBox = new System.Windows.Forms.TextBox();
-            this.SearchBoxLabel = new System.Windows.Forms.Label();
             this.mainFormBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.BtnSearch = new System.Windows.Forms.Button();
             this.TabControlMain.SuspendLayout();
             this.TabEquipsPage.SuspendLayout();
             this.EquipTab.SuspendLayout();
@@ -128,12 +128,14 @@
             this.TabNPCsPage.SuspendLayout();
             this.TabPetsPage.SuspendLayout();
             this.TabReactors.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize) (this.mainFormBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.mainFormBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // TabControlMain
             // 
-            this.TabControlMain.Anchor = ((System.Windows.Forms.AnchorStyles) ((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right)));
+            this.TabControlMain.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.TabControlMain.Controls.Add(this.TabEquipsPage);
             this.TabControlMain.Controls.Add(this.TabUsePage);
             this.TabControlMain.Controls.Add(this.TabSetupPage);
@@ -145,7 +147,7 @@
             this.TabControlMain.Controls.Add(this.TabNPCsPage);
             this.TabControlMain.Controls.Add(this.TabPetsPage);
             this.TabControlMain.Controls.Add(this.TabReactors);
-            this.TabControlMain.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
+            this.TabControlMain.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TabControlMain.Location = new System.Drawing.Point(0, 29);
             this.TabControlMain.Margin = new System.Windows.Forms.Padding(0);
             this.TabControlMain.Name = "TabControlMain";
@@ -783,7 +785,9 @@
             // 
             this.ComboLoadType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.ComboLoadType.FormattingEnabled = true;
-            this.ComboLoadType.Items.AddRange(new object[] {"BIN", "WZ"});
+            this.ComboLoadType.Items.AddRange(new object[] {
+            "BIN",
+            "WZ"});
             this.ComboLoadType.Location = new System.Drawing.Point(5, 5);
             this.ComboLoadType.Name = "ComboLoadType";
             this.ComboLoadType.Size = new System.Drawing.Size(55, 21);
@@ -824,6 +828,7 @@
             this.BtnSave.BackColor = System.Drawing.Color.Transparent;
             this.BtnSave.FlatAppearance.BorderSize = 0;
             this.BtnSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BtnSave.Image = global::WzVisualizer.Properties.Resources.FloppyIcon;
             this.BtnSave.Location = new System.Drawing.Point(467, 2);
             this.BtnSave.Name = "BtnSave";
             this.BtnSave.Size = new System.Drawing.Size(23, 23);
@@ -833,34 +838,36 @@
             // 
             // SearchTextBox
             // 
-            this.SearchTextBox.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.SearchTextBox.AcceptsReturn = true;
+            this.SearchTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.SearchTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.SearchTextBox.Location = new System.Drawing.Point(702, 6);
+            this.SearchTextBox.Multiline = true;
             this.SearchTextBox.Name = "SearchTextBox";
             this.SearchTextBox.Size = new System.Drawing.Size(158, 20);
             this.SearchTextBox.TabIndex = 6;
-            this.SearchTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.SearchTextBox_KeyPress);
-            // 
-            // SearchBoxLabel
-            // 
-            this.SearchBoxLabel.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.SearchBoxLabel.AutoSize = true;
-            this.SearchBoxLabel.Location = new System.Drawing.Point(659, 9);
-            this.SearchBoxLabel.Name = "SearchBoxLabel";
-            this.SearchBoxLabel.Size = new System.Drawing.Size(41, 13);
-            this.SearchBoxLabel.TabIndex = 7;
-            this.SearchBoxLabel.Text = "Search";
+            this.SearchTextBox.TextChanged += new System.EventHandler(this.SearchTextBox_TextChanged);
             // 
             // mainFormBindingSource
             // 
             this.mainFormBindingSource.DataSource = typeof(WzVisualizer.MainForm);
+            // 
+            // BtnSearch
+            // 
+            this.BtnSearch.Location = new System.Drawing.Point(645, 6);
+            this.BtnSearch.Name = "BtnSearch";
+            this.BtnSearch.Size = new System.Drawing.Size(51, 23);
+            this.BtnSearch.TabIndex = 7;
+            this.BtnSearch.Text = "Search";
+            this.BtnSearch.UseVisualStyleBackColor = true;
+            this.BtnSearch.Click += new System.EventHandler(this.BtnSearch_Click);
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(864, 525);
-            this.Controls.Add(this.SearchBoxLabel);
+            this.Controls.Add(this.BtnSearch);
             this.Controls.Add(this.SearchTextBox);
             this.Controls.Add(this.BtnSave);
             this.Controls.Add(this.BtnWzLoad);
@@ -868,7 +875,7 @@
             this.Controls.Add(this.ComboEncType);
             this.Controls.Add(this.ComboLoadType);
             this.Controls.Add(this.TabControlMain);
-            this.Icon = ((System.Drawing.Icon) (resources.GetObject("$this.Icon")));
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainForm";
             this.Text = "WzVisualizer";
             this.Load += new System.EventHandler(this.MainForm_Load);
@@ -906,9 +913,10 @@
             this.TabNPCsPage.ResumeLayout(false);
             this.TabPetsPage.ResumeLayout(false);
             this.TabReactors.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize) (this.mainFormBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.mainFormBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
+
         }
 
         private System.Windows.Forms.Button BtnSave;
@@ -938,7 +946,6 @@
         private WzVisualizer.GUI.Controls.DataViewer NPCView;
         private WzVisualizer.GUI.Controls.DataViewer PetsView;
         private WzVisualizer.GUI.Controls.DataViewer ReactorView;
-        private System.Windows.Forms.Label SearchBoxLabel;
         private System.Windows.Forms.TextBox SearchTextBox;
         private WzVisualizer.GUI.Controls.DataViewer SetupChairsView;
         private WzVisualizer.GUI.Controls.DataViewer SetupOthersView;
@@ -982,6 +989,8 @@
         private WzVisualizer.GUI.Controls.DataViewer UseScrollsView;
 
         #endregion
+
+        private System.Windows.Forms.Button BtnSearch;
     }
 }
 
