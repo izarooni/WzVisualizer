@@ -573,8 +573,7 @@ namespace WzVisualizer {
                     if (ComboEncType.SelectedIndex == 0)
                         mapleVersion = WzTool.DetectMapleVersion(stringWzPath + Resources.FileExtension, out _);
                     else
-                        mapleVersion = (WzMapleVersion)
-                            ComboEncType.SelectedIndex - 1;
+                        mapleVersion = (WzMapleVersion) ComboEncType.SelectedIndex - 1;
 
                     StringWz = new WzFile(stringWzPath + Resources.FileExtension, mapleVersion);
                     StringWz.ParseWzFile();
@@ -707,7 +706,7 @@ namespace WzVisualizer {
 
         private void SearchTextBox_TextChanged(object sender, EventArgs e) {
             string[] lines = SearchTextBox.Text.Split(new[] { "\r\n" }, StringSplitOptions.None);
-            SearchTextBox.Height = 15 * Math.Max(1, lines.Length);
+            SearchTextBox.Height = Math.Max(20, 15 * Math.Max(1, lines.Length));
         }
 
         #endregion
