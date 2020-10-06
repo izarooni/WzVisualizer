@@ -101,7 +101,7 @@ namespace WzVisualizer {
         }
 
         private static string GetStringValue(WzImageProperty img) {
-            return img != null && img is WzStringProperty str ? str.Value : null;
+            return img != null && img is WzStringProperty str ? str.Value : "NO-NAME";
         }
 
         public static string GetNpc(int id) {
