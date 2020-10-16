@@ -65,12 +65,7 @@ namespace MapleLib.WzLib
 
         public abstract void SetValue(object value);
 
-        public override void Remove()
-        {
-            ((IPropertyContainer)Parent).RemoveProperty(this);
-        }
-
-		public virtual void ExportXml(StreamWriter writer, int level)
+        public virtual void ExportXml(StreamWriter writer, int level)
 		{
 			writer.WriteLine(XmlUtil.Indentation(level) + XmlUtil.OpenNamedTag(this.PropertyType.ToString(), this.Name, true));
 			writer.WriteLine(XmlUtil.Indentation(level) + XmlUtil.CloseTag(this.PropertyType.ToString()));

@@ -505,9 +505,5 @@ namespace MapleLib.WzLib {
                 return strMatch(strWildCard.Substring(1), strCompare.Substring(1));
             return false;
         }
-
-        public override void Remove() {
-            Dispose();
-        }
     }
 }

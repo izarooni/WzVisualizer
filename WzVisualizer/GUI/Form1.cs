@@ -106,8 +106,6 @@ namespace WzVisualizer {
 
             if (wzObject is WzImage img) {
                 id = int.Parse(Path.GetFileNameWithoutExtension(img.Name));
-                properties = BuildProperties(img) ?? "";
-
                 WzImageProperty link = img.GetFromPath("info/link");
                 if (link != null) {
                     string linkName = ((WzStringProperty) link).Value;

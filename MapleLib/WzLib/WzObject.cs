@@ -27,18 +27,24 @@ namespace MapleLib.WzLib {
         /// The name of the object
         /// </summary>
         public abstract string Name { get; set; }
+
         /// <summary>
         /// The WzObjectType of the object
         /// </summary>
         public abstract WzObjectType ObjectType { get; }
+
         /// <summary>
         /// Returns the parent object
         /// </summary>
         public abstract WzObject Parent { get; internal set; }
+
         /// <summary>
         /// Returns the parent WZ File
         /// </summary>
         public abstract WzFile WzFileParent { get; }
+
+        public WzStringProperty OutLink => this["_outlink"] as WzStringProperty;
+        public WzStringProperty InLink => this["_inlink"] as WzStringProperty;
 
         public WzObject this[string name] {
             get {
@@ -59,38 +65,29 @@ namespace MapleLib.WzLib {
 
         public string FullPath {
             get {
-                if (this is WzFile) return ((WzFile)this).WzDirectory.Name;
+                if (this is WzFile) return ((WzFile) this).WzDirectory.Name;
                 string result = this.Name;
                 WzObject currObj = this;
                 while (currObj.Parent != null) {
                     currObj = currObj.Parent;
                     result = currObj.Name + @"\" + result;
                 }
+
                 return result;
             }
         }
 
-        /// <summary>
-        /// Used in HaCreator to save already parsed images
-        /// </summary>
-        public virtual object HCTag { get; set; }
+        public virtual object WzValue {
+            get { return null; }
+        }
 
-        /// <summary>
-        /// Used in HaCreator's MapSimulator to save already parsed textures
-        /// </summary>
-        public virtual object MSTag { get; set; }
-
-        /// <summary>
-        /// Used in HaRepacker to save WzNodes
-        /// </summary>
-        public virtual object HRTag { get; set; }
-        public virtual object WzValue { get { return null; } }
         public abstract void Dispose();
-        public abstract void Remove();
 
         //Credits to BluePoop for the idea of using cast overriding
         //2015 - That is the worst idea ever, removed and replaced with Get* methods
+
         #region Cast Values
+
         public virtual int GetInt() {
             throw new NotImplementedException();
         }
@@ -126,6 +123,7 @@ namespace MapleLib.WzLib {
         public virtual byte[] GetBytes() {
             throw new NotImplementedException();
         }
+
         #endregion
     }
 }

@@ -545,10 +545,5 @@ namespace MapleLib.WzLib
             return result;
         }
         #endregion
-
-        public override void Remove()
-        {
-            ((WzDirectory)Parent).RemoveDirectory(this);
-        }
-    }
+	}
 }

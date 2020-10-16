@@ -152,7 +152,6 @@ namespace MapleLib.WzLib
                     property.SetValue(value);
                 else
                 {
-                    property.Remove();
                     CreateWzProp(parentImage, propType, propName, value);
                 }
             }

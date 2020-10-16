@@ -19,6 +19,7 @@ using System.IO;
 using MapleLib.WzLib.Util;
 using System;
 using System.Drawing;
+using NAudio.SoundFont;
 
 namespace MapleLib.WzLib.WzProperties {
     /// <summary>
@@ -219,24 +220,33 @@ namespace MapleLib.WzLib.WzProperties {
         #region Cast Values
 
         public override Bitmap GetBitmap() {
-            if (this["_inlink"] is WzStringProperty inlink) {
+            if (InLink != null) {
                 WzObject currentWzObj = this; // first object to work with
                 while ((currentWzObj = currentWzObj.Parent) != null) {
-                    if (!(currentWzObj is WzImage))  // keep looping if its not a WzImage
+                    if (!(currentWzObj is WzImage)) // keep looping if its not a WzImage
                         continue;
 
                     WzImage wzImageParent = (WzImage)currentWzObj;
-                    WzImageProperty foundProperty = wzImageParent.GetFromPath(inlink.Value);
+                    WzImageProperty foundProperty = wzImageParent.GetFromPath(InLink.Value);
                     if (foundProperty != null && foundProperty is WzImageProperty) {
                         return foundProperty.GetBitmap();
                     }
                 }
-            } else if (this["_outlink"] is WzStringProperty outlink) {
-                WzObject foundProperty = WzFileParent.GetObjectFromPath(outlink.Value);
+            } else if (OutLink != null) {
+                WzObject foundProperty = WzFileParent.GetObjectFromPath(OutLink.Value);
+                if (foundProperty.OutLink != null) {
+                    if (foundProperty.WzFileParent.GetObjectFromPath(foundProperty.OutLink.Value) == this) {
+                        Console.WriteLine("RECURSION FOUND");
+                        // recursive linking, who the fuck did this??
+                        return null;
+                    }
+                }
+
                 if (foundProperty is WzImageProperty) {
                     return foundProperty.GetBitmap();
                 }
             }
+
             return imageProp.GetPNG(false);
         }
         #endregion

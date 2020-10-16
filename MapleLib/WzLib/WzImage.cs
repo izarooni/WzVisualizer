@@ -215,9 +215,6 @@ namespace MapleLib.WzLib {
             return string.Format("WzSubProperty('{0}')", Name);
         }
 
-        public override void Remove() {
-            ((WzDirectory)Parent).RemoveImage(this);
-        }
         #endregion
 
         #region Parsing Methods
