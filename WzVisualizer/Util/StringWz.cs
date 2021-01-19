@@ -1,9 +1,26 @@
 ﻿using System;
 using MapleLib.WzLib;
 using MapleLib.WzLib.WzProperties;
+using WzVisualizer.Util;
 
 namespace WzVisualizer {
-    public static class WzStringUtility {
+    public static class StringWz {
+        public static void Dispose() {
+            // disposed when Wz.String.Dispose() is called,
+            // when the WzFile is disposed, disposing each img unnecessary
+            // we can just null to remove the reference
+            _eqp = null;
+            _etc = null;
+            _cash = null;
+            _ins = null;
+            _consume = null;
+            _map = null;
+            _mob = null;
+            _skill = null;
+            _npc = null;
+            _pet = null;
+        }
+
         public static void Load(WzFile wz) {
             _eqp = wz.WzDirectory.GetImageByName("Eqp.img");
             _etc = wz.WzDirectory.GetImageByName("Etc.img");
@@ -27,6 +44,11 @@ namespace WzVisualizer {
         private static WzImage _skill;
         private static WzImage _npc;
         private static WzImage _pet;
+
+        private static void SetParsed(WzImage image) {
+            if (image.Parsed) return;
+            image.ParseImage();
+        }
 
         private static string LeftPadding(char pad, string input, int count) {
             if (input.Length < count) {
@@ -54,17 +76,17 @@ namespace WzVisualizer {
                 case 112:
                 case 113:
                 case 114: return "Accessory";
-                case 104: return "Coat";
-                case 105: return "Longcoat";
-                case 106: return "Pants";
-                case 107: return "Shoes";
-                case 108: return "Glove";
-                case 109: return "Shield";
-                case 110: return "Cape";
-                case 111: return "Ring";
+                case 104:                             return "Coat";
+                case 105:                             return "Longcoat";
+                case 106:                             return "Pants";
+                case 107:                             return "Shoes";
+                case 108:                             return "Glove";
+                case 109:                             return "Shield";
+                case 110:                             return "Cape";
+                case 111:                             return "Ring";
                 case int n when n >= 130 && n <= 170: return "Weapon";
-                case 180: return "PetEquip";
-                case 190: return "Taming";
+                case 180:                             return "PetEquip";
+                case 190:                             return "Taming";
             }
         }
 
@@ -81,23 +103,16 @@ namespace WzVisualizer {
             else path = "etc";
             path += "/" + mapId;
             WzSubProperty subProperty = (WzSubProperty) _map.GetFromPath(path);
-            Console.WriteLine((subProperty != null) + " / " + path);
-            if (subProperty != null) {
-                string retName = "";
-                WzStringProperty mapName = (WzStringProperty) subProperty.GetFromPath("mapName");
-                WzStringProperty streetName = (WzStringProperty) subProperty.GetFromPath("streetName");
-                if (mapName != null) retName += mapName.Value;
-                if (mapName != null && streetName != null) retName += " - "; // x fucking d
-                if (streetName != null) retName += streetName.Value;
-                return retName;
-            }
+            if (subProperty == null) return "NO-NAME";
 
-            return "NO-NAME";
-        }
+            string retName = "";
+            WzStringProperty mapName = (WzStringProperty) subProperty.GetFromPath("mapName");
+            WzStringProperty streetName = (WzStringProperty) subProperty.GetFromPath("streetName");
+            if (mapName != null) retName += mapName.Value;
+            if (mapName != null && streetName != null) retName += " - "; // x fucking d
+            if (streetName != null) retName += streetName.Value;
+            return retName;
 
-        private static void SetParsed(WzImage image) {
-            if (image.Parsed) return;
-            image.ParseImage();
         }
 
         private static string GetStringValue(WzImageProperty img) {

@@ -95,11 +95,7 @@ namespace MapleLib.WzLib {
             FilePath = filePath;
             FileVersion = -1;
             MapleVersion = version;
-            if (version == WzMapleVersion.GETFROMZLZ) {
-                FileStream zlzStream = File.OpenRead(Path.Combine(Path.GetDirectoryName(filePath), "ZLZ.dll"));
-                WzIv = Util.WzKeyGenerator.GetIvFromZlz(zlzStream);
-                zlzStream.Close();
-            } else WzIv = version.EncryptionKey();
+            WzIv = version.EncryptionKey();
         }
 
         /// <summary>
@@ -111,28 +107,19 @@ namespace MapleLib.WzLib {
             FilePath = filePath;
             FileVersion = gameVersion;
             MapleVersion = version;
-            if (version == WzMapleVersion.GETFROMZLZ) {
-                FileStream zlzStream = File.OpenRead(Path.Combine(Path.GetDirectoryName(filePath), "ZLZ.dll"));
-                WzIv = Util.WzKeyGenerator.GetIvFromZlz(zlzStream);
-                zlzStream.Close();
-            } else WzIv = version.EncryptionKey();
+            WzIv = version.EncryptionKey();
         }
 
         /// <summary>
         /// Parses the wz file, if the wz file is a list.wz file, WzDirectory will be a WzListDirectory, if not, it'll simply be a WzDirectory
         /// </summary>
         public void ParseWzFile() {
-            if (MapleVersion == WzMapleVersion.GENERATE)
-                throw new InvalidOperationException("Cannot call ParseWzFile() if WZ file type is GENERATE");
             ParseMainWzDirectory();
             GC.Collect();
             GC.WaitForPendingFinalizers();
         }
 
         public void ParseWzFile(byte[] WzIv) {
-            if (MapleVersion != WzMapleVersion.GENERATE)
-                throw new InvalidOperationException(
-                    "Cannot call ParseWzFile(byte[] generateKey) if WZ file type is not GENERATE");
             this.WzIv = WzIv;
             ParseMainWzDirectory();
             GC.Collect();

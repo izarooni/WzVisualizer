@@ -141,15 +141,14 @@ namespace MapleLib.WzLib.Util
             fileVersion = (short)version;
             WzMapleVersion mostSuitableVersion = WzMapleVersion.GMS;
             double maxSuccessRate = 0;
-            foreach (DictionaryEntry mapleVersionEntry in mapleVersionSuccessRates)
-                if ((double)mapleVersionEntry.Value > maxSuccessRate)
-                {
-                    mostSuitableVersion = (WzMapleVersion)mapleVersionEntry.Key;
-                    maxSuccessRate = (double)mapleVersionEntry.Value;
-                }
-            if (maxSuccessRate < 0.7 && File.Exists(Path.Combine(Path.GetDirectoryName(wzFilePath), "ZLZ.dll")))
-                return WzMapleVersion.GETFROMZLZ;
-            else return mostSuitableVersion;
+            foreach (DictionaryEntry mapleVersionEntry in mapleVersionSuccessRates) {
+	            if ((double)mapleVersionEntry.Value > maxSuccessRate)
+	            {
+		            mostSuitableVersion = (WzMapleVersion)mapleVersionEntry.Key;
+		            maxSuccessRate = (double)mapleVersionEntry.Value;
+	            }
+            }
+            return mostSuitableVersion;
         }
 
         public const int WzHeader = 0x31474B50; //PKG1

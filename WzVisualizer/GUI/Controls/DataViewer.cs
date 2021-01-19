@@ -12,6 +12,8 @@ namespace WzVisualizer.GUI.Controls {
     public partial class DataViewer : UserControl {
         public DataViewer() {
             InitializeComponent();
+
+            Tag = new List<BinData>();
         }
     }
 }

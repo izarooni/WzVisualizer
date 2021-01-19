@@ -14,36 +14,21 @@
  * You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.*/
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+namespace MapleLib.WzLib {
+    public static class WzMapleVersionExt {
 
-namespace MapleLib.WzLib
-{
-    public static class WzVersionData
-    {
-        public static byte[] EncryptionKey(this WzMapleVersion mapleVersion)
-        {
-            switch (mapleVersion)
-            {
-                case WzMapleVersion.GMS: return new byte[4] { 0x4D, 0x23, 0xC7, 0x2B };
-                case WzMapleVersion.EMS: return new byte[4] { 0xB9, 0x7D, 0x63, 0xE9 };
-                default: return new byte[4];
-
+        public static byte[] EncryptionKey(this WzMapleVersion mapleVersion) {
+            switch (mapleVersion) {
+                case WzMapleVersion.GMS: return new byte[] {0x4D, 0x23, 0xC7, 0x2B};
+                case WzMapleVersion.EMS: return new byte[] {0xB9, 0x7D, 0x63, 0xE9};
+                default:                 return new byte[4];
             }
-            throw new NullReferenceException();
         }
     }
 
-	public enum WzMapleVersion
-	{
-		GMS,
-		EMS,
-		BMS,
-		CLASSIC, // used for haha01haha01's programs
-
-		GENERATE,
-        GETFROMZLZ
-	}
+    public enum WzMapleVersion {
+        GMS,
+        EMS,
+        BMS,
+    }
 }

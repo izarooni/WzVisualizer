@@ -130,7 +130,7 @@
   <data name="Error" xml:space="preserve">
     <value>Error</value>
   </data>
-  <data name="FIleNotFound" xml:space="preserve">
+  <data name="FileNotFound" xml:space="preserve">
     <value>File Not Found</value>
   </data>
   <data name="CompleteSaveBIN" xml:space="preserve">
@@ -139,7 +139,7 @@
   <data name="CompleteSaveImages" xml:space="preserve">
     <value>Images save complete</value>
   </data>
-  <data name="FileExtension" xml:space="preserve">
+  <data name="FileExtensionWZ" xml:space="preserve">
     <value>.wz</value>
   </data>
 </root>
