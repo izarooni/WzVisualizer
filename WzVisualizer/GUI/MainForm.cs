@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
@@ -151,7 +152,6 @@ namespace WzVisualizer.GUI
                     children.Sort((a, b) => a.Name.CompareTo(b.Name));
                     foreach (var img in children)
                     {
-                        img.ParseImage();
                         string sId = Path.GetFileNameWithoutExtension(img.Name);
                         if (int.TryParse(sId, out int itemId))
                         {
@@ -172,10 +172,24 @@ namespace WzVisualizer.GUI
                                     dv = EquipFacesView;
                                     break;
                                 case int n when (n == 3 || n == 4):
-                                    icon = (img.GetFromPath("default/hairOverHead") ?? img.GetFromPath("default/hair"))
-                                        ?.GetBitmap();
+                                {
+                                    icon = (img.GetFromPath("default/hairOverHead") ?? img.GetFromPath("default/hair"))?.GetBitmap();
+                                    var hairBelowBody = img.GetFromPath("default/hairBelowBody")?.GetBitmap();
+                                    if (icon != null && hairBelowBody != null)
+                                    {
+                                        var merge = new Bitmap(Math.Max(icon.Width, hairBelowBody.Width), Math.Max(icon.Height, hairBelowBody.Height));
+                                        using (var g = Graphics.FromImage(merge))
+                                        {
+                                            g.DrawImage(hairBelowBody, Point.Empty);
+                                            g.DrawImage(icon, Point.Empty);
+                                        }
+
+                                        icon = merge;
+                                    }
+
                                     dv = EquipHairsView;
                                     break;
+                                }
                                 case int n when ((n >= 101 && n <= 103) || (n >= 112 && n <= 114)):
                                     dv = EquipAccessoryView;
                                     break;
@@ -210,7 +224,7 @@ namespace WzVisualizer.GUI
                                     dv = EquipMountsView;
                                     break;
                             }
-
+                                
                             ((List<BinData>) dv.Tag).Add(new BinData(itemId, icon, name, properties));
                             dv.GridView.Rows.Add(itemId, icon, name, properties);
                         }
