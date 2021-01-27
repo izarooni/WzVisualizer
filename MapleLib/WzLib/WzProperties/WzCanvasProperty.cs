@@ -19,7 +19,6 @@ using System.IO;
 using MapleLib.WzLib.Util;
 using System;
 using System.Drawing;
-using NAudio.SoundFont;
 
 namespace MapleLib.WzLib.WzProperties {
     /// <summary>
@@ -234,7 +233,7 @@ namespace MapleLib.WzLib.WzProperties {
                 }
             } else if (OutLink != null) {
                 WzObject foundProperty = WzFileParent.GetObjectFromPath(OutLink.Value);
-                if (foundProperty.OutLink != null) {
+                if (foundProperty?.OutLink != null) {
                     if (foundProperty.WzFileParent.GetObjectFromPath(foundProperty.OutLink.Value) == this) {
                         Console.WriteLine("RECURSION FOUND");
                         // recursive linking, who the fuck did this??

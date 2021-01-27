@@ -80,9 +80,6 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
-    <Reference Include="WzVisualizer, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>bin\Debug\WzVisualizer.exe</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BinData.cs" />
@@ -93,7 +90,6 @@
     <Compile Include="GUI\Controls\DataViewer.Designer.cs">
       <DependentUpon>DataViewer.cs</DependentUpon>
     </Compile>
-    <Compile Include="IO\BinaryDataUtil.cs" />
     <Compile Include="GUI\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -106,6 +102,7 @@
     <Compile Include="GUI\PropertiesViewer.Designer.cs">
       <DependentUpon>PropertiesViewer.cs</DependentUpon>
     </Compile>
+    <Compile Include="IO\BinaryDataUtil.cs" />
     <Compile Include="ItemConstants.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

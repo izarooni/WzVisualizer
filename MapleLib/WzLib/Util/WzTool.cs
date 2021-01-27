@@ -17,6 +17,7 @@
 using System;
 using System.Collections;
 using System.IO;
+using System.Linq;
 using MapleLib.MapleCryptoLib;
 
 namespace MapleLib.WzLib.Util
@@ -130,8 +131,25 @@ namespace MapleLib.WzLib.Util
             wzf.Dispose();
             return (double)recognizedChars / (double)totalChars;
         }
+        public static int DetectMapleVersion(string path, string fileName)
+        {
+            using (FileStream stream = new FileStream(path + "\\" + fileName, FileMode.Open, FileAccess.Read))
+            {
+                var values = Enum.GetValues(typeof(WzMapleVersion)).Cast<WzMapleVersion>();
+                foreach (var v in values)
+                {
+                    using (WzBinaryReader reader = new WzBinaryReader(stream, v.EncryptionKey()))
+                    {
+                        byte b = reader.ReadByte();
+                        if (b != 0x73 || reader.ReadString() != "Property" || reader.ReadUInt16() != 0) continue;
+                        return (int) v;
+                    }
+                }
+            }
 
-        public static WzMapleVersion DetectMapleVersion(string wzFilePath, out short fileVersion)
+            return -1;
+        }
+		public static WzMapleVersion DetectMapleVersion(string wzFilePath, out short fileVersion)
         {
             Hashtable mapleVersionSuccessRates = new Hashtable();
             short? version = null;
@@ -168,5 +186,5 @@ namespace MapleLib.WzLib.Util
             Array.Copy(b, 0, result, a.Length, b.Length);
             return result;
         }
-	}
+    }
 }

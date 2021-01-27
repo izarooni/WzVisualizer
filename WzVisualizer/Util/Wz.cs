@@ -36,8 +36,8 @@ namespace WzVisualizer.Util {
                 if ((file = GetFile(wz)) != null) return file;
             }
 
-            if (File.Exists(filePath) || File.Exists(filePath += Resources.FileExtensionWZ)) {
-                file = new WzFile(filePath, encryption);
+            if (File.Exists(filePath) || File.Exists(filePath + Resources.FileExtensionWZ)) {
+                file = new WzFile(filePath + Resources.FileExtensionWZ, encryption);
                 file.ParseWzFile();
             } else if (Directory.Exists(filePath)) {
                 file = new WzFile(filePath, encryption);
