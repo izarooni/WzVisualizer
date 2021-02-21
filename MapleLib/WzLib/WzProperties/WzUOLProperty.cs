@@ -196,7 +196,8 @@ namespace MapleLib.WzLib.WzProperties {
         }
 
         public override Bitmap GetBitmap() {
-            return LinkValue.GetBitmap();
+            // some UOL properties are incorrectly stated
+            return LinkValue?.GetBitmap();
         }
 
         public override byte[] GetBytes() {
