@@ -1,6 +1,8 @@
 ﻿using System;
 using System.IO;
+
 using MapleLib.WzLib;
+
 using WzVisualizer.Properties;
 
 namespace WzVisualizer.Util {
@@ -36,7 +38,10 @@ namespace WzVisualizer.Util {
                 if ((file = GetFile(wz)) != null) return file;
             }
 
-            if (File.Exists(filePath) || File.Exists(filePath + Resources.FileExtensionWZ)) {
+            if (File.Exists(filePath)) {
+                file = new WzFile(filePath, encryption);
+                file.ParseWzFile();
+            } else if (File.Exists(filePath + Resources.FileExtensionWZ)) {
                 file = new WzFile(filePath + Resources.FileExtensionWZ, encryption);
                 file.ParseWzFile();
             } else if (Directory.Exists(filePath)) {
