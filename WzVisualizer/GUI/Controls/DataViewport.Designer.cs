@@ -1,9 +1,11 @@
-﻿namespace WzVisualizer.GUI.Controls {
-    partial class DataViewer {
+using System.ComponentModel;
+
+namespace WzVisualizer.GUI.Controls {
+    partial class DataViewport {
         /// <summary> 
         /// Required designer variable.
         /// </summary>
-        private System.ComponentModel.IContainer components = null;
+        private IContainer components = null;
 
         /// <summary> 
         /// Clean up any resources being used.
@@ -13,6 +15,7 @@
             if (disposing && (components != null)) {
                 components.Dispose();
             }
+
             base.Dispose(disposing);
         }
 
@@ -28,7 +31,7 @@
             this.propBitmap = new System.Windows.Forms.DataGridViewImageColumn();
             this.propName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.propProperties = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            ((System.ComponentModel.ISupportInitialize) (this.GridView)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.GridView)).BeginInit();
             this.SuspendLayout();
             // 
             // GridView
@@ -36,13 +39,13 @@
             this.GridView.AllowUserToAddRows = false;
             this.GridView.AllowUserToDeleteRows = false;
             this.GridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.GridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {this.propID, this.propBitmap, this.propName, this.propProperties});
+            this.GridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { this.propID, this.propBitmap, this.propName, this.propProperties });
             this.GridView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.GridView.Location = new System.Drawing.Point(0, 0);
             this.GridView.Name = "GridView";
             this.GridView.ReadOnly = true;
             this.GridView.RowTemplate.Height = 50;
-            this.GridView.Size = new System.Drawing.Size(150, 150);
+            this.GridView.Size = new System.Drawing.Size(500, 250);
             this.GridView.TabIndex = 0;
             // 
             // propID
@@ -74,13 +77,14 @@
             this.propProperties.Name = "propProperties";
             this.propProperties.ReadOnly = true;
             // 
-            // DataViewer
+            // DataViewport
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.GridView);
-            this.Name = "DataViewer";
-            ((System.ComponentModel.ISupportInitialize) (this.GridView)).EndInit();
+            this.Name = "DataViewport";
+            this.Size = new System.Drawing.Size(500, 250);
+            ((System.ComponentModel.ISupportInitialize)(this.GridView)).EndInit();
             this.ResumeLayout(false);
         }
 

@@ -49,16 +49,15 @@ namespace WzVisualizer.IO {
             return bins;
         }
 
-        internal static void ImportGrid(string file, DataViewer dv, AddGridRowCallBack callbackTask) {
+        internal static void ImportGrid(string file, DataViewport dv, AddGridRowCallBack callbackTask) {
             var grid = dv.GridView;
             List<BinData> bins = (List<BinData>) dv.Tag;
 
-            if (bins.Count == 0) {
+            if (bins == null || bins.Count == 0) {
                 // load binary files
                 var path = $"{ExportFolder}/{file}";
                 if (!File.Exists(path)) return;
-                bins = ParseBinaryFile(path);
-                grid.Tag = bins;
+                dv.Tag = bins = ParseBinaryFile(path);
             }
 
             grid.SuspendLayout();
@@ -70,7 +69,7 @@ namespace WzVisualizer.IO {
             var directory = $"{ImagesFolder}/{folder}";
             Directory.CreateDirectory(directory);
 
-            var gdv = (DataViewer) page.Controls[0];
+            var gdv = (DataViewport) page.Controls[0];
             var rows = gdv.GridView.Rows;
             foreach (DataGridViewRow row in rows) {
                 var cells = row.Cells;
@@ -95,7 +94,7 @@ namespace WzVisualizer.IO {
             string filePath = $"{directory}/{page.Text}.bin";
             Directory.CreateDirectory(directory);
 
-            var gdv = (DataViewer) page.Controls[0];
+            var gdv = (DataViewport) page.Controls[0];
             var rows = gdv.GridView.Rows;
 
             using BinaryWriter bw = new BinaryWriter(new FileStream(filePath, FileMode.Create));

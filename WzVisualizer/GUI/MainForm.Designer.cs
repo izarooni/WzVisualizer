@@ -24,68 +24,68 @@
         /// </summary>
         private void InitializeComponent() {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(WzVisualizer.GUI.MainForm));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.TabControlMain = new System.Windows.Forms.TabControl();
             this.TabEquipsPage = new System.Windows.Forms.TabPage();
             this.EquipTab = new System.Windows.Forms.TabControl();
             this.TabEHairs = new System.Windows.Forms.TabPage();
-            this.EquipHairsView = new WzVisualizer.GUI.Controls.DataViewer();
+            this.EquipHairsView = new WzVisualizer.GUI.Controls.DataViewport();
             this.TabEFaces = new System.Windows.Forms.TabPage();
-            this.EquipFacesView = new WzVisualizer.GUI.Controls.DataViewer();
+            this.EquipFacesView = new WzVisualizer.GUI.Controls.DataViewport();
             this.TabsEWeapons = new System.Windows.Forms.TabPage();
-            this.EquipWeaponsView = new WzVisualizer.GUI.Controls.DataViewer();
+            this.EquipWeaponsView = new WzVisualizer.GUI.Controls.DataViewport();
             this.TabEAccessory = new System.Windows.Forms.TabPage();
-            this.EquipAccessoryView = new WzVisualizer.GUI.Controls.DataViewer();
+            this.EquipAccessoryView = new WzVisualizer.GUI.Controls.DataViewport();
             this.TabECaps = new System.Windows.Forms.TabPage();
-            this.EquipCapsView = new WzVisualizer.GUI.Controls.DataViewer();
+            this.EquipCapsView = new WzVisualizer.GUI.Controls.DataViewport();
             this.TabEOveralls = new System.Windows.Forms.TabPage();
-            this.EquipsOverallsView = new WzVisualizer.GUI.Controls.DataViewer();
+            this.EquipsOverallsView = new WzVisualizer.GUI.Controls.DataViewport();
             this.TabETops = new System.Windows.Forms.TabPage();
-            this.EquipTopsView = new WzVisualizer.GUI.Controls.DataViewer();
+            this.EquipTopsView = new WzVisualizer.GUI.Controls.DataViewport();
             this.TabEBottoms = new System.Windows.Forms.TabPage();
-            this.EquipPantsView = new WzVisualizer.GUI.Controls.DataViewer();
+            this.EquipPantsView = new WzVisualizer.GUI.Controls.DataViewport();
             this.TabEShoes = new System.Windows.Forms.TabPage();
-            this.EquipShoesView = new WzVisualizer.GUI.Controls.DataViewer();
+            this.EquipShoesView = new WzVisualizer.GUI.Controls.DataViewport();
             this.TabECapes = new System.Windows.Forms.TabPage();
-            this.EquipCapesView = new WzVisualizer.GUI.Controls.DataViewer();
+            this.EquipCapesView = new WzVisualizer.GUI.Controls.DataViewport();
             this.TabEGloves = new System.Windows.Forms.TabPage();
-            this.EquipGlovesView = new WzVisualizer.GUI.Controls.DataViewer();
+            this.EquipGlovesView = new WzVisualizer.GUI.Controls.DataViewport();
             this.TabERings = new System.Windows.Forms.TabPage();
-            this.EquipRingsView = new WzVisualizer.GUI.Controls.DataViewer();
+            this.EquipRingsView = new WzVisualizer.GUI.Controls.DataViewport();
             this.TabEShields = new System.Windows.Forms.TabPage();
-            this.EquipShieldsView = new WzVisualizer.GUI.Controls.DataViewer();
+            this.EquipShieldsView = new WzVisualizer.GUI.Controls.DataViewport();
             this.TabETames = new System.Windows.Forms.TabPage();
-            this.EquipMountsView = new WzVisualizer.GUI.Controls.DataViewer();
+            this.EquipMountsView = new WzVisualizer.GUI.Controls.DataViewport();
             this.TabUsePage = new System.Windows.Forms.TabPage();
             this.TabUse = new System.Windows.Forms.TabControl();
             this.TabUConsumes = new System.Windows.Forms.TabPage();
-            this.UseConsumeView = new WzVisualizer.GUI.Controls.DataViewer();
+            this.UseConsumeView = new WzVisualizer.GUI.Controls.DataViewport();
             this.TabUScrolls = new System.Windows.Forms.TabPage();
-            this.UseScrollsView = new WzVisualizer.GUI.Controls.DataViewer();
+            this.UseScrollsView = new WzVisualizer.GUI.Controls.DataViewport();
             this.TabUProjectiles = new System.Windows.Forms.TabPage();
-            this.UseProjectileView = new WzVisualizer.GUI.Controls.DataViewer();
+            this.UseProjectileView = new WzVisualizer.GUI.Controls.DataViewport();
             this.TabSetupPage = new System.Windows.Forms.TabPage();
             this.TabSetup = new System.Windows.Forms.TabControl();
             this.TabSChairs = new System.Windows.Forms.TabPage();
-            this.SetupChairsView = new WzVisualizer.GUI.Controls.DataViewer();
+            this.SetupChairsView = new WzVisualizer.GUI.Controls.DataViewport();
             this.TabSOther = new System.Windows.Forms.TabPage();
-            this.SetupOthersView = new WzVisualizer.GUI.Controls.DataViewer();
+            this.SetupOthersView = new WzVisualizer.GUI.Controls.DataViewport();
             this.TabEtcPage = new System.Windows.Forms.TabPage();
-            this.EtcView = new WzVisualizer.GUI.Controls.DataViewer();
+            this.EtcView = new WzVisualizer.GUI.Controls.DataViewport();
             this.TabCashPage = new System.Windows.Forms.TabPage();
-            this.CashView = new WzVisualizer.GUI.Controls.DataViewer();
+            this.CashView = new WzVisualizer.GUI.Controls.DataViewport();
             this.TabMapsPage = new System.Windows.Forms.TabPage();
-            this.MapsView = new WzVisualizer.GUI.Controls.DataViewer();
+            this.MapsView = new WzVisualizer.GUI.Controls.DataViewport();
             this.TabMobsPage = new System.Windows.Forms.TabPage();
-            this.MobsView = new WzVisualizer.GUI.Controls.DataViewer();
+            this.MobsView = new WzVisualizer.GUI.Controls.DataViewport();
             this.TabSkillsPage = new System.Windows.Forms.TabPage();
-            this.SkillsView = new WzVisualizer.GUI.Controls.DataViewer();
+            this.SkillsView = new WzVisualizer.GUI.Controls.DataViewport();
             this.TabNPCsPage = new System.Windows.Forms.TabPage();
-            this.NPCView = new WzVisualizer.GUI.Controls.DataViewer();
+            this.NPCView = new WzVisualizer.GUI.Controls.DataViewport();
             this.TabPetsPage = new System.Windows.Forms.TabPage();
-            this.PetsView = new WzVisualizer.GUI.Controls.DataViewer();
+            this.PetsView = new WzVisualizer.GUI.Controls.DataViewport();
             this.TabReactors = new System.Windows.Forms.TabPage();
-            this.ReactorView = new WzVisualizer.GUI.Controls.DataViewer();
+            this.ReactorView = new WzVisualizer.GUI.Controls.DataViewport();
             this.ComboLoadType = new System.Windows.Forms.ComboBox();
             this.ComboEncType = new System.Windows.Forms.ComboBox();
             this.TextWzPath = new System.Windows.Forms.TextBox();
@@ -128,9 +128,14 @@
             this.TabNPCsPage.SuspendLayout();
             this.TabPetsPage.SuspendLayout();
             this.TabReactors.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize) (this.mainFormBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.mainFormBindingSource)).BeginInit();
             this.SuspendLayout();
-            this.TabControlMain.Anchor = ((System.Windows.Forms.AnchorStyles) ((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right)));
+            // 
+            // TabControlMain
+            // 
+            this.TabControlMain.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.TabControlMain.Controls.Add(this.TabEquipsPage);
             this.TabControlMain.Controls.Add(this.TabUsePage);
             this.TabControlMain.Controls.Add(this.TabSetupPage);
@@ -142,7 +147,7 @@
             this.TabControlMain.Controls.Add(this.TabNPCsPage);
             this.TabControlMain.Controls.Add(this.TabPetsPage);
             this.TabControlMain.Controls.Add(this.TabReactors);
-            this.TabControlMain.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
+            this.TabControlMain.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TabControlMain.Location = new System.Drawing.Point(0, 29);
             this.TabControlMain.Margin = new System.Windows.Forms.Padding(0);
             this.TabControlMain.Name = "TabControlMain";
@@ -150,6 +155,9 @@
             this.TabControlMain.SelectedIndex = 0;
             this.TabControlMain.Size = new System.Drawing.Size(864, 496);
             this.TabControlMain.TabIndex = 0;
+            // 
+            // TabEquipsPage
+            // 
             this.TabEquipsPage.Controls.Add(this.EquipTab);
             this.TabEquipsPage.Location = new System.Drawing.Point(4, 29);
             this.TabEquipsPage.Margin = new System.Windows.Forms.Padding(0);
@@ -158,6 +166,9 @@
             this.TabEquipsPage.TabIndex = 0;
             this.TabEquipsPage.Text = "Equips";
             this.TabEquipsPage.UseVisualStyleBackColor = true;
+            // 
+            // EquipTab
+            // 
             this.EquipTab.Controls.Add(this.TabEHairs);
             this.EquipTab.Controls.Add(this.TabEFaces);
             this.EquipTab.Controls.Add(this.TabsEWeapons);
@@ -179,6 +190,9 @@
             this.EquipTab.SelectedIndex = 0;
             this.EquipTab.Size = new System.Drawing.Size(856, 463);
             this.EquipTab.TabIndex = 2;
+            // 
+            // TabEHairs
+            // 
             this.TabEHairs.Controls.Add(this.EquipHairsView);
             this.TabEHairs.Location = new System.Drawing.Point(4, 25);
             this.TabEHairs.Name = "TabEHairs";
@@ -188,12 +202,18 @@
             this.TabEHairs.Tag = "";
             this.TabEHairs.Text = "Hairs";
             this.TabEHairs.UseVisualStyleBackColor = true;
+            // 
+            // EquipHairsView
+            // 
             this.EquipHairsView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.EquipHairsView.Location = new System.Drawing.Point(3, 3);
             this.EquipHairsView.Margin = new System.Windows.Forms.Padding(4);
             this.EquipHairsView.Name = "EquipHairsView";
             this.EquipHairsView.Size = new System.Drawing.Size(842, 428);
             this.EquipHairsView.TabIndex = 0;
+            // 
+            // TabEFaces
+            // 
             this.TabEFaces.Controls.Add(this.EquipFacesView);
             this.TabEFaces.Location = new System.Drawing.Point(4, 25);
             this.TabEFaces.Name = "TabEFaces";
@@ -202,12 +222,18 @@
             this.TabEFaces.TabIndex = 10;
             this.TabEFaces.Text = "Faces";
             this.TabEFaces.UseVisualStyleBackColor = true;
+            // 
+            // EquipFacesView
+            // 
             this.EquipFacesView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.EquipFacesView.Location = new System.Drawing.Point(3, 3);
             this.EquipFacesView.Margin = new System.Windows.Forms.Padding(5);
             this.EquipFacesView.Name = "EquipFacesView";
             this.EquipFacesView.Size = new System.Drawing.Size(842, 428);
             this.EquipFacesView.TabIndex = 1;
+            // 
+            // TabsEWeapons
+            // 
             this.TabsEWeapons.Controls.Add(this.EquipWeaponsView);
             this.TabsEWeapons.Location = new System.Drawing.Point(4, 25);
             this.TabsEWeapons.Name = "TabsEWeapons";
@@ -216,12 +242,18 @@
             this.TabsEWeapons.TabIndex = 0;
             this.TabsEWeapons.Text = "Weapons";
             this.TabsEWeapons.UseVisualStyleBackColor = true;
+            // 
+            // EquipWeaponsView
+            // 
             this.EquipWeaponsView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.EquipWeaponsView.Location = new System.Drawing.Point(3, 3);
             this.EquipWeaponsView.Margin = new System.Windows.Forms.Padding(5);
             this.EquipWeaponsView.Name = "EquipWeaponsView";
             this.EquipWeaponsView.Size = new System.Drawing.Size(842, 428);
             this.EquipWeaponsView.TabIndex = 1;
+            // 
+            // TabEAccessory
+            // 
             this.TabEAccessory.Controls.Add(this.EquipAccessoryView);
             this.TabEAccessory.Location = new System.Drawing.Point(4, 25);
             this.TabEAccessory.Name = "TabEAccessory";
@@ -230,12 +262,18 @@
             this.TabEAccessory.TabIndex = 12;
             this.TabEAccessory.Text = "Accessory";
             this.TabEAccessory.UseVisualStyleBackColor = true;
+            // 
+            // EquipAccessoryView
+            // 
             this.EquipAccessoryView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.EquipAccessoryView.Location = new System.Drawing.Point(3, 3);
             this.EquipAccessoryView.Margin = new System.Windows.Forms.Padding(5);
             this.EquipAccessoryView.Name = "EquipAccessoryView";
             this.EquipAccessoryView.Size = new System.Drawing.Size(842, 428);
             this.EquipAccessoryView.TabIndex = 1;
+            // 
+            // TabECaps
+            // 
             this.TabECaps.Controls.Add(this.EquipCapsView);
             this.TabECaps.Location = new System.Drawing.Point(4, 25);
             this.TabECaps.Name = "TabECaps";
@@ -244,12 +282,18 @@
             this.TabECaps.TabIndex = 1;
             this.TabECaps.Text = "Caps";
             this.TabECaps.UseVisualStyleBackColor = true;
+            // 
+            // EquipCapsView
+            // 
             this.EquipCapsView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.EquipCapsView.Location = new System.Drawing.Point(3, 3);
             this.EquipCapsView.Margin = new System.Windows.Forms.Padding(5);
             this.EquipCapsView.Name = "EquipCapsView";
             this.EquipCapsView.Size = new System.Drawing.Size(842, 428);
             this.EquipCapsView.TabIndex = 1;
+            // 
+            // TabEOveralls
+            // 
             this.TabEOveralls.Controls.Add(this.EquipsOverallsView);
             this.TabEOveralls.Location = new System.Drawing.Point(4, 25);
             this.TabEOveralls.Name = "TabEOveralls";
@@ -258,12 +302,18 @@
             this.TabEOveralls.TabIndex = 2;
             this.TabEOveralls.Text = "Overalls";
             this.TabEOveralls.UseVisualStyleBackColor = true;
+            // 
+            // EquipsOverallsView
+            // 
             this.EquipsOverallsView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.EquipsOverallsView.Location = new System.Drawing.Point(3, 3);
             this.EquipsOverallsView.Margin = new System.Windows.Forms.Padding(5);
             this.EquipsOverallsView.Name = "EquipsOverallsView";
             this.EquipsOverallsView.Size = new System.Drawing.Size(842, 428);
             this.EquipsOverallsView.TabIndex = 1;
+            // 
+            // TabETops
+            // 
             this.TabETops.Controls.Add(this.EquipTopsView);
             this.TabETops.Location = new System.Drawing.Point(4, 25);
             this.TabETops.Name = "TabETops";
@@ -272,12 +322,18 @@
             this.TabETops.TabIndex = 3;
             this.TabETops.Text = "Tops";
             this.TabETops.UseVisualStyleBackColor = true;
+            // 
+            // EquipTopsView
+            // 
             this.EquipTopsView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.EquipTopsView.Location = new System.Drawing.Point(3, 3);
             this.EquipTopsView.Margin = new System.Windows.Forms.Padding(5);
             this.EquipTopsView.Name = "EquipTopsView";
             this.EquipTopsView.Size = new System.Drawing.Size(842, 428);
             this.EquipTopsView.TabIndex = 1;
+            // 
+            // TabEBottoms
+            // 
             this.TabEBottoms.Controls.Add(this.EquipPantsView);
             this.TabEBottoms.Location = new System.Drawing.Point(4, 25);
             this.TabEBottoms.Name = "TabEBottoms";
@@ -286,12 +342,18 @@
             this.TabEBottoms.TabIndex = 4;
             this.TabEBottoms.Text = "Bottoms";
             this.TabEBottoms.UseVisualStyleBackColor = true;
+            // 
+            // EquipPantsView
+            // 
             this.EquipPantsView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.EquipPantsView.Location = new System.Drawing.Point(3, 3);
             this.EquipPantsView.Margin = new System.Windows.Forms.Padding(5);
             this.EquipPantsView.Name = "EquipPantsView";
             this.EquipPantsView.Size = new System.Drawing.Size(842, 428);
             this.EquipPantsView.TabIndex = 1;
+            // 
+            // TabEShoes
+            // 
             this.TabEShoes.Controls.Add(this.EquipShoesView);
             this.TabEShoes.Location = new System.Drawing.Point(4, 25);
             this.TabEShoes.Name = "TabEShoes";
@@ -300,12 +362,18 @@
             this.TabEShoes.TabIndex = 5;
             this.TabEShoes.Text = "Shoes";
             this.TabEShoes.UseVisualStyleBackColor = true;
+            // 
+            // EquipShoesView
+            // 
             this.EquipShoesView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.EquipShoesView.Location = new System.Drawing.Point(3, 3);
             this.EquipShoesView.Margin = new System.Windows.Forms.Padding(5);
             this.EquipShoesView.Name = "EquipShoesView";
             this.EquipShoesView.Size = new System.Drawing.Size(842, 428);
             this.EquipShoesView.TabIndex = 1;
+            // 
+            // TabECapes
+            // 
             this.TabECapes.Controls.Add(this.EquipCapesView);
             this.TabECapes.Location = new System.Drawing.Point(4, 25);
             this.TabECapes.Name = "TabECapes";
@@ -314,12 +382,18 @@
             this.TabECapes.TabIndex = 6;
             this.TabECapes.Text = "Capes";
             this.TabECapes.UseVisualStyleBackColor = true;
+            // 
+            // EquipCapesView
+            // 
             this.EquipCapesView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.EquipCapesView.Location = new System.Drawing.Point(3, 3);
             this.EquipCapesView.Margin = new System.Windows.Forms.Padding(5);
             this.EquipCapesView.Name = "EquipCapesView";
             this.EquipCapesView.Size = new System.Drawing.Size(842, 428);
             this.EquipCapesView.TabIndex = 1;
+            // 
+            // TabEGloves
+            // 
             this.TabEGloves.Controls.Add(this.EquipGlovesView);
             this.TabEGloves.Location = new System.Drawing.Point(4, 25);
             this.TabEGloves.Name = "TabEGloves";
@@ -328,12 +402,18 @@
             this.TabEGloves.TabIndex = 7;
             this.TabEGloves.Text = "Gloves";
             this.TabEGloves.UseVisualStyleBackColor = true;
+            // 
+            // EquipGlovesView
+            // 
             this.EquipGlovesView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.EquipGlovesView.Location = new System.Drawing.Point(3, 3);
             this.EquipGlovesView.Margin = new System.Windows.Forms.Padding(5);
             this.EquipGlovesView.Name = "EquipGlovesView";
             this.EquipGlovesView.Size = new System.Drawing.Size(842, 428);
             this.EquipGlovesView.TabIndex = 1;
+            // 
+            // TabERings
+            // 
             this.TabERings.Controls.Add(this.EquipRingsView);
             this.TabERings.Location = new System.Drawing.Point(4, 25);
             this.TabERings.Name = "TabERings";
@@ -342,12 +422,18 @@
             this.TabERings.TabIndex = 8;
             this.TabERings.Text = "Rings";
             this.TabERings.UseVisualStyleBackColor = true;
+            // 
+            // EquipRingsView
+            // 
             this.EquipRingsView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.EquipRingsView.Location = new System.Drawing.Point(3, 3);
             this.EquipRingsView.Margin = new System.Windows.Forms.Padding(5);
             this.EquipRingsView.Name = "EquipRingsView";
             this.EquipRingsView.Size = new System.Drawing.Size(842, 428);
             this.EquipRingsView.TabIndex = 1;
+            // 
+            // TabEShields
+            // 
             this.TabEShields.Controls.Add(this.EquipShieldsView);
             this.TabEShields.Location = new System.Drawing.Point(4, 25);
             this.TabEShields.Name = "TabEShields";
@@ -356,12 +442,18 @@
             this.TabEShields.TabIndex = 11;
             this.TabEShields.Text = "Shields";
             this.TabEShields.UseVisualStyleBackColor = true;
+            // 
+            // EquipShieldsView
+            // 
             this.EquipShieldsView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.EquipShieldsView.Location = new System.Drawing.Point(3, 3);
             this.EquipShieldsView.Margin = new System.Windows.Forms.Padding(5);
             this.EquipShieldsView.Name = "EquipShieldsView";
             this.EquipShieldsView.Size = new System.Drawing.Size(842, 428);
             this.EquipShieldsView.TabIndex = 1;
+            // 
+            // TabETames
+            // 
             this.TabETames.Controls.Add(this.EquipMountsView);
             this.TabETames.Location = new System.Drawing.Point(4, 25);
             this.TabETames.Name = "TabETames";
@@ -370,12 +462,18 @@
             this.TabETames.TabIndex = 13;
             this.TabETames.Text = "Mounts";
             this.TabETames.UseVisualStyleBackColor = true;
+            // 
+            // EquipMountsView
+            // 
             this.EquipMountsView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.EquipMountsView.Location = new System.Drawing.Point(3, 3);
             this.EquipMountsView.Margin = new System.Windows.Forms.Padding(5);
             this.EquipMountsView.Name = "EquipMountsView";
             this.EquipMountsView.Size = new System.Drawing.Size(842, 428);
             this.EquipMountsView.TabIndex = 1;
+            // 
+            // TabUsePage
+            // 
             this.TabUsePage.Controls.Add(this.TabUse);
             this.TabUsePage.Location = new System.Drawing.Point(4, 29);
             this.TabUsePage.Name = "TabUsePage";
@@ -384,6 +482,9 @@
             this.TabUsePage.TabIndex = 1;
             this.TabUsePage.Text = "Use";
             this.TabUsePage.UseVisualStyleBackColor = true;
+            // 
+            // TabUse
+            // 
             this.TabUse.Controls.Add(this.TabUConsumes);
             this.TabUse.Controls.Add(this.TabUScrolls);
             this.TabUse.Controls.Add(this.TabUProjectiles);
@@ -393,6 +494,9 @@
             this.TabUse.SelectedIndex = 0;
             this.TabUse.Size = new System.Drawing.Size(850, 457);
             this.TabUse.TabIndex = 0;
+            // 
+            // TabUConsumes
+            // 
             this.TabUConsumes.Controls.Add(this.UseConsumeView);
             this.TabUConsumes.Location = new System.Drawing.Point(4, 25);
             this.TabUConsumes.Name = "TabUConsumes";
@@ -401,12 +505,18 @@
             this.TabUConsumes.TabIndex = 0;
             this.TabUConsumes.Text = "Consumes";
             this.TabUConsumes.UseVisualStyleBackColor = true;
+            // 
+            // UseConsumeView
+            // 
             this.UseConsumeView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.UseConsumeView.Location = new System.Drawing.Point(3, 3);
             this.UseConsumeView.Margin = new System.Windows.Forms.Padding(4);
             this.UseConsumeView.Name = "UseConsumeView";
             this.UseConsumeView.Size = new System.Drawing.Size(836, 422);
             this.UseConsumeView.TabIndex = 0;
+            // 
+            // TabUScrolls
+            // 
             this.TabUScrolls.Controls.Add(this.UseScrollsView);
             this.TabUScrolls.Location = new System.Drawing.Point(4, 25);
             this.TabUScrolls.Name = "TabUScrolls";
@@ -415,12 +525,18 @@
             this.TabUScrolls.TabIndex = 1;
             this.TabUScrolls.Text = "Scrolls";
             this.TabUScrolls.UseVisualStyleBackColor = true;
+            // 
+            // UseScrollsView
+            // 
             this.UseScrollsView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.UseScrollsView.Location = new System.Drawing.Point(3, 3);
             this.UseScrollsView.Margin = new System.Windows.Forms.Padding(4);
             this.UseScrollsView.Name = "UseScrollsView";
             this.UseScrollsView.Size = new System.Drawing.Size(836, 422);
             this.UseScrollsView.TabIndex = 0;
+            // 
+            // TabUProjectiles
+            // 
             this.TabUProjectiles.Controls.Add(this.UseProjectileView);
             this.TabUProjectiles.Location = new System.Drawing.Point(4, 25);
             this.TabUProjectiles.Name = "TabUProjectiles";
@@ -429,12 +545,18 @@
             this.TabUProjectiles.TabIndex = 2;
             this.TabUProjectiles.Text = "Projectiles";
             this.TabUProjectiles.UseVisualStyleBackColor = true;
+            // 
+            // UseProjectileView
+            // 
             this.UseProjectileView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.UseProjectileView.Location = new System.Drawing.Point(3, 3);
             this.UseProjectileView.Margin = new System.Windows.Forms.Padding(4);
             this.UseProjectileView.Name = "UseProjectileView";
             this.UseProjectileView.Size = new System.Drawing.Size(836, 422);
             this.UseProjectileView.TabIndex = 0;
+            // 
+            // TabSetupPage
+            // 
             this.TabSetupPage.Controls.Add(this.TabSetup);
             this.TabSetupPage.Location = new System.Drawing.Point(4, 29);
             this.TabSetupPage.Name = "TabSetupPage";
@@ -443,6 +565,9 @@
             this.TabSetupPage.TabIndex = 2;
             this.TabSetupPage.Text = "Setup";
             this.TabSetupPage.UseVisualStyleBackColor = true;
+            // 
+            // TabSetup
+            // 
             this.TabSetup.Controls.Add(this.TabSChairs);
             this.TabSetup.Controls.Add(this.TabSOther);
             this.TabSetup.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -451,6 +576,9 @@
             this.TabSetup.SelectedIndex = 0;
             this.TabSetup.Size = new System.Drawing.Size(850, 457);
             this.TabSetup.TabIndex = 1;
+            // 
+            // TabSChairs
+            // 
             this.TabSChairs.Controls.Add(this.SetupChairsView);
             this.TabSChairs.Location = new System.Drawing.Point(4, 25);
             this.TabSChairs.Name = "TabSChairs";
@@ -459,12 +587,18 @@
             this.TabSChairs.TabIndex = 1;
             this.TabSChairs.Text = "Chairs";
             this.TabSChairs.UseVisualStyleBackColor = true;
+            // 
+            // SetupChairsView
+            // 
             this.SetupChairsView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.SetupChairsView.Location = new System.Drawing.Point(3, 3);
             this.SetupChairsView.Margin = new System.Windows.Forms.Padding(4);
             this.SetupChairsView.Name = "SetupChairsView";
             this.SetupChairsView.Size = new System.Drawing.Size(836, 422);
             this.SetupChairsView.TabIndex = 0;
+            // 
+            // TabSOther
+            // 
             this.TabSOther.Controls.Add(this.SetupOthersView);
             this.TabSOther.Location = new System.Drawing.Point(4, 25);
             this.TabSOther.Name = "TabSOther";
@@ -473,12 +607,18 @@
             this.TabSOther.TabIndex = 2;
             this.TabSOther.Text = "Others";
             this.TabSOther.UseVisualStyleBackColor = true;
+            // 
+            // SetupOthersView
+            // 
             this.SetupOthersView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.SetupOthersView.Location = new System.Drawing.Point(3, 3);
             this.SetupOthersView.Margin = new System.Windows.Forms.Padding(4);
             this.SetupOthersView.Name = "SetupOthersView";
             this.SetupOthersView.Size = new System.Drawing.Size(836, 422);
             this.SetupOthersView.TabIndex = 0;
+            // 
+            // TabEtcPage
+            // 
             this.TabEtcPage.Controls.Add(this.EtcView);
             this.TabEtcPage.Location = new System.Drawing.Point(4, 29);
             this.TabEtcPage.Name = "TabEtcPage";
@@ -487,12 +627,18 @@
             this.TabEtcPage.TabIndex = 4;
             this.TabEtcPage.Text = "Etc";
             this.TabEtcPage.UseVisualStyleBackColor = true;
+            // 
+            // EtcView
+            // 
             this.EtcView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.EtcView.Location = new System.Drawing.Point(3, 3);
             this.EtcView.Margin = new System.Windows.Forms.Padding(4);
             this.EtcView.Name = "EtcView";
             this.EtcView.Size = new System.Drawing.Size(850, 457);
             this.EtcView.TabIndex = 0;
+            // 
+            // TabCashPage
+            // 
             this.TabCashPage.Controls.Add(this.CashView);
             this.TabCashPage.Location = new System.Drawing.Point(4, 29);
             this.TabCashPage.Name = "TabCashPage";
@@ -501,12 +647,18 @@
             this.TabCashPage.TabIndex = 5;
             this.TabCashPage.Text = "Cash";
             this.TabCashPage.UseVisualStyleBackColor = true;
+            // 
+            // CashView
+            // 
             this.CashView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.CashView.Location = new System.Drawing.Point(3, 3);
             this.CashView.Margin = new System.Windows.Forms.Padding(4);
             this.CashView.Name = "CashView";
             this.CashView.Size = new System.Drawing.Size(850, 457);
             this.CashView.TabIndex = 0;
+            // 
+            // TabMapsPage
+            // 
             this.TabMapsPage.Controls.Add(this.MapsView);
             this.TabMapsPage.Location = new System.Drawing.Point(4, 29);
             this.TabMapsPage.Name = "TabMapsPage";
@@ -515,12 +667,18 @@
             this.TabMapsPage.TabIndex = 6;
             this.TabMapsPage.Text = "Maps";
             this.TabMapsPage.UseVisualStyleBackColor = true;
+            // 
+            // MapsView
+            // 
             this.MapsView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.MapsView.Location = new System.Drawing.Point(3, 3);
             this.MapsView.Margin = new System.Windows.Forms.Padding(4);
             this.MapsView.Name = "MapsView";
             this.MapsView.Size = new System.Drawing.Size(850, 457);
             this.MapsView.TabIndex = 0;
+            // 
+            // TabMobsPage
+            // 
             this.TabMobsPage.Controls.Add(this.MobsView);
             this.TabMobsPage.Location = new System.Drawing.Point(4, 29);
             this.TabMobsPage.Name = "TabMobsPage";
@@ -529,12 +687,18 @@
             this.TabMobsPage.TabIndex = 7;
             this.TabMobsPage.Text = "Mobs";
             this.TabMobsPage.UseVisualStyleBackColor = true;
+            // 
+            // MobsView
+            // 
             this.MobsView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.MobsView.Location = new System.Drawing.Point(3, 3);
             this.MobsView.Margin = new System.Windows.Forms.Padding(4);
             this.MobsView.Name = "MobsView";
             this.MobsView.Size = new System.Drawing.Size(850, 457);
             this.MobsView.TabIndex = 0;
+            // 
+            // TabSkillsPage
+            // 
             this.TabSkillsPage.Controls.Add(this.SkillsView);
             this.TabSkillsPage.Location = new System.Drawing.Point(4, 29);
             this.TabSkillsPage.Name = "TabSkillsPage";
@@ -543,12 +707,18 @@
             this.TabSkillsPage.TabIndex = 8;
             this.TabSkillsPage.Text = "Skills";
             this.TabSkillsPage.UseVisualStyleBackColor = true;
+            // 
+            // SkillsView
+            // 
             this.SkillsView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.SkillsView.Location = new System.Drawing.Point(3, 3);
             this.SkillsView.Margin = new System.Windows.Forms.Padding(4);
             this.SkillsView.Name = "SkillsView";
             this.SkillsView.Size = new System.Drawing.Size(850, 457);
             this.SkillsView.TabIndex = 0;
+            // 
+            // TabNPCsPage
+            // 
             this.TabNPCsPage.Controls.Add(this.NPCView);
             this.TabNPCsPage.Location = new System.Drawing.Point(4, 29);
             this.TabNPCsPage.Name = "TabNPCsPage";
@@ -557,12 +727,18 @@
             this.TabNPCsPage.TabIndex = 9;
             this.TabNPCsPage.Text = "NPCs";
             this.TabNPCsPage.UseVisualStyleBackColor = true;
+            // 
+            // NPCView
+            // 
             this.NPCView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.NPCView.Location = new System.Drawing.Point(3, 3);
             this.NPCView.Margin = new System.Windows.Forms.Padding(4);
             this.NPCView.Name = "NPCView";
             this.NPCView.Size = new System.Drawing.Size(850, 457);
             this.NPCView.TabIndex = 0;
+            // 
+            // TabPetsPage
+            // 
             this.TabPetsPage.Controls.Add(this.PetsView);
             this.TabPetsPage.Location = new System.Drawing.Point(4, 29);
             this.TabPetsPage.Name = "TabPetsPage";
@@ -571,12 +747,18 @@
             this.TabPetsPage.TabIndex = 10;
             this.TabPetsPage.Text = "Pets";
             this.TabPetsPage.UseVisualStyleBackColor = true;
+            // 
+            // PetsView
+            // 
             this.PetsView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.PetsView.Location = new System.Drawing.Point(3, 3);
             this.PetsView.Margin = new System.Windows.Forms.Padding(4);
             this.PetsView.Name = "PetsView";
             this.PetsView.Size = new System.Drawing.Size(850, 457);
             this.PetsView.TabIndex = 0;
+            // 
+            // TabReactors
+            // 
             this.TabReactors.Controls.Add(this.ReactorView);
             this.TabReactors.Location = new System.Drawing.Point(4, 29);
             this.TabReactors.Name = "TabReactors";
@@ -585,32 +767,49 @@
             this.TabReactors.TabIndex = 11;
             this.TabReactors.Text = "Reactors";
             this.TabReactors.UseVisualStyleBackColor = true;
+            // 
+            // ReactorView
+            // 
             this.ReactorView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ReactorView.Location = new System.Drawing.Point(3, 3);
             this.ReactorView.Margin = new System.Windows.Forms.Padding(4);
             this.ReactorView.Name = "ReactorView";
             this.ReactorView.Size = new System.Drawing.Size(850, 457);
             this.ReactorView.TabIndex = 0;
+            // 
+            // ComboLoadType
+            // 
             this.ComboLoadType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.ComboLoadType.FormattingEnabled = true;
-            this.ComboLoadType.Items.AddRange(new object[] {"BIN", "WZ"});
+            this.ComboLoadType.Items.AddRange(new object[] {
+            "BIN",
+            "WZ"});
             this.ComboLoadType.Location = new System.Drawing.Point(5, 5);
             this.ComboLoadType.Name = "ComboLoadType";
             this.ComboLoadType.Size = new System.Drawing.Size(55, 21);
             this.ComboLoadType.TabIndex = 1;
             this.ComboLoadType.SelectedIndexChanged += new System.EventHandler(this.ComboLoadType_SelectedIndexChanged);
+            // 
+            // ComboEncType
+            // 
             this.ComboEncType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.ComboEncType.FormattingEnabled = true;
             this.ComboEncType.Location = new System.Drawing.Point(67, 5);
             this.ComboEncType.Name = "ComboEncType";
             this.ComboEncType.Size = new System.Drawing.Size(111, 21);
             this.ComboEncType.TabIndex = 2;
+            // 
+            // TextWzPath
+            // 
             this.TextWzPath.Enabled = false;
             this.TextWzPath.Location = new System.Drawing.Point(184, 5);
             this.TextWzPath.Name = "TextWzPath";
             this.TextWzPath.Size = new System.Drawing.Size(196, 20);
             this.TextWzPath.TabIndex = 3;
             this.TextWzPath.Click += new System.EventHandler(this.TextWzPath_Click);
+            // 
+            // BtnWzLoad
+            // 
             this.BtnWzLoad.Enabled = false;
             this.BtnWzLoad.Location = new System.Drawing.Point(386, 3);
             this.BtnWzLoad.Name = "BtnWzLoad";
@@ -619,6 +818,9 @@
             this.BtnWzLoad.Text = "Load";
             this.BtnWzLoad.UseVisualStyleBackColor = true;
             this.BtnWzLoad.Click += new System.EventHandler(this.BtnWzLoad_Click);
+            // 
+            // BtnSave
+            // 
             this.BtnSave.BackColor = System.Drawing.Color.Transparent;
             this.BtnSave.FlatAppearance.BorderSize = 0;
             this.BtnSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -629,17 +831,25 @@
             this.BtnSave.TabIndex = 5;
             this.BtnSave.UseVisualStyleBackColor = false;
             this.BtnSave.MouseUp += new System.Windows.Forms.MouseEventHandler(this.BtnSave_Click);
+            // 
+            // SearchTextBox
+            // 
             this.SearchTextBox.AcceptsReturn = true;
-            this.SearchTextBox.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.SearchTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.SearchTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.SearchTextBox.Location = new System.Drawing.Point(702, 6);
-            this.SearchTextBox.Multiline = true;
             this.SearchTextBox.Name = "SearchTextBox";
             this.SearchTextBox.Size = new System.Drawing.Size(158, 20);
             this.SearchTextBox.TabIndex = 6;
             this.SearchTextBox.TextChanged += new System.EventHandler(this.SearchTextBox_TextChanged);
+            // 
+            // mainFormBindingSource
+            // 
             this.mainFormBindingSource.DataSource = typeof(WzVisualizer.GUI.MainForm);
-            this.BtnSearch.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            // 
+            // BtnSearch
+            // 
+            this.BtnSearch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.BtnSearch.Location = new System.Drawing.Point(645, 6);
             this.BtnSearch.Name = "BtnSearch";
             this.BtnSearch.Size = new System.Drawing.Size(51, 23);
@@ -647,6 +857,9 @@
             this.BtnSearch.Text = "Search";
             this.BtnSearch.UseVisualStyleBackColor = true;
             this.BtnSearch.Click += new System.EventHandler(this.BtnSearch_Click);
+            // 
+            // MainForm
+            // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(864, 525);
@@ -658,9 +871,9 @@
             this.Controls.Add(this.ComboEncType);
             this.Controls.Add(this.ComboLoadType);
             this.Controls.Add(this.TabControlMain);
-            this.Icon = ((System.Drawing.Icon) (resources.GetObject("$this.Icon")));
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainForm";
-            this.Text = "WzVisualizer 1.5.2";
+            this.Text = "WzVisualizer 1.5.3";
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.TabControlMain.ResumeLayout(false);
             this.TabEquipsPage.ResumeLayout(false);
@@ -696,43 +909,44 @@
             this.TabNPCsPage.ResumeLayout(false);
             this.TabPetsPage.ResumeLayout(false);
             this.TabReactors.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize) (this.mainFormBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.mainFormBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
+
         }
 
         private System.Windows.Forms.Button BtnSave;
         private System.Windows.Forms.Button BtnSearch;
         private System.Windows.Forms.Button BtnWzLoad;
-        private WzVisualizer.GUI.Controls.DataViewer CashView;
+        private WzVisualizer.GUI.Controls.DataViewport CashView;
         private System.Windows.Forms.ComboBox ComboEncType;
         private System.Windows.Forms.ComboBox ComboLoadType;
-        private WzVisualizer.GUI.Controls.DataViewer EquipAccessoryView;
-        private WzVisualizer.GUI.Controls.DataViewer EquipCapesView;
-        private WzVisualizer.GUI.Controls.DataViewer EquipCapsView;
-        private WzVisualizer.GUI.Controls.DataViewer EquipFacesView;
-        private WzVisualizer.GUI.Controls.DataViewer EquipGlovesView;
-        private WzVisualizer.GUI.Controls.DataViewer EquipHairsView;
-        private WzVisualizer.GUI.Controls.DataViewer EquipMountsView;
-        private WzVisualizer.GUI.Controls.DataViewer EquipPantsView;
-        private WzVisualizer.GUI.Controls.DataViewer EquipRingsView;
-        private WzVisualizer.GUI.Controls.DataViewer EquipShieldsView;
-        private WzVisualizer.GUI.Controls.DataViewer EquipShoesView;
-        private WzVisualizer.GUI.Controls.DataViewer EquipsOverallsView;
+        private WzVisualizer.GUI.Controls.DataViewport EquipAccessoryView;
+        private WzVisualizer.GUI.Controls.DataViewport EquipCapesView;
+        private WzVisualizer.GUI.Controls.DataViewport EquipCapsView;
+        private WzVisualizer.GUI.Controls.DataViewport EquipFacesView;
+        private WzVisualizer.GUI.Controls.DataViewport EquipGlovesView;
+        private WzVisualizer.GUI.Controls.DataViewport EquipHairsView;
+        private WzVisualizer.GUI.Controls.DataViewport EquipMountsView;
+        private WzVisualizer.GUI.Controls.DataViewport EquipPantsView;
+        private WzVisualizer.GUI.Controls.DataViewport EquipRingsView;
+        private WzVisualizer.GUI.Controls.DataViewport EquipShieldsView;
+        private WzVisualizer.GUI.Controls.DataViewport EquipShoesView;
+        private WzVisualizer.GUI.Controls.DataViewport EquipsOverallsView;
         private System.Windows.Forms.TabControl EquipTab;
-        private WzVisualizer.GUI.Controls.DataViewer EquipTopsView;
-        private WzVisualizer.GUI.Controls.DataViewer EquipWeaponsView;
-        private WzVisualizer.GUI.Controls.DataViewer EtcView;
+        private WzVisualizer.GUI.Controls.DataViewport EquipTopsView;
+        private WzVisualizer.GUI.Controls.DataViewport EquipWeaponsView;
+        private WzVisualizer.GUI.Controls.DataViewport EtcView;
         private System.Windows.Forms.BindingSource mainFormBindingSource;
-        private WzVisualizer.GUI.Controls.DataViewer MapsView;
-        private WzVisualizer.GUI.Controls.DataViewer MobsView;
-        private WzVisualizer.GUI.Controls.DataViewer NPCView;
-        private WzVisualizer.GUI.Controls.DataViewer PetsView;
-        private WzVisualizer.GUI.Controls.DataViewer ReactorView;
+        private WzVisualizer.GUI.Controls.DataViewport MapsView;
+        private WzVisualizer.GUI.Controls.DataViewport MobsView;
+        private WzVisualizer.GUI.Controls.DataViewport NPCView;
+        private WzVisualizer.GUI.Controls.DataViewport PetsView;
+        private WzVisualizer.GUI.Controls.DataViewport ReactorView;
         private System.Windows.Forms.TextBox SearchTextBox;
-        private WzVisualizer.GUI.Controls.DataViewer SetupChairsView;
-        private WzVisualizer.GUI.Controls.DataViewer SetupOthersView;
-        private WzVisualizer.GUI.Controls.DataViewer SkillsView;
+        private WzVisualizer.GUI.Controls.DataViewport SetupChairsView;
+        private WzVisualizer.GUI.Controls.DataViewport SetupOthersView;
+        private WzVisualizer.GUI.Controls.DataViewport SkillsView;
         private System.Windows.Forms.TabPage TabCashPage;
         private System.Windows.Forms.TabControl TabControlMain;
         private System.Windows.Forms.TabPage TabEAccessory;
@@ -767,9 +981,9 @@
         private System.Windows.Forms.TabControl TabUse;
         private System.Windows.Forms.TabPage TabUsePage;
         private System.Windows.Forms.TextBox TextWzPath;
-        private WzVisualizer.GUI.Controls.DataViewer UseConsumeView;
-        private WzVisualizer.GUI.Controls.DataViewer UseProjectileView;
-        private WzVisualizer.GUI.Controls.DataViewer UseScrollsView;
+        private WzVisualizer.GUI.Controls.DataViewport UseConsumeView;
+        private WzVisualizer.GUI.Controls.DataViewport UseProjectileView;
+        private WzVisualizer.GUI.Controls.DataViewport UseScrollsView;
 
         #endregion
     }

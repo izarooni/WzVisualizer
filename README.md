@@ -1,7 +1,6 @@
 
 # WzVisualizer
-A WZ Visualizer written in C# -- Also known as a GM Handtool!
-Target framework .NET 4.5.1 using [MapleLib](https://github.com/haha01haha01/MapleLib/tree/59b31c04d2327d8d6a3f37c2b6907d9d817c66ab) 
+A WZ Visualizer written in C# -- Also known as a GM Handtool!   
 
 ### Features
 - Contents of a single selected cell is copied to the clipboard

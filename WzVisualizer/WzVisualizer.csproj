@@ -84,11 +84,11 @@
   <ItemGroup>
     <Compile Include="BinData.cs" />
     <Compile Include="GUI\Controls\ComboBoxItem.cs" />
-    <Compile Include="GUI\Controls\DataViewer.cs">
+    <Compile Include="GUI\Controls\DataViewport.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="GUI\Controls\DataViewer.Designer.cs">
-      <DependentUpon>DataViewer.cs</DependentUpon>
+    <Compile Include="GUI\Controls\DataViewport.Designer.cs">
+      <DependentUpon>DataViewport.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI\MainForm.cs">
       <SubType>Form</SubType>
@@ -108,11 +108,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Util\Wz.cs" />
     <Compile Include="Util\StringWz.cs" />
-    <EmbeddedResource Include="GUI\Controls\DataViewer.resx">
-      <DependentUpon>DataViewer.cs</DependentUpon>
+    <EmbeddedResource Include="GUI\Controls\DataViewport.resx">
+      <DependentUpon>DataViewport.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\PropertiesViewer.resx">
       <DependentUpon>PropertiesViewer.cs</DependentUpon>
@@ -128,8 +129,6 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <None Include="packages.config" />
-    <None Include="Properties\DataSources\MainForm.datasource" />
-    <None Include="Properties\DataSources\Program.datasource" />
     <None Include="Properties\DataSources\WzVisualizer.Properties.Resources.datasource" />
     <None Include="Properties\DataSources\WzVisualizer.Properties.Settings.datasource" />
     <None Include="Properties\Settings.settings">

@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Drawing;
 
 namespace WzVisualizer {
+
+    [Serializable]
     public class BinData {
-        private string name;
+        public string _name;
 
         public BinData() { }
 
@@ -20,14 +22,14 @@ namespace WzVisualizer {
 
         public int ID { get; set; }
 
+        public string Name {
+            get => _name ?? "NO-NAME";
+            set => _name = value ?? "NO-NAME";
+        }
+
         public Image Image { get; set; }
 
         public List<string> Properties { get; } = new List<string>();
-
-        public string Name {
-            get => name;
-            set => name = value ?? "NO-NAME";
-        }
 
         public bool Search(string filter) {
             if (ID.ToString().Contains(filter)) return true;
