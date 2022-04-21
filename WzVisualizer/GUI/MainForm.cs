@@ -607,6 +607,12 @@ namespace WzVisualizer.GUI {
             SearchTextBox.Height = Math.Max(20, 15 * Math.Max(1, lines.Length));
         }
 
+        private void SearchTextBox_KeyPress(object sender, KeyPressEventArgs e) {
+            if ((int) e.KeyChar == 13) {
+                OnTabControlChanged();
+            }
+        }
+
         private void MainForm_Load(object sender, EventArgs e) {
             OnTabControlChanged();
         }

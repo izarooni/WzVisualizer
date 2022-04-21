@@ -869,6 +869,7 @@
             this.SearchTextBox.Size = new System.Drawing.Size(158, 20);
             this.SearchTextBox.TabIndex = 6;
             this.SearchTextBox.TextChanged += new System.EventHandler(this.SearchTextBox_TextChanged);
+            this.SearchTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.SearchTextBox_KeyPress);
             // 
             // mainFormBindingSource
             // 
@@ -900,7 +901,7 @@
             this.Controls.Add(this.TabControlMain);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainForm";
-            this.Text = "WzVisualizer 1.5.4";
+            this.Text = "WzVisualizer 1.5.5";
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.TabControlMain.ResumeLayout(false);
             this.TabEquipsPage.ResumeLayout(false);
