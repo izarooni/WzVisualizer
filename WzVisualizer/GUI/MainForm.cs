@@ -126,9 +126,13 @@ namespace WzVisualizer.GUI {
                 if (result != DialogResult.Yes) return;
                 loadAll = true;
                 for (int i = 0; i <= 10; i++) {
-                    TabControlMain.SelectedIndex = i;
-                    LoadWzData(i, encryption, directory);
-                    BtnSave_Click(null, new MouseEventArgs(MouseButtons.Left, 0, 0, 0, 0));
+                    try {
+                        TabControlMain.SelectedIndex = i;
+                        LoadWzData(i, encryption, directory);
+                        BtnSave_Click(null, new MouseEventArgs(MouseButtons.Left, 0, 0, 0, 0));
+                    } catch (Exception e) {
+                        MessageBox.Show($"Could not load tab {i}: {e.Message}");
+                    }
                 }
 
                 return;
@@ -242,6 +246,7 @@ namespace WzVisualizer.GUI {
                                             if (ItemConstants.IsConsume(itemId)) AddRow(img, UseConsumeView);
                                             break;
                                         case 204:
+                                        case 234:
                                             AddRow(img, UseScrollsView);
                                             break;
                                         case 206:
@@ -524,11 +529,11 @@ namespace WzVisualizer.GUI {
                 }
                 case MouseButtons.Right: {
                     if (ModifierKeys == Keys.Shift) {
-                        ForEachPage(TabControlMain, page => BinaryDataUtil.ExportPictures(page, page.Text));
+                        ForEachPage(TabControlMain, (page, text) => BinaryDataUtil.ExportPictures(page, text));
                     } else {
                         if (main.Controls[0] is TabControl tc) {
                             foreach (TabPage page in tc.TabPages) {
-                                BinaryDataUtil.ExportPictures(page, page.Text);
+                                BinaryDataUtil.ExportPictures(page, main.Text);
                             }
                         } else {
                             BinaryDataUtil.ExportPictures(main, main.Text);
@@ -623,7 +628,7 @@ namespace WzVisualizer.GUI {
             BinaryDataUtil.ImportGrid($"{main.Text}/{sub.Text}.bin", (DataViewport)sub.Controls[0], AddGridRow);
         }
 
-        private void ForEachPage(TabControl control, Action<TabPage> testfor) {
+        private void ForEachPage(TabControl control, Action<TabPage, string> testfor) {
             for (var i = 0; i < control.Controls.Count; i++) {
                 var child = control.Controls[i];
                 if (control == TabControlMain) {
@@ -631,7 +636,7 @@ namespace WzVisualizer.GUI {
                 }
                 
                 if (child.Controls[0] is DataViewport) {
-                    testfor.Invoke(child as TabPage);
+                    testfor.Invoke(child as TabPage, TabControlMain.SelectedTab.Text);
                 } else if (child.Controls[0] is TabControl) {
                     ForEachPage(child.Controls[0] as TabControl, testfor);
                 }
