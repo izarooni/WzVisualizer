@@ -90,35 +90,20 @@ namespace WzVisualizer.IO {
         }
 
         public static void ExportBinary(TabPage page, string folder) {
+            if (page.Controls[0] is TabControl tc) {
+                page = tc.SelectedTab;
+            }
+            var dv = (DataViewport) page.Controls[0];
+            List<BinData> data = (List<BinData>) dv.Tag;
+
             string directory = $"{ExportFolder}/{folder}";
             string filePath = $"{directory}/{page.Text}.bin";
             Directory.CreateDirectory(directory);
 
-            var gdv = (DataViewport) page.Controls[0];
-            var rows = gdv.GridView.Rows;
-
             using BinaryWriter bw = new BinaryWriter(new FileStream(filePath, FileMode.Create));
-            bw.Write(rows.Count);
-            for (int a = 0; a < rows.Count; a++) {
-                var cells = rows[a].Cells;
-                BinData bin = new BinData();
-                for (int b = 0; b < cells.Count; b++) {
-                    var cell = cells[b];
-                    string colName = cell.OwningColumn.Name;
-                    if (colName.Contains("ID")) bin.ID = (int) cell.Value;
-                    else if (colName.Contains("Bitmap")) bin.Image = (Bitmap) cell.Value;
-                    else if (colName.Contains("Name")) bin.Name = (string) cell.Value;
-                    else if (colName.Contains("Properties")) {
-                        string[] properties = ((string) cell.Value).Split(new[] {"\r\n"}, StringSplitOptions.None);
-                        foreach (string prop in properties)
-                            bin.Properties.Add(prop);
-                    }
-                    else {
-                        throw new Exception($"unhandled column '{colName}'");
-                    }
-                }
-
-                bw.Write(bin.ID);
+            bw.Write(data.Count);
+            foreach (BinData bin in data) {
+            bw.Write(bin.ID);
                 bw.Write(bin.Name);
                 bw.Write(bin.Properties.Count);
                 foreach (string prop in bin.Properties) {
@@ -134,6 +119,7 @@ namespace WzVisualizer.IO {
                     bw.Write(buffer);
                 }
             }
+            bw.Flush();
         }
     }
 }

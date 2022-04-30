@@ -211,7 +211,6 @@
             this.EquipHairsView.Name = "EquipHairsView";
             this.EquipHairsView.Size = new System.Drawing.Size(842, 428);
             this.EquipHairsView.TabIndex = 0;
-            this.EquipHairsView.Tag = ((object)(resources.GetObject("EquipHairsView.Tag")));
             // 
             // TabEFaces
             // 
@@ -232,7 +231,6 @@
             this.EquipFacesView.Name = "EquipFacesView";
             this.EquipFacesView.Size = new System.Drawing.Size(842, 428);
             this.EquipFacesView.TabIndex = 1;
-            this.EquipFacesView.Tag = ((object)(resources.GetObject("EquipFacesView.Tag")));
             // 
             // TabsEWeapons
             // 
@@ -253,7 +251,6 @@
             this.EquipWeaponsView.Name = "EquipWeaponsView";
             this.EquipWeaponsView.Size = new System.Drawing.Size(842, 428);
             this.EquipWeaponsView.TabIndex = 1;
-            this.EquipWeaponsView.Tag = ((object)(resources.GetObject("EquipWeaponsView.Tag")));
             // 
             // TabEAccessory
             // 
@@ -274,7 +271,6 @@
             this.EquipAccessoryView.Name = "EquipAccessoryView";
             this.EquipAccessoryView.Size = new System.Drawing.Size(842, 428);
             this.EquipAccessoryView.TabIndex = 1;
-            this.EquipAccessoryView.Tag = ((object)(resources.GetObject("EquipAccessoryView.Tag")));
             // 
             // TabECaps
             // 
@@ -295,7 +291,6 @@
             this.EquipCapsView.Name = "EquipCapsView";
             this.EquipCapsView.Size = new System.Drawing.Size(842, 428);
             this.EquipCapsView.TabIndex = 1;
-            this.EquipCapsView.Tag = ((object)(resources.GetObject("EquipCapsView.Tag")));
             // 
             // TabEOveralls
             // 
@@ -316,7 +311,6 @@
             this.EquipsOverallsView.Name = "EquipsOverallsView";
             this.EquipsOverallsView.Size = new System.Drawing.Size(842, 428);
             this.EquipsOverallsView.TabIndex = 1;
-            this.EquipsOverallsView.Tag = ((object)(resources.GetObject("EquipsOverallsView.Tag")));
             // 
             // TabETops
             // 
@@ -337,7 +331,6 @@
             this.EquipTopsView.Name = "EquipTopsView";
             this.EquipTopsView.Size = new System.Drawing.Size(842, 428);
             this.EquipTopsView.TabIndex = 1;
-            this.EquipTopsView.Tag = ((object)(resources.GetObject("EquipTopsView.Tag")));
             // 
             // TabEBottoms
             // 
@@ -358,7 +351,6 @@
             this.EquipPantsView.Name = "EquipPantsView";
             this.EquipPantsView.Size = new System.Drawing.Size(842, 428);
             this.EquipPantsView.TabIndex = 1;
-            this.EquipPantsView.Tag = ((object)(resources.GetObject("EquipPantsView.Tag")));
             // 
             // TabEShoes
             // 
@@ -379,7 +371,6 @@
             this.EquipShoesView.Name = "EquipShoesView";
             this.EquipShoesView.Size = new System.Drawing.Size(842, 428);
             this.EquipShoesView.TabIndex = 1;
-            this.EquipShoesView.Tag = ((object)(resources.GetObject("EquipShoesView.Tag")));
             // 
             // TabECapes
             // 
@@ -400,7 +391,6 @@
             this.EquipCapesView.Name = "EquipCapesView";
             this.EquipCapesView.Size = new System.Drawing.Size(842, 428);
             this.EquipCapesView.TabIndex = 1;
-            this.EquipCapesView.Tag = ((object)(resources.GetObject("EquipCapesView.Tag")));
             // 
             // TabEGloves
             // 
@@ -421,7 +411,6 @@
             this.EquipGlovesView.Name = "EquipGlovesView";
             this.EquipGlovesView.Size = new System.Drawing.Size(842, 428);
             this.EquipGlovesView.TabIndex = 1;
-            this.EquipGlovesView.Tag = ((object)(resources.GetObject("EquipGlovesView.Tag")));
             // 
             // TabERings
             // 
@@ -442,7 +431,6 @@
             this.EquipRingsView.Name = "EquipRingsView";
             this.EquipRingsView.Size = new System.Drawing.Size(842, 428);
             this.EquipRingsView.TabIndex = 1;
-            this.EquipRingsView.Tag = ((object)(resources.GetObject("EquipRingsView.Tag")));
             // 
             // TabEShields
             // 
@@ -463,7 +451,6 @@
             this.EquipShieldsView.Name = "EquipShieldsView";
             this.EquipShieldsView.Size = new System.Drawing.Size(842, 428);
             this.EquipShieldsView.TabIndex = 1;
-            this.EquipShieldsView.Tag = ((object)(resources.GetObject("EquipShieldsView.Tag")));
             // 
             // TabETames
             // 
@@ -484,7 +471,6 @@
             this.EquipMountsView.Name = "EquipMountsView";
             this.EquipMountsView.Size = new System.Drawing.Size(842, 428);
             this.EquipMountsView.TabIndex = 1;
-            this.EquipMountsView.Tag = ((object)(resources.GetObject("EquipMountsView.Tag")));
             // 
             // TabUsePage
             // 
@@ -528,7 +514,6 @@
             this.UseConsumeView.Name = "UseConsumeView";
             this.UseConsumeView.Size = new System.Drawing.Size(836, 422);
             this.UseConsumeView.TabIndex = 0;
-            this.UseConsumeView.Tag = ((object)(resources.GetObject("UseConsumeView.Tag")));
             // 
             // TabUScrolls
             // 
@@ -549,7 +534,6 @@
             this.UseScrollsView.Name = "UseScrollsView";
             this.UseScrollsView.Size = new System.Drawing.Size(836, 422);
             this.UseScrollsView.TabIndex = 0;
-            this.UseScrollsView.Tag = ((object)(resources.GetObject("UseScrollsView.Tag")));
             // 
             // TabUProjectiles
             // 
@@ -570,7 +554,6 @@
             this.UseProjectileView.Name = "UseProjectileView";
             this.UseProjectileView.Size = new System.Drawing.Size(836, 422);
             this.UseProjectileView.TabIndex = 0;
-            this.UseProjectileView.Tag = ((object)(resources.GetObject("UseProjectileView.Tag")));
             // 
             // TabSetupPage
             // 
@@ -613,7 +596,6 @@
             this.SetupChairsView.Name = "SetupChairsView";
             this.SetupChairsView.Size = new System.Drawing.Size(836, 422);
             this.SetupChairsView.TabIndex = 0;
-            this.SetupChairsView.Tag = ((object)(resources.GetObject("SetupChairsView.Tag")));
             // 
             // TabSOther
             // 
@@ -634,7 +616,6 @@
             this.SetupOthersView.Name = "SetupOthersView";
             this.SetupOthersView.Size = new System.Drawing.Size(836, 422);
             this.SetupOthersView.TabIndex = 0;
-            this.SetupOthersView.Tag = ((object)(resources.GetObject("SetupOthersView.Tag")));
             // 
             // TabEtcPage
             // 
@@ -655,7 +636,6 @@
             this.EtcView.Name = "EtcView";
             this.EtcView.Size = new System.Drawing.Size(850, 457);
             this.EtcView.TabIndex = 0;
-            this.EtcView.Tag = ((object)(resources.GetObject("EtcView.Tag")));
             // 
             // TabCashPage
             // 
@@ -676,7 +656,6 @@
             this.CashView.Name = "CashView";
             this.CashView.Size = new System.Drawing.Size(850, 457);
             this.CashView.TabIndex = 0;
-            this.CashView.Tag = ((object)(resources.GetObject("CashView.Tag")));
             // 
             // TabMapsPage
             // 
@@ -697,7 +676,6 @@
             this.MapsView.Name = "MapsView";
             this.MapsView.Size = new System.Drawing.Size(850, 457);
             this.MapsView.TabIndex = 0;
-            this.MapsView.Tag = ((object)(resources.GetObject("MapsView.Tag")));
             // 
             // TabMobsPage
             // 
@@ -718,7 +696,6 @@
             this.MobsView.Name = "MobsView";
             this.MobsView.Size = new System.Drawing.Size(850, 457);
             this.MobsView.TabIndex = 0;
-            this.MobsView.Tag = ((object)(resources.GetObject("MobsView.Tag")));
             // 
             // TabSkillsPage
             // 
@@ -739,7 +716,6 @@
             this.SkillsView.Name = "SkillsView";
             this.SkillsView.Size = new System.Drawing.Size(850, 457);
             this.SkillsView.TabIndex = 0;
-            this.SkillsView.Tag = ((object)(resources.GetObject("SkillsView.Tag")));
             // 
             // TabNPCsPage
             // 
@@ -760,7 +736,6 @@
             this.NPCView.Name = "NPCView";
             this.NPCView.Size = new System.Drawing.Size(850, 457);
             this.NPCView.TabIndex = 0;
-            this.NPCView.Tag = ((object)(resources.GetObject("NPCView.Tag")));
             // 
             // TabPetsPage
             // 
@@ -781,7 +756,6 @@
             this.PetsView.Name = "PetsView";
             this.PetsView.Size = new System.Drawing.Size(850, 457);
             this.PetsView.TabIndex = 0;
-            this.PetsView.Tag = ((object)(resources.GetObject("PetsView.Tag")));
             // 
             // TabReactors
             // 
@@ -802,7 +776,6 @@
             this.ReactorView.Name = "ReactorView";
             this.ReactorView.Size = new System.Drawing.Size(850, 457);
             this.ReactorView.TabIndex = 0;
-            this.ReactorView.Tag = ((object)(resources.GetObject("ReactorView.Tag")));
             // 
             // ComboLoadType
             // 
@@ -901,7 +874,7 @@
             this.Controls.Add(this.TabControlMain);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainForm";
-            this.Text = "WzVisualizer 1.5.5";
+            this.Text = "WzVisualizer 1.5.7";
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.TabControlMain.ResumeLayout(false);
             this.TabEquipsPage.ResumeLayout(false);

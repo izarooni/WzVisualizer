@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -51,6 +52,7 @@ namespace WzVisualizer.GUI {
             foreach (var c in page.Controls) {
                 switch (c) {
                     case DataViewport view: {
+                        view.Tag = new List<BinData>();
                         view.GridView.CellDoubleClick += Grid_CellDoubleClick;
                         view.GridView.CellStateChanged += Grid_RowStateChanged;
                         break;
@@ -129,19 +131,19 @@ namespace WzVisualizer.GUI {
                     try {
                         TabControlMain.SelectedIndex = i;
                         LoadWzData(i, encryption, directory);
-                        BtnSave_Click(null, new MouseEventArgs(MouseButtons.Left, 0, 0, 0, 0));
                     } catch (Exception e) {
                         MessageBox.Show($"Could not load tab {i}: {e.Message}");
                     }
                 }
 
+                BtnSave_Click(null, new MouseEventArgs(MouseButtons.Left, 0, 0, 0, 0));
                 return;
             }
 
             switch (selectedRoot) {
                 case 0: // Equips
                 {
-                    var selectedTab = EquipTab.SelectedIndex;
+                    // var selectedTab = EquipTab.SelectedIndex;
                     var file = Wz.Character.LoadFile($@"{directory}\Character", encryption, false);
                     List<WzImage> children = file.WzDirectory.GetChildImages();
                     children.Sort((a, b) => a.Name.CompareTo(b.Name));
@@ -150,33 +152,34 @@ namespace WzVisualizer.GUI {
                         if (int.TryParse(sId, out int itemId)) {
                             var name = StringWz.GetEqp(itemId);
                             var properties = GetAllProperties(img);
-                            var icon = img.GetFromPath("info/icon")?.GetBitmap();
+                            var icon = img.GetFromPath("info/icon");
+                            Bitmap image = null;
 
                             DataViewport dv;
                             int bodyPart = itemId / 10000;
                             switch (bodyPart) {
                                 default: continue;
-                                case int n when (loadAll || selectedTab == 0) && (n == 3 || n == 4): {
-                                    icon = (img.GetFromPath("default/hairOverHead") ?? img.GetFromPath("default/hair"))?.GetBitmap();
+                                case int n when (n == 3 || n == 4): {
+                                    image = (img.GetFromPath("default/hairOverHead") ?? img.GetFromPath("default/hair"))?.GetBitmap();
                                     var hairBelowBody = (img.GetFromPath("default/hairBelowBody") as WzCanvasProperty)?.GetBitmap();
-                                    if (icon != null && hairBelowBody != null) {
-                                        var merge = new Bitmap(Math.Max(icon.Width, hairBelowBody.Width), Math.Max(icon.Height, hairBelowBody.Height));
+                                    if (image != null && hairBelowBody != null) {
+                                        var merge = new Bitmap(Math.Max(image.Width, hairBelowBody.Width), Math.Max(image.Height, hairBelowBody.Height));
                                         using (var g = Graphics.FromImage(merge)) {
                                             g.DrawImage(hairBelowBody, Point.Empty);
-                                            g.DrawImage(icon, Point.Empty);
+                                            g.DrawImage(image, Point.Empty);
                                         }
 
-                                        icon = merge;
+                                        image = merge;
                                     }
 
                                     dv = EquipHairsView;
                                     break;
                                 }
-                                case int n when (loadAll || selectedTab == 1) && (n == 2 || n == 5):
-                                    icon = img.GetFromPath("blink/0/face")?.GetBitmap();
+                                case int n when (n == 2 || n == 5):
+                                    image = img.GetFromPath("blink/0/face")?.GetBitmap();
                                     dv = EquipFacesView;
                                     break;
-                                case int n when (loadAll || selectedTab == 2) && (n >= 130 && n <= 170):
+                                case int n when (n >= 130 && n <= 170):
                                     dv = EquipWeaponsView;
                                     break;
                                 case int n when ((n >= 101 && n <= 103) || (n >= 112 && n <= 114)):
@@ -214,8 +217,10 @@ namespace WzVisualizer.GUI {
                                     break;
                             }
 
-                            ((List<BinData>)dv.Tag).Add(new BinData(itemId, icon, name, properties));
-                            dv.GridView.Rows.Add(itemId, icon, name, properties);
+                            if (dv == null) continue;
+                            image ??= icon?.GetBitmap();
+                            ((List<BinData>) dv.Tag)?.Add(new BinData(itemId, image, name, properties));
+                            dv.GridView.Rows.Add(itemId, image, name, properties);
                         }
                     }
 
@@ -450,6 +455,9 @@ namespace WzVisualizer.GUI {
             } else
                 return;
 
+            if (grid.Parent is DataViewport dv) {
+                ((List<BinData>)dv.Tag)?.Add(new BinData(id, png?.GetBitmap(), name, properties));
+            }
             grid.Rows.Add(id, png?.GetBitmap(), name, properties);
         }
 
@@ -516,10 +524,9 @@ namespace WzVisualizer.GUI {
 
             switch (((MouseEventArgs)ev).Button) {
                 case MouseButtons.Left: {
-                    if (main.Controls[0] is TabControl tc) {
-                        foreach (TabPage page in tc.TabPages) {
-                            BinaryDataUtil.ExportBinary(page, main.Text);
-                        }
+                    if (loadAll || ModifierKeys == Keys.Shift) {
+                        ForEachPage(TabControlMain,
+                            (page, text) => BinaryDataUtil.ExportBinary(page, text));
                     } else {
                         BinaryDataUtil.ExportBinary(main, main.Text);
                     }
@@ -557,6 +564,9 @@ namespace WzVisualizer.GUI {
                         break;
                     case string str when str.Length > 0:
                         Clipboard.SetText(str);
+                        break;
+                    case Bitmap image:
+                        Clipboard.SetImage(image);
                         break;
                     default:
                         Clipboard.Clear();
