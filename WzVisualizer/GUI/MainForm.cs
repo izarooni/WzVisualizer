@@ -538,13 +538,7 @@ namespace WzVisualizer.GUI {
                     if (ModifierKeys == Keys.Shift) {
                         ForEachPage(TabControlMain, (page, text) => BinaryDataUtil.ExportPictures(page, text));
                     } else {
-                        if (main.Controls[0] is TabControl tc) {
-                            foreach (TabPage page in tc.TabPages) {
-                                BinaryDataUtil.ExportPictures(page, main.Text);
-                            }
-                        } else {
-                            BinaryDataUtil.ExportPictures(main, main.Text);
-                        }
+                        BinaryDataUtil.ExportPictures(main, main.Text);
                     }
 
                     if (!loadAll) MessageBox.Show(Resources.CompleteSaveImages);
@@ -640,8 +634,16 @@ namespace WzVisualizer.GUI {
             ClearAllPages(TabControlMain);
 
             var main = TabControlMain.SelectedTab;
-            var sub = (main.Controls[0] is TabControl tc ? tc.SelectedTab : main);
-            BinaryDataUtil.ImportGrid($"{main.Text}/{sub.Text}.bin", (DataViewport)sub.Controls[0], AddGridRow);
+            if (main.Controls[0] is TabControl tc) {
+                foreach (TabPage page in tc.TabPages) {
+                    BinaryDataUtil.ImportGrid($"{main.Text}/{page.Text}.bin", (DataViewport)page.Controls[0], 
+                        tc.SelectedTab == page ? AddGridRow : null);
+                }
+
+                return;
+            } 
+
+            BinaryDataUtil.ImportGrid($"{main.Text}/{main.Text}.bin", (DataViewport)main.Controls[0], AddGridRow);
         }
 
         private void ForEachPage(TabControl control, Action<TabPage, string> testfor) {
@@ -650,7 +652,7 @@ namespace WzVisualizer.GUI {
                 if (control == TabControlMain) {
                     TabControlMain.SelectedIndex = i;
                 }
-                
+
                 if (child.Controls[0] is DataViewport) {
                     testfor.Invoke(child as TabPage, TabControlMain.SelectedTab.Text);
                 } else if (child.Controls[0] is TabControl) {

@@ -60,30 +60,30 @@ namespace WzVisualizer.IO {
                 dv.Tag = bins = ParseBinaryFile(path);
             }
 
+            if (callbackTask == null) return;
             grid.SuspendLayout();
             bins.ForEach(e => callbackTask(grid, e));
             grid.ResumeLayout();
         }
 
         public static void ExportPictures(TabPage page, string folder) {
+            if (page.Controls[0] is TabControl tc) {
+                foreach (TabPage pages in tc.TabPages) {
+                    ExportPictures(pages, folder);
+                }
+
+                return;
+            }
+
             var directory = $"{ImagesFolder}/{folder}";
             Directory.CreateDirectory(directory);
 
-            var gdv = (DataViewport) page.Controls[0];
-            var rows = gdv.GridView.Rows;
-            foreach (DataGridViewRow row in rows) {
-                var cells = row.Cells;
+            var dv = (DataViewport) page.Controls[0];
+            List<BinData> bins = (List<BinData>)dv.Tag;
 
-                Bitmap bitmap = null;
-                string fileName = null;
-
-                foreach (DataGridViewCell cell in cells) {
-                    var colName = cell.OwningColumn.Name;
-
-                    if (colName.Contains("Bitmap")) bitmap = (Bitmap) cell.Value;
-                    else if (colName.Contains("ID")) fileName = $"{(int) cell.Value}";
-                }
-
+            foreach (BinData bin in bins) {
+                var bitmap = bin.Image;
+                string fileName = $"{bin.ID}";
                 if (bitmap == null || string.IsNullOrEmpty(fileName)) continue;
                 bitmap.Save($"{directory}/{fileName}.png", ImageFormat.Png);
             }
