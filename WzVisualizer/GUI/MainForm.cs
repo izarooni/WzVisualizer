@@ -291,13 +291,8 @@ namespace WzVisualizer.GUI {
                     foreach (var img in children) {
                         string sMapId = Path.GetFileNameWithoutExtension(img.Name);
                         if (!int.TryParse(sMapId, out int mapId)) continue;
-
                         img.ParseImage();
-                        string properties = GetAllProperties(img);
-                        WzCanvasProperty icon = (WzCanvasProperty)img.GetFromPath("miniMap/canvas");
-                        string name = StringWz.GetFieldFullName(mapId);
-
-                        MapsView.GridView.Rows.Add(mapId, icon?.GetBitmap(), name, properties);
+                        AddGridRow(MapsView.GridView, img);
                     }
 
                     Wz.Map.Dispose();
@@ -417,9 +412,9 @@ namespace WzVisualizer.GUI {
             if (wzObject is WzImage img) {
                 id = int.Parse(Path.GetFileNameWithoutExtension(img.Name));
                 WzImageProperty link = img.GetFromPath("info/link");
-                if (link != null) {
-                    string linkName = ((WzStringProperty)link).Value;
-                    img = ((WzDirectory)img.Parent).GetChildImages().Find(p => p.Name.Equals(linkName + ".img"));
+                if (link is WzStringProperty) {
+                    string linkName = ((WzStringProperty) link).Value;
+                    img = ((WzDirectory) img.Parent).GetChildImages().Find(p => p.Name.Equals(linkName + ".img"));
                     if (img == null) return;
                 }
 
@@ -437,6 +432,9 @@ namespace WzVisualizer.GUI {
                 } else if (img.WzFileParent.Name.StartsWith("Reactor")) {
                     name = img.GetFromPath("action")?.GetString();
                     png = img.GetFromPath("0/0");
+                } else if (img.WzFileParent.Name.StartsWith("Map")) {
+                    name = StringWz.GetFieldFullName(id);
+                    png = img.GetFromPath("miniMap/canvas");
                 } else {
                     // for breadcrumb like: '{ID}.img/info/icon'
                     if (ItemConstants.IsEquip(id)) name = StringWz.GetEqp(id);
