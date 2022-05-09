@@ -639,16 +639,19 @@ namespace WzVisualizer.GUI {
             ClearAllPages(TabControlMain);
 
             var main = TabControlMain.SelectedTab;
-            if (main.Controls[0] is TabControl tc) {
-                foreach (TabPage page in tc.TabPages) {
-                    BinaryDataUtil.ImportGrid($"{main.Text}/{page.Text}.bin", (DataViewport)page.Controls[0], 
-                        tc.SelectedTab == page ? AddGridRow : null);
-                }
+            var dv = GetCurrentDataViewport();
+            BinaryDataUtil.ImportGrid($"{main.Text}/{dv.Parent.Text}.bin", dv, AddGridRow);
 
-                return;
-            } 
+            // if (main.Controls[0] is TabControl tc) {
+            //     foreach (TabPage page in tc.TabPages) {
+            //         BinaryDataUtil.ImportGrid($"{main.Text}/{page.Name}.bin", (DataViewport)page.Controls[0], 
+            //             tc.SelectedTab == page ? AddGridRow : null);
+            //     }
+            //
+            //     return;
+            // } 
 
-            BinaryDataUtil.ImportGrid($"{main.Text}/{main.Text}.bin", (DataViewport)main.Controls[0], AddGridRow);
+            // BinaryDataUtil.ImportGrid($"{main.Text}/{main.Text}.bin", (DataViewport)main.Controls[0], AddGridRow);
         }
 
         private void ForEachPage(TabControl control, Action<TabPage, string> testfor) {
@@ -673,16 +676,18 @@ namespace WzVisualizer.GUI {
             foreach (TabPage page in tabControl.TabPages) {
                 switch (page.Controls[0]) {
                     case DataViewport dv: {
-                        if (dv.Tag is List<BinData> data) data.Clear();
+                        if (dv.Tag is List<BinData> data) {
+                            data.Clear();
+                        }
+
                         dv.GridView.Rows.Clear();
                         GC.Collect();
                         break;
                     }
                     case TabControl tc:
-                        if (tc == TabControlMain && tc.SelectedTab != TabControlMain.SelectedTab) {
-                            ClearAllPages(tc);
-                        }
-
+                        if (tc == TabControlMain && tc.SelectedTab == TabControlMain.SelectedTab) 
+                            break;
+                        ClearAllPages(tc);
                         break;
                 }
             }

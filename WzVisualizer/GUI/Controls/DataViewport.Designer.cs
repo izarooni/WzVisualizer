@@ -39,7 +39,11 @@ namespace WzVisualizer.GUI.Controls {
             this.GridView.AllowUserToAddRows = false;
             this.GridView.AllowUserToDeleteRows = false;
             this.GridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.GridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { this.propID, this.propBitmap, this.propName, this.propProperties });
+            this.GridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.propID,
+            this.propBitmap,
+            this.propName,
+            this.propProperties});
             this.GridView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.GridView.Location = new System.Drawing.Point(0, 0);
             this.GridView.Name = "GridView";
@@ -66,6 +70,7 @@ namespace WzVisualizer.GUI.Controls {
             // propName
             // 
             this.propName.DataPropertyName = "NameProperty";
+            this.propName.FillWeight = 130F;
             this.propName.HeaderText = "Name";
             this.propName.Name = "propName";
             this.propName.ReadOnly = true;
@@ -86,14 +91,16 @@ namespace WzVisualizer.GUI.Controls {
             this.Size = new System.Drawing.Size(500, 250);
             ((System.ComponentModel.ISupportInitialize)(this.GridView)).EndInit();
             this.ResumeLayout(false);
+
         }
 
         internal System.Windows.Forms.DataGridView GridView;
-        private System.Windows.Forms.DataGridViewImageColumn propBitmap;
-        private System.Windows.Forms.DataGridViewTextBoxColumn propID;
-        private System.Windows.Forms.DataGridViewTextBoxColumn propName;
-        private System.Windows.Forms.DataGridViewTextBoxColumn propProperties;
 
         #endregion
+
+        private System.Windows.Forms.DataGridViewTextBoxColumn propID;
+        private System.Windows.Forms.DataGridViewImageColumn propBitmap;
+        private System.Windows.Forms.DataGridViewTextBoxColumn propName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn propProperties;
     }
 }
