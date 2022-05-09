@@ -323,7 +323,7 @@ namespace WzVisualizer.GUI {
 
                         if (!(tree is WzSubProperty)) continue;
                         List<WzImageProperty> skills = tree.WzProperties;
-                        skills.ForEach(s => AddSkillRow(s));
+                        skills.ForEach(s => AddGridRow(SkillsView.GridView, s));
                     }
 
                     Wz.Skill.Dispose();
@@ -442,16 +442,23 @@ namespace WzVisualizer.GUI {
                     png = img.GetFromPath("info/icon");
                 }
             } else if (wzObject is WzSubProperty subProperty) {
-                // for path like: 'category.img/{ID}/info/icon' (Etc.wz)
                 id = int.Parse(subProperty.Name);
-                if (ItemConstants.IsEtc(id)) name = StringWz.GetEtc(id);
-                else if (ItemConstants.IsCash(id)) name = StringWz.GetCash(id);
-                else if (ItemConstants.IsChair(id)) name = StringWz.GetChair(id);
-                else if (ItemConstants.IsConsume(id)) name = StringWz.GetConsume(id);
 
-                png = subProperty.GetFromPath("info/icon");
-            } else
-                return;
+                if (subProperty.WzFileParent.Name.StartsWith("Skill")) {
+                    name = StringWz.GetSkill(subProperty.Name);
+                    properties = GetAllProperties(subProperty);
+                    png = subProperty.GetFromPath("icon");
+                } else {
+                    // for path like: 'category.img/{ID}/info/icon' (Etc.wz)
+                    id = int.Parse(subProperty.Name);
+                    if (ItemConstants.IsEtc(id)) name = StringWz.GetEtc(id);
+                    else if (ItemConstants.IsCash(id)) name = StringWz.GetCash(id);
+                    else if (ItemConstants.IsChair(id)) name = StringWz.GetChair(id);
+                    else if (ItemConstants.IsConsume(id)) name = StringWz.GetConsume(id);
+
+                    png = subProperty.GetFromPath("info/icon");
+                }
+            } else return;
 
             if (grid.Parent is DataViewport dv) {
                 ((List<BinData>)dv.Tag)?.Add(new BinData(id, png?.GetBitmap(), name, properties));
@@ -662,17 +669,20 @@ namespace WzVisualizer.GUI {
         /// <summary>
         /// Clear all DataViewport grids to allow re-populating data, especially when search queries are present
         /// </summary>
-        private static void ClearAllPages(TabControl tabControl) {
+        private void ClearAllPages(TabControl tabControl) {
             foreach (TabPage page in tabControl.TabPages) {
                 switch (page.Controls[0]) {
-                    case DataViewport dv:
-                        if (dv.GridView.RowCount > 0) {
-                            dv.GridView.Rows.Clear();
+                    case DataViewport dv: {
+                        if (dv.Tag is List<BinData> data) data.Clear();
+                        dv.GridView.Rows.Clear();
+                        GC.Collect();
+                        break;
+                    }
+                    case TabControl tc:
+                        if (tc == TabControlMain && tc.SelectedTab != TabControlMain.SelectedTab) {
+                            ClearAllPages(tc);
                         }
 
-                        break;
-                    case TabControl tc:
-                        ClearAllPages(tc);
                         break;
                 }
             }
