@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Windows.Forms;
+
 using WzVisualizer.GUI;
 using WzVisualizer.GUI.Controls;
 
@@ -51,18 +52,18 @@ namespace WzVisualizer.IO {
 
         internal static void ImportGrid(string file, DataViewport dv, AddGridRowCallBack callbackTask) {
             var grid = dv.GridView;
-            List<BinData> bins = (List<BinData>) dv.Tag;
+            var data = dv.Data;
 
-            if (bins == null || bins.Count == 0) {
+            if (data == null || data.Count == 0) {
                 // load binary files
                 var path = $"{ExportFolder}/{file}";
                 if (!File.Exists(path)) return;
-                dv.Tag = bins = ParseBinaryFile(path);
+                dv.Data.AddRange(ParseBinaryFile(path));
             }
 
             if (callbackTask == null) return;
             grid.SuspendLayout();
-            bins.ForEach(e => callbackTask(grid, e));
+            dv.Data.ForEach(e => callbackTask(grid, e));
             grid.ResumeLayout();
         }
 
@@ -78,10 +79,8 @@ namespace WzVisualizer.IO {
             var directory = $"{ImagesFolder}/{folder}";
             Directory.CreateDirectory(directory);
 
-            var dv = (DataViewport) page.Controls[0];
-            List<BinData> bins = (List<BinData>)dv.Tag;
-
-            foreach (BinData bin in bins) {
+            var dv = (DataViewport)page.Controls[0];
+            foreach (BinData bin in dv.Data) {
                 var bitmap = bin.Image;
                 string fileName = $"{bin.ID}";
                 if (bitmap == null || string.IsNullOrEmpty(fileName)) continue;
@@ -93,8 +92,8 @@ namespace WzVisualizer.IO {
             if (page.Controls[0] is TabControl tc) {
                 page = tc.SelectedTab;
             }
-            var dv = (DataViewport) page.Controls[0];
-            List<BinData> data = (List<BinData>) dv.Tag;
+            var dv = (DataViewport)page.Controls[0];
+            var data = dv.Data;
 
             string directory = $"{ExportFolder}/{folder}";
             string filePath = $"{directory}/{page.Text}.bin";
@@ -103,7 +102,7 @@ namespace WzVisualizer.IO {
             using BinaryWriter bw = new BinaryWriter(new FileStream(filePath, FileMode.Create));
             bw.Write(data.Count);
             foreach (BinData bin in data) {
-            bw.Write(bin.ID);
+                bw.Write(bin.ID);
                 bw.Write(bin.Name);
                 bw.Write(bin.Properties.Count);
                 foreach (string prop in bin.Properties) {

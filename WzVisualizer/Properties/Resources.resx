@@ -137,7 +137,7 @@
     <value>BIN save complete</value>
   </data>
   <data name="CompleteSaveImages" xml:space="preserve">
-    <value>Images save complete</value>
+    <value>Images successfully saved</value>
   </data>
   <data name="FileExtensionWZ" xml:space="preserve">
     <value>.wz</value>

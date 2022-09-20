@@ -5,9 +5,11 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+
 using MapleLib.WzLib;
 using MapleLib.WzLib.Util;
 using MapleLib.WzLib.WzProperties;
+
 using WzVisualizer.GUI.Controls;
 using WzVisualizer.IO;
 using WzVisualizer.Properties;
@@ -52,19 +54,18 @@ namespace WzVisualizer.GUI {
             foreach (var c in page.Controls) {
                 switch (c) {
                     case DataViewport view: {
-                        view.Tag = new List<BinData>();
-                        view.GridView.CellDoubleClick += Grid_CellDoubleClick;
-                        view.GridView.CellStateChanged += Grid_RowStateChanged;
-                        break;
-                    }
-                    case TabControl ctrl: {
-                        ctrl.Selected += TabControl_Selected;
-                        foreach (TabPage childPage in ctrl.TabPages) {
-                            AddEventHandlers(childPage);
+                            view.GridView.CellDoubleClick += Grid_CellDoubleClick;
+                            view.GridView.CellStateChanged += Grid_RowStateChanged;
+                            break;
                         }
+                    case TabControl ctrl: {
+                            ctrl.Selected += TabControl_Selected;
+                            foreach (TabPage childPage in ctrl.TabPages) {
+                                AddEventHandlers(childPage);
+                            }
 
-                        break;
-                    }
+                            break;
+                        }
                 }
             }
         }
@@ -143,219 +144,219 @@ namespace WzVisualizer.GUI {
             switch (selectedRoot) {
                 case 0: // Equips
                 {
-                    // var selectedTab = EquipTab.SelectedIndex;
-                    var file = Wz.Character.LoadFile($@"{directory}\Character", encryption, false);
-                    List<WzImage> children = file.WzDirectory.GetChildImages();
-                    children.Sort((a, b) => a.Name.CompareTo(b.Name));
-                    foreach (var img in children) {
-                        string sId = Path.GetFileNameWithoutExtension(img.Name);
-                        if (int.TryParse(sId, out int itemId)) {
-                            var name = StringWz.GetEqp(itemId);
-                            var properties = GetAllProperties(img);
-                            var icon = img.GetFromPath("info/icon");
-                            Bitmap image = null;
+                        // var selectedTab = EquipTab.SelectedIndex;
+                        var file = Wz.Character.LoadFile($@"{directory}\Character", encryption, false);
+                        List<WzImage> children = file.WzDirectory.GetChildImages();
+                        children.Sort((a, b) => a.Name.CompareTo(b.Name));
+                        foreach (var img in children) {
+                            string sId = Path.GetFileNameWithoutExtension(img.Name);
+                            if (int.TryParse(sId, out int itemId)) {
+                                var name = StringWz.GetEqp(itemId);
+                                var properties = GetAllProperties(img);
+                                var icon = img.GetFromPath("info/icon");
+                                Bitmap image = null;
 
-                            DataViewport dv;
-                            int bodyPart = itemId / 10000;
-                            switch (bodyPart) {
-                                default: continue;
-                                case int n when (n == 3 || n == 4): {
-                                    image = (img.GetFromPath("default/hairOverHead") ?? img.GetFromPath("default/hair"))?.GetBitmap();
-                                    var hairBelowBody = (img.GetFromPath("default/hairBelowBody") as WzCanvasProperty)?.GetBitmap();
-                                    if (image != null && hairBelowBody != null) {
-                                        var merge = new Bitmap(Math.Max(image.Width, hairBelowBody.Width), Math.Max(image.Height, hairBelowBody.Height));
-                                        using (var g = Graphics.FromImage(merge)) {
-                                            g.DrawImage(hairBelowBody, Point.Empty);
-                                            g.DrawImage(image, Point.Empty);
+                                DataViewport dv;
+                                int bodyPart = itemId / 10000;
+                                switch (bodyPart) {
+                                    default: continue;
+                                    case int n when (n == 3 || n == 4): {
+                                            image = (img.GetFromPath("default/hairOverHead") ?? img.GetFromPath("default/hair"))?.GetBitmap();
+                                            var hairBelowBody = (img.GetFromPath("default/hairBelowBody") as WzCanvasProperty)?.GetBitmap();
+                                            if (image != null && hairBelowBody != null) {
+                                                var merge = new Bitmap(Math.Max(image.Width, hairBelowBody.Width), Math.Max(image.Height, hairBelowBody.Height));
+                                                using (var g = Graphics.FromImage(merge)) {
+                                                    g.DrawImage(hairBelowBody, Point.Empty);
+                                                    g.DrawImage(image, Point.Empty);
+                                                }
+
+                                                image = merge;
+                                            }
+
+                                            dv = EquipHairsView;
+                                            break;
                                         }
-
-                                        image = merge;
-                                    }
-
-                                    dv = EquipHairsView;
-                                    break;
+                                    case int n when (n == 2 || n == 5):
+                                        image = img.GetFromPath("blink/0/face")?.GetBitmap();
+                                        dv = EquipFacesView;
+                                        break;
+                                    case int n when (n >= 130 && n <= 170):
+                                        dv = EquipWeaponsView;
+                                        break;
+                                    case int n when ((n >= 101 && n <= 103) || (n >= 112 && n <= 114)):
+                                        dv = EquipAccessoryView;
+                                        break;
+                                    case 100:
+                                        dv = EquipCapsView;
+                                        break;
+                                    case 105:
+                                        dv = EquipsOverallsView;
+                                        break;
+                                    case 104:
+                                        dv = EquipTopsView;
+                                        break;
+                                    case 106:
+                                        dv = EquipPantsView;
+                                        break;
+                                    case 107:
+                                        dv = EquipShoesView;
+                                        break;
+                                    case 110:
+                                        dv = EquipCapesView;
+                                        break;
+                                    case 108:
+                                        dv = EquipGlovesView;
+                                        break;
+                                    case 111:
+                                        dv = EquipRingsView;
+                                        break;
+                                    case 109:
+                                        dv = EquipShieldsView;
+                                        break;
+                                    case int n when (n is 190 or 191 || n == 193):
+                                        dv = EquipMountsView;
+                                        break;
                                 }
-                                case int n when (n == 2 || n == 5):
-                                    image = img.GetFromPath("blink/0/face")?.GetBitmap();
-                                    dv = EquipFacesView;
-                                    break;
-                                case int n when (n >= 130 && n <= 170):
-                                    dv = EquipWeaponsView;
-                                    break;
-                                case int n when ((n >= 101 && n <= 103) || (n >= 112 && n <= 114)):
-                                    dv = EquipAccessoryView;
-                                    break;
-                                case 100:
-                                    dv = EquipCapsView;
-                                    break;
-                                case 105:
-                                    dv = EquipsOverallsView;
-                                    break;
-                                case 104:
-                                    dv = EquipTopsView;
-                                    break;
-                                case 106:
-                                    dv = EquipPantsView;
-                                    break;
-                                case 107:
-                                    dv = EquipShoesView;
-                                    break;
-                                case 110:
-                                    dv = EquipCapesView;
-                                    break;
-                                case 108:
-                                    dv = EquipGlovesView;
-                                    break;
-                                case 111:
-                                    dv = EquipRingsView;
-                                    break;
-                                case 109:
-                                    dv = EquipShieldsView;
-                                    break;
-                                case int n when (n is 190 or 191 || n == 193):
-                                    dv = EquipMountsView;
-                                    break;
+
+                                if (dv == null) continue;
+                                image ??= icon?.GetBitmap();
+                                dv.Data.Add(new BinData(itemId, image, name, properties));
+                                dv.GridView.Rows.Add(itemId, image, name, properties);
                             }
-
-                            if (dv == null) continue;
-                            image ??= icon?.GetBitmap();
-                            ((List<BinData>) dv.Tag)?.Add(new BinData(itemId, image, name, properties));
-                            dv.GridView.Rows.Add(itemId, image, name, properties);
                         }
+
+                        Wz.Character.Dispose();
+
+                        break;
                     }
-
-                    Wz.Character.Dispose();
-
-                    break;
-                }
                 case 1: // Use
                 case 2: // Setup
                 case 3: // Etc
                 case 4: // Cash
                 case 9: // Pets
                 {
-                    var file = Wz.Item.LoadFile($@"{directory}\Item", encryption, false);
-                    var children = file.WzDirectory.GetChildImages();
-                    children.Sort((a, b) => String.Compare(a.Name, b.Name, StringComparison.Ordinal));
+                        var file = Wz.Item.LoadFile($@"{directory}\Item", encryption, false);
+                        var children = file.WzDirectory.GetChildImages();
+                        children.Sort((a, b) => String.Compare(a.Name, b.Name, StringComparison.Ordinal));
 
-                    void AddRow(WzImage wz, DataViewport dv) =>
-                        wz.WzProperties.ForEach(imgs => AddGridRow(dv.GridView, imgs));
+                        void AddRow(WzImage wz, DataViewport dv) =>
+                            wz.WzProperties.ForEach(imgs => AddGridRow(dv.GridView, imgs));
 
-                    foreach (var img in children) {
-                        string name = Path.GetFileNameWithoutExtension(img.Name);
-                        if (int.TryParse(name, out int itemId)) {
-                            switch (selectedRoot) {
-                                case 1:
-                                    switch (itemId) {
-                                        default:
-                                            if (ItemConstants.IsConsume(itemId)) AddRow(img, UseConsumeView);
-                                            break;
-                                        case 204:
-                                        case 234:
-                                            AddRow(img, UseScrollsView);
-                                            break;
-                                        case 206:
-                                        case 207:
-                                        case 233:
-                                            AddRow(img, UseProjectileView);
-                                            break;
-                                    }
+                        foreach (var img in children) {
+                            string name = Path.GetFileNameWithoutExtension(img.Name);
+                            if (int.TryParse(name, out int itemId)) {
+                                switch (selectedRoot) {
+                                    case 1:
+                                        switch (itemId) {
+                                            default:
+                                                if (ItemConstants.IsConsume(itemId)) AddRow(img, UseConsumeView);
+                                                break;
+                                            case 204:
+                                            case 234:
+                                                AddRow(img, UseScrollsView);
+                                                break;
+                                            case 206:
+                                            case 207:
+                                            case 233:
+                                                AddRow(img, UseProjectileView);
+                                                break;
+                                        }
 
-                                    break;
-                                case 2 when itemId == 301 || itemId == 399:
-                                    AddRow(img, (itemId == 301 ? SetupChairsView : SetupOthersView));
-                                    break;
-                                case 3 when ItemConstants.IsEtc(itemId):
-                                    AddRow(img, EtcView);
-                                    break;
-                                case 4 when ItemConstants.IsCash(itemId):
-                                    AddRow(img, CashView);
-                                    break;
-                                case 9 when ItemConstants.IsPet(itemId):
-                                    AddGridRow(PetsView.GridView, img);
-                                    break;
+                                        break;
+                                    case 2 when itemId == 301 || itemId == 399:
+                                        AddRow(img, (itemId == 301 ? SetupChairsView : SetupOthersView));
+                                        break;
+                                    case 3 when ItemConstants.IsEtc(itemId):
+                                        AddRow(img, EtcView);
+                                        break;
+                                    case 4 when ItemConstants.IsCash(itemId):
+                                        AddRow(img, CashView);
+                                        break;
+                                    case 9 when ItemConstants.IsPet(itemId):
+                                        AddGridRow(PetsView.GridView, img);
+                                        break;
+                                }
                             }
                         }
+
+                        Wz.Item.Dispose();
+
+                        break;
                     }
-
-                    Wz.Item.Dispose();
-
-                    break;
-                }
                 case 5: {
-                    // Map
-                    var file = Wz.Map.LoadFile($@"{directory}\Map", encryption, false);
+                        // Map
+                        var file = Wz.Map.LoadFile($@"{directory}\Map", encryption, false);
 
-                    var children = file.WzDirectory.GetChildImages();
-                    children.Sort((a, b) => String.Compare(a.Name, b.Name, StringComparison.Ordinal));
-                    foreach (var img in children) {
-                        string sMapId = Path.GetFileNameWithoutExtension(img.Name);
-                        if (!int.TryParse(sMapId, out int mapId)) continue;
-                        img.ParseImage();
-                        AddGridRow(MapsView.GridView, img);
+                        var children = file.WzDirectory.GetChildImages();
+                        children.Sort((a, b) => String.Compare(a.Name, b.Name, StringComparison.Ordinal));
+                        foreach (var img in children) {
+                            string sMapId = Path.GetFileNameWithoutExtension(img.Name);
+                            if (!int.TryParse(sMapId, out int mapId)) continue;
+                            img.ParseImage();
+                            AddGridRow(MapsView.GridView, img);
+                        }
+
+                        Wz.Map.Dispose();
+
+                        break;
                     }
-
-                    Wz.Map.Dispose();
-
-                    break;
-                }
                 case 6: {
-                    // Mob
-                    var file = Wz.Mob.LoadFile($@"{directory}\Mob", encryption, false);
-                    var children = file.WzDirectory.GetChildImages();
-                    children.Sort((a, b) => String.Compare(a.Name, b.Name, StringComparison.Ordinal));
-                    foreach (var img in children) {
-                        AddGridRow(MobsView.GridView, img);
+                        // Mob
+                        var file = Wz.Mob.LoadFile($@"{directory}\Mob", encryption, false);
+                        var children = file.WzDirectory.GetChildImages();
+                        children.Sort((a, b) => String.Compare(a.Name, b.Name, StringComparison.Ordinal));
+                        foreach (var img in children) {
+                            AddGridRow(MobsView.GridView, img);
+                        }
+
+                        Wz.Mob.Dispose();
+
+                        break;
                     }
-
-                    Wz.Mob.Dispose();
-
-                    break;
-                }
                 case 7: {
-                    // Skills
-                    var file = Wz.Skill.LoadFile($@"{directory}\Skill", encryption, false);
-                    var children = file.WzDirectory.GetChildImages();
-                    foreach (var img in children) {
-                        string name = Path.GetFileNameWithoutExtension(img.Name);
-                        if (!int.TryParse(name, out _)) continue;
-                        WzImageProperty tree = img.GetFromPath("skill");
+                        // Skills
+                        var file = Wz.Skill.LoadFile($@"{directory}\Skill", encryption, false);
+                        var children = file.WzDirectory.GetChildImages();
+                        foreach (var img in children) {
+                            string name = Path.GetFileNameWithoutExtension(img.Name);
+                            if (!int.TryParse(name, out _)) continue;
+                            WzImageProperty tree = img.GetFromPath("skill");
 
-                        if (!(tree is WzSubProperty)) continue;
-                        List<WzImageProperty> skills = tree.WzProperties;
-                        skills.ForEach(s => AddGridRow(SkillsView.GridView, s));
+                            if (!(tree is WzSubProperty)) continue;
+                            List<WzImageProperty> skills = tree.WzProperties;
+                            skills.ForEach(s => AddGridRow(SkillsView.GridView, s));
+                        }
+
+                        Wz.Skill.Dispose();
+
+                        break;
                     }
-
-                    Wz.Skill.Dispose();
-
-                    break;
-                }
                 case 8: {
-                    // NPCs
-                    var file = Wz.Npc.LoadFile($@"{directory}\Npc", encryption, false);
-                    var children = file.WzDirectory.GetChildImages();
-                    children.Sort((a, b) => String.Compare(a.Name, b.Name, StringComparison.Ordinal));
-                    foreach (var img in children) {
-                        AddGridRow(NPCView.GridView, img);
+                        // NPCs
+                        var file = Wz.Npc.LoadFile($@"{directory}\Npc", encryption, false);
+                        var children = file.WzDirectory.GetChildImages();
+                        children.Sort((a, b) => String.Compare(a.Name, b.Name, StringComparison.Ordinal));
+                        foreach (var img in children) {
+                            AddGridRow(NPCView.GridView, img);
+                        }
+
+                        Wz.Npc.Dispose();
+
+                        break;
                     }
-
-                    Wz.Npc.Dispose();
-
-                    break;
-                }
                 case 10: {
-                    // Reactors
-                    var file = Wz.Reactor.LoadFile($@"{directory}\Reactor", encryption, false);
-                    var children = file.WzDirectory.GetChildImages();
-                    children.Sort((a, b) => String.Compare(a.Name, b.Name, StringComparison.Ordinal));
-                    foreach (var img in children) {
-                        AddGridRow(ReactorView.GridView, img);
+                        // Reactors
+                        var file = Wz.Reactor.LoadFile($@"{directory}\Reactor", encryption, false);
+                        var children = file.WzDirectory.GetChildImages();
+                        children.Sort((a, b) => String.Compare(a.Name, b.Name, StringComparison.Ordinal));
+                        foreach (var img in children) {
+                            AddGridRow(ReactorView.GridView, img);
+                        }
+
+                        Wz.Reactor.Dispose();
+
+                        break;
                     }
-
-                    Wz.Reactor.Dispose();
-
-                    break;
-                }
             }
         }
 
@@ -393,16 +394,6 @@ namespace WzVisualizer.GUI {
             grid.Rows.Add(bin.ID, bin.Image, bin.Name, properties);
         }
 
-        #region row append
-
-        private void AddSkillRow(WzImageProperty s) {
-            var id = int.Parse(s.Name);
-            var name = StringWz.GetSkill(s.Name);
-            var properties = GetAllProperties(s);
-            WzObject icon = s.GetFromPath("icon");
-            SkillsView.GridView.Rows.Add(id, icon?.GetBitmap(), name, properties);
-        }
-
         private void AddGridRow(DataGridView grid, object wzObject) {
             int id;
             string name = null;
@@ -413,8 +404,8 @@ namespace WzVisualizer.GUI {
                 id = int.Parse(Path.GetFileNameWithoutExtension(img.Name));
                 WzImageProperty link = img.GetFromPath("info/link");
                 if (link is WzStringProperty) {
-                    string linkName = ((WzStringProperty) link).Value;
-                    img = ((WzDirectory) img.Parent).GetChildImages().Find(p => p.Name.Equals(linkName + ".img"));
+                    string linkName = ((WzStringProperty)link).Value;
+                    img = ((WzDirectory)img.Parent).GetChildImages().Find(p => p.Name.Equals(linkName + ".img"));
                     if (img == null) return;
                 }
 
@@ -461,18 +452,16 @@ namespace WzVisualizer.GUI {
             } else return;
 
             if (grid.Parent is DataViewport dv) {
-                ((List<BinData>)dv.Tag)?.Add(new BinData(id, png?.GetBitmap(), name, properties));
+                dv.Data.Add(new BinData(id, png?.GetBitmap(), name, properties));
             }
             grid.Rows.Add(id, png?.GetBitmap(), name, properties);
         }
-
-        #endregion
 
         /// <summary>
         /// Begin loading WZ data corresponding to the selected tab
         /// </summary>
         private void BtnWzLoad_Click(object sender, EventArgs e) {
-            ClearAllPages(TabControlMain);
+            ClearAllPages(TabControlMain, true);
             DisposeWzFiles();
 
             var wzFolderPath = TextWzPath.Text;
@@ -529,26 +518,25 @@ namespace WzVisualizer.GUI {
 
             switch (((MouseEventArgs)ev).Button) {
                 case MouseButtons.Left: {
-                    if (loadAll || ModifierKeys == Keys.Shift) {
-                        ForEachPage(TabControlMain,
-                            (page, text) => BinaryDataUtil.ExportBinary(page, text));
-                    } else {
-                        BinaryDataUtil.ExportBinary(main, main.Text);
-                    }
+                        if (loadAll || ModifierKeys == Keys.Shift) {
+                            ForEachPage(TabControlMain, BinaryDataUtil.ExportBinary);
+                        } else {
+                            BinaryDataUtil.ExportBinary(main, main.Text);
+                        }
 
-                    if (!loadAll) MessageBox.Show(Resources.CompleteSaveBIN);
-                    break;
-                }
+                        if (!loadAll) MessageBox.Show(Resources.CompleteSaveBIN);
+                        break;
+                    }
                 case MouseButtons.Right: {
-                    if (ModifierKeys == Keys.Shift) {
-                        ForEachPage(TabControlMain, (page, text) => BinaryDataUtil.ExportPictures(page, text));
-                    } else {
-                        BinaryDataUtil.ExportPictures(main, main.Text);
-                    }
+                        if (ModifierKeys == Keys.Shift) {
+                            ForEachPage(TabControlMain, BinaryDataUtil.ExportPictures);
+                        } else {
+                            BinaryDataUtil.ExportPictures(main, main.Text);
+                        }
 
-                    if (!loadAll) MessageBox.Show(Resources.CompleteSaveImages);
-                    break;
-                }
+                        if (!loadAll) MessageBox.Show(Resources.CompleteSaveImages);
+                        break;
+                    }
             }
         }
 
@@ -617,7 +605,7 @@ namespace WzVisualizer.GUI {
         }
 
         private void SearchTextBox_KeyPress(object sender, KeyPressEventArgs e) {
-            if ((int) e.KeyChar == 13) {
+            if ((int)e.KeyChar == 13) {
                 OnTabControlChanged();
             }
         }
@@ -641,29 +629,16 @@ namespace WzVisualizer.GUI {
             var main = TabControlMain.SelectedTab;
             var dv = GetCurrentDataViewport();
             BinaryDataUtil.ImportGrid($"{main.Text}/{dv.Parent.Text}.bin", dv, AddGridRow);
-
-            // if (main.Controls[0] is TabControl tc) {
-            //     foreach (TabPage page in tc.TabPages) {
-            //         BinaryDataUtil.ImportGrid($"{main.Text}/{page.Name}.bin", (DataViewport)page.Controls[0], 
-            //             tc.SelectedTab == page ? AddGridRow : null);
-            //     }
-            //
-            //     return;
-            // } 
-
-            // BinaryDataUtil.ImportGrid($"{main.Text}/{main.Text}.bin", (DataViewport)main.Controls[0], AddGridRow);
         }
 
         private void ForEachPage(TabControl control, Action<TabPage, string> testfor) {
             for (var i = 0; i < control.Controls.Count; i++) {
                 var child = control.Controls[i];
-                if (control == TabControlMain) {
-                    TabControlMain.SelectedIndex = i;
-                }
+                control.SelectedIndex = i;
 
                 if (child.Controls[0] is DataViewport) {
                     testfor.Invoke(child as TabPage, TabControlMain.SelectedTab.Text);
-                } else if (child.Controls[0] is TabControl) {
+                } else if (child.Controls[0] is TabControl tc) {
                     ForEachPage(child.Controls[0] as TabControl, testfor);
                 }
             }
@@ -672,20 +647,17 @@ namespace WzVisualizer.GUI {
         /// <summary>
         /// Clear all DataViewport grids to allow re-populating data, especially when search queries are present
         /// </summary>
-        private void ClearAllPages(TabControl tabControl) {
+        private void ClearAllPages(TabControl tabControl, bool clearData = false) {
             foreach (TabPage page in tabControl.TabPages) {
                 switch (page.Controls[0]) {
                     case DataViewport dv: {
-                        if (dv.Tag is List<BinData> data) {
-                            data.Clear();
+                            if (clearData) dv.Data.Clear();
+                            dv.GridView.Rows.Clear();
+                            GC.Collect();
+                            break;
                         }
-
-                        dv.GridView.Rows.Clear();
-                        GC.Collect();
-                        break;
-                    }
                     case TabControl tc:
-                        if (tc == TabControlMain && tc.SelectedTab == TabControlMain.SelectedTab) 
+                        if (tc == TabControlMain && tc.SelectedTab == TabControlMain.SelectedTab)
                             break;
                         ClearAllPages(tc);
                         break;
