@@ -14,11 +14,12 @@
  * You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.*/
 
+using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
+using System.Linq;
 using MapleLib.MapleCryptoLib;
+using MapleLib.WzLib.WzStructure.Enums;
 
 namespace MapleLib.WzLib.Util
 {
@@ -37,7 +38,15 @@ namespace MapleLib.WzLib.Util
 
 		#region Constructors
 		public WzBinaryWriter(Stream output, byte[] WzIv)
-			: this(output, WzIv, false) { }
+			: this(output, WzIv, false)
+		{
+			this.Hash = 0;
+		}
+
+		public WzBinaryWriter(Stream output, byte[] WzIv, uint Hash)
+			: this(output, WzIv, false) {
+			this.Hash = Hash;
+		}
 
 		public WzBinaryWriter(Stream output, byte[] WzIv, bool leaveOpen)
 			: base(output)
@@ -49,8 +58,16 @@ namespace MapleLib.WzLib.Util
 		#endregion
 
 		#region Methods
+		/// <summary>
+		/// ?InternalSerializeString@@YAHPAGPAUIWzArchive@@EE@Z
+		/// </summary>
+		/// <param name="s"></param>
+		/// <param name="withoutOffset">bExistID_0x73   0x73</param>
+		/// <param name="withOffset">bNewID_0x1b  0x1B</param>
 		public void WriteStringValue(string s, int withoutOffset, int withOffset)
 		{
+			// if length is > 4 and the string cache contains the string
+			// writes the offset instead
 			if (s.Length > 4 && StringCache.ContainsKey(s))
 			{
 				Write((byte)withOffset);
@@ -68,24 +85,37 @@ namespace MapleLib.WzLib.Util
 			}
 		}
 
-		public void WriteWzObjectValue(string s, byte type)
+		/// <summary>
+		/// Writes the Wz object value
+		/// </summary>
+		/// <param name="stringObjectValue"></param>
+		/// <param name="type"></param>
+		/// <param name="unk_GMS230"></param>
+		/// <returns>true if the Wz object value is written as an offset in the Wz file, else if not</returns>
+		public bool WriteWzObjectValue(string stringObjectValue, WzDirectoryType type)
 		{
-			string storeName = type + "_" + s;
-			if (s.Length > 4 && StringCache.ContainsKey(storeName))
+			string storeName = string.Format("{0}_{1}", (byte) type, stringObjectValue);
+
+			// if length is > 4 and the string cache contains the string
+			// writes the offset instead
+			if (stringObjectValue.Length > 4 && StringCache.ContainsKey(storeName))
 			{
-				Write((byte)2);
+				Write((byte)WzDirectoryType.RetrieveStringFromOffset_2); // 2
 				Write((int)StringCache[storeName]);
+
+				return true;
 			}
 			else
 			{
 				int sOffset = (int)(this.BaseStream.Position - Header.FStart);
-				Write(type);
-				Write(s);
+				Write((byte)type);
+				Write(stringObjectValue);
 				if (!StringCache.ContainsKey(storeName))
 				{
 					StringCache[storeName] = sOffset;
 				}
 			}
+			return false;
 		}
 
 		public override void Write(string value)
@@ -96,16 +126,9 @@ namespace MapleLib.WzLib.Util
 			}
 			else
 			{
-				bool unicode = false;
-				for (int i = 0; i < value.Length; i++)
-				{
-					if (value[i] > sbyte.MaxValue)
-					{
-						unicode = true;
-					}
-				}
+                bool unicode = value.Any(c => c > sbyte.MaxValue);
 
-				if (unicode)
+                if (unicode)
 				{
 					ushort mask = 0xAAAA;
 
@@ -119,14 +142,17 @@ namespace MapleLib.WzLib.Util
 						Write((sbyte)value.Length);
 					}
 
-					for (int i = 0; i < value.Length; i++)
-					{
-						ushort encryptedChar = (ushort)value[i];
-						encryptedChar ^= (ushort)((WzKey[i * 2 + 1] << 8) + WzKey[i * 2]);
-						encryptedChar ^= mask;
-						mask++;
-						Write(encryptedChar);
-					}
+					int i = 0;
+                    foreach (var character in value)
+                    {
+                        ushort encryptedChar = (ushort)character;
+                        encryptedChar ^= (ushort)((WzKey[i * 2 + 1] << 8) + WzKey[i * 2]);
+                        encryptedChar ^= mask;
+                        mask++;
+                        Write(encryptedChar);
+
+						i++;
+                    }
 				}
 				else // ASCII
 				{
@@ -142,14 +168,17 @@ namespace MapleLib.WzLib.Util
 						Write((sbyte)(-value.Length));
 					}
 
-					for (int i = 0; i < value.Length; i++)
-					{
-						byte encryptedChar = (byte)value[i];
-						encryptedChar ^= WzKey[i];
-						encryptedChar ^= mask;
-						mask++;
-						Write(encryptedChar);
-					}
+					int i = 0;
+                    foreach (char c in value)
+                    {
+                        byte encryptedChar = (byte)c;
+                        encryptedChar ^= WzKey[i];
+                        encryptedChar ^= mask;
+                        mask++;
+                        Write(encryptedChar);
+
+						i++;
+                    }
 				}
 			}
 		}
@@ -224,8 +253,8 @@ namespace MapleLib.WzLib.Util
 		{
 			uint encOffset = (uint)BaseStream.Position;
 			encOffset = (encOffset - Header.FStart) ^ 0xFFFFFFFF;
-			encOffset *= Hash;
-			encOffset -= CryptoConstants.WZ_OffsetConstant;
+			encOffset *= Hash; // could this be removed? 
+			encOffset -= MapleCryptoConstants.WZ_OffsetConstant;
 			encOffset = RotateLeft(encOffset, (byte)(encOffset & 0x1F));
 			uint writeOffset = encOffset ^ (value - (Header.FStart * 2));
 			Write(writeOffset);

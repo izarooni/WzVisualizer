@@ -59,7 +59,7 @@ namespace MapleLib.WzLib.WzProperties
 		/// The name of the property
 		/// </summary>
 		public override string Name { get { return name; } set { name = value; } }
-		public override void WriteValue(MapleLib.WzLib.Util.WzBinaryWriter writer)
+		public override void WriteValue(WzBinaryWriter writer)
 		{
 			writer.Write((byte)8);
 			writer.WriteStringValue(Value, 0, 1);
@@ -105,17 +105,55 @@ namespace MapleLib.WzLib.WzProperties
 			this.name = name;
 			this.val = value;
 		}
+
+		/// <summary>
+		/// Spine runtime related resources
+		/// p.s just assuming it should be, if its a WzStingProperty and .atlas, .skel or .json until there is a better way to detect it
+		/// </summary>
+		public bool IsSpineRelatedResources
+		{
+			get { return (name.EndsWith(".atlas") || name.EndsWith(".json") || name.EndsWith(".skel")); }
+		}
+
+		public bool IsSpineAtlasResources
+		{
+			get { return (name.EndsWith(".atlas")); }
+		}
 		#endregion
 
-        #region Cast Values
-        public override string GetString()
+		#region Cast Values
+		public override int GetInt()
+		{
+			int outvalue = 0;
+			int.TryParse(val, out outvalue);
+
+			return outvalue; // stupid nexon . fu, some shit that should be WzIntProperty
+		}
+
+		public override short GetShort()
+		{
+			short outvalue = 0;
+			short.TryParse(val, out outvalue);
+
+			return outvalue; // stupid nexon . fu, some shit that should be WzIntProperty
+		}
+
+		public override long GetLong()
+		{
+			long outvalue = 0;
+			long.TryParse(val, out outvalue);
+
+			return outvalue; // stupid nexon . fu, some shit that should be WzIntProperty
+		}
+
+		public override string GetString()
         {
             return val;
         }
 
         public override string ToString()
         {
-            return string.Format("{0}={1}", name, val);
+            return val;
         }
         #endregion
 	}

@@ -16,10 +16,14 @@
 
 using System;
 using System.Collections;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 
+using MapleLib.Configuration;
 using MapleLib.MapleCryptoLib;
+using MapleLib.PacketLib;
 
 namespace MapleLib.WzLib.Util {
     public class WzTool {
@@ -27,11 +31,11 @@ namespace MapleLib.WzLib.Util {
         public static Hashtable StringCache = new Hashtable();
 
         public static UInt32 RotateLeft(UInt32 x, byte n) {
-            return (UInt32) (((x) << (n)) | ((x) >> (32 - (n))));
+            return (UInt32)(((x) << (n)) | ((x) >> (32 - (n))));
         }
 
         public static UInt32 RotateRight(UInt32 x, byte n) {
-            return (UInt32) (((x) >> (n)) | ((x) << (32 - (n))));
+            return (UInt32)(((x) >> (n)) | ((x) << (32 - (n))));
         }
 
         public static int GetCompressedIntLength(int i) {
@@ -76,9 +80,36 @@ namespace MapleLib.WzLib.Util {
 
         public static T StringToEnum<T>(string name) {
             try {
-                return (T) Enum.Parse(typeof(T), name);
+                return (T)Enum.Parse(typeof(T), name);
             } catch {
                 return default(T);
+            }
+        }
+
+        /// <summary>
+        /// Get WZ encryption IV from maple version 
+        /// </summary>
+        /// <param name="ver"></param>
+        /// <param name="fallbackCustomIv">The custom bytes to use as IV</param>
+        /// <returns></returns>
+        public static byte[] GetIvByMapleVersion(WzMapleVersion ver) {
+            switch (ver) {
+                case WzMapleVersion.EMS:
+                    return MapleCryptoConstants.WZ_MSEAIV;//?
+                case WzMapleVersion.GMS:
+                    return MapleCryptoConstants.WZ_GMSIV;
+                case WzMapleVersion.CUSTOM: // custom WZ encryption bytes from stored app setting
+                    {
+                        ConfigurationManager config = new ConfigurationManager();
+                        return config.GetCusomWzIVEncryption(); // fallback with BMS
+                    }
+                case WzMapleVersion.GENERATE: // dont fill anything with GENERATE, it is not supposed to load anything
+                    return new byte[4];
+
+                case WzMapleVersion.BMS:
+                case WzMapleVersion.CLASSIC:
+                default:
+                    return new byte[4];
             }
         }
 
@@ -90,14 +121,45 @@ namespace MapleLib.WzLib.Util {
             return result;
         }
 
+
+        /// <summary>
+        /// Attempts to bruteforce the WzKey with a given WZ file
+        /// </summary>
+        /// <param name="wzPath"></param>
+        /// <param name="wzIvKey"></param>
+        /// <returns>The probability. Normalized to 100</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool TryBruteforcingWzIVKey(string wzPath, byte[] wzIvKey) {
+            using (WzFile wzf = new WzFile(wzPath, wzIvKey)) {
+                string parseErrorMessage = string.Empty;
+                WzFileParseStatus parseStatus = wzf.ParseMainWzDirectory(true);
+                if (parseStatus != WzFileParseStatus.Success) {
+                    wzf.Dispose();
+                    return false;
+                }
+                if (wzf.WzDirectory.WzImages.Count > 0 && wzf.WzDirectory.WzImages[0].Name.EndsWith(".img")) {
+                    wzf.Dispose();
+                    return true;
+                }
+
+                wzf.Dispose();
+            }
+            return false;
+        }
+
         public static double GetDecryptionSuccessRate(string wzPath, WzMapleVersion encVersion, ref short? version) {
             WzFile wzf;
             if (version == null)
                 wzf = new WzFile(wzPath, encVersion);
             else
-                wzf = new WzFile(wzPath, (short) version, encVersion);
-            wzf.ParseWzFile();
-            if (version == null) version = wzf.FileVersion;
+                wzf = new WzFile(wzPath, (short)version, encVersion);
+
+            WzFileParseStatus parseStatus = wzf.ParseWzFile();
+            if (parseStatus != WzFileParseStatus.Success) {
+                return 0.0d;
+            }
+
+            if (version == null) version = wzf.Version;
             int recognizedChars = 0;
             int totalChars = 0;
             foreach (WzDirectory wzdir in wzf.WzDirectory.WzDirectories) {
@@ -109,49 +171,68 @@ namespace MapleLib.WzLib.Util {
                 totalChars += wzimg.Name.Length;
             }
             wzf.Dispose();
-            return (double) recognizedChars / (double) totalChars;
+            return (double)recognizedChars / (double)totalChars;
         }
+
         public static int DetectMapleVersion(string path, string fileName) {
             using (FileStream stream = new FileStream(path + "\\" + fileName, FileMode.Open, FileAccess.Read)) {
-                var values = Enum.GetValues(typeof(WzMapleVersion)).Cast<WzMapleVersion>();
-                foreach (var v in values) {
-                    using (WzBinaryReader reader = new WzBinaryReader(stream, v.EncryptionKey())) {
+                foreach (var v in Enum.GetValues(typeof(WzMapleVersion)).Cast<WzMapleVersion>()) {
+                    using (WzBinaryReader reader = new WzBinaryReader(stream, GetIvByMapleVersion(v))) {
                         byte b = reader.ReadByte();
                         if (b != 0x73 || reader.ReadString() != "Property" || reader.ReadUInt16() != 0) continue;
-                        return (int) v;
+                        return (int)v;
                     }
                 }
             }
 
             return -1;
         }
+
         public static WzMapleVersion DetectMapleVersion(string wzFilePath, out short fileVersion) {
             Hashtable mapleVersionSuccessRates = new Hashtable();
             short? version = null;
-
-            var encryptions = Enum.GetValues(typeof(WzMapleVersion)).Cast<WzMapleVersion>();
-            foreach (var e in encryptions) {
-                mapleVersionSuccessRates.Add(e, GetDecryptionSuccessRate(wzFilePath, e, ref version));
-            }
-
-            fileVersion = (short) version;
+            mapleVersionSuccessRates.Add(WzMapleVersion.GMS, GetDecryptionSuccessRate(wzFilePath, WzMapleVersion.GMS, ref version));
+            mapleVersionSuccessRates.Add(WzMapleVersion.EMS, GetDecryptionSuccessRate(wzFilePath, WzMapleVersion.EMS, ref version));
+            mapleVersionSuccessRates.Add(WzMapleVersion.BMS, GetDecryptionSuccessRate(wzFilePath, WzMapleVersion.BMS, ref version));
+            fileVersion = (short)version;
             WzMapleVersion mostSuitableVersion = WzMapleVersion.GMS;
             double maxSuccessRate = 0;
+
             foreach (DictionaryEntry mapleVersionEntry in mapleVersionSuccessRates) {
-                if ((double) mapleVersionEntry.Value > maxSuccessRate) {
-                    mostSuitableVersion = (WzMapleVersion) mapleVersionEntry.Key;
-                    maxSuccessRate = (double) mapleVersionEntry.Value;
+                if ((double)mapleVersionEntry.Value > maxSuccessRate) {
+                    mostSuitableVersion = (WzMapleVersion)mapleVersionEntry.Key;
+                    maxSuccessRate = (double)mapleVersionEntry.Value;
                 }
             }
-            return mostSuitableVersion;
+            if (maxSuccessRate < 0.7 && File.Exists(Path.Combine(Path.GetDirectoryName(wzFilePath), "ZLZ.dll")))
+                return WzMapleVersion.GETFROMZLZ;
+            else return mostSuitableVersion;
         }
 
         public const int WzHeader = 0x31474B50; //PKG1
 
         public static bool IsListFile(string path) {
-            BinaryReader reader = new BinaryReader(File.OpenRead(path));
-            bool result = reader.ReadInt32() != WzHeader;
-            reader.Close();
+            bool result;
+            using (BinaryReader reader = new BinaryReader(File.OpenRead(path))) {
+                int header = reader.ReadInt32();
+                result = header != WzHeader;
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// Checks if the input file is Data.wz hotfix file [not to be mistaken for Data.wz for pre v4x!]
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        public static bool IsDataWzHotfixFile(string path) {
+            bool result = false;
+            using (BinaryReader reader = new BinaryReader(File.OpenRead(path))) {
+                byte firstByte = reader.ReadByte();
+
+                result = firstByte == WzImage.WzImageHeaderByte_WithoutOffset; // check the first byte. It should be 0x73 that represends a WzImage
+            }
+
             return result;
         }
 

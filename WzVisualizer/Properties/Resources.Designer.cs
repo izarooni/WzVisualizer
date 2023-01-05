@@ -97,6 +97,15 @@ namespace WzVisualizer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Failed to process data ({0}): {1}.
+        /// </summary>
+        internal static string ErrorProcessing {
+            get {
+                return ResourceManager.GetString("ErrorProcessing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to .wz.
         /// </summary>
         internal static string FileExtensionWZ {
@@ -125,11 +134,30 @@ namespace WzVisualizer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Failed to load String data in the specified directory.
+        ///   Looks up a localized string similar to Failed to find game data. Please make sure your folder selection is correct..
         /// </summary>
-        internal static string MissingStringFile {
+        internal static string GameFilesNotFound {
             get {
-                return ResourceManager.GetString("MissingStringFile", resourceCulture);
+                return ResourceManager.GetString("GameFilesNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You have opted to load every tab. Are you sure you want to do this?.
+        /// </summary>
+        internal static string MassOpWarning {
+            get {
+                return ResourceManager.GetString("MassOpWarning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap MissingIco {
+            get {
+                object obj = ResourceManager.GetObject("MissingIco", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
     }

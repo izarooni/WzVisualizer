@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
+
 using MapleLib.WzLib;
 using MapleLib.WzLib.WzProperties;
+
 using WzVisualizer.Util;
 
 namespace WzVisualizer {
@@ -19,21 +22,28 @@ namespace WzVisualizer {
             _skill = null;
             _npc = null;
             _pet = null;
+
+            _fieldNames.Clear();
         }
 
-        public static void Load(WzFile wz) {
-            _eqp = wz.WzDirectory.GetImageByName("Eqp.img");
-            _etc = wz.WzDirectory.GetImageByName("Etc.img");
-            _cash = wz.WzDirectory.GetImageByName("Cash.img");
-            _ins = wz.WzDirectory.GetImageByName("Ins.img");
-            _consume = wz.WzDirectory.GetImageByName("Consume.img");
-            _map = wz.WzDirectory.GetImageByName("Map.img");
-            _mob = wz.WzDirectory.GetImageByName("Mob.img");
-            _skill = wz.WzDirectory.GetImageByName("Skill.img");
-            _npc = wz.WzDirectory.GetImageByName("Npc.img");
-            _pet = wz.WzDirectory.GetImageByName("Pet.img");
+        public static void Load(List<WzFile> files) {
+            foreach (var file in files) {
+                file.ParseWzFile();
+
+                _eqp ??= file.WzDirectory.GetImageByName("Eqp.img");
+                _etc ??= file.WzDirectory.GetImageByName("Etc.img");
+                _cash ??= file.WzDirectory.GetImageByName("Cash.img");
+                _ins ??= file.WzDirectory.GetImageByName("Ins.img");
+                _consume ??= file.WzDirectory.GetImageByName("Consume.img");
+                _map ??= file.WzDirectory.GetImageByName("Map.img");
+                _mob ??= file.WzDirectory.GetImageByName("Mob.img");
+                _skill ??= file.WzDirectory.GetImageByName("Skill.img");
+                _npc ??= file.WzDirectory.GetImageByName("Npc.img");
+                _pet ??= file.WzDirectory.GetImageByName("Pet.img");
+            }
         }
 
+        private static Dictionary<int, string> _fieldNames = new();
         private static WzImage _eqp;
         private static WzImage _etc;
         private static WzImage _cash;
@@ -76,42 +86,52 @@ namespace WzVisualizer {
                 case 112:
                 case 113:
                 case 114: return "Accessory";
-                case 104:                             return "Coat";
-                case 105:                             return "Longcoat";
-                case 106:                             return "Pants";
-                case 107:                             return "Shoes";
-                case 108:                             return "Glove";
-                case 109:                             return "Shield";
-                case 110:                             return "Cape";
-                case 111:                             return "Ring";
+                case 104: return "Coat";
+                case 105: return "Longcoat";
+                case 106: return "Pants";
+                case 107: return "Shoes";
+                case 108: return "Glove";
+                case 109: return "Shield";
+                case 110: return "Cape";
+                case 111: return "Ring";
                 case int n when n >= 130 && n <= 170: return "Weapon";
-                case 180:                             return "PetEquip";
-                case 190:                             return "Taming";
+                case 180: return "PetEquip";
+                case 190: return "Taming";
             }
         }
 
         public static string GetFieldFullName(int mapId) {
-            string path;
-            int section = mapId / 10000000;
 
-            if (section <= 9) path = "maple";
-            else if (section >= 10 && section <= 19) path = "victoria";
-            else if (section >= 20 && section <= 28) path = "ossyria";
-            else if (section >= 50 && section <= 55) path = "singapore";
-            else if (section >= 60 && section <= 61) path = "MasteriaGL";
-            else if (section >= 67 && section <= 68) path = "weddingGL";
-            else path = "etc";
-            path += "/" + mapId;
-            WzSubProperty subProperty = (WzSubProperty) _map.GetFromPath(path);
-            if (subProperty == null) return "NO-NAME";
+            var files = Wz.String.GetFiles();
 
-            string retName = "";
-            WzStringProperty mapName = (WzStringProperty) subProperty.GetFromPath("mapName");
-            WzStringProperty streetName = (WzStringProperty) subProperty.GetFromPath("streetName");
-            if (mapName != null) retName += mapName.Value;
-            if (mapName != null && streetName != null) retName += " - "; // x fucking d
-            if (streetName != null) retName += streetName.Value;
-            return retName;
+            if (_fieldNames.Count == 0 && files.Count > 0) {
+                foreach (var file in files) {
+                    var map = file.WzDirectory.GetImageByName("Map.img");
+                    if (map == null) continue;
+
+                    foreach (var region in map.WzProperties) {
+                        foreach (var id in region.WzProperties) {
+                            var parsedId = int.Parse(id.Name);
+
+                            var retName = "";
+                            var mapName = id.GetFromPath("mapName") as WzStringProperty;
+                            var streetName = id.GetFromPath("streetName") as WzStringProperty;
+
+                            if (mapName != null) retName += mapName.Value;
+                            if (mapName != null && streetName != null) retName += " - "; // x fucking d
+                            if (streetName != null) retName += streetName.Value;
+
+                            if (!_fieldNames.ContainsKey(parsedId)) _fieldNames.Add(parsedId, retName);
+                        }
+                    }
+                }
+            }
+
+            if (_fieldNames.TryGetValue(mapId, out var name)) {
+                return name;
+            }
+
+            return "NO-NAME";
 
         }
 

@@ -47,6 +47,8 @@ namespace WzVisualizer.IO {
                 bins.Add(bin);
             }
 
+            bins.Sort((a, b) => a.ID.CompareTo(b.ID));
+
             return bins;
         }
 
@@ -54,7 +56,7 @@ namespace WzVisualizer.IO {
             var grid = dv.GridView;
             var data = dv.Data;
 
-            if (data == null || data.Count == 0) {
+            if (data.Count == 0) {
                 // load binary files
                 var path = $"{ExportFolder}/{file}";
                 if (!File.Exists(path)) return;

@@ -6,6 +6,7 @@ namespace WzVisualizer {
 
     [Serializable]
     public class BinData {
+
         public string _name;
 
         public BinData() { }
@@ -14,10 +15,23 @@ namespace WzVisualizer {
             ID = id;
             Image = icon;
             Name = name;
-            string[] lines = properties.Split(new[] {"\r\n"}, StringSplitOptions.None);
+            string[] lines = properties.Split(new[] { "\r\n" }, StringSplitOptions.None);
             foreach (string line in lines) {
                 Properties.Add(line);
             }
+        }
+
+        public override int GetHashCode() {
+            return this.ID;
+        }
+
+        public override bool Equals(object obj) {
+            if (obj == this) return true;
+            if (obj is BinData other) {
+                return this.ID == other.ID;
+            }
+
+            return false;
         }
 
         public int ID { get; set; }

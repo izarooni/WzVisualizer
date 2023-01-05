@@ -17,6 +17,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using MapleLib.WzLib.Util;
 
 namespace MapleLib.WzLib.WzProperties
@@ -111,34 +112,28 @@ namespace MapleLib.WzLib.WzProperties
 				return ((WzImageProperty)Parent)[path.Substring(name.IndexOf('/') + 1)];
 			}
 			WzImageProperty ret = this;
-			for (int x = 0; x < segments.Length; x++)
+			foreach (string segment in segments)
 			{
-				bool foundChild = false;
-				foreach (WzImageProperty iwp in ret.WzProperties)
-				{
-					if (iwp.Name == segments[x])
-					{
-                        ret = iwp;
-						foundChild = true;
-						break;
-					}
-				}
-				if (!foundChild)
-				{
-					return null;
-				}
-			}
+                ret = ret.WzProperties.FirstOrDefault(iwp => iwp.Name == segment);
+                if (ret == null)
+                {
+                    break;
+                }
+            }
 			return ret;
 		}
-		public override void WriteValue(MapleLib.WzLib.Util.WzBinaryWriter writer)
+		public override void WriteValue(WzBinaryWriter writer)
 		{
             List<WzExtended> extendedProps = new List<WzExtended>(properties.Count);
-            foreach (WzImageProperty prop in properties) if (prop is WzExtended) extendedProps.Add((WzExtended)prop);
-			writer.WriteStringValue("Shape2D#Convex2D", 0x73, 0x1B);
+            foreach (WzImageProperty prop in properties) 
+				if (prop is WzExtended) 
+					extendedProps.Add((WzExtended)prop);
+			writer.WriteStringValue("Shape2D#Convex2D", WzImage.WzImageHeaderByte_WithoutOffset, WzImage.WzImageHeaderByte_WithOffset);
             writer.WriteCompressedInt(extendedProps.Count);
-            for (int i = 0; i < extendedProps.Count; i++)
+
+			foreach (WzImageProperty imgProperty in properties) 
 			{
-                properties[i].WriteValue(writer);
+				imgProperty.WriteValue(writer);
 			}
 		}
 		public override void ExportXml(StreamWriter writer, int level)

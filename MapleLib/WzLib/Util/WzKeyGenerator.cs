@@ -14,9 +14,7 @@
  * You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.*/
 
-using System;
 using System.IO;
-using System.Security.Cryptography;
 using MapleLib.MapleCryptoLib;
 
 namespace MapleLib.WzLib.Util
@@ -47,9 +45,20 @@ namespace MapleLib.WzLib.Util
 			return aes;
 		}
 
-        public static WzMutableKey GenerateWzKey(byte[] WzIv)
+		/// <summary>
+		/// Generates the WZ Key for .Lua property
+		/// </summary>
+		/// <returns></returns>
+		public static WzMutableKey GenerateLuaWzKey()
+		{
+			return new WzMutableKey(
+				MapleCryptoConstants.WZ_MSEAIV, 
+				MapleCryptoConstants.GetTrimmedUserKey(ref MapleCryptoConstants.MAPLESTORY_USERKEY_DEFAULT));
+		}
+
+		public static WzMutableKey GenerateWzKey(byte[] WzIv)
         {
-            return new WzMutableKey(WzIv, CryptoConstants.getTrimmedUserKey());
+            return new WzMutableKey(WzIv, MapleCryptoConstants.GetTrimmedUserKey(ref MapleCryptoConstants.UserKey_WzLib));
         }
         #endregion
     }

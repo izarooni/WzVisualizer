@@ -135,7 +135,7 @@ namespace MapleLib.WzLib.WzProperties
 
         public override string ToString()
         {
-			return string.Format("WzShortProperty('{0}'={1})", name, val);
+            return val.ToString();
         }
         #endregion
 	}

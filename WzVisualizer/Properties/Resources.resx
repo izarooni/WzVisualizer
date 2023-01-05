@@ -124,8 +124,8 @@
   <data name="BadEncryption" xml:space="preserve">
     <value>Failed to parse the WZ file. Perhaps the wrong WZ encryption is being used?</value>
   </data>
-  <data name="MissingStringFile" xml:space="preserve">
-    <value>Failed to load String data in the specified directory</value>
+  <data name="GameFilesNotFound" xml:space="preserve">
+    <value>Failed to find game data. Please make sure your folder selection is correct.</value>
   </data>
   <data name="Error" xml:space="preserve">
     <value>Error</value>
@@ -141,5 +141,14 @@
   </data>
   <data name="FileExtensionWZ" xml:space="preserve">
     <value>.wz</value>
+  </data>
+  <data name="MassOpWarning" xml:space="preserve">
+    <value>You have opted to load every tab. Are you sure you want to do this?</value>
+  </data>
+  <data name="MissingIco" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\missingno.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ErrorProcessing" xml:space="preserve">
+    <value>Failed to process data ({0}): {1}</value>
   </data>
 </root>

@@ -4,7 +4,7 @@ using System.Windows.Forms;
 namespace WzVisualizer.GUI.Controls {
     public partial class DataViewport : UserControl {
 
-        public List<BinData> Data { get; } = new List<BinData>();
+        public List<BinData> Data { get; set; }
 
         public DataViewport() {
             InitializeComponent();

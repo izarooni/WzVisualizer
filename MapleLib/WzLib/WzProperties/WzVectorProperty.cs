@@ -69,9 +69,9 @@ namespace MapleLib.WzLib.WzProperties
 		/// The WzPropertyType of the property
 		/// </summary>
 		public override WzPropertyType PropertyType { get { return WzPropertyType.Vector; } }
-		public override void WriteValue(MapleLib.WzLib.Util.WzBinaryWriter writer)
+		public override void WriteValue(WzBinaryWriter writer)
 		{
-			writer.WriteStringValue("Shape2D#Vector2D", 0x73, 0x1B);
+			writer.WriteStringValue("Shape2D#Vector2D", WzImage.WzImageHeaderByte_WithoutOffset, WzImage.WzImageHeaderByte_WithOffset);
 			writer.WriteCompressedInt(X.Value);
 			writer.WriteCompressedInt(Y.Value);
 		}
@@ -130,10 +130,36 @@ namespace MapleLib.WzLib.WzProperties
 			this.x = x;
 			this.y = y;
 		}
+
+		/// <summary>
+		/// Creates a WzVectorProperty with the specified name, x and y
+		/// </summary>
+		/// <param name="name">The name of the property</param>
+		/// <param name="x">The x value of the vector</param>
+		/// <param name="y">The y value of the vector</param>
+		public WzVectorProperty(string name, int x, int y)
+		{
+			this.name = name;
+			this.x = new WzIntProperty(string.Empty, x);
+			this.y = new WzIntProperty(string.Empty, y);
+		}
+
+		/// <summary>
+		/// Creates a WzVectorProperty with the specified name, x and y
+		/// </summary>
+		/// <param name="name">The name of the property</param>
+		/// <param name="x">The x value of the vector</param>
+		/// <param name="y">The y value of the vector</param>
+		public WzVectorProperty(string name, float x, float y)
+		{
+			this.name = name;
+			this.x = new WzIntProperty(string.Empty, (int)x);
+			this.y = new WzIntProperty(string.Empty, (int)y);
+		}
 		#endregion
 
-        #region Cast Values
-        public override System.Drawing.Point GetPoint()
+		#region Cast Values
+		public override System.Drawing.Point GetPoint()
         {
             return new System.Drawing.Point(x.val, y.val);
         }

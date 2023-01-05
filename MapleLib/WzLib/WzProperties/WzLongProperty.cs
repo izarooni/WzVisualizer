@@ -19,7 +19,7 @@ using MapleLib.WzLib.Util;
 
 namespace MapleLib.WzLib.WzProperties
 {
-    class WzLongProperty : WzImageProperty
+    public class WzLongProperty : WzImageProperty
     {
         #region Fields
         internal string name;
@@ -79,7 +79,7 @@ namespace MapleLib.WzLib.WzProperties
         /// <summary>
         /// The value of the property
         /// </summary>
-        public long Value { get { return val; } set { val = value; } }
+        public long Value { get { return val; } set { val = (long) value; } }
         /// <summary>
         /// Creates a blank WzCompressedIntProperty
         /// </summary>

@@ -15,141 +15,160 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.*/
 
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Text;
 using MapleLib.MapleCryptoLib;
+using MapleLib.PacketLib;
 
 namespace MapleLib.WzLib.Util
 {
-	public class WzBinaryReader : BinaryReader
-	{
-		#region Properties
-		public WzMutableKey WzKey { get; set; }
-		public uint Hash { get; set; }
-		public WzHeader Header { get; set; }
-		#endregion
+    public class WzBinaryReader : BinaryReader
+    {
+        #region Properties
+        public WzMutableKey WzKey { get; set; }
+        public uint Hash { get; set; }
+        public WzHeader Header { get; set; }
+        #endregion
 
-		#region Constructors
-		public WzBinaryReader(Stream input, byte[] WzIv)
-			: base(input)
-		{
-			WzKey = WzKeyGenerator.GenerateWzKey(WzIv);
-		}
-		#endregion
+        #region Constructors
+        public WzBinaryReader(Stream input, byte[] WzIv)
+            : base(input)
+        {
+            WzKey = WzKeyGenerator.GenerateWzKey(WzIv);
+        }
+        #endregion
 
-		#region Methods
-		public string ReadStringAtOffset(long Offset)
-		{
-			return ReadStringAtOffset(Offset, false);
-		}
+        #region Methods
+        /// <summary>
+        /// Sets the base stream position to the header FStart + offset
+        /// </summary>
+        /// <param name="offset"></param>
+        public void SetOffsetFromFStartToPosition(int offset)
+        {
+            BaseStream.Position = Header.FStart + offset;
+        }
 
-		public string ReadStringAtOffset(long Offset, bool readByte)
-		{
-			long CurrentOffset = BaseStream.Position;
-			BaseStream.Position = Offset;
-			if (readByte)
-			{
-				ReadByte();
-			}
-			string ReturnString = ReadString();
-			BaseStream.Position = CurrentOffset;
-			return ReturnString;
-		}
+        public void RollbackStreamPosition(int byOffset)
+        {
+            if (BaseStream.Position < byOffset)
+                throw new Exception("Cant rollback stream position below 0");
 
-		public override string ReadString()
-		{
-			sbyte smallLength = base.ReadSByte();
+            BaseStream.Position -= byOffset;
+        }
 
-			if (smallLength == 0)
-			{
-				return string.Empty;
-			}
+        public string ReadStringAtOffset(long Offset)
+        {
+            return ReadStringAtOffset(Offset, false);
+        }
 
-			int length;
-			StringBuilder retString = new StringBuilder();
-			if (smallLength > 0) // Unicode
-			{
-				ushort mask = 0xAAAA;
-				if (smallLength == sbyte.MaxValue)
-				{
-					length = ReadInt32();
-				}
-				else
-				{
-					length = (int)smallLength;
-				}
-				if (length <= 0)
-				{
-					return string.Empty;
-				}
+        public string ReadStringAtOffset(long Offset, bool readByte)
+        {
+            long CurrentOffset = BaseStream.Position;
+            BaseStream.Position = Offset;
+            if (readByte)
+            {
+                ReadByte();
+            }
+            string ReturnString = ReadString();
+            BaseStream.Position = CurrentOffset;
+            return ReturnString;
+        }
 
-				for (int i = 0; i < length; i++)
-				{
-					ushort encryptedChar = ReadUInt16();
-					encryptedChar ^= mask;
-					encryptedChar ^= (ushort)((WzKey[i * 2 + 1] << 8) + WzKey[i * 2]);
-					retString.Append((char)encryptedChar);
-					mask++;
-				}
-			}
-			else
-			{ // ASCII
-				byte mask = 0xAA;
-				if (smallLength == sbyte.MinValue)
-				{
-					length = ReadInt32();
-				}
-				else
-				{
-					length = (int)(-smallLength);
-				}
-				if (length <= 0)
-				{
-					return string.Empty;
-				}
+        public override string ReadString()
+        {
+            sbyte smallLength = base.ReadSByte();
 
-				for (int i = 0; i < length; i++)
-				{
-					byte encryptedChar = ReadByte();
-					encryptedChar ^= mask;
-					encryptedChar ^= (byte)WzKey[i];
-					retString.Append((char)encryptedChar);
-					mask++;
-				}
-			}
-			return retString.ToString();
-		}
+            if (smallLength == 0)
+            {
+                return string.Empty;
+            }
 
-		/// <summary>
-		/// Reads an ASCII string, without decryption
-		/// </summary>
-		/// <param name="filePath">Length of bytes to read</param>
-		public string ReadString(int length)
-		{
-			return Encoding.ASCII.GetString(ReadBytes(length));
-		}
+            int length;
+            StringBuilder retString = new StringBuilder();
+            if (smallLength > 0) // Unicode
+            {
+                ushort mask = 0xAAAA;
+                if (smallLength == sbyte.MaxValue)
+                {
+                    length = ReadInt32();
+                }
+                else
+                {
+                    length = (int)smallLength;
+                }
+                if (length <= 0)
+                {
+                    return string.Empty;
+                }
+                
+                for (int i = 0; i < length; i++)
+                {
+                    ushort encryptedChar = ReadUInt16();
+                    encryptedChar ^= mask;
+                    encryptedChar ^= (ushort)((WzKey[(i * 2 + 1)] << 8) + WzKey[(i * 2)]);
+                    retString.Append((char)encryptedChar);
+                    mask++;
+                }
+            }
+            else
+            { // ASCII
+                byte mask = 0xAA;
+                if (smallLength == sbyte.MinValue)
+                {
+                    length = ReadInt32();
+                }
+                else
+                {
+                    length = (int)(-smallLength);
+                }
+                if (length <= 0)
+                {
+                    return string.Empty;
+                }
 
-		public string ReadNullTerminatedString()
-		{
-			StringBuilder retString = new StringBuilder();
-			byte b = ReadByte();
-			while (b != 0)
-			{
-				retString.Append((char)b);
-				b = ReadByte();
-			}
-			return retString.ToString();
-		}
+                for (int i = 0; i < length; i++)
+                {
+                    byte encryptedChar = ReadByte();
+                    encryptedChar ^= mask;
+                    encryptedChar ^= (byte)WzKey[i];
+                    retString.Append((char)encryptedChar);
+                    mask++;
+                }
+            }
+            return retString.ToString();
+        }
 
-		public int ReadCompressedInt()
-		{
-			sbyte sb = base.ReadSByte();
-			if (sb == sbyte.MinValue)
-			{
-				return ReadInt32();
-			}
-			return sb;
-		}
+        /// <summary>
+        /// Reads an ASCII string, without decryption
+        /// </summary>
+        /// <param name="filePath">Length of bytes to read</param>
+        public string ReadString(int length)
+        {
+            return Encoding.ASCII.GetString(ReadBytes(length));
+        }
+
+        public string ReadNullTerminatedString()
+        {
+            StringBuilder retString = new StringBuilder();
+            byte b = ReadByte();
+            while (b != 0)
+            {
+                retString.Append((char)b);
+                b = ReadByte();
+            }
+            return retString.ToString();
+        }
+
+        public int ReadCompressedInt()
+        {
+            sbyte sb = base.ReadSByte();
+            if (sb == sbyte.MinValue)
+            {
+                return ReadInt32();
+            }
+            return sb;
+        }
 
         public long ReadLong()
         {
@@ -161,50 +180,96 @@ namespace MapleLib.WzLib.Util
             return sb;
         }
 
-		public uint ReadOffset()
-		{
-			uint offset = (uint)BaseStream.Position;
-			offset = (offset - Header.FStart) ^ uint.MaxValue;
-			offset *= Hash;
-			offset -= CryptoConstants.WZ_OffsetConstant;
-			offset = WzTool.RotateLeft(offset, (byte)(offset & 0x1F));
-			uint encryptedOffset = ReadUInt32();
-			offset ^= encryptedOffset;
-			offset += Header.FStart * 2;
-			return offset;
-		}
+        /// <summary>
+        /// The amount of bytes available remaining in the stream
+        /// </summary>
+        /// <returns></returns>
+        public long Available()
+        {
+            return BaseStream.Length - BaseStream.Position;
+        }
 
-		public string DecryptString(char[] stringToDecrypt)
-		{
-			string outputString = "";
-			for (int i = 0; i < stringToDecrypt.Length; i++)
-				outputString += (char)(stringToDecrypt[i] ^ ((char)((WzKey[i * 2 + 1] << 8) + WzKey[i * 2])));
-			return outputString;
-		}
+        public uint ReadOffset()
+        {
+            uint offset = (uint)BaseStream.Position;
+            offset = (offset - Header.FStart) ^ uint.MaxValue;
+            offset *= Hash;
+            offset -= MapleCryptoConstants.WZ_OffsetConstant;
+            offset = WzTool.RotateLeft(offset, (byte)(offset & 0x1F));
+            uint encryptedOffset = ReadUInt32();
+            offset ^= encryptedOffset;
+            offset += Header.FStart * 2;
+            return offset;
+        }
 
-		public string DecryptNonUnicodeString(char[] stringToDecrypt)
-		{
-			string outputString = "";
-			for (int i = 0; i < stringToDecrypt.Length; i++)
-				outputString += (char)(stringToDecrypt[i] ^ WzKey[i]);
-			return outputString;
-		}
+        public string DecryptString(char[] stringToDecrypt)
+        {
+            StringBuilder outputString = new StringBuilder();
 
-		public string ReadStringBlock(uint offset)
-		{
-			switch (ReadByte())
-			{
-				case 0:
-				case 0x73:
-					return ReadString();
-				case 1:
-				case 0x1B:
-					return ReadStringAtOffset(offset + ReadInt32());
-				default:
-					return "";
-			}
-		}
+            int i = 0;
+            foreach (char c in stringToDecrypt)
+            {
+                outputString.Append((char)(c ^ ((char)((WzKey[i * 2 + 1] << 8) + WzKey[i * 2]))));
+                i++;
+            }
+            return outputString.ToString();
+        }
 
-		#endregion
-	}
+
+        public string DecryptNonUnicodeString(char[] stringToDecrypt)
+        {
+            // Initialize the output string with the correct capacity
+            StringBuilder outputString = new StringBuilder(stringToDecrypt.Length);
+
+            for (int i = 0; i < stringToDecrypt.Length; i++)
+            {
+                // Append the decrypted character to the StringBuilder object
+                outputString.Append((char)(stringToDecrypt[i] ^ WzKey[i]));
+            }
+
+            // Convert the StringBuilder object to a string and return it
+            return outputString.ToString();
+        }
+
+        public string ReadStringBlock(uint offset)
+        {
+            switch (ReadByte())
+            {
+                case 0:
+                case WzImage.WzImageHeaderByte_WithoutOffset:
+                    return ReadString();
+                case 1:
+                case WzImage.WzImageHeaderByte_WithOffset:
+                    return ReadStringAtOffset(offset + ReadInt32());
+                default:
+                    return "";
+            }
+        }
+
+        #endregion
+
+        #region Debugging Methods
+        /// <summary>
+        /// Prints the next numberOfBytes in the stream in the system debug console.
+        /// </summary>
+        /// <param name="numberOfBytes"></param>
+        public void PrintHexBytes(int numberOfBytes)
+        {
+#if DEBUG // only debug
+            string hex = HexTool.ToString(ReadBytes(numberOfBytes));
+            Debug.WriteLine(hex);
+
+            this.BaseStream.Position -= numberOfBytes;
+#endif
+        }
+#endregion
+
+#region Overrides
+        public override void Close()
+        {
+            // debug here
+            base.Close();
+        }
+#endregion
+    }
 }

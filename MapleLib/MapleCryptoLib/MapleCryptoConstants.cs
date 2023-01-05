@@ -14,18 +14,21 @@
  * You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.*/
 
+using System.Linq;
+
 namespace MapleLib.MapleCryptoLib
 {
 	/// <summary>
 	/// Contains all the constant values used for various functions
 	/// </summary>
-	public class CryptoConstants
+	public class MapleCryptoConstants
 	{
-
-		/// <summary>
-		/// AES UserKey used by MapleStory
-		/// </summary>
-		public static byte[] bMapleWZAESKey = new byte[128] { //16 * 8
+        #region User Key
+        /// <summary>
+        /// Default AES UserKey used by MapleStory
+        /// This key may be replaced with custom bytes by the user. (private server)
+        /// </summary>
+        public static byte[] MAPLESTORY_USERKEY_DEFAULT = new byte[128] { //16 * 8
             0x13, 0x00, 0x00, 0x00, 0x52, 0x00, 0x00, 0x00, 0x2A, 0x00, 0x00, 0x00, 0x5B, 0x00, 0x00, 0x00,
             0x08, 0x00, 0x00, 0x00, 0x02, 0x00, 0x00, 0x00, 0x10, 0x00, 0x00, 0x00, 0x60, 0x00, 0x00, 0x00,
             0x06, 0x00, 0x00, 0x00, 0x02, 0x00, 0x00, 0x00, 0x43, 0x00, 0x00, 0x00, 0x0F, 0x00, 0x00, 0x00,
@@ -35,6 +38,23 @@ namespace MapleLib.MapleCryptoLib
             0x33, 0x00, 0x00, 0x00, 0x55, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x09, 0x00, 0x00, 0x00,
             0x52, 0x00, 0x00, 0x00, 0xDE, 0x00, 0x00, 0x00, 0xC7, 0x00, 0x00, 0x00, 0x1E, 0x00, 0x00, 0x00
             };
+
+		/// <summary>
+		/// The default AES UserKey to be used by HaRepacker or HaCreator.
+		/// </summary>
+		public static byte[] UserKey_WzLib = MAPLESTORY_USERKEY_DEFAULT.ToArray();
+
+
+		/// <summary>
+		/// Determines if 'UserKey_WzLib' to be used by HaRepacker/ HaCreator is equivalent to the default Maplestory User Key.
+		/// </summary>
+		/// <returns></returns>
+		public static bool IsDefaultMapleStoryUserKey()
+        {
+			return MAPLESTORY_USERKEY_DEFAULT.SequenceEqual(UserKey_WzLib);
+		}
+		#endregion
+
 
 		/// <summary>
 		/// ShuffleBytes used by MapleStory to generate a new IV
@@ -66,19 +86,32 @@ namespace MapleLib.MapleCryptoLib
         };
 
 		/// <summary>
+		/// ?s_BasicKey@CAESCipher@@2PAEA
+		/// IV used to create the WzKey for GMS
+		/// </summary>
+		public static byte[] WZ_GMSIV = new byte[4] { 0x4D, 0x23, 0xC7, 0x2B };
+
+		/// <summary>
+		/// ?s_BasicKey@CAESCipher@@2PAEA
+		/// IV used to create the WzKey for the latest version of GMS, MSEA, or KMS
+		/// </summary>
+		public static byte[] WZ_MSEAIV = new byte[4] { 0xB9, 0x7D, 0x63, 0xE9 };
+
+		/// <summary>
 		/// Constant used in WZ offset encryption
 		/// </summary>
 		public static uint WZ_OffsetConstant = 0x581C3F6D;
 
 		/// <summary>
-		/// Trims the AES UserKey for use an AES cryptor
+		/// Trims the AES UserKey (x128 bytes -> x32 bytes) for use an AES cryptor
+		/// <paramref name="UserKey">The UserKey to use to create the trimmed key.</paramref>
 		/// </summary>
-		public static byte[] getTrimmedUserKey()
+		public static byte[] GetTrimmedUserKey(ref byte[] UserKey)
 		{
 			byte[] key = new byte[32];
 			for (int i = 0; i < 128; i += 16)
 			{
-				key[i / 4] = bMapleWZAESKey[i];
+				key[i / 4] = UserKey[i]; // the userkey to use by WzLib.
 			}
 			return key;
 		}

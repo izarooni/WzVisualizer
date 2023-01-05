@@ -15,6 +15,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.*/
 
 using System;
+using System.Numerics;
 
 namespace MapleLib.MapleCryptoLib
 {
@@ -59,19 +60,19 @@ namespace MapleLib.MapleCryptoLib
 		/// <summary>
 		/// Updates the current IV
 		/// </summary>
-		public void updateIV()
+		public void UpdateIV()
 		{
-			_IV = getNewIV(_IV);
+			_IV = GetNewIV(_IV);
 		}
 
 		/// <summary>
 		/// Encrypts data with AES and updates the IV
 		/// </summary>
 		/// <param name="data">The data to crypt</param>
-		public void crypt(byte[] data)
+		public void Crypt(byte[] data)
 		{
-			AESEncryption.aesCrypt(_IV, data, data.Length);
-			updateIV();
+			MapleAESEncryption.AesCrypt(_IV, data, data.Length);
+			UpdateIV();
 		}
 
 		/// <summary>
@@ -79,13 +80,13 @@ namespace MapleLib.MapleCryptoLib
 		/// </summary>
 		/// <param name="oldIv">The Old IV used to generate the new IV</param>
 		/// <returns>A new IV</returns>
-		public static byte[] getNewIV(byte[] oldIv)
+		public static byte[] GetNewIV(byte[] oldIv)
 		{
 			//byte[] start = CryptoConstants.bDefaultAESKeyValue;
 			byte[] start = new byte[4] { 0xf2, 0x53, 0x50, 0xc6 };//TODO: ADD GLOBAL VAR BACK
 			for (int i = 0; i < 4; i++)
 			{
-				shuffle(oldIv[i], start);
+				Shuffle(oldIv[i], start);
 			}
 			return start;
 		}
@@ -96,26 +97,26 @@ namespace MapleLib.MapleCryptoLib
 		/// <param name="inputByte">Byte of the old IV</param>
 		/// <param name="start">The Default AES Key</param>
 		/// <returns>The shuffled bytes</returns>
-		public static byte[] shuffle(byte inputByte, byte[] start)
+		public static byte[] Shuffle(byte inputByte, byte[] start)
 		{
 			byte a = start[1];
 			byte b = a;
 			uint c, d;
-			b = CryptoConstants.bShuffle[b];
+			b = MapleCryptoConstants.bShuffle[b];
 			b -= inputByte;
 			start[0] += b;
 			b = start[2];
-			b ^= CryptoConstants.bShuffle[inputByte];
+			b ^= MapleCryptoConstants.bShuffle[inputByte];
 			a -= b;
 			start[1] = a;
 			a = start[3];
 			b = a;
 			a -= start[0];
-			b = CryptoConstants.bShuffle[b];
+			b = MapleCryptoConstants.bShuffle[b];
 			b += inputByte;
 			b ^= start[2];
 			start[2] = b;
-			a += CryptoConstants.bShuffle[inputByte];
+			a += MapleCryptoConstants.bShuffle[inputByte];
 			start[3] = a;
 
 			c = (uint)(start[0] + start[1] * 0x100 + start[2] * 0x10000 + start[3] * 0x1000000);
@@ -138,7 +139,7 @@ namespace MapleLib.MapleCryptoLib
 		/// </summary>
 		/// <param name="size">Size of the packet</param>
 		/// <returns>The packet header</returns>
-		public byte[] getHeaderToClient(int size)
+		public byte[] GetHeaderToClient(int size)
 		{
 			byte[] header = new byte[4];
 			int a = _IV[3] * 0x100 + _IV[2];
@@ -156,7 +157,7 @@ namespace MapleLib.MapleCryptoLib
 		/// </summary>
 		/// <param name="size">Size of the packet</param>
 		/// <returns>The packet header</returns>
-		public byte[] getHeaderToServer(int size)
+		public byte[] GetHeaderToServer(int size)
 		{
 			byte[] header = new byte[4];
 			int a = IV[3] * 0x100 + IV[2];
@@ -174,9 +175,9 @@ namespace MapleLib.MapleCryptoLib
 		/// </summary>
 		/// <param name="packetHeader">Header of the packet</param>
 		/// <returns>The length of the packet</returns>
-		public static int getPacketLength(int packetHeader)
+		public static int GetPacketLength(int packetHeader)
 		{
-			return getPacketLength(BitConverter.GetBytes(packetHeader));
+			return GetPacketLength(BitConverter.GetBytes(packetHeader));
 		}
 
 		/// <summary>
@@ -184,7 +185,7 @@ namespace MapleLib.MapleCryptoLib
 		/// </summary>
 		/// <param name="packetHeader">Header of the packet</param>
 		/// <returns>The length of the packet</returns>
-		public static int getPacketLength(byte[] packetHeader)
+		public static int GetPacketLength(byte[] packetHeader)
 		{
 			if (packetHeader.Length < 4)
 			{
@@ -199,7 +200,7 @@ namespace MapleLib.MapleCryptoLib
 		/// </summary>
 		/// <param name="packetHeader">The header of the packet received</param>
 		/// <returns>The packet is valid</returns>
-		public bool checkPacketToServer(byte[] packet)
+		public bool CheckPacketToServer(byte[] packet)
 		{
 			int a = packet[0] ^ _IV[2];
 			int b = _mapleVersion;
@@ -215,7 +216,7 @@ namespace MapleLib.MapleCryptoLib
 		/// <param name="count">Amount of bytes to repeat</param>
 		/// <param name="mult">Times to repeat the packet</param>
 		/// <returns>The multiplied bytes</returns>
-		public static byte[] multiplyBytes(byte[] input, int count, int mult)
+		public static byte[] MultiplyBytes(byte[] input, int count, int mult)
 		{
 			byte[] ret = new byte[count * mult];
 			for (int x = 0; x < ret.Length; x++)
@@ -224,7 +225,39 @@ namespace MapleLib.MapleCryptoLib
 			}
 			return ret;
 		}
-		#endregion
 
-	}
+        public static byte[] MultiplyBytes_SIMD(byte[] input, int count, int mult)
+        {
+            byte[] ret = new byte[count * mult];
+            int simdWidth = Vector<byte>.Count;
+
+            // Process input in blocks of simdWidth elements
+            int blockCount = count / simdWidth;
+            for (int i = 0; i < blockCount; i++)
+            {
+                // Load simdWidth elements from input into a vector
+                Vector<byte> vec = new Vector<byte>(input, i * simdWidth);
+
+                // Replicate the vector mult times and store it in the output
+                for (int j = 0; j < mult; j++)
+                {
+                    vec.CopyTo(ret, (i * simdWidth * mult) + (j * simdWidth));
+                }
+            }
+
+            // Process any remaining elements
+            int remainder = count % simdWidth;
+            if (remainder > 0)
+            {
+                for (int x = 0; x < ret.Length; x++)
+                {
+                    ret[x] = input[x % count];
+                }
+            }
+
+            return ret;
+        }
+        #endregion
+
+    }
 }

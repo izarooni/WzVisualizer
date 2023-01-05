@@ -14,21 +14,23 @@
  * You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.*/
 
-namespace MapleLib.WzLib {
-    public static class WzMapleVersionExt {
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
-        public static byte[] EncryptionKey(this WzMapleVersion mapleVersion) {
-            switch (mapleVersion) {
-                case WzMapleVersion.GMS: return new byte[] {0x4D, 0x23, 0xC7, 0x2B};
-                case WzMapleVersion.EMS: return new byte[] {0xB9, 0x7D, 0x63, 0xE9};
-                default:                 return new byte[4];
-            }
-        }
-    }
+namespace MapleLib.WzLib
+{
+    public enum WzMapleVersion
+    {
+        GMS = 0,
+        EMS = 1,
+        BMS = 2,
+        CLASSIC = 3,
+        GENERATE = 4,
+        GETFROMZLZ = 5,
+        CUSTOM = 6, // input bytes, for private servers
 
-    public enum WzMapleVersion {
-        GMS,
-        EMS,
-        BMS,
+        UNKNOWN = 99,
     }
 }

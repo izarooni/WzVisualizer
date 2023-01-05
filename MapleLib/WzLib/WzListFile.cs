@@ -32,14 +32,14 @@ namespace MapleLib.WzLib
 		/// <param name="filePath">Path to the wz file</param>
         public static List<string> ParseListFile(string filePath, WzMapleVersion version)
         {
-            return ParseListFile(filePath, version.EncryptionKey());
+            return ParseListFile(filePath, WzTool.GetIvByMapleVersion(version));
         }
 
         /// <summary>
 		/// Parses a wz list file on the disk
 		/// </summary>
 		/// <param name="filePath">Path to the wz file</param>
-        public static List<string> ParseListFile(string filePath, byte[] WzIv)
+        private static List<string> ParseListFile(string filePath, byte[] WzIv)
         {
             List<string> listEntries = new List<string>();
             byte[] wzFileBytes = File.ReadAllBytes(filePath);
@@ -63,7 +63,7 @@ namespace MapleLib.WzLib
 
         public static void SaveToDisk(string path, WzMapleVersion version, List<string> listEntries)
         {
-            SaveToDisk(path, version.EncryptionKey(), listEntries);
+            SaveToDisk(path, WzTool.GetIvByMapleVersion(version), listEntries);
         }
 
 		public static void SaveToDisk(string path, byte[] WzIv, List<string> listEntries)
@@ -72,12 +72,11 @@ namespace MapleLib.WzLib
             string lastEntry = listEntries[lastIndex];
             listEntries[lastIndex] = lastEntry.Substring(0, lastEntry.Length - 1) + "/";
             WzBinaryWriter wzWriter = new WzBinaryWriter(File.Create(path), WzIv);
-            string s;
-            for (int i = 0; i < listEntries.Count; i++)
+
+            foreach (string listEntry in listEntries)
             {
-                s = listEntries[i];
-                wzWriter.Write((int)s.Length);
-                char[] encryptedChars = wzWriter.EncryptString(s + (char)0);
+                wzWriter.Write((int)listEntry.Length);
+                char[] encryptedChars = wzWriter.EncryptString(listEntry + (char)0);
                 for (int j = 0; j < encryptedChars.Length; j++)
                     wzWriter.Write((short)encryptedChars[j]);
             }
