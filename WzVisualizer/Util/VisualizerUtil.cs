@@ -515,13 +515,17 @@ namespace WzVisualizer.Util {
         public static void AddNewRow(MainForm app, DataGridView grid, BinData bin) {
             var query = app.SearchQuery;
             if (!string.IsNullOrEmpty(query)) {
-                var queries = query.Split(new[] { " " }, StringSplitOptions.None);
+                var queries = query.Split(new[] { " " }, StringSplitOptions.RemoveEmptyEntries);
                 foreach (var arg in queries) {
                     // all queries must match
-                    if (!bin.Search(arg)) return;
+                    if (bin.Search(arg)) {
+                        goto VALIDATED;
+                    }
                 }
+                return;
             }
 
+            VALIDATED:
             var properties = "";
             foreach (var p in bin.Properties) {
                 properties += p + "\r\n";
@@ -538,16 +542,24 @@ namespace WzVisualizer.Util {
         /// <returns></returns>
         private static string GetAllProperties(object obj) {
             var append = "";
+
+            void AppendLine(string blockName, WzImageProperty property) {
+                if (property == null) return;
+
+                if (append.Length > 0) append += "\r\n";
+                append += blockName + AppendProperties(property, "");
+            }
+
             switch (obj) {
                 default:
                     throw new Exception($"unhandled parameter type '{nameof(obj)}': {obj}");
                 case WzSubProperty sub:
-                    append += "[info]" + AppendProperties(sub.GetFromPath("info"), "");
-                    append += "\r\n[levels]" + AppendProperties(sub.GetFromPath("level"), "");
-                    append += "\r\n[common]" + AppendProperties(sub.GetFromPath("common"), "");
+                    AppendLine("[info]", sub.GetFromPath("info"));
+                    AppendLine("[levels]", sub.GetFromPath("level")); // skills with defined level stats
+                    AppendLine("[common]", sub.GetFromPath("common")); // skills with scaling level stats
                     break;
                 case WzImage img:
-                    append += "[info]" + AppendProperties(img.GetFromPath("info"), "");
+                    AppendLine("[info]", img.GetFromPath("info"));
                     break;
             }
 
@@ -604,7 +616,6 @@ namespace WzVisualizer.Util {
             // for some reason, wpf crashes if we don't copy the bitmap?????????? bruh moment
             if (bmp == null) return null;
 
-            var image = new Bitmap(bmp.Width, bmp.Height);
             using var g = Graphics.FromImage(image);
             g.DrawImage(bmp, Point.Empty);
             return image;
