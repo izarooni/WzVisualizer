@@ -237,7 +237,7 @@ namespace WzVisualizer.GUI {
         /// directory as the root folder containing WZ files
         /// </summary>
         private void TextWzPath_Click(object sender, EventArgs e) {
-            if (string.IsNullOrWhiteSpace(folderBrowser.SelectedPath)) return;
+            if (ComboLoadType.SelectedIndex != 1) return;
             if (folderBrowser.ShowDialog() != DialogResult.OK) return;
 
             TextWzPath.Text = folderBrowser.SelectedPath;
