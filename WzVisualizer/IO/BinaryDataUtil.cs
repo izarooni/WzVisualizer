@@ -69,10 +69,10 @@ namespace WzVisualizer.IO {
             grid.ResumeLayout();
         }
 
-        public static void ExportPictures(TabPage page, string folder) {
-            if (page.Controls[0] is TabControl tc) {
-                foreach (TabPage pages in tc.TabPages) {
-                    ExportPictures(pages, folder);
+        public static void ExportPictures(TabPage tab, string folder) {
+            if (tab.Controls[0] is TabControl ctrl) {
+                foreach (TabPage subTab in ctrl.TabPages) {
+                    ExportPictures(subTab, folder);
                 }
 
                 return;
@@ -81,7 +81,7 @@ namespace WzVisualizer.IO {
             var directory = $"{ImagesFolder}/{folder}";
             Directory.CreateDirectory(directory);
 
-            var dv = (DataViewport)page.Controls[0];
+            var dv = (DataViewport)tab.Controls[0];
             foreach (BinData bin in dv.Data) {
                 var bitmap = bin.Image;
                 string fileName = $"{bin.ID}";
@@ -90,15 +90,19 @@ namespace WzVisualizer.IO {
             }
         }
 
-        public static void ExportBinary(TabPage page, string folder) {
-            if (page.Controls[0] is TabControl tc) {
-                page = tc.SelectedTab;
+        public static void ExportBinary(TabPage tab, string folder) {
+            if (tab.Controls[0] is TabControl ctrl) {
+                foreach (TabPage subTab in ctrl.TabPages) {
+                    ExportBinary(subTab, folder);
+                }
+                return;
             }
-            var dv = (DataViewport)page.Controls[0];
+
+            var dv = (DataViewport)tab.Controls[0];
             var data = dv.Data;
 
             string directory = $"{ExportFolder}/{folder}";
-            string filePath = $"{directory}/{page.Text}.bin";
+            string filePath = $"{directory}/{tab.Text}.bin";
             Directory.CreateDirectory(directory);
 
             using BinaryWriter bw = new BinaryWriter(new FileStream(filePath, FileMode.Create));

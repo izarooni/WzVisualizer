@@ -6,8 +6,6 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 
-using MapleLib.WzLib;
-
 using WzVisualizer.GUI.Controls;
 using WzVisualizer.IO;
 using WzVisualizer.Properties;
@@ -23,18 +21,6 @@ namespace WzVisualizer.GUI {
 
         public MainForm() {
             InitializeComponent();
-
-            // Obtain the last used WZ root directory
-            TextWzPath.Text = Settings.Default.PathCache;
-            // Set default values for the ComboBoxes
-            ComboLoadType.SelectedIndex = 0;
-
-            TabControlMain.Selected += TabControl_Selected;
-            foreach (var ctrl in TabControlMain.Controls) {
-                if (ctrl is TabPage page) {
-                    AddEventHandlers(page);
-                }
-            }
         }
 
         public string SearchQuery => SearchTextBox.Text;
@@ -42,24 +28,19 @@ namespace WzVisualizer.GUI {
         /// <summary>
         /// recursively add event handlers to all DataViewport components
         /// </summary>
-        private void AddEventHandlers(TabPage page) {
-            foreach (var c in page.Controls) {
-                switch (c) {
-                    case DataViewport view: {
-                            view.Data = new List<BinData>(); // cheeky little initializer
+        private void AddEventHandlers(TabControl tab) {
+            foreach (Control ctrl in tab.Controls) {
+                switch (ctrl.Controls[0]) {
+                    case DataViewport dv:
+                        dv.Data = new List<BinData>(); // cheeky little initializer
 
-                            view.GridView.CellDoubleClick += Grid_CellDoubleClick;
-                            view.GridView.CellStateChanged += Grid_RowStateChanged;
-                            break;
-                        }
-                    case TabControl ctrl: {
-                            ctrl.Selected += TabControl_Selected;
-                            foreach (TabPage childPage in ctrl.TabPages) {
-                                AddEventHandlers(childPage);
-                            }
-
-                            break;
-                        }
+                        dv.GridView.CellDoubleClick += Grid_CellDoubleClick;
+                        dv.GridView.CellStateChanged += Grid_RowStateChanged;
+                        break;
+                    case TabControl subTab:
+                        subTab.Selected += TabControl_Selected;
+                        AddEventHandlers(subTab);
+                        break;
                 }
             }
         }
@@ -70,36 +51,27 @@ namespace WzVisualizer.GUI {
             return (DataViewport)sub.Controls[0];
         }
 
-
-        private void LoadWzData(int selectedRoot) {
-            if (loadAll) {
-                for (var i = 0; i < TabControlMain.TabCount; i++) {
-                    try {
-                        TabControlMain.SelectedIndex = i;
-                        ForEachPage(TabControlMain, delegate (TabPage page, string pageName) {
-                            VisualizerUtil.ProcessTab(selectedRoot, this);
-                        });
-                    } catch (Exception e) {
-                        MessageBox.Show(string.Format(Resources.ErrorProcessing, TabControlMain.SelectedTab.Name, e.Message));
-                    }
-                }
-                BtnSave_Click(null, new MouseEventArgs(MouseButtons.Left, 0, 0, 0, 0));
-
-                return;
-            }
-
-            VisualizerUtil.ProcessTab(selectedRoot, this);
-        }
-
         /// <summary>
         /// clears all collections, closes underlying file readers 
         /// then calls the garbage collector for each loaded WZ file
         /// </summary>
         private static void DisposeWzFiles() {
-            var wzs = Enum.GetValues(typeof(Wz)).Cast<Wz>();
-            foreach (var wz in wzs) {
+            foreach (var wz in Enum.GetValues(typeof(Wz)).Cast<Wz>()) {
                 wz.Dispose();
             }
+        }
+
+        private void LoadWzData() {
+            if (loadAll) {
+                for (var i = 0; i < TabControlMain.TabCount; i++) {
+                    TabControlMain.SelectedIndex = i;
+                    VisualizerUtil.ProcessTab(i, this);
+                }
+                BtnSave_Click(null, new MouseEventArgs(MouseButtons.Left, 0, 0, 0, 0));
+                return;
+            }
+
+            VisualizerUtil.ProcessTab(TabControlMain.SelectedIndex, this);
         }
 
         /// <summary>
@@ -112,11 +84,10 @@ namespace WzVisualizer.GUI {
             loadAll = ModifierKeys == Keys.Shift;
 
             if (loadAll) {
-                var result = MessageBox.Show(Resources.MassOpWarning, "Warning", MessageBoxButtons.YesNo);
+                var result = MessageBox.Show(Resources.MassReadWarning, "Warning", MessageBoxButtons.YesNo);
                 if (result != DialogResult.Yes) return;
             }
 
-            var selRootTab = TabControlMain.SelectedIndex;
             var path = TextWzPath.Text;
 
             if (!path.Equals(Settings.Default.PathCache)) {
@@ -125,8 +96,7 @@ namespace WzVisualizer.GUI {
             }
 
             if (string.IsNullOrEmpty(path)) {
-                MessageBox.Show(Resources.GameFilesNotFound, Resources.FileNotFound, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
+                goto NO_FILES;
             }
 
             // 64-bit client update
@@ -146,7 +116,7 @@ namespace WzVisualizer.GUI {
                         // DirectoryNotFoundException : List.wz removed
                     }
                 }
-                LoadWzData(selRootTab);
+                LoadWzData();
                 return;
             }
 
@@ -160,7 +130,7 @@ namespace WzVisualizer.GUI {
 
                     wz.Load(@$"{path}\{wz}{Resources.FileExtensionWZ}", false);
                 }
-                LoadWzData(selRootTab);
+                LoadWzData();
                 return;
             }
 
@@ -169,8 +139,30 @@ namespace WzVisualizer.GUI {
                 foreach (var wz in Enum.GetValues(typeof(Wz)).Cast<Wz>()) {
                     wz.Load(@$"{path}\{wz}{Resources.FileExtensionWZ}");
                 }
-                LoadWzData(selRootTab);
+                LoadWzData();
+                return;
             }
+
+            NO_FILES:
+            MessageBox.Show(Resources.GameFilesNotFound, Resources.FileNotFound, MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
+        void ExportBinary(TabControl tab, bool saveAll = false) {
+            var selectedTab = tab.SelectedTab;
+            if (saveAll) {
+                for (var i = 0; i < TabControlMain.TabCount; i++) {
+                    BinaryDataUtil.ExportBinary(TabControlMain.TabPages[i], TabControlMain.TabPages[i].Text);
+                }
+            } else BinaryDataUtil.ExportBinary(selectedTab, selectedTab.Text);
+        }
+
+        void ExportPictures(TabControl tab, bool saveAll = false) {
+            var selectedTab = tab.SelectedTab;
+            if (saveAll) {
+                for (var i = 0; i < TabControlMain.TabCount; i++) {
+                    BinaryDataUtil.ExportPictures(TabControlMain.TabPages[i], TabControlMain.TabPages[i].Text);
+                }
+            } else BinaryDataUtil.ExportPictures(selectedTab, selectedTab.Text);
         }
 
         /// <summary>
@@ -178,38 +170,23 @@ namespace WzVisualizer.GUI {
         /// Some tabs may have another TabControl in which that Control contains a Grid control.
         /// </summary>
         private void BtnSave_Click(object sender, EventArgs ev) {
-            var main = TabControlMain.SelectedTab;
             var button = ((MouseEventArgs)ev).Button;
+            var saveAll = loadAll || ModifierKeys == Keys.Shift;
+
+            if (!loadAll && saveAll) {
+                var result = MessageBox.Show(Resources.MassWriteWarning, "Warning", MessageBoxButtons.YesNo);
+                if (result != DialogResult.Yes) return;
+            }
 
             if (button == MouseButtons.Left) {
-                if (loadAll || ModifierKeys == Keys.Shift) {
-                    ForEachPage(TabControlMain, BinaryDataUtil.ExportBinary);
-                } else {
-                    if (main.Controls[0] is TabControl sub) {
-                        foreach (TabPage subpage in sub.Controls) {
-                            BinaryDataUtil.ExportBinary(subpage, main.Text);
-                        }
-                        return;
-                    }
-                    BinaryDataUtil.ExportBinary(main, main.Text);
-                }
-
-                if (!loadAll) MessageBox.Show(Resources.CompleteSaveBIN);
+                ExportBinary(TabControlMain, saveAll);
+                MessageBox.Show(Resources.CompleteSaveBIN, "Save Complete");
             } else if (button == MouseButtons.Right) {
-                if (ModifierKeys == Keys.Shift) {
-                    ForEachPage(TabControlMain, BinaryDataUtil.ExportPictures);
-                } else {
-                    if (main.Controls[0] is TabControl sub) {
-                        foreach (TabPage subpage in sub.Controls) {
-                            BinaryDataUtil.ExportPictures(subpage, main.Text);
-                        }
-                        return;
-                    }
-                    BinaryDataUtil.ExportPictures(main, main.Text);
-                }
-
-                if (!loadAll) MessageBox.Show(Resources.CompleteSaveImages);
+                ExportPictures(TabControlMain, saveAll);
+                MessageBox.Show(Resources.CompleteSaveImages, "Save Complete");
             }
+
+            loadAll = false;
         }
 
         /// <summary>
@@ -282,6 +259,14 @@ namespace WzVisualizer.GUI {
         }
 
         private void MainForm_Load(object sender, EventArgs e) {
+            // Obtain the last used WZ root directory
+            TextWzPath.Text = Settings.Default.PathCache;
+            // Set default values for the ComboBoxes
+            ComboLoadType.SelectedIndex = 0;
+
+            TabControlMain.Selected += TabControl_Selected;
+            AddEventHandlers(TabControlMain);
+
             OnTabControlChanged();
         }
 

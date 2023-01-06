@@ -134,7 +134,7 @@
     <value>File Not Found</value>
   </data>
   <data name="CompleteSaveBIN" xml:space="preserve">
-    <value>BIN save complete</value>
+    <value>Binary files successfully saved</value>
   </data>
   <data name="CompleteSaveImages" xml:space="preserve">
     <value>Images successfully saved</value>
@@ -142,7 +142,7 @@
   <data name="FileExtensionWZ" xml:space="preserve">
     <value>.wz</value>
   </data>
-  <data name="MassOpWarning" xml:space="preserve">
+  <data name="MassReadWarning" xml:space="preserve">
     <value>You have opted to load every tab. Are you sure you want to do this?</value>
   </data>
   <data name="MissingIco" type="System.Resources.ResXFileRef, System.Windows.Forms">
@@ -150,5 +150,8 @@
   </data>
   <data name="ErrorProcessing" xml:space="preserve">
     <value>Failed to process data ({0}): {1}</value>
+  </data>
+  <data name="MassWriteWarning" xml:space="preserve">
+    <value>You have opted to save every tab. Are you sure you want to do this?</value>
   </data>
 </root>

@@ -49,24 +49,25 @@ namespace WzVisualizer.Util {
 
         public static void ProcessTab(int nRootTab, MainForm app) {
             SuspendLayouts(app);
-            switch ((RootVTab)nRootTab) {
+            var rootTab = (RootVTab)nRootTab;
+            switch (rootTab) {
                 case RootVTab.Equips:
                     ParseEquips(app);
                     break;
                 case RootVTab.Use:
-                    ProcessGeneric(app);
+                    ProcessGeneric(app, rootTab);
                     break;
                 case RootVTab.Setup:
-                    ProcessGeneric(app);
+                    ProcessGeneric(app, rootTab);
                     break;
                 case RootVTab.Etc:
-                    ProcessGeneric(app);
+                    ProcessGeneric(app, rootTab);
                     break;
                 case RootVTab.Cash:
-                    ProcessGeneric(app);
+                    ProcessGeneric(app, rootTab);
                     break;
                 case RootVTab.Map:
-                    ParseMap(app);
+                    ParseMap(app); // these can probably be merged into ProcessGeneric but maybe another day
                     break;
                 case RootVTab.Mob:
                     ParseMob(app);
@@ -78,7 +79,7 @@ namespace WzVisualizer.Util {
                     ParseNpc(app);
                     break;
                 case RootVTab.Pets:
-                    ProcessGeneric(app);
+                    ProcessGeneric(app, rootTab);
                     break;
                 case RootVTab.Reactors:
                     ParseReactors(app);
@@ -231,8 +232,7 @@ namespace WzVisualizer.Util {
         #endregion
 
         #region generic
-        private static void ProcessGeneric(MainForm app) {
-            var rootTab = (RootVTab)app.TabControlMain.SelectedIndex;
+        private static void ProcessGeneric(MainForm app, RootVTab rootTab) {
 
             var files = Wz.Item.GetFiles();
 
@@ -331,10 +331,7 @@ namespace WzVisualizer.Util {
                             break;
                     }
                 }
-                file.Dispose();
             }
-
-            Wz.Item.Dispose();
         }
 
         private static void ParseGeneric(DataGridView grid, object wzObject) {
@@ -616,6 +613,7 @@ namespace WzVisualizer.Util {
             // for some reason, wpf crashes if we don't copy the bitmap?????????? bruh moment
             if (bmp == null) return null;
 
+            var image = new Bitmap(bmp.Width, bmp.Height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
             using var g = Graphics.FromImage(image);
             g.DrawImage(bmp, Point.Empty);
             return image;

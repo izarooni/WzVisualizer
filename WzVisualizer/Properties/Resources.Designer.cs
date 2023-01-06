@@ -70,7 +70,7 @@ namespace WzVisualizer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to BIN save complete.
+        ///   Looks up a localized string similar to Binary files successfully saved.
         /// </summary>
         internal static string CompleteSaveBIN {
             get {
@@ -145,9 +145,18 @@ namespace WzVisualizer.Properties {
         /// <summary>
         ///   Looks up a localized string similar to You have opted to load every tab. Are you sure you want to do this?.
         /// </summary>
-        internal static string MassOpWarning {
+        internal static string MassReadWarning {
             get {
-                return ResourceManager.GetString("MassOpWarning", resourceCulture);
+                return ResourceManager.GetString("MassReadWarning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You have opted to save every tab. Are you sure you want to do this?.
+        /// </summary>
+        internal static string MassWriteWarning {
+            get {
+                return ResourceManager.GetString("MassWriteWarning", resourceCulture);
             }
         }
         
