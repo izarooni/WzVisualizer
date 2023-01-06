@@ -218,18 +218,31 @@ namespace WzVisualizer.GUI {
         /// Display the PropertiesViewer Form when a Properties column cell is double clicked
         /// </summary>
         private void Grid_CellDoubleClick(object sender, DataGridViewCellEventArgs e) {
-            if (e.ColumnIndex != 3 || e.RowIndex == -1) return;
+            if (e.RowIndex < 0) return;
 
-            viewer.SetProperties((string)((DataGridView)sender).SelectedCells[0].Value);
-            if (!viewer.Visible) {
-                viewer.Height = Height;
-                viewer.StartPosition = FormStartPosition.Manual;
+            var grid = (DataGridView)sender;
+            var cell = grid.SelectedCells[0];
 
-                viewer.Left = Right;
-                viewer.Top = Top;
+            switch (cell.ColumnIndex) {
+                case 1:
+                    var bmp = cell.Value as Bitmap;
+                    if (bmp == null) return;
+                    cell.OwningColumn.Width = bmp.Width + 15;
+                    cell.OwningRow.Height = bmp.Height + 15;
+                    break;
+                case 3:
+                    viewer.SetProperties((string)((DataGridView)sender).SelectedCells[0].Value);
+                    if (!viewer.Visible) {
+                        viewer.Height = Height;
+                        viewer.StartPosition = FormStartPosition.Manual;
+
+                        viewer.Left = Right;
+                        viewer.Top = Top;
+                    }
+                    viewer.Show();
+                    viewer.BringToFront();
+                    break;
             }
-            viewer.Show();
-            viewer.BringToFront();
         }
 
         /// <summary>

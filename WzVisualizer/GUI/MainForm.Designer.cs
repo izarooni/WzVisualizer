@@ -535,7 +535,7 @@
             this.TabUScrolls.Location = new System.Drawing.Point(4, 25);
             this.TabUScrolls.Name = "TabUScrolls";
             this.TabUScrolls.Padding = new System.Windows.Forms.Padding(3);
-            this.TabUScrolls.Size = new System.Drawing.Size(842, 428);
+            this.TabUScrolls.Size = new System.Drawing.Size(773, 514);
             this.TabUScrolls.TabIndex = 1;
             this.TabUScrolls.Text = "Scrolls";
             this.TabUScrolls.UseVisualStyleBackColor = true;
@@ -547,7 +547,7 @@
             this.UseScrollsView.Location = new System.Drawing.Point(3, 3);
             this.UseScrollsView.Margin = new System.Windows.Forms.Padding(4);
             this.UseScrollsView.Name = "UseScrollsView";
-            this.UseScrollsView.Size = new System.Drawing.Size(836, 422);
+            this.UseScrollsView.Size = new System.Drawing.Size(767, 508);
             this.UseScrollsView.TabIndex = 0;
             // 
             // TabUProjectiles
@@ -556,7 +556,7 @@
             this.TabUProjectiles.Location = new System.Drawing.Point(4, 25);
             this.TabUProjectiles.Name = "TabUProjectiles";
             this.TabUProjectiles.Padding = new System.Windows.Forms.Padding(3);
-            this.TabUProjectiles.Size = new System.Drawing.Size(842, 428);
+            this.TabUProjectiles.Size = new System.Drawing.Size(773, 514);
             this.TabUProjectiles.TabIndex = 2;
             this.TabUProjectiles.Text = "Projectiles";
             this.TabUProjectiles.UseVisualStyleBackColor = true;
@@ -568,7 +568,7 @@
             this.UseProjectileView.Location = new System.Drawing.Point(3, 3);
             this.UseProjectileView.Margin = new System.Windows.Forms.Padding(4);
             this.UseProjectileView.Name = "UseProjectileView";
-            this.UseProjectileView.Size = new System.Drawing.Size(836, 422);
+            this.UseProjectileView.Size = new System.Drawing.Size(767, 508);
             this.UseProjectileView.TabIndex = 0;
             // 
             // TabSetupPage
@@ -620,7 +620,7 @@
             this.TabSOther.Location = new System.Drawing.Point(4, 25);
             this.TabSOther.Name = "TabSOther";
             this.TabSOther.Padding = new System.Windows.Forms.Padding(3);
-            this.TabSOther.Size = new System.Drawing.Size(842, 428);
+            this.TabSOther.Size = new System.Drawing.Size(773, 514);
             this.TabSOther.TabIndex = 2;
             this.TabSOther.Text = "Others";
             this.TabSOther.UseVisualStyleBackColor = true;
@@ -632,7 +632,7 @@
             this.SetupOthersView.Location = new System.Drawing.Point(3, 3);
             this.SetupOthersView.Margin = new System.Windows.Forms.Padding(4);
             this.SetupOthersView.Name = "SetupOthersView";
-            this.SetupOthersView.Size = new System.Drawing.Size(836, 422);
+            this.SetupOthersView.Size = new System.Drawing.Size(767, 508);
             this.SetupOthersView.TabIndex = 0;
             // 
             // TabEtcPage
