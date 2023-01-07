@@ -127,8 +127,8 @@ namespace WzVisualizer.Util {
             foreach (var file in files) {
                 if (!file.Name.StartsWith("Character.wz")) {
                     var name = Regex.Replace(Path.GetFileNameWithoutExtension(file.Name), "[^a-zA-Z]", "");
-                    if (!Enum.TryParse<EquipTab>(name, out var page)) continue;
-                    if (!file.Name.StartsWith(page.ToString())) continue;
+                    if (!Enum.TryParse<EquipTab>(name, out var tabName)) continue;
+                    if (!file.Name.StartsWith(tabName.ToString())) continue;
                 }
 
                 Console.WriteLine($"[VisualizerUtil] Loading {file.Name}");
@@ -218,11 +218,10 @@ namespace WzVisualizer.Util {
                     }
                     image = DuplicateBitmap(image);
 
-                    dv.Data.Add(new BinData(itemId, image, name, properties));
-
                     if (app.GetCurrentDataViewport() == dv) {
-                        dv.GridView.Rows.Add(itemId, image, name, properties);
+                        dv.GridView.Rows.Add(itemId, image, name, properties.Substring(0, Math.Min(properties.Length, 50)));
                     }
+                    dv.Data.Add(new BinData(itemId, image, name, properties));
                 }
                 file.Dispose();
             }
@@ -406,9 +405,9 @@ namespace WzVisualizer.Util {
                 image = null;
             }
             image = DuplicateBitmap(image);
-
-            grid.Rows.Add(id, image, name, properties);
+            grid.Rows.Add(id, image, name, properties.Substring(0, Math.Min(properties.Length, 50)));
             ((DataViewport)grid.Parent).Data.Add(new BinData(id, image, name, properties));
+
         }
         #endregion
 
@@ -611,11 +610,12 @@ namespace WzVisualizer.Util {
          */
         private static Bitmap DuplicateBitmap(Bitmap bmp) {
             // for some reason, wpf crashes if we don't copy the bitmap?????????? bruh moment
-            if (bmp == null) return null;
+            if (bmp == null || bmp.PixelFormat == System.Drawing.Imaging.PixelFormat.DontCare) return null;
 
             var image = new Bitmap(bmp.Width, bmp.Height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
             using var g = Graphics.FromImage(image);
             g.DrawImage(bmp, Point.Empty);
+            bmp.Dispose();
             return image;
         }
     }

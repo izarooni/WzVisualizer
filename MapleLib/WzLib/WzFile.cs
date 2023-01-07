@@ -246,11 +246,13 @@ namespace MapleLib.WzLib
             // it can be any number if the client is 64-bit. Assigning 777 is just for convenience when calculating the versionHash.
             this.wzVersionHeader = this.wz_withEncryptVersionHeader ? reader.ReadUInt16() : wzVersionHeader64bit_start;
 
-            Debug.WriteLine("----------------------------------------");
-            Debug.WriteLine(string.Format("Read Wz File {0}", this.Name));
-            Debug.WriteLine(string.Format("wz_withEncryptVersionHeader: {0}", wz_withEncryptVersionHeader));
-            Debug.WriteLine(string.Format("wzVersionHeader: {0}", wzVersionHeader));
-            Debug.WriteLine("----------------------------------------");
+            if (!lazyParse) {
+                Debug.WriteLine("----------------------------------------");
+                Debug.WriteLine(string.Format("Read Wz File {0}", this.Name));
+                Debug.WriteLine(string.Format("wz_withEncryptVersionHeader: {0}", wz_withEncryptVersionHeader));
+                Debug.WriteLine(string.Format("wzVersionHeader: {0}", wzVersionHeader));
+                Debug.WriteLine("----------------------------------------");
+            }
 
             if (mapleStoryPatchVersion == -1)
             {

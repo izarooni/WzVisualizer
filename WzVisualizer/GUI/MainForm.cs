@@ -266,7 +266,7 @@ namespace WzVisualizer.GUI {
         }
 
         private void SearchTextBox_KeyPress(object sender, KeyPressEventArgs e) {
-            if ((int)e.KeyChar == 13) {
+            if (e.KeyChar == 13) {
                 OnTabControlChanged();
             }
         }
@@ -300,19 +300,6 @@ namespace WzVisualizer.GUI {
             BinaryDataUtil.ImportGrid($"{main.Text}/{dv.Parent.Text}.bin", dv, (grid, data) => VisualizerUtil.AddNewRow(this, grid, data));
         }
 
-        private void ForEachPage(TabControl control, Action<TabPage, string> testfor) {
-            for (var i = 0; i < control.Controls.Count; i++) {
-                var child = control.Controls[i];
-                control.SelectedIndex = i;
-
-                if (child.Controls[0] is DataViewport) {
-                    testfor.Invoke(child as TabPage, TabControlMain.SelectedTab.Text);
-                } else if (child.Controls[0] is TabControl tc) {
-                    ForEachPage(child.Controls[0] as TabControl, testfor);
-                }
-            }
-        }
-
         /// <summary>
         /// Clear all DataViewport grids to allow re-populating data, especially when search queries are present
         /// </summary>
@@ -322,7 +309,6 @@ namespace WzVisualizer.GUI {
                     case DataViewport dv: {
                             if (clearData) dv.Data.Clear();
                             dv.GridView.Rows.Clear();
-                            GC.Collect();
                             break;
                         }
                     case TabControl tc:
@@ -332,6 +318,7 @@ namespace WzVisualizer.GUI {
                         break;
                 }
             }
+            GC.Collect();
         }
     }
 }
