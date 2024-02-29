@@ -101,6 +101,8 @@ namespace WzVisualizer.IO {
             var dv = (DataViewport)tab.Controls[0];
             var data = dv.Data;
 
+            if (data.Count == 0) return;
+
             string directory = $"{ExportFolder}/{folder}";
             string filePath = $"{directory}/{tab.Text}.bin";
             Directory.CreateDirectory(directory);

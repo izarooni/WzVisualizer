@@ -177,6 +177,10 @@ namespace MapleLib.WzLib
             this.wzFile = wzFile;
         }
 
+        public override string ToString() {
+            return $"WzDirectory(Name={Name})";
+        }
+
         /// <summary>
         /// Parses the WzDirectory
         /// <paramref name="lazyParse">Only parses the first directory</paramref>
@@ -218,8 +222,6 @@ namespace MapleLib.WzLib
 
                             type = reader.ReadByte();
                             fname = reader.ReadString();
-
-                            Console.WriteLine("EntryCount: {0}, type: {1}, fname: {2}", entryCount, type, fname);
                             break;
                         }
                     case (byte) WzDirectoryType.WzDirectory_3:

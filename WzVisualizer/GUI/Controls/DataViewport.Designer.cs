@@ -38,6 +38,7 @@ namespace WzVisualizer.GUI.Controls {
             // 
             this.GridView.AllowUserToAddRows = false;
             this.GridView.AllowUserToDeleteRows = false;
+            this.GridView.AllowUserToOrderColumns = true;
             this.GridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.GridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.propID,
@@ -54,10 +55,12 @@ namespace WzVisualizer.GUI.Controls {
             // 
             // propID
             // 
+            this.propID.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.propID.DataPropertyName = "IDProperty";
             this.propID.HeaderText = "ID";
             this.propID.Name = "propID";
             this.propID.ReadOnly = true;
+            this.propID.Width = 43;
             // 
             // propBitmap
             // 
@@ -77,6 +80,7 @@ namespace WzVisualizer.GUI.Controls {
             // 
             // propProperties
             // 
+            this.propProperties.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.propProperties.DataPropertyName = "PropertiesProperty";
             this.propProperties.HeaderText = "Properties";
             this.propProperties.Name = "propProperties";

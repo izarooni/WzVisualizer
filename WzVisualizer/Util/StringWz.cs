@@ -78,7 +78,8 @@ namespace WzVisualizer {
                 case 2:
                 case 5: return "Face";
                 case 3:
-                case 4: return "Hair";
+                case 4:
+                case 6: return "Hair";
                 case 100: return "Cap";
                 case 101:
                 case 102:

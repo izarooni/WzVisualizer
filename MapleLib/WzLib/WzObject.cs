@@ -31,7 +31,7 @@ namespace MapleLib.WzLib
         private object msTag_spine = null;
         private object tag3 = null;
 
-		public abstract void Dispose();
+        public abstract void Dispose();
 
 		/// <summary>
 		/// The name of the object

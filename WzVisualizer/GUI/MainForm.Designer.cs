@@ -39,7 +39,7 @@
             this.TabECaps = new System.Windows.Forms.TabPage();
             this.EquipCapsView = new WzVisualizer.GUI.Controls.DataViewport();
             this.TabEOveralls = new System.Windows.Forms.TabPage();
-            this.EquipsOverallsView = new WzVisualizer.GUI.Controls.DataViewport();
+            this.EquipOverallsView = new WzVisualizer.GUI.Controls.DataViewport();
             this.TabETops = new System.Windows.Forms.TabPage();
             this.EquipTopsView = new WzVisualizer.GUI.Controls.DataViewport();
             this.TabEBottoms = new System.Windows.Forms.TabPage();
@@ -86,13 +86,14 @@
             this.PetsView = new WzVisualizer.GUI.Controls.DataViewport();
             this.TabReactors = new System.Windows.Forms.TabPage();
             this.ReactorView = new WzVisualizer.GUI.Controls.DataViewport();
-            this.ComboLoadType = new System.Windows.Forms.ComboBox();
             this.TextWzPath = new System.Windows.Forms.TextBox();
-            this.BtnWzLoad = new System.Windows.Forms.Button();
-            this.BtnSave = new System.Windows.Forms.Button();
             this.SearchTextBox = new System.Windows.Forms.TextBox();
-            this.mainFormBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.WzPathLabel = new System.Windows.Forms.Label();
+            this.BtnWzLoad = new System.Windows.Forms.Button();
             this.BtnSearch = new System.Windows.Forms.Button();
+            this.BtnSave = new System.Windows.Forms.Button();
+            this.mainFormBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.symbolButton1 = new WzVisualizer.GUI.Controls.SymbolButton();
             this.TabControlMain.SuspendLayout();
             this.TabEquipsPage.SuspendLayout();
             this.EquipTab.SuspendLayout();
@@ -149,6 +150,7 @@
             this.TabControlMain.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TabControlMain.Location = new System.Drawing.Point(0, 29);
             this.TabControlMain.Margin = new System.Windows.Forms.Padding(0);
+            this.TabControlMain.Multiline = true;
             this.TabControlMain.Name = "TabControlMain";
             this.TabControlMain.Padding = new System.Drawing.Point(15, 5);
             this.TabControlMain.SelectedIndex = 0;
@@ -184,7 +186,6 @@
             this.EquipTab.Controls.Add(this.TabETames);
             this.EquipTab.Dock = System.Windows.Forms.DockStyle.Fill;
             this.EquipTab.Location = new System.Drawing.Point(0, 0);
-            this.EquipTab.Multiline = true;
             this.EquipTab.Name = "EquipTab";
             this.EquipTab.SelectedIndex = 0;
             this.EquipTab.Size = new System.Drawing.Size(787, 549);
@@ -298,7 +299,7 @@
             // 
             // TabEOveralls
             // 
-            this.TabEOveralls.Controls.Add(this.EquipsOverallsView);
+            this.TabEOveralls.Controls.Add(this.EquipOverallsView);
             this.TabEOveralls.Location = new System.Drawing.Point(4, 25);
             this.TabEOveralls.Name = "TabEOveralls";
             this.TabEOveralls.Padding = new System.Windows.Forms.Padding(3);
@@ -307,15 +308,15 @@
             this.TabEOveralls.Text = "Overalls";
             this.TabEOveralls.UseVisualStyleBackColor = true;
             // 
-            // EquipsOverallsView
+            // EquipOverallsView
             // 
-            this.EquipsOverallsView.Data = null;
-            this.EquipsOverallsView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.EquipsOverallsView.Location = new System.Drawing.Point(3, 3);
-            this.EquipsOverallsView.Margin = new System.Windows.Forms.Padding(5);
-            this.EquipsOverallsView.Name = "EquipsOverallsView";
-            this.EquipsOverallsView.Size = new System.Drawing.Size(773, 514);
-            this.EquipsOverallsView.TabIndex = 1;
+            this.EquipOverallsView.Data = null;
+            this.EquipOverallsView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.EquipOverallsView.Location = new System.Drawing.Point(3, 3);
+            this.EquipOverallsView.Margin = new System.Windows.Forms.Padding(5);
+            this.EquipOverallsView.Name = "EquipOverallsView";
+            this.EquipOverallsView.Size = new System.Drawing.Size(773, 514);
+            this.EquipOverallsView.TabIndex = 1;
             // 
             // TabETops
             // 
@@ -803,94 +804,98 @@
             this.ReactorView.Size = new System.Drawing.Size(781, 543);
             this.ReactorView.TabIndex = 0;
             // 
-            // ComboLoadType
-            // 
-            this.ComboLoadType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.ComboLoadType.FormattingEnabled = true;
-            this.ComboLoadType.Items.AddRange(new object[] {
-            "BIN",
-            "WZ"});
-            this.ComboLoadType.Location = new System.Drawing.Point(5, 5);
-            this.ComboLoadType.Name = "ComboLoadType";
-            this.ComboLoadType.Size = new System.Drawing.Size(55, 21);
-            this.ComboLoadType.TabIndex = 1;
-            this.ComboLoadType.SelectedIndexChanged += new System.EventHandler(this.ComboLoadType_SelectedIndexChanged);
-            // 
             // TextWzPath
             // 
-            this.TextWzPath.Enabled = false;
-            this.TextWzPath.Location = new System.Drawing.Point(66, 4);
+            this.TextWzPath.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.TextWzPath.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.TextWzPath.Location = new System.Drawing.Point(49, 6);
             this.TextWzPath.Name = "TextWzPath";
-            this.TextWzPath.Size = new System.Drawing.Size(196, 20);
+            this.TextWzPath.Size = new System.Drawing.Size(222, 20);
             this.TextWzPath.TabIndex = 3;
             this.TextWzPath.Click += new System.EventHandler(this.TextWzPath_Click);
-            // 
-            // BtnWzLoad
-            // 
-            this.BtnWzLoad.Enabled = false;
-            this.BtnWzLoad.Location = new System.Drawing.Point(268, 3);
-            this.BtnWzLoad.Name = "BtnWzLoad";
-            this.BtnWzLoad.Size = new System.Drawing.Size(75, 23);
-            this.BtnWzLoad.TabIndex = 4;
-            this.BtnWzLoad.Text = "Load";
-            this.BtnWzLoad.UseVisualStyleBackColor = true;
-            this.BtnWzLoad.Click += new System.EventHandler(this.BtnWzLoad_Click);
-            // 
-            // BtnSave
-            // 
-            this.BtnSave.BackColor = System.Drawing.Color.Transparent;
-            this.BtnSave.FlatAppearance.BorderSize = 0;
-            this.BtnSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BtnSave.Image = global::WzVisualizer.Properties.Resources.FloppyIcon;
-            this.BtnSave.Location = new System.Drawing.Point(349, 3);
-            this.BtnSave.Name = "BtnSave";
-            this.BtnSave.Size = new System.Drawing.Size(23, 21);
-            this.BtnSave.TabIndex = 5;
-            this.BtnSave.UseVisualStyleBackColor = false;
-            this.BtnSave.MouseUp += new System.Windows.Forms.MouseEventHandler(this.BtnSave_Click);
             // 
             // SearchTextBox
             // 
             this.SearchTextBox.AcceptsReturn = true;
             this.SearchTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.SearchTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.SearchTextBox.Location = new System.Drawing.Point(633, 6);
+            this.SearchTextBox.Location = new System.Drawing.Point(584, 6);
             this.SearchTextBox.Name = "SearchTextBox";
-            this.SearchTextBox.Size = new System.Drawing.Size(158, 20);
+            this.SearchTextBox.Size = new System.Drawing.Size(132, 20);
             this.SearchTextBox.TabIndex = 6;
             this.SearchTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.SearchTextBox_KeyPress);
+            // 
+            // WzPathLabel
+            // 
+            this.WzPathLabel.AutoSize = true;
+            this.WzPathLabel.Location = new System.Drawing.Point(7, 9);
+            this.WzPathLabel.Name = "WzPathLabel";
+            this.WzPathLabel.Size = new System.Drawing.Size(36, 13);
+            this.WzPathLabel.TabIndex = 7;
+            this.WzPathLabel.Text = "Folder";
+            this.WzPathLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // BtnWzLoad
+            // 
+            this.BtnWzLoad.Location = new System.Drawing.Point(278, 6);
+            this.BtnWzLoad.Name = "BtnWzLoad";
+            this.BtnWzLoad.Size = new System.Drawing.Size(61, 20);
+            this.BtnWzLoad.TabIndex = 8;
+            this.BtnWzLoad.Text = "Load";
+            this.BtnWzLoad.UseVisualStyleBackColor = true;
+            this.BtnWzLoad.Click += new System.EventHandler(this.BtnWzLoad_Click);
+            // 
+            // BtnSearch
+            // 
+            this.BtnSearch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.BtnSearch.Location = new System.Drawing.Point(720, 6);
+            this.BtnSearch.Name = "BtnSearch";
+            this.BtnSearch.Size = new System.Drawing.Size(64, 20);
+            this.BtnSearch.TabIndex = 9;
+            this.BtnSearch.Text = "Search";
+            this.BtnSearch.UseVisualStyleBackColor = true;
+            this.BtnSearch.Click += new System.EventHandler(this.BtnSearch_Click);
+            // 
+            // BtnSave
+            // 
+            this.BtnSave.Location = new System.Drawing.Point(345, 6);
+            this.BtnSave.Name = "BtnSave";
+            this.BtnSave.Size = new System.Drawing.Size(61, 20);
+            this.BtnSave.TabIndex = 10;
+            this.BtnSave.Text = "Save";
+            this.BtnSave.UseVisualStyleBackColor = true;
+            this.BtnSave.Click += new System.EventHandler(this.BtnSave_Click);
             // 
             // mainFormBindingSource
             // 
             this.mainFormBindingSource.DataSource = typeof(WzVisualizer.GUI.MainForm);
             // 
-            // BtnSearch
+            // symbolButton1
             // 
-            this.BtnSearch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.BtnSearch.Location = new System.Drawing.Point(576, 6);
-            this.BtnSearch.Name = "BtnSearch";
-            this.BtnSearch.Size = new System.Drawing.Size(51, 23);
-            this.BtnSearch.TabIndex = 7;
-            this.BtnSearch.Text = "Search";
-            this.BtnSearch.UseVisualStyleBackColor = true;
-            this.BtnSearch.Click += new System.EventHandler(this.BtnSearch_Click);
+            this.symbolButton1.Location = new System.Drawing.Point(0, 0);
+            this.symbolButton1.Name = "symbolButton1";
+            this.symbolButton1.Size = new System.Drawing.Size(150, 150);
+            this.symbolButton1.TabIndex = 0;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(795, 611);
-            this.Controls.Add(this.BtnSearch);
-            this.Controls.Add(this.SearchTextBox);
             this.Controls.Add(this.BtnSave);
+            this.Controls.Add(this.BtnSearch);
             this.Controls.Add(this.BtnWzLoad);
+            this.Controls.Add(this.WzPathLabel);
+            this.Controls.Add(this.SearchTextBox);
             this.Controls.Add(this.TextWzPath);
-            this.Controls.Add(this.ComboLoadType);
             this.Controls.Add(this.TabControlMain);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.KeyPreview = true;
             this.Name = "MainForm";
-            this.Text = "WzVisualizer - v1.6.0";
+            this.Text = "WzVisualizer - v1.6.3";
             this.Load += new System.EventHandler(this.MainForm_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MainForm_KeyDown);
+            this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.MainForm_KeyUp);
             this.TabControlMain.ResumeLayout(false);
             this.TabEquipsPage.ResumeLayout(false);
             this.EquipTab.ResumeLayout(false);
@@ -930,12 +935,7 @@
             this.PerformLayout();
 
         }
-
-        private System.Windows.Forms.Button BtnSave;
-        private System.Windows.Forms.Button BtnSearch;
-        private System.Windows.Forms.Button BtnWzLoad;
         public WzVisualizer.GUI.Controls.DataViewport CashView;
-        private System.Windows.Forms.ComboBox ComboLoadType;
         public WzVisualizer.GUI.Controls.DataViewport EquipAccessoryView;
         public WzVisualizer.GUI.Controls.DataViewport EquipCapesView;
         public WzVisualizer.GUI.Controls.DataViewport EquipCapsView;
@@ -947,7 +947,7 @@
         public WzVisualizer.GUI.Controls.DataViewport EquipRingsView;
         public WzVisualizer.GUI.Controls.DataViewport EquipShieldsView;
         public WzVisualizer.GUI.Controls.DataViewport EquipShoesView;
-        public WzVisualizer.GUI.Controls.DataViewport EquipsOverallsView;
+        public WzVisualizer.GUI.Controls.DataViewport EquipOverallsView;
         public System.Windows.Forms.TabControl EquipTab;
         public WzVisualizer.GUI.Controls.DataViewport EquipTopsView;
         public WzVisualizer.GUI.Controls.DataViewport EquipWeaponsView;
@@ -1001,6 +1001,12 @@
         public WzVisualizer.GUI.Controls.DataViewport UseScrollsView;
 
         #endregion
+
+        private Controls.SymbolButton symbolButton1;
+        private System.Windows.Forms.Label WzPathLabel;
+        private System.Windows.Forms.Button BtnWzLoad;
+        private System.Windows.Forms.Button BtnSearch;
+        private System.Windows.Forms.Button BtnSave;
     }
 }
 

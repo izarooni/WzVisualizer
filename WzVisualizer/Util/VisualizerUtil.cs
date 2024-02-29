@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Text.RegularExpressions;
@@ -67,7 +68,7 @@ namespace WzVisualizer.Util {
                     ProcessGeneric(app, rootTab);
                     break;
                 case RootVTab.Map:
-                    ParseMap(app); // these can probably be merged into ProcessGeneric but maybe another day
+                    ParseMap(app);
                     break;
                 case RootVTab.Mob:
                     ParseMob(app);
@@ -125,13 +126,17 @@ namespace WzVisualizer.Util {
             var files = Wz.Character.GetFiles();
 
             foreach (var file in files) {
+                // 64-bit client support
                 if (!file.Name.StartsWith("Character.wz")) {
                     var name = Regex.Replace(Path.GetFileNameWithoutExtension(file.Name), "[^a-zA-Z]", "");
                     if (!Enum.TryParse<EquipTab>(name, out var tabName)) continue;
                     if (!file.Name.StartsWith(tabName.ToString())) continue;
                 }
 
-                Console.WriteLine($"[VisualizerUtil] Loading {file.Name}");
+
+                Stopwatch timer = new Stopwatch();
+                timer.Start();
+
                 file.ParseWzFile();
                 var root = file.WzDirectory;
                 var images = root.WzImages;
@@ -142,46 +147,34 @@ namespace WzVisualizer.Util {
                     images.AddRange(CollectAllNodes(root));
                 }
 
-                // 64-bit client support
+                timer.Stop();
+                Debug.WriteLine($"[VisualizerUtil] {file.Name} loaded {images.Count} entries in {timer.Elapsed}ms");
+
                 foreach (var img in images) {
                     if (!int.TryParse(Path.GetFileNameWithoutExtension(img.Name), out var itemId)) continue;
 
                     Bitmap image = null;
 
                     DataViewport dv;
+
                     switch (itemId / 10000) {
-                        default: continue;
-                        case 3 or 4: {
-                                image = (img.GetFromPath("default/hairOverHead") ?? img.GetFromPath("default/hair"))?.GetLinkedWzImageProperty().GetBitmap();
-                                var hairBelowBody = (img.GetFromPath("default/hairBelowBody") as WzCanvasProperty)?.GetLinkedWzImageProperty().GetBitmap();
-                                if (image != null && hairBelowBody != null) {
-                                    var merge = new Bitmap(Math.Max(image.Width, hairBelowBody.Width), Math.Max(image.Height, hairBelowBody.Height));
-                                    using (var g = Graphics.FromImage(merge)) {
-                                        g.DrawImage(hairBelowBody, Point.Empty);
-                                        g.DrawImage(image, Point.Empty);
-                                    }
-
-                                    image = merge;
-                                }
-
-                                dv = app.EquipHairsView;
-                                break;
-                            }
+                        case 3 or 4 or 6:
+                            dv = app.EquipHairsView;
+                            break;
                         case 2 or 5:
-                            image = (img.GetFromPath("default/face") ?? img.GetFromPath("blink/0/face"))?.GetLinkedWzImageProperty().GetBitmap();
                             dv = app.EquipFacesView;
                             break;
-                        case <= 170 and >= 130:
+                        case >= 130 and <= 170:
                             dv = app.EquipWeaponsView;
                             break;
-                        case (>= 101 and <= 103 or >= 112 and <= 114):
+                        case (>= 101 and <= 103) or (>= 112 and <= 114):
                             dv = app.EquipAccessoryView;
                             break;
                         case 100:
                             dv = app.EquipCapsView;
                             break;
                         case 105:
-                            dv = app.EquipsOverallsView;
+                            dv = app.EquipOverallsView;
                             break;
                         case 104:
                             dv = app.EquipTopsView;
@@ -192,36 +185,64 @@ namespace WzVisualizer.Util {
                         case 107:
                             dv = app.EquipShoesView;
                             break;
-                        case 110:
-                            dv = app.EquipCapesView;
-                            break;
                         case 108:
                             dv = app.EquipGlovesView;
-                            break;
-                        case 111:
-                            dv = app.EquipRingsView;
                             break;
                         case 109:
                             dv = app.EquipShieldsView;
                             break;
+                        case 110:
+                            dv = app.EquipCapesView;
+                            break;
+                        case 111:
+                            dv = app.EquipRingsView;
+                            break;
                         case 190 or 191 or 193:
                             dv = app.EquipMountsView;
                             break;
+                        default: continue;
                     }
 
-
-                    var name = StringWz.GetEqp(itemId);
-                    var properties = GetAllProperties(img);
-                    if (image == null) {
-                        var icon = img.GetFromPath("info/icon");
-                        if (icon != null) image = icon?.GetLinkedWzImageProperty().GetBitmap();
-                    }
-                    image = DuplicateBitmap(image);
 
                     if (app.GetCurrentDataViewport() == dv) {
+                        var name = StringWz.GetEqp(itemId);
+                        var properties = GetAllProperties(img);
+
+                        switch (itemId / 10000) {
+                            case 3 or 4 or 6: {
+                                    image = (img.GetFromPath("default/hairOverHead") ?? img.GetFromPath("default/hair"))
+                                        ?.GetLinkedWzImageProperty().GetBitmap();
+                                    var hairBelowBody = (img.GetFromPath("default/hairBelowBody") as WzCanvasProperty)
+                                        ?.GetLinkedWzImageProperty().GetBitmap();
+
+                                    // combine front and back hair
+                                    if (image != null && hairBelowBody != null) {
+                                        var merge = new Bitmap(Math.Max(image.Width, hairBelowBody.Width),
+                                            Math.Max(image.Height, hairBelowBody.Height));
+                                        using (var g = Graphics.FromImage(merge)) {
+                                            g.DrawImage(hairBelowBody, Point.Empty);
+                                            g.DrawImage(image, Point.Empty);
+                                        }
+
+                                        image = merge;
+                                    }
+
+                                    break;
+                                }
+                            case 2 or 5:
+                                image = (img.GetFromPath("default/face") ?? img.GetFromPath("blink/0/face"))
+                                    ?.GetLinkedWzImageProperty().GetBitmap();
+                                break;
+                            default:
+                                var icon = img.GetFromPath("info/icon");
+                                if (icon != null) image = icon?.GetLinkedWzImageProperty().GetBitmap();
+                                break;
+                        }
+
+                        image = DuplicateBitmap(image);
                         dv.GridView.Rows.Add(itemId, image, name, properties.Substring(0, Math.Min(properties.Length, 50)));
+                        dv.Data.Add(new BinData(itemId, image, name, properties));
                     }
-                    dv.Data.Add(new BinData(itemId, image, name, properties));
                 }
                 file.Dispose();
             }
@@ -232,102 +253,105 @@ namespace WzVisualizer.Util {
 
         #region generic
         private static void ProcessGeneric(MainForm app, RootVTab rootTab) {
-
-            var files = Wz.Item.GetFiles();
-
             void AddNewRows(WzImage wz, DataViewport dv) {
                 wz.WzProperties.ForEach(img => ParseGeneric(dv.GridView, img));
             }
 
-            foreach (var file in files) {
+            // loop through types of Wz enum
 
-                // 64-bit parsing optimization due to having so many partitioned files 
-                // maplestory is now 30GB+ thus .wz files are now separated.
-                // i only want to parse necessary files that contain the items needed for rendering
-                switch (rootTab) {
-                    case RootVTab.Use:
-                        // 64-bit client
-                        if (!file.Name.StartsWith("Consume") &&
-                            // classic
-                            !file.Name.StartsWith("Item")) continue;
-                        break;
+            foreach (Wz wz in Enum.GetValues(typeof(Wz))) {
+                List<WzFile> files = wz.GetFiles();
 
-                    case RootVTab.Setup:
-                        if (!file.Name.StartsWith("Install")) continue;
-                        break;
-                    case RootVTab.Etc:
-                        if (!file.Name.StartsWith("Etc")) continue;
-                        break;
-                    case RootVTab.Cash:
-                        if (!file.Name.StartsWith("Cash")) continue;
-                        break;
-                    case RootVTab.Pets:
-                        // 64-bit client
-                        if (!file.Name.StartsWith("Pet") &&
-                            // classic
-                            !file.Name.StartsWith("Item")) continue;
-                        break;
+                foreach (var file in files) {
 
-                    case RootVTab.Equips:
-                    case RootVTab.Map:
-                    case RootVTab.Mob:
-                    case RootVTab.Skills:
-                    case RootVTab.NPC:
-                    case RootVTab.Reactors:
-                    default: continue;
-                }
-
-                Console.WriteLine($"[VisualizerUtil] Loading {file.Name}");
-                file.ParseWzFile();
-                var root = file.WzDirectory;
-                var images = root.WzImages;
-
-                // classic
-                if (images.Count == 0 && root.WzDirectories.Count > 0) {
-                    images = new List<WzImage>();
-                    foreach (var dir in root.WzDirectories) {
-                        images.AddRange(dir.WzImages);
-                    }
-                }
-
-                // 64-bit client support
-                foreach (var img in images) {
-                    if (!int.TryParse(Path.GetFileNameWithoutExtension(img.Name), out var itemId)) continue;
-
+                    // 64-bit parsing optimization due to having so many partitioned files 
+                    // maplestory is now 30GB+ thus .wz files are now separated.
+                    // i only want to parse necessary files that contain the items needed for rendering
                     switch (rootTab) {
-                        case RootVTab.Use when itemId / 100 == 2:
-                            switch (itemId) {
-                                case <= 203:
-                                    AddNewRows(img, app.UseConsumeView);
-                                    break;
-                                case 204:
-                                case 234:
-                                    AddNewRows(img, app.UseScrollsView);
-                                    break;
-                                case 206:
-                                case 207:
-                                case 233:
-                                    AddNewRows(img, app.UseProjectileView);
-                                    break;
-                            }
+                        case RootVTab.Use:
+                            // 64-bit client
+                            if (!file.Name.StartsWith("Consume") &&
+                                // classic
+                                !file.Name.StartsWith("Item")) continue;
+                            break;
 
+                        case RootVTab.Setup:
+                            if (!file.Name.StartsWith("Item")) continue;
                             break;
-                        case RootVTab.Setup when itemId is 301 or 399 or >= 3010 and <= 30157:
-                            // 301 ~ 399: classic
-                            // 3010 ~ 3014: 64-bit client
-                            var chair = itemId == 301 || itemId >= 3010 && itemId <= 3014;
-                            AddNewRows(img, chair ? app.SetupChairsView : app.SetupOthersView);
+                        case RootVTab.Etc:
+                            if (!file.Name.StartsWith("Item")) continue;
                             break;
-                        case RootVTab.Etc when ItemConstants.IsEtc(itemId):
-                            AddNewRows(img, app.EtcView);
+                        case RootVTab.Cash:
+                            if (!file.Name.StartsWith("Cash")
+                                && !file.Name.StartsWith(("Item"))) continue;
                             break;
-                        case RootVTab.Cash when ItemConstants.IsCash(itemId):
-                            AddNewRows(img, app.CashView);
+                        case RootVTab.Pets:
+                            // 64-bit client
+                            if (!file.Name.StartsWith("Pet") &&
+                                // classic
+                                !file.Name.StartsWith("Item")) continue;
                             break;
-                        case RootVTab.Pets when ItemConstants.IsPet(itemId):
-                            // AddNewRows(img, app.PetsView);
-                            ParseGeneric(app.PetsView.GridView, img);
-                            break;
+                        case RootVTab.Map:
+                        case RootVTab.Mob:
+                        case RootVTab.Skills:
+                        case RootVTab.NPC:
+                        case RootVTab.Equips:
+                        case RootVTab.Reactors:
+                        default: continue;
+                    }
+
+                    Console.WriteLine($"[VisualizerUtil] Loading {file.Name} via common structure");
+                    file.ParseWzFile();
+                    var root = file.WzDirectory;
+                    var images = root.WzImages;
+
+                    // classic
+                    if (images.Count == 0 && root.WzDirectories.Count > 0) {
+                        images = new List<WzImage>();
+                        foreach (var dir in root.WzDirectories) {
+                            images.AddRange(dir.WzImages);
+                        }
+                    }
+
+                    // 64-bit client support
+                    foreach (var img in images) {
+                        if (!int.TryParse(Path.GetFileNameWithoutExtension(img.Name), out var itemId)) continue;
+
+                        switch (rootTab) {
+                            case RootVTab.Use when itemId / 100 == 2:
+                                switch (itemId) {
+                                    case <= 203:
+                                        AddNewRows(img, app.UseConsumeView);
+                                        break;
+                                    case 204:
+                                    case 234:
+                                        AddNewRows(img, app.UseScrollsView);
+                                        break;
+                                    case 206:
+                                    case 207:
+                                    case 233:
+                                        AddNewRows(img, app.UseProjectileView);
+                                        break;
+                                }
+
+                                break;
+                            case RootVTab.Setup when itemId is 301 or 399 or >= 3010 and <= 30157:
+                                // 301 ~ 399: classic
+                                // 3010 ~ 3014: 64-bit client
+                                var chair = itemId == 301 || itemId >= 3010 && itemId <= 3014;
+                                AddNewRows(img, chair ? app.SetupChairsView : app.SetupOthersView);
+                                break;
+                            case RootVTab.Etc when ItemConstants.IsEtc(itemId):
+                                AddNewRows(img, app.EtcView);
+                                break;
+                            case RootVTab.Cash when ItemConstants.IsCash(itemId):
+                                AddNewRows(img, app.CashView);
+                                break;
+                            case RootVTab.Pets when ItemConstants.IsPet(itemId):
+                                // AddNewRows(img, app.PetsView);
+                                ParseGeneric(app.PetsView.GridView, img);
+                                break;
+                        }
                     }
                 }
             }
@@ -421,12 +445,13 @@ namespace WzVisualizer.Util {
                 Console.WriteLine($"[VisualizerUtil] Loading {file.Name}");
                 file.ParseWzFile();
                 var root = file.WzDirectory;
-
-                foreach (var img in root.WzImages) {
-                    if (!int.TryParse(Path.GetFileNameWithoutExtension(img.Name), out var mapId)) continue;
-
-                    ParseGeneric(app.MapsView.GridView, img);
-                }
+                WzDirectory maps = root.GetDirectoryByName("Map");
+                maps.WzDirectories.ForEach(dir => {
+                    Match match = Regex.Match(dir.Name, "^Map\\d+$");
+                    if (match.Success) {
+                        dir.WzImages.ForEach(img => ParseGeneric(app.MapsView.GridView, img));
+                    }
+                });
             }
 
             Wz.Map.Dispose();
@@ -521,7 +546,7 @@ namespace WzVisualizer.Util {
                 return;
             }
 
-            VALIDATED:
+        VALIDATED:
             var properties = "";
             foreach (var p in bin.Properties) {
                 properties += p + "\r\n";
@@ -615,7 +640,6 @@ namespace WzVisualizer.Util {
             var image = new Bitmap(bmp.Width, bmp.Height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
             using var g = Graphics.FromImage(image);
             g.DrawImage(bmp, Point.Empty);
-            bmp.Dispose();
             return image;
         }
     }

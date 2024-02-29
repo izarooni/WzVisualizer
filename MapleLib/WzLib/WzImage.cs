@@ -20,6 +20,7 @@ using System;
 using MapleLib.WzLib.Util;
 using MapleLib.WzLib.WzProperties;
 using System.Linq;
+using System.Windows.Forms;
 
 namespace MapleLib.WzLib
 {

@@ -17,10 +17,13 @@ namespace WzVisualizer.GUI {
     public partial class MainForm : Form {
         private readonly FolderBrowserDialog folderBrowser = new();
         private readonly PropertiesViewer viewer = new();
-        private bool loadAll = false;
+        private bool loadAll;
 
         public MainForm() {
             InitializeComponent();
+
+            // set the default path to the current directory
+            TextWzPath.Text = Directory.GetCurrentDirectory();
         }
 
         public string SearchQuery => SearchTextBox.Text;
@@ -143,7 +146,7 @@ namespace WzVisualizer.GUI {
                 return;
             }
 
-            NO_FILES:
+        NO_FILES:
             MessageBox.Show(Resources.GameFilesNotFound, Resources.FileNotFound, MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
@@ -224,6 +227,9 @@ namespace WzVisualizer.GUI {
             var cell = grid.SelectedCells[0];
 
             switch (cell.ColumnIndex) {
+                case 0:
+                    Clipboard.SetText($"!item {cell.Value}");
+                    break;
                 case 1:
                     var bmp = cell.Value as Bitmap;
                     if (bmp == null) return;
@@ -250,20 +256,10 @@ namespace WzVisualizer.GUI {
         /// directory as the root folder containing WZ files
         /// </summary>
         private void TextWzPath_Click(object sender, EventArgs e) {
-            if (ComboLoadType.SelectedIndex != 1) return;
             if (folderBrowser.ShowDialog() != DialogResult.OK) return;
-
             TextWzPath.Text = folderBrowser.SelectedPath;
         }
 
-        /// <summary>
-        /// Enable or disable the WZ path controls if BIN loading is selected
-        /// </summary>
-        private void ComboLoadType_SelectedIndexChanged(object sender, EventArgs e) {
-            var enabled = (ComboLoadType.SelectedIndex == 1);
-            TextWzPath.Enabled = enabled;
-            BtnWzLoad.Enabled = enabled;
-        }
 
         private void SearchTextBox_KeyPress(object sender, KeyPressEventArgs e) {
             if (e.KeyChar == 13) {
@@ -271,11 +267,21 @@ namespace WzVisualizer.GUI {
             }
         }
 
+        private void MainForm_KeyDown(object sender, KeyEventArgs e) {
+            loadAll = ModifierKeys == Keys.Shift;
+            BtnSave.Text = loadAll ? "Save All" : "Save";
+            BtnWzLoad.Text = loadAll ? "Load All" : "Load";
+        }
+
+        private void MainForm_KeyUp(object sender, KeyEventArgs e) {
+            loadAll = ModifierKeys == Keys.Shift;
+            BtnSave.Text = loadAll ? "Save All" : "Save";
+            BtnWzLoad.Text = loadAll ? "Load All" : "Load";
+        }
+
         private void MainForm_Load(object sender, EventArgs e) {
             // Obtain the last used WZ root directory
             TextWzPath.Text = Settings.Default.PathCache;
-            // Set default values for the ComboBoxes
-            ComboLoadType.SelectedIndex = 0;
 
             TabControlMain.Selected += TabControl_Selected;
             AddEventHandlers(TabControlMain);
