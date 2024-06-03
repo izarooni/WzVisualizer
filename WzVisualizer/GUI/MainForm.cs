@@ -15,18 +15,25 @@ namespace WzVisualizer.GUI {
     internal delegate void AddGridRowCallBack(DataGridView grid, BinData binData);
 
     public partial class MainForm : Form {
+        internal readonly SearchForm SearchForm = new();
+
         private readonly FolderBrowserDialog folderBrowser = new();
         private readonly PropertiesViewer viewer = new();
-        private bool loadAll;
+        public bool LoadAll { get; set; }
 
         public MainForm() {
             InitializeComponent();
 
             // set the default path to the current directory
-            TextWzPath.Text = Directory.GetCurrentDirectory();
+            wzPathTextbox.Text = Directory.GetCurrentDirectory();
+
+            AddOwnedForm(SearchForm);
+            SearchForm.Location = new Point(Right - SearchForm.Width - 5, Top + SearchForm.Height / 2);
+            LocationChanged += (o, args) => SearchForm.Location = new Point(Right - SearchForm.Width - 5, Top + SearchForm.Height / 2);
+            SearchForm.searchButton.Click += (o, args) => OnTabControlChanged();
         }
 
-        public string SearchQuery => SearchTextBox.Text;
+        public string SearchQuery => searchTextbox.Text;
 
         /// <summary>
         /// recursively add event handlers to all DataViewport components
@@ -65,7 +72,7 @@ namespace WzVisualizer.GUI {
         }
 
         private void LoadWzData() {
-            if (loadAll) {
+            if (LoadAll) {
                 for (var i = 0; i < TabControlMain.TabCount; i++) {
                     TabControlMain.SelectedIndex = i;
                     VisualizerUtil.ProcessTab(i, this);
@@ -84,14 +91,14 @@ namespace WzVisualizer.GUI {
             ClearAllPages(TabControlMain, true);
             DisposeWzFiles();
 
-            loadAll = ModifierKeys == Keys.Shift;
+            LoadAll = ModifierKeys == Keys.Shift;
 
-            if (loadAll) {
+            if (LoadAll) {
                 var result = MessageBox.Show(Resources.MassReadWarning, "Warning", MessageBoxButtons.YesNo);
                 if (result != DialogResult.Yes) return;
             }
 
-            var path = TextWzPath.Text;
+            var path = wzPathTextbox.Text;
 
             if (!path.Equals(Settings.Default.PathCache)) {
                 Settings.Default.PathCache = path;
@@ -115,7 +122,7 @@ namespace WzVisualizer.GUI {
 
                             wz.Load(file);
                         }
-                    } catch (DirectoryNotFoundException _) {
+                    } catch (DirectoryNotFoundException) {
                         // DirectoryNotFoundException : List.wz removed
                     }
                 }
@@ -154,6 +161,7 @@ namespace WzVisualizer.GUI {
             var selectedTab = tab.SelectedTab;
             if (saveAll) {
                 for (var i = 0; i < TabControlMain.TabCount; i++) {
+                    TabControlMain.SelectedIndex = i;
                     BinaryDataUtil.ExportBinary(TabControlMain.TabPages[i], TabControlMain.TabPages[i].Text);
                 }
             } else BinaryDataUtil.ExportBinary(selectedTab, selectedTab.Text);
@@ -163,6 +171,7 @@ namespace WzVisualizer.GUI {
             var selectedTab = tab.SelectedTab;
             if (saveAll) {
                 for (var i = 0; i < TabControlMain.TabCount; i++) {
+                    TabControlMain.SelectedIndex = i;
                     BinaryDataUtil.ExportPictures(TabControlMain.TabPages[i], TabControlMain.TabPages[i].Text);
                 }
             } else BinaryDataUtil.ExportPictures(selectedTab, selectedTab.Text);
@@ -174,22 +183,21 @@ namespace WzVisualizer.GUI {
         /// </summary>
         private void BtnSave_Click(object sender, EventArgs ev) {
             var button = ((MouseEventArgs)ev).Button;
-            var saveAll = loadAll || ModifierKeys == Keys.Shift;
+            var saveAll = LoadAll || ModifierKeys == Keys.Shift;
 
-            if (!loadAll && saveAll) {
+            if (!LoadAll && saveAll) {
                 var result = MessageBox.Show(Resources.MassWriteWarning, "Warning", MessageBoxButtons.YesNo);
                 if (result != DialogResult.Yes) return;
             }
 
-            if (button == MouseButtons.Left) {
-                ExportBinary(TabControlMain, saveAll);
-                MessageBox.Show(Resources.CompleteSaveBIN, "Save Complete");
-            } else if (button == MouseButtons.Right) {
-                ExportPictures(TabControlMain, saveAll);
-                MessageBox.Show(Resources.CompleteSaveImages, "Save Complete");
-            }
+            ExportBinary(TabControlMain, saveAll);
+            MessageBox.Show(Resources.CompleteSaveBIN, "Save Complete");
+            LoadAll = false;
+        }
 
-            loadAll = false;
+        private void BtnExport_Click(object sender, EventArgs e) {
+            ExportPictures(TabControlMain, true);
+            MessageBox.Show(Resources.CompleteSaveImages, "Save Complete");
         }
 
         /// <summary>
@@ -201,7 +209,7 @@ namespace WzVisualizer.GUI {
                     case int i:
                         Clipboard.SetText(i.ToString());
                         break;
-                    case string str when str.Length > 0:
+                    case string { Length: > 0 } str:
                         Clipboard.SetText(str);
                         break;
                     case Bitmap { Width: >= 0, Height: >= 0 } image:
@@ -257,7 +265,7 @@ namespace WzVisualizer.GUI {
         /// </summary>
         private void TextWzPath_Click(object sender, EventArgs e) {
             if (folderBrowser.ShowDialog() != DialogResult.OK) return;
-            TextWzPath.Text = folderBrowser.SelectedPath;
+            wzPathTextbox.Text = folderBrowser.SelectedPath;
         }
 
 
@@ -267,21 +275,23 @@ namespace WzVisualizer.GUI {
             }
         }
 
-        private void MainForm_KeyDown(object sender, KeyEventArgs e) {
-            loadAll = ModifierKeys == Keys.Shift;
-            BtnSave.Text = loadAll ? "Save All" : "Save";
-            BtnWzLoad.Text = loadAll ? "Load All" : "Load";
+        internal void MainForm_KeyDown(object sender, KeyEventArgs e) {
+            LoadAll = ModifierKeys == Keys.Shift;
+            saveButton.Text = LoadAll ? "Save All" : "Save";
+            loadButton.Text = LoadAll ? "Load All" : "Load";
+            searchButton.Text = LoadAll ? "Options" : "Search";
         }
 
-        private void MainForm_KeyUp(object sender, KeyEventArgs e) {
-            loadAll = ModifierKeys == Keys.Shift;
-            BtnSave.Text = loadAll ? "Save All" : "Save";
-            BtnWzLoad.Text = loadAll ? "Load All" : "Load";
+        internal void MainForm_KeyUp(object sender, KeyEventArgs e) {
+            LoadAll = ModifierKeys == Keys.Shift;
+            saveButton.Text = LoadAll ? "Save All" : "Save";
+            loadButton.Text = LoadAll ? "Load All" : "Load";
+            searchButton.Text = LoadAll ? "Options" : "Search";
         }
 
         private void MainForm_Load(object sender, EventArgs e) {
             // Obtain the last used WZ root directory
-            TextWzPath.Text = Settings.Default.PathCache;
+            wzPathTextbox.Text = Settings.Default.PathCache;
 
             TabControlMain.Selected += TabControl_Selected;
             AddEventHandlers(TabControlMain);
@@ -294,8 +304,12 @@ namespace WzVisualizer.GUI {
         }
 
         private void BtnSearch_Click(object sender, EventArgs e) {
-            // re-load the tab, but this time we should have a search query
-            OnTabControlChanged();
+            if (ModifierKeys == Keys.Shift) {
+                SearchForm.Show();
+            } else {
+                // re-load the tab, but this time we should have a search query
+                OnTabControlChanged();
+            }
         }
 
         private void OnTabControlChanged() {

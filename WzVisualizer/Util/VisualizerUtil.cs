@@ -203,8 +203,7 @@ namespace WzVisualizer.Util {
                         default: continue;
                     }
 
-
-                    if (app.GetCurrentDataViewport() == dv) {
+                    if (app.GetCurrentDataViewport() == dv || app.LoadAll) {
                         var name = StringWz.GetEqp(itemId);
                         var properties = GetAllProperties(img);
 
@@ -424,7 +423,7 @@ namespace WzVisualizer.Util {
             Bitmap image = null;
             try {
                 image = icon?.GetLinkedWzImageProperty().GetBitmap();
-            } catch (NullReferenceException e) {
+            } catch (NullReferenceException) {
                 // null UOL property while parsing v238 NPC.wz...
                 image = null;
             }
@@ -534,19 +533,24 @@ namespace WzVisualizer.Util {
         /// <param name="grid">the grid view to add a row to</param>
         /// <param name="bin">bin data (wz files that were parsed then saved as a bin file type)</param>
         public static void AddNewRow(MainForm app, DataGridView grid, BinData bin) {
+            bool showResult = true;
+
             var query = app.SearchQuery;
             if (!string.IsNullOrEmpty(query)) {
+                showResult = false;
+
                 var queries = query.Split(new[] { " " }, StringSplitOptions.RemoveEmptyEntries);
                 foreach (var arg in queries) {
-                    // all queries must match
-                    if (bin.Search(arg)) {
-                        goto VALIDATED;
-                    }
+                    if (bin.Search(arg)) showResult = true;
                 }
-                return;
             }
 
-        VALIDATED:
+            if (app.SearchForm.emptyBmpFilterCheckbox.Checked) {
+                showResult = bin.Image.Height == bin.Image.Width && bin.Image.Height == 1;
+            }
+
+            if (!showResult) return;
+
             var properties = "";
             foreach (var p in bin.Properties) {
                 properties += p + "\r\n";

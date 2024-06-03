@@ -71,10 +71,10 @@ namespace WzVisualizer.IO {
 
         public static void ExportPictures(TabPage tab, string folder) {
             if (tab.Controls[0] is TabControl ctrl) {
-                foreach (TabPage subTab in ctrl.TabPages) {
-                    ExportPictures(subTab, folder);
+                for (var i = 0; i < ctrl.TabCount; i++) {
+                    ctrl.SelectedIndex = i;
+                    ExportPictures(ctrl.TabPages[i], folder);
                 }
-
                 return;
             }
 
@@ -92,8 +92,9 @@ namespace WzVisualizer.IO {
 
         public static void ExportBinary(TabPage tab, string folder) {
             if (tab.Controls[0] is TabControl ctrl) {
-                foreach (TabPage subTab in ctrl.TabPages) {
-                    ExportBinary(subTab, folder);
+                for (var i = 0; i < ctrl.TabCount; i++) {
+                    ctrl.SelectedIndex = i;
+                    ExportBinary(ctrl.TabPages[i], folder);
                 }
                 return;
             }

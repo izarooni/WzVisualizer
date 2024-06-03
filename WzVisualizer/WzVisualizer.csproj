@@ -115,11 +115,11 @@
     <Compile Include="GUI\Controls\DataViewport.Designer.cs">
       <DependentUpon>DataViewport.cs</DependentUpon>
     </Compile>
-    <Compile Include="GUI\Controls\SymbolButton.cs">
-      <SubType>UserControl</SubType>
+    <Compile Include="GUI\SearchForm.cs">
+      <SubType>Form</SubType>
     </Compile>
-    <Compile Include="GUI\Controls\SymbolButton.Designer.cs">
-      <DependentUpon>SymbolButton.cs</DependentUpon>
+    <Compile Include="GUI\SearchForm.Designer.cs">
+      <DependentUpon>SearchForm.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI\MainForm.cs">
       <SubType>Form</SubType>
@@ -143,8 +143,8 @@
     <EmbeddedResource Include="GUI\Controls\DataViewport.resx">
       <DependentUpon>DataViewport.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="GUI\Controls\SymbolButton.resx">
-      <DependentUpon>SymbolButton.cs</DependentUpon>
+    <EmbeddedResource Include="GUI\SearchForm.resx">
+      <DependentUpon>SearchForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
