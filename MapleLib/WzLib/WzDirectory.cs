@@ -273,11 +273,11 @@ namespace MapleLib.WzLib
 
             foreach (WzDirectory subdir in subDirs)
             {
-                if (subdir.Checksum != 0)
-                {
+                //if (subdir.Checksum != 0)
+                //{
                     reader.BaseStream.Position = subdir.offset;
                     subdir.ParseDirectory();
-                }
+                //}
             }
         }
 
