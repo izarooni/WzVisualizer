@@ -36,6 +36,9 @@ namespace WzVisualizer {
                 }
 
                 prop = prop.Replace("\t", "");
+                // replacing strings fucks up some properties that represent speech
+                // but more often than not they are indented properties that need to be flattened
+                prop = prop.Replace(" ", "");
 
                 if (prop.Length > 0) {
                     str += $"{prop};";
