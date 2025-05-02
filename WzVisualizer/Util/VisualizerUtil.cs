@@ -92,7 +92,7 @@ namespace WzVisualizer.Util {
         }
 
         private static void SuspendLayouts(MainForm app) {
-            foreach (TabPage tab in app.TabControlMain.TabPages) {
+            foreach (TabPage tab in app.MainTabControl.TabPages) {
                 foreach (var control in tab.Controls) {
                     var grid = control as DataGridView;
                     var sub = control as TabPage;
@@ -107,7 +107,7 @@ namespace WzVisualizer.Util {
         }
 
         private static void ResumeLayouts(MainForm app) {
-            foreach (TabPage tab in app.TabControlMain.TabPages) {
+            foreach (TabPage tab in app.MainTabControl.TabPages) {
                 foreach (var control in tab.Controls) {
                     var grid = control as DataGridView;
                     var sub = control as TabPage;
@@ -159,46 +159,49 @@ namespace WzVisualizer.Util {
 
                     switch (itemId / 10000) {
                         case 3 or 4 or 6:
-                            dv = app.EquipHairsView;
+                            dv = app.HairsGrid;
                             break;
                         case 2 or 5:
-                            dv = app.EquipFacesView;
+                            dv = app.FacesGrid;
                             break;
                         case >= 130 and <= 170:
-                            dv = app.EquipWeaponsView;
+                            dv = app.WeaponsGrid;
                             break;
                         case (>= 101 and <= 103) or (>= 112 and <= 114):
-                            dv = app.EquipAccessoryView;
+                            dv = app.AccessoryGrid;
                             break;
                         case 100:
-                            dv = app.EquipCapsView;
+                            dv = app.HaatsGrid;
                             break;
                         case 105:
-                            dv = app.EquipOverallsView;
+                            dv = app.OverallsGrid;
                             break;
                         case 104:
-                            dv = app.EquipTopsView;
+                            dv = app.TopsGrid;
                             break;
                         case 106:
-                            dv = app.EquipPantsView;
+                            dv = app.BottomsGrid;
                             break;
                         case 107:
-                            dv = app.EquipShoesView;
+                            dv = app.ShoesGrid;
                             break;
                         case 108:
-                            dv = app.EquipGlovesView;
+                            dv = app.GlovesGrid;
                             break;
                         case 109:
-                            dv = app.EquipShieldsView;
+                            dv = app.ShieldsGrid;
                             break;
                         case 110:
-                            dv = app.EquipCapesView;
+                            dv = app.CapesGrid;
                             break;
                         case 111:
-                            dv = app.EquipRingsView;
+                            dv = app.RingsGrid;
                             break;
                         case 190 or 191 or 193:
-                            dv = app.EquipMountsView;
+                            dv = app.MountsGrid;
+                            break;
+                        case (>= 180 and <= 183):
+                            dv = app.PetEquipsGrid;
                             break;
                         default: continue;
                     }
@@ -320,16 +323,16 @@ namespace WzVisualizer.Util {
                             case RootVTab.Use when itemId / 100 == 2:
                                 switch (itemId) {
                                     case <= 203:
-                                        AddNewRows(img, app.UseConsumeView);
+                                        AddNewRows(img, app.ConsumeGrid);
                                         break;
                                     case 204:
                                     case 234:
-                                        AddNewRows(img, app.UseScrollsView);
+                                        AddNewRows(img, app.ScrollsGrid);
                                         break;
                                     case 206:
                                     case 207:
                                     case 233:
-                                        AddNewRows(img, app.UseProjectileView);
+                                        AddNewRows(img, app.ProjectsGrid);
                                         break;
                                 }
 
@@ -338,17 +341,17 @@ namespace WzVisualizer.Util {
                                 // 301 ~ 399: classic
                                 // 3010 ~ 3014: 64-bit client
                                 var chair = itemId == 301 || itemId >= 3010 && itemId <= 3014;
-                                AddNewRows(img, chair ? app.SetupChairsView : app.SetupOthersView);
+                                AddNewRows(img, chair ? app.ChairsGrid : app.SetupEtcGrid);
                                 break;
                             case RootVTab.Etc when ItemConstants.IsEtc(itemId):
-                                AddNewRows(img, app.EtcView);
+                                AddNewRows(img, app.EtcGrid);
                                 break;
                             case RootVTab.Cash when ItemConstants.IsCash(itemId):
-                                AddNewRows(img, app.CashView);
+                                AddNewRows(img, app.CashGrid);
                                 break;
                             case RootVTab.Pets when ItemConstants.IsPet(itemId):
                                 // AddNewRows(img, app.PetsView);
-                                ParseGeneric(app.PetsView.GridView, img);
+                                ParseGeneric(app.PetsGrid.GridView, img);
                                 break;
                         }
                     }
@@ -448,7 +451,7 @@ namespace WzVisualizer.Util {
                 maps.WzDirectories.ForEach(dir => {
                     Match match = Regex.Match(dir.Name, "^Map\\d+$");
                     if (match.Success) {
-                        dir.WzImages.ForEach(img => ParseGeneric(app.MapsView.GridView, img));
+                        dir.WzImages.ForEach(img => ParseGeneric(app.MapsGrid.GridView, img));
                     }
                 });
             }
@@ -465,7 +468,7 @@ namespace WzVisualizer.Util {
                 var root = file.WzDirectory;
 
                 foreach (var img in root.WzImages) {
-                    ParseGeneric(app.MobsView.GridView, img);
+                    ParseGeneric(app.MobsGrid.GridView, img);
                 }
             }
 
@@ -487,7 +490,7 @@ namespace WzVisualizer.Util {
 
                     if (!(tree is WzSubProperty)) continue;
 
-                    tree.WzProperties.ForEach(img => ParseGeneric(app.SkillsView.GridView, img));
+                    tree.WzProperties.ForEach(img => ParseGeneric(app.SkillsGrid.GridView, img));
                     var skills = tree.WzProperties;
                 }
             }
@@ -504,7 +507,7 @@ namespace WzVisualizer.Util {
                 var root = file.WzDirectory;
 
                 foreach (var img in root.WzImages) {
-                    ParseGeneric(app.NPCView.GridView, img);
+                    ParseGeneric(app.NpcsGrid.GridView, img);
                 }
             }
 
@@ -520,7 +523,7 @@ namespace WzVisualizer.Util {
                 var root = file.WzDirectory;
 
                 foreach (var img in root.WzImages) {
-                    ParseGeneric(app.ReactorView.GridView, img);
+                    ParseGeneric(app.ReactorsGrid.GridView, img);
                 }
             }
 

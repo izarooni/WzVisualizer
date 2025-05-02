@@ -49,7 +49,7 @@ namespace WzVisualizer.GUI {
         }
 
         public TabPage GetCurrentTabPage() {
-            var main = TabControlMain.SelectedTab;
+            var main = MainTabControl.SelectedTab;
             var sub = (main.Controls[0] is TabControl tc ? tc.SelectedTab : main);
             return sub;
         }
@@ -71,31 +71,31 @@ namespace WzVisualizer.GUI {
 
         private void LoadWzData() {
             if (LoadAll) {
-                for (var i = 0; i < TabControlMain.TabCount; i++) {
-                    TabControlMain.SelectedIndex = i;
+                for (var i = 0; i < MainTabControl.TabCount; i++) {
+                    MainTabControl.SelectedIndex = i;
                     VisualizerUtil.ProcessTab(i, this);
                 }
                 SaveBinary(true);
             } else {
-                VisualizerUtil.ProcessTab(TabControlMain.SelectedIndex, this);
+                VisualizerUtil.ProcessTab(MainTabControl.SelectedIndex, this);
             }
         }
 
         internal void LoadCurrentTabPage() {
-            ClearAllPages(TabControlMain);
+            ClearAllPages(MainTabControl);
 
-            var main = TabControlMain.SelectedTab;
+            var main = MainTabControl.SelectedTab;
             var tab = GetCurrentTabPage();
             var dv = GetCurrentDataViewport();
             BinaryDataUtil.ImportGrid($"{main.Text}/{tab.Text}.bin", dv, (grid, data) => VisualizerUtil.AddNewRow(this, grid, data));
         }
 
         private void ExportPictures() {
-            for (var i = 0; i < TabControlMain.TabCount; i++) {
+            for (var i = 0; i < MainTabControl.TabCount; i++) {
                 // changing the selected tab will trigger the TabControl_Selected event
                 // which will prepare the data for us to export
-                TabControlMain.SelectedIndex = i;
-                BinaryDataUtil.ExportPictures(TabControlMain.TabPages[i], TabControlMain.TabPages[i].Text);
+                MainTabControl.SelectedIndex = i;
+                BinaryDataUtil.ExportPictures(MainTabControl.TabPages[i], MainTabControl.TabPages[i].Text);
             }
             MessageBox.Show(Resources.CompleteSaveImages, Resources.SaveComplete);
         }
@@ -112,7 +112,7 @@ namespace WzVisualizer.GUI {
                         break;
                     }
                     case TabControl tc:
-                        if (tc == TabControlMain && tc.SelectedTab == TabControlMain.SelectedTab)
+                        if (tc == MainTabControl && tc.SelectedTab == MainTabControl.SelectedTab)
                             break;
                         ClearAllPages(tc);
                         break;
@@ -127,13 +127,13 @@ namespace WzVisualizer.GUI {
         /// </summary>
         private void SaveBinary(bool everything) {
             if (everything) {
-                for (var i = 0; i < TabControlMain.TabCount; i++) {
-                    TabControlMain.SelectedIndex = i;
-                    BinaryDataUtil.ExportBinary(TabControlMain.TabPages[i], TabControlMain.SelectedTab.Text);
+                for (var i = 0; i < MainTabControl.TabCount; i++) {
+                    MainTabControl.SelectedIndex = i;
+                    BinaryDataUtil.ExportBinary(MainTabControl.TabPages[i], MainTabControl.SelectedTab.Text);
                 }
             } else {
                 var selectedTab = GetCurrentTabPage();
-                BinaryDataUtil.ExportBinary(selectedTab, TabControlMain.SelectedTab.Text);
+                BinaryDataUtil.ExportBinary(selectedTab, MainTabControl.SelectedTab.Text);
             }
 
             MessageBox.Show(Resources.CompleteSaveBIN, Resources.SaveComplete);
@@ -144,7 +144,7 @@ namespace WzVisualizer.GUI {
         /// Begin loading WZ data corresponding to the selected tab
         /// </summary>
         private void VerifyWzFolder(string path) {
-            ClearAllPages(TabControlMain, true);
+            ClearAllPages(MainTabControl, true);
             DisposeWzFiles();
 
             if (LoadAll) {
@@ -269,8 +269,8 @@ namespace WzVisualizer.GUI {
         }
 
         private void MainForm_Load(object sender, EventArgs e) {
-            TabControlMain.Selected += TabControl_Selected;
-            AddEventHandlers(TabControlMain);
+            MainTabControl.Selected += TabControl_Selected;
+            AddEventHandlers(MainTabControl);
 
             LoadCurrentTabPage();
         }
