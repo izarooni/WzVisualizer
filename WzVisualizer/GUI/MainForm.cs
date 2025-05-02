@@ -1,39 +1,32 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
-
 using WzVisualizer.GUI.Controls;
 using WzVisualizer.IO;
 using WzVisualizer.Properties;
 using WzVisualizer.Util;
 
 namespace WzVisualizer.GUI {
-    internal delegate void AddGridRowCallBack(DataGridView grid, BinData binData);
+    delegate void AddGridRowCallBack(DataGridView grid, BinData binData);
 
     public partial class MainForm : Form {
-        internal readonly SearchForm SearchForm = new();
 
-        private readonly FolderBrowserDialog folderBrowser = new();
-        private readonly PropertiesViewer viewer = new();
-        public bool LoadAll { get; set; }
+        private readonly PropertiesViewer _viewer = new();
+        internal readonly SearchForm SearchForm = new();
 
         public MainForm() {
             InitializeComponent();
 
-            // set the default path to the current directory
-            wzPathTextbox.Text = Directory.GetCurrentDirectory();
-
             AddOwnedForm(SearchForm);
             SearchForm.Location = new Point(Right - SearchForm.Width - 5, Top + SearchForm.Height / 2);
             LocationChanged += (o, args) => SearchForm.Location = new Point(Right - SearchForm.Width - 5, Top + SearchForm.Height / 2);
-            SearchForm.searchButton.Click += (o, args) => OnTabControlChanged();
+            SearchForm.searchButton.Click += (o, args) => LoadCurrentTabPage();
         }
-
-        public string SearchQuery => searchTextbox.Text;
+        public bool LoadAll { get; set; }
+        public string SearchQuery => SearchForm.SearchBox.Text;
 
         /// <summary>
         /// recursively add event handlers to all DataViewport components
@@ -55,10 +48,15 @@ namespace WzVisualizer.GUI {
             }
         }
 
-        public DataViewport GetCurrentDataViewport() {
+        public TabPage GetCurrentTabPage() {
             var main = TabControlMain.SelectedTab;
             var sub = (main.Controls[0] is TabControl tc ? tc.SelectedTab : main);
-            return (DataViewport)sub.Controls[0];
+            return sub;
+        }
+
+        public DataViewport GetCurrentDataViewport() {
+            var tab = GetCurrentTabPage();
+            return (DataViewport)tab.Controls[0];
         }
 
         /// <summary>
@@ -77,28 +75,82 @@ namespace WzVisualizer.GUI {
                     TabControlMain.SelectedIndex = i;
                     VisualizerUtil.ProcessTab(i, this);
                 }
-                BtnSave_Click(null, new MouseEventArgs(MouseButtons.Left, 0, 0, 0, 0));
-                return;
+                SaveBinary(true);
+            } else {
+                VisualizerUtil.ProcessTab(TabControlMain.SelectedIndex, this);
+            }
+        }
+
+        internal void LoadCurrentTabPage() {
+            ClearAllPages(TabControlMain);
+
+            var main = TabControlMain.SelectedTab;
+            var tab = GetCurrentTabPage();
+            var dv = GetCurrentDataViewport();
+            BinaryDataUtil.ImportGrid($"{main.Text}/{tab.Text}.bin", dv, (grid, data) => VisualizerUtil.AddNewRow(this, grid, data));
+        }
+
+        private void ExportPictures() {
+            for (var i = 0; i < TabControlMain.TabCount; i++) {
+                // changing the selected tab will trigger the TabControl_Selected event
+                // which will prepare the data for us to export
+                TabControlMain.SelectedIndex = i;
+                BinaryDataUtil.ExportPictures(TabControlMain.TabPages[i], TabControlMain.TabPages[i].Text);
+            }
+            MessageBox.Show(Resources.CompleteSaveImages, Resources.SaveComplete);
+        }
+
+        /// <summary>
+        /// Clear all DataViewport grids to allow re-populating data, especially when search queries are present
+        /// </summary>
+        private void ClearAllPages(TabControl tabControl, bool clearData = false) {
+            foreach (TabPage page in tabControl.TabPages) {
+                switch (page.Controls[0]) {
+                    case DataViewport dv: {
+                        if (clearData) dv.Data.Clear();
+                        dv.GridView.Rows.Clear();
+                        break;
+                    }
+                    case TabControl tc:
+                        if (tc == TabControlMain && tc.SelectedTab == TabControlMain.SelectedTab)
+                            break;
+                        ClearAllPages(tc);
+                        break;
+                }
+            }
+            GC.Collect();
+        }
+
+        /// <summary>
+        /// upon clicking the save button, store data of the current opened grid.
+        /// Some tabs may have another TabControl in which that Control contains a Grid control.
+        /// </summary>
+        private void SaveBinary(bool everything) {
+            if (everything) {
+                for (var i = 0; i < TabControlMain.TabCount; i++) {
+                    TabControlMain.SelectedIndex = i;
+                    BinaryDataUtil.ExportBinary(TabControlMain.TabPages[i], TabControlMain.SelectedTab.Text);
+                }
+            } else {
+                var selectedTab = GetCurrentTabPage();
+                BinaryDataUtil.ExportBinary(selectedTab, TabControlMain.SelectedTab.Text);
             }
 
-            VisualizerUtil.ProcessTab(TabControlMain.SelectedIndex, this);
+            MessageBox.Show(Resources.CompleteSaveBIN, Resources.SaveComplete);
+            LoadAll = false;
         }
 
         /// <summary>
         /// Begin loading WZ data corresponding to the selected tab
         /// </summary>
-        private void BtnWzLoad_Click(object sender, EventArgs e) {
+        private void VerifyWzFolder(string path) {
             ClearAllPages(TabControlMain, true);
             DisposeWzFiles();
 
-            LoadAll = ModifierKeys == Keys.Shift;
-
             if (LoadAll) {
-                var result = MessageBox.Show(Resources.MassReadWarning, "Warning", MessageBoxButtons.YesNo);
+                var result = MessageBox.Show(Resources.MassReadWarning, @"Warning", MessageBoxButtons.YesNo);
                 if (result != DialogResult.Yes) return;
             }
-
-            var path = wzPathTextbox.Text;
 
             if (!path.Equals(Settings.Default.PathCache)) {
                 Settings.Default.PathCache = path;
@@ -157,49 +209,6 @@ namespace WzVisualizer.GUI {
             MessageBox.Show(Resources.GameFilesNotFound, Resources.FileNotFound, MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
-        void ExportBinary(TabControl tab, bool saveAll = false) {
-            var selectedTab = tab.SelectedTab;
-            if (saveAll) {
-                for (var i = 0; i < TabControlMain.TabCount; i++) {
-                    TabControlMain.SelectedIndex = i;
-                    BinaryDataUtil.ExportBinary(TabControlMain.TabPages[i], TabControlMain.TabPages[i].Text);
-                }
-            } else BinaryDataUtil.ExportBinary(selectedTab, selectedTab.Text);
-        }
-
-        void ExportPictures(TabControl tab, bool saveAll = false) {
-            var selectedTab = tab.SelectedTab;
-            if (saveAll) {
-                for (var i = 0; i < TabControlMain.TabCount; i++) {
-                    TabControlMain.SelectedIndex = i;
-                    BinaryDataUtil.ExportPictures(TabControlMain.TabPages[i], TabControlMain.TabPages[i].Text);
-                }
-            } else BinaryDataUtil.ExportPictures(selectedTab, selectedTab.Text);
-        }
-
-        /// <summary>
-        /// upon clicking the save button, store data of the current opened grid.
-        /// Some tabs may have another TabControl in which that Control contains a Grid control.
-        /// </summary>
-        private void BtnSave_Click(object sender, EventArgs ev) {
-            var button = ((MouseEventArgs)ev).Button;
-            var saveAll = LoadAll || ModifierKeys == Keys.Shift;
-
-            if (!LoadAll && saveAll) {
-                var result = MessageBox.Show(Resources.MassWriteWarning, "Warning", MessageBoxButtons.YesNo);
-                if (result != DialogResult.Yes) return;
-            }
-
-            ExportBinary(TabControlMain, saveAll);
-            MessageBox.Show(Resources.CompleteSaveBIN, "Save Complete");
-            LoadAll = false;
-        }
-
-        private void BtnExport_Click(object sender, EventArgs e) {
-            ExportPictures(TabControlMain, true);
-            MessageBox.Show(Resources.CompleteSaveImages, "Save Complete");
-        }
-
         /// <summary>
         /// Update the Window's clipboard when a cell is selected
         /// </summary>
@@ -245,100 +254,77 @@ namespace WzVisualizer.GUI {
                     cell.OwningRow.Height = bmp.Height + 15;
                     break;
                 case 3:
-                    viewer.SetProperties((string)((DataGridView)sender).SelectedCells[0].Value);
-                    if (!viewer.Visible) {
-                        viewer.Height = Height;
-                        viewer.StartPosition = FormStartPosition.Manual;
+                    _viewer.SetProperties((string)((DataGridView)sender).SelectedCells[0].Value);
+                    if (!_viewer.Visible) {
+                        _viewer.Height = Height;
+                        _viewer.StartPosition = FormStartPosition.Manual;
 
-                        viewer.Left = Right;
-                        viewer.Top = Top;
+                        _viewer.Left = Right;
+                        _viewer.Top = Top;
                     }
-                    viewer.Show();
-                    viewer.BringToFront();
+                    _viewer.Show();
+                    _viewer.BringToFront();
                     break;
             }
         }
 
-        /// <summary>
-        /// Open the FolderBrowser dialog window when the text box is clicked and set the selected
-        /// directory as the root folder containing WZ files
-        /// </summary>
-        private void TextWzPath_Click(object sender, EventArgs e) {
-            if (folderBrowser.ShowDialog() != DialogResult.OK) return;
-            wzPathTextbox.Text = folderBrowser.SelectedPath;
-        }
-
-
-        private void SearchTextBox_KeyPress(object sender, KeyPressEventArgs e) {
-            if (e.KeyChar == 13) {
-                OnTabControlChanged();
-            }
-        }
-
-        internal void MainForm_KeyDown(object sender, KeyEventArgs e) {
-            LoadAll = ModifierKeys == Keys.Shift;
-            saveButton.Text = LoadAll ? "Save All" : "Save";
-            loadButton.Text = LoadAll ? "Load All" : "Load";
-            searchButton.Text = LoadAll ? "Options" : "Search";
-        }
-
-        internal void MainForm_KeyUp(object sender, KeyEventArgs e) {
-            LoadAll = ModifierKeys == Keys.Shift;
-            saveButton.Text = LoadAll ? "Save All" : "Save";
-            loadButton.Text = LoadAll ? "Load All" : "Load";
-            searchButton.Text = LoadAll ? "Options" : "Search";
-        }
-
         private void MainForm_Load(object sender, EventArgs e) {
-            // Obtain the last used WZ root directory
-            wzPathTextbox.Text = Settings.Default.PathCache;
-
             TabControlMain.Selected += TabControl_Selected;
             AddEventHandlers(TabControlMain);
 
-            OnTabControlChanged();
+            LoadCurrentTabPage();
         }
 
         private void TabControl_Selected(object sender, TabControlEventArgs e) {
-            OnTabControlChanged();
+            LoadCurrentTabPage();
         }
 
-        private void BtnSearch_Click(object sender, EventArgs e) {
-            if (ModifierKeys == Keys.Shift) {
-                SearchForm.Show();
-            } else {
-                // re-load the tab, but this time we should have a search query
-                OnTabControlChanged();
+        private void OnLoadCurrentTabPage(object sender, EventArgs e) {
+            LoadAll = false;
+
+            var folderDlg = new FolderBrowserDialog {
+                Description = "Select a folder",
+                ShowNewFolderButton = false,
+                SelectedPath = Settings.Default.PathCache
+            };
+            if (folderDlg.ShowDialog() == DialogResult.OK) {
+                VerifyWzFolder(folderDlg.SelectedPath);
             }
         }
+        private void OnLoadEverything(object sender, EventArgs e) {
+            LoadAll = true;
 
-        private void OnTabControlChanged() {
-            ClearAllPages(TabControlMain);
+            var folderDlg = new FolderBrowserDialog {
+                Description = "Select a folder",
+                ShowNewFolderButton = false,
+                SelectedPath = Settings.Default.PathCache
+            };
+            if (folderDlg.ShowDialog() == DialogResult.OK) {
+                VerifyWzFolder(folderDlg.SelectedPath);
+            }
+        }
+        private void OnSaveCurrentTabPage(object sender, EventArgs e) {
+            SaveBinary(false);
+        }
+        private void OnSaveEverything(object sender, EventArgs e) {
+            var result = MessageBox.Show(Resources.MassWriteWarning, "Warning", MessageBoxButtons.YesNo);
+            if (result != DialogResult.Yes) return;
 
-            var main = TabControlMain.SelectedTab;
-            var dv = GetCurrentDataViewport();
-            BinaryDataUtil.ImportGrid($"{main.Text}/{dv.Parent.Text}.bin", dv, (grid, data) => VisualizerUtil.AddNewRow(this, grid, data));
+            SaveBinary(true);
+        }
+        private void OnExportPictures(object sender, EventArgs e) {
+            ExportPictures();
+        }
+        private void OnShowSearchForm(object sender, EventArgs e) {
+            SearchForm.Show();
         }
 
-        /// <summary>
-        /// Clear all DataViewport grids to allow re-populating data, especially when search queries are present
-        /// </summary>
-        private void ClearAllPages(TabControl tabControl, bool clearData = false) {
-            foreach (TabPage page in tabControl.TabPages) {
-                switch (page.Controls[0]) {
-                    case DataViewport dv: {
-                            if (clearData) dv.Data.Clear();
-                            dv.GridView.Rows.Clear();
-                            break;
-                        }
-                    case TabControl tc:
-                        if (tc == TabControlMain && tc.SelectedTab == TabControlMain.SelectedTab)
-                            break;
-                        ClearAllPages(tc);
-                        break;
-                }
-            }
-            GC.Collect();
+        private void OnOpenningMainToolstrip(object sender, EventArgs e) {
+            OpenCurrentMenuItem.Text = $"Load {GetCurrentTabPage().Text}";
+        }
+
+        private void exportTocsvToolStripMenuItem_Click(object sender, EventArgs e) {
+            BinaryDataUtil.ExportCSV(GetCurrentTabPage(), GetCurrentTabPage().Text);
         }
     }
 }

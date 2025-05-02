@@ -21,6 +21,30 @@ namespace WzVisualizer {
             }
         }
 
+        public override string ToString() {
+            // convert to csv format
+            var str = $"{ID},\"{Name}\",";
+            for (int i = 0; i < Properties.Count; i++) {
+                string prop = Properties[i];
+
+                // if starts with \[a-zA-Z+\] remove
+                if (prop.StartsWith("[") && prop.EndsWith("]")) {
+                    int index = prop.IndexOf(']');
+                    if (index > 0) {
+                        prop = prop.Substring(index + 1);
+                    }
+                }
+
+                prop = prop.Replace("\t", "");
+
+                if (prop.Length > 0) {
+                    str += $"{prop};";
+                }
+            }
+            str = str.TrimEnd(';');
+            return str;
+        }
+
         public override int GetHashCode() {
             return this.ID;
         }

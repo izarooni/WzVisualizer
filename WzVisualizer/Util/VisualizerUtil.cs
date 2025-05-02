@@ -566,32 +566,34 @@ namespace WzVisualizer.Util {
         /// <param name="obj">a WzSubProperty or WzImage</param>
         /// <returns></returns>
         private static string GetAllProperties(object obj) {
-            var append = "";
+            var properties = "";
+           
+            void AppendProperties(string blockName, WzImageProperty root) {
+                if (root == null) return;
 
-            void AppendLine(string blockName, WzImageProperty property) {
-                if (property == null) return;
-
-                if (append.Length > 0) append += "\r\n";
-                append += blockName + AppendProperties(property, "");
+                // put labels on their own lines i.e. [info], [levels], [common]
+                if (properties.Length > 0) properties += "\r\n";
+                // append properties from provided section
+                properties += blockName + GetNestedProperties(root, "");
             }
 
             switch (obj) {
                 default:
                     throw new Exception($"unhandled parameter type '{nameof(obj)}': {obj}");
                 case WzSubProperty sub:
-                    AppendLine("[info]", sub.GetFromPath("info"));
-                    AppendLine("[levels]", sub.GetFromPath("level")); // skills with defined level stats
-                    AppendLine("[common]", sub.GetFromPath("common")); // skills with scaling level stats
+                    AppendProperties("[info]", sub.GetFromPath("info"));
+                    AppendProperties("[levels]", sub.GetFromPath("level")); // skills with defined level stats
+                    AppendProperties("[common]", sub.GetFromPath("common")); // skills with scaling level stats
                     break;
                 case WzImage img:
-                    AppendLine("[info]", img.GetFromPath("info"));
+                    AppendProperties("[info]", img.GetFromPath("info"));
                     break;
             }
 
-            return append;
+            return properties;
         }
 
-        private static string AppendProperties(WzImageProperty parent, string prefix) {
+        private static string GetNestedProperties(WzImageProperty parent, string prefix) {
             if (parent?.WzProperties == null) return "";
 
             var properties = "";
@@ -599,13 +601,19 @@ namespace WzVisualizer.Util {
             foreach (WzImageProperty sub in parent.WzProperties) {
                 switch (sub.PropertyType) {
                     default:
+                        if (sub.Name.Equals("hs", StringComparison.CurrentCultureIgnoreCase)) break;
                         // append all properties
                         properties += $"\r\n{prefix}{sub.Name}={sub.WzValue}";
-                        if (sub.PropertyType == WzPropertyType.SubProperty) {
-                            // increase sub-properties indent by 1 tab character
-                            properties += AppendProperties(sub, "\t" + prefix);
+                        break;
+                    case WzPropertyType.SubProperty:
+                        properties += $"\r\n{prefix}{sub.Name}={sub.WzValue}";
+                        // increase sub-properties indentation for separation
+                        properties += GetNestedProperties(sub, "    " + prefix);
+                        break;
+                    case WzPropertyType.Vector:
+                        if (!sub.Name.Equals("rb") && !sub.Name.Equals("lt")) {
+                            Debug.WriteLine("Skipping Vector property " + sub.Name);
                         }
-
                         break;
                     case WzPropertyType.Canvas:
                     case WzPropertyType.PNG:

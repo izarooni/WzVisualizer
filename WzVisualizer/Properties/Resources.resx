@@ -151,4 +151,7 @@
   <data name="MassWriteWarning" xml:space="preserve">
     <value>You have opted to save every tab. Are you sure you want to do this?</value>
   </data>
+  <data name="SaveComplete" xml:space="preserve">
+    <value>Save Complete</value>
+  </data>
 </root>

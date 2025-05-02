@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
@@ -69,6 +68,28 @@ namespace WzVisualizer.IO {
             grid.ResumeLayout();
         }
 
+        /// <summary>
+        /// not pretty but, a basic enough implementation for certain cases
+        /// (i was using this for MapleStory Worlds)
+        /// </summary>
+        public static void ExportCSV(TabPage tab, string file) {
+            var csvPath = $"{ExportFolder}/{file}.csv";
+
+            var dv = (DataViewport)tab.Controls[0];
+            var data = dv.Data;
+
+            using StreamWriter sw = new StreamWriter(csvPath, false);
+            sw.WriteLine("ID,Name,Properties");
+            foreach (BinData bin in data) {
+                sw.WriteLine(bin.ToString());
+            }
+            sw.Flush();
+        }
+
+        /// <summary>
+        /// Saves all pictures in the current tab to the specified folder.
+        /// If the tab contains a TabControl, it will recursively save all pictures in the child tabs.
+        /// </summary>
         public static void ExportPictures(TabPage tab, string folder) {
             if (tab.Controls[0] is TabControl ctrl) {
                 for (var i = 0; i < ctrl.TabCount; i++) {

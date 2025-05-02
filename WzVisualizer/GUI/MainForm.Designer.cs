@@ -17,13 +17,11 @@
         }
 
         #region Windows Form Designer generated code
-
         /// <summary>
         /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
-            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.TabControlMain = new System.Windows.Forms.TabControl();
             this.TabEquipsPage = new System.Windows.Forms.TabPage();
@@ -86,14 +84,16 @@
             this.PetsView = new WzVisualizer.GUI.Controls.DataViewport();
             this.TabReactors = new System.Windows.Forms.TabPage();
             this.ReactorView = new WzVisualizer.GUI.Controls.DataViewport();
-            this.wzPathTextbox = new System.Windows.Forms.TextBox();
-            this.searchTextbox = new System.Windows.Forms.TextBox();
-            this.wzPathLabel = new System.Windows.Forms.Label();
-            this.loadButton = new System.Windows.Forms.Button();
-            this.searchButton = new System.Windows.Forms.Button();
-            this.saveButton = new System.Windows.Forms.Button();
-            this.exportButton = new System.Windows.Forms.Button();
-            this.mainFormBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.OpenMenu = new System.Windows.Forms.ToolStripMenuItem();
+            this.OpenCurrentMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.OpenAllMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.SaveMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ExportPicturesMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.searchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exportTocsvToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.TabControlMain.SuspendLayout();
             this.TabEquipsPage.SuspendLayout();
             this.EquipTab.SuspendLayout();
@@ -128,7 +128,7 @@
             this.TabNPCsPage.SuspendLayout();
             this.TabPetsPage.SuspendLayout();
             this.TabReactors.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.mainFormBindingSource)).BeginInit();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // TabControlMain
@@ -148,13 +148,13 @@
             this.TabControlMain.Controls.Add(this.TabPetsPage);
             this.TabControlMain.Controls.Add(this.TabReactors);
             this.TabControlMain.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TabControlMain.Location = new System.Drawing.Point(0, 29);
+            this.TabControlMain.Location = new System.Drawing.Point(0, 24);
             this.TabControlMain.Margin = new System.Windows.Forms.Padding(0);
             this.TabControlMain.Multiline = true;
             this.TabControlMain.Name = "TabControlMain";
             this.TabControlMain.Padding = new System.Drawing.Point(15, 5);
             this.TabControlMain.SelectedIndex = 0;
-            this.TabControlMain.Size = new System.Drawing.Size(795, 582);
+            this.TabControlMain.Size = new System.Drawing.Size(795, 506);
             this.TabControlMain.TabIndex = 0;
             // 
             // TabEquipsPage
@@ -163,7 +163,7 @@
             this.TabEquipsPage.Location = new System.Drawing.Point(4, 29);
             this.TabEquipsPage.Margin = new System.Windows.Forms.Padding(0);
             this.TabEquipsPage.Name = "TabEquipsPage";
-            this.TabEquipsPage.Size = new System.Drawing.Size(787, 549);
+            this.TabEquipsPage.Size = new System.Drawing.Size(787, 473);
             this.TabEquipsPage.TabIndex = 0;
             this.TabEquipsPage.Text = "Equips";
             this.TabEquipsPage.UseVisualStyleBackColor = true;
@@ -188,7 +188,7 @@
             this.EquipTab.Location = new System.Drawing.Point(0, 0);
             this.EquipTab.Name = "EquipTab";
             this.EquipTab.SelectedIndex = 0;
-            this.EquipTab.Size = new System.Drawing.Size(787, 549);
+            this.EquipTab.Size = new System.Drawing.Size(787, 473);
             this.EquipTab.TabIndex = 2;
             // 
             // TabEHairs
@@ -197,7 +197,7 @@
             this.TabEHairs.Location = new System.Drawing.Point(4, 25);
             this.TabEHairs.Name = "TabEHairs";
             this.TabEHairs.Padding = new System.Windows.Forms.Padding(3);
-            this.TabEHairs.Size = new System.Drawing.Size(779, 520);
+            this.TabEHairs.Size = new System.Drawing.Size(779, 444);
             this.TabEHairs.TabIndex = 9;
             this.TabEHairs.Tag = "";
             this.TabEHairs.Text = "Hairs";
@@ -210,7 +210,7 @@
             this.EquipHairsView.Location = new System.Drawing.Point(3, 3);
             this.EquipHairsView.Margin = new System.Windows.Forms.Padding(4);
             this.EquipHairsView.Name = "EquipHairsView";
-            this.EquipHairsView.Size = new System.Drawing.Size(773, 514);
+            this.EquipHairsView.Size = new System.Drawing.Size(773, 438);
             this.EquipHairsView.TabIndex = 0;
             // 
             // TabEFaces
@@ -219,7 +219,7 @@
             this.TabEFaces.Location = new System.Drawing.Point(4, 25);
             this.TabEFaces.Name = "TabEFaces";
             this.TabEFaces.Padding = new System.Windows.Forms.Padding(3);
-            this.TabEFaces.Size = new System.Drawing.Size(779, 520);
+            this.TabEFaces.Size = new System.Drawing.Size(779, 444);
             this.TabEFaces.TabIndex = 10;
             this.TabEFaces.Text = "Faces";
             this.TabEFaces.UseVisualStyleBackColor = true;
@@ -231,7 +231,7 @@
             this.EquipFacesView.Location = new System.Drawing.Point(3, 3);
             this.EquipFacesView.Margin = new System.Windows.Forms.Padding(5);
             this.EquipFacesView.Name = "EquipFacesView";
-            this.EquipFacesView.Size = new System.Drawing.Size(773, 514);
+            this.EquipFacesView.Size = new System.Drawing.Size(773, 438);
             this.EquipFacesView.TabIndex = 1;
             // 
             // TabsEWeapons
@@ -240,7 +240,7 @@
             this.TabsEWeapons.Location = new System.Drawing.Point(4, 25);
             this.TabsEWeapons.Name = "TabsEWeapons";
             this.TabsEWeapons.Padding = new System.Windows.Forms.Padding(3);
-            this.TabsEWeapons.Size = new System.Drawing.Size(779, 520);
+            this.TabsEWeapons.Size = new System.Drawing.Size(779, 444);
             this.TabsEWeapons.TabIndex = 0;
             this.TabsEWeapons.Text = "Weapons";
             this.TabsEWeapons.UseVisualStyleBackColor = true;
@@ -252,7 +252,7 @@
             this.EquipWeaponsView.Location = new System.Drawing.Point(3, 3);
             this.EquipWeaponsView.Margin = new System.Windows.Forms.Padding(5);
             this.EquipWeaponsView.Name = "EquipWeaponsView";
-            this.EquipWeaponsView.Size = new System.Drawing.Size(773, 514);
+            this.EquipWeaponsView.Size = new System.Drawing.Size(773, 438);
             this.EquipWeaponsView.TabIndex = 1;
             // 
             // TabEAccessory
@@ -261,7 +261,7 @@
             this.TabEAccessory.Location = new System.Drawing.Point(4, 25);
             this.TabEAccessory.Name = "TabEAccessory";
             this.TabEAccessory.Padding = new System.Windows.Forms.Padding(3);
-            this.TabEAccessory.Size = new System.Drawing.Size(779, 520);
+            this.TabEAccessory.Size = new System.Drawing.Size(779, 444);
             this.TabEAccessory.TabIndex = 12;
             this.TabEAccessory.Text = "Accessory";
             this.TabEAccessory.UseVisualStyleBackColor = true;
@@ -273,7 +273,7 @@
             this.EquipAccessoryView.Location = new System.Drawing.Point(3, 3);
             this.EquipAccessoryView.Margin = new System.Windows.Forms.Padding(5);
             this.EquipAccessoryView.Name = "EquipAccessoryView";
-            this.EquipAccessoryView.Size = new System.Drawing.Size(773, 514);
+            this.EquipAccessoryView.Size = new System.Drawing.Size(773, 438);
             this.EquipAccessoryView.TabIndex = 1;
             // 
             // TabECaps
@@ -282,7 +282,7 @@
             this.TabECaps.Location = new System.Drawing.Point(4, 25);
             this.TabECaps.Name = "TabECaps";
             this.TabECaps.Padding = new System.Windows.Forms.Padding(3);
-            this.TabECaps.Size = new System.Drawing.Size(779, 520);
+            this.TabECaps.Size = new System.Drawing.Size(779, 444);
             this.TabECaps.TabIndex = 1;
             this.TabECaps.Text = "Caps";
             this.TabECaps.UseVisualStyleBackColor = true;
@@ -294,7 +294,7 @@
             this.EquipCapsView.Location = new System.Drawing.Point(3, 3);
             this.EquipCapsView.Margin = new System.Windows.Forms.Padding(5);
             this.EquipCapsView.Name = "EquipCapsView";
-            this.EquipCapsView.Size = new System.Drawing.Size(773, 514);
+            this.EquipCapsView.Size = new System.Drawing.Size(773, 438);
             this.EquipCapsView.TabIndex = 1;
             // 
             // TabEOveralls
@@ -303,7 +303,7 @@
             this.TabEOveralls.Location = new System.Drawing.Point(4, 25);
             this.TabEOveralls.Name = "TabEOveralls";
             this.TabEOveralls.Padding = new System.Windows.Forms.Padding(3);
-            this.TabEOveralls.Size = new System.Drawing.Size(779, 520);
+            this.TabEOveralls.Size = new System.Drawing.Size(779, 444);
             this.TabEOveralls.TabIndex = 2;
             this.TabEOveralls.Text = "Overalls";
             this.TabEOveralls.UseVisualStyleBackColor = true;
@@ -315,7 +315,7 @@
             this.EquipOverallsView.Location = new System.Drawing.Point(3, 3);
             this.EquipOverallsView.Margin = new System.Windows.Forms.Padding(5);
             this.EquipOverallsView.Name = "EquipOverallsView";
-            this.EquipOverallsView.Size = new System.Drawing.Size(773, 514);
+            this.EquipOverallsView.Size = new System.Drawing.Size(773, 438);
             this.EquipOverallsView.TabIndex = 1;
             // 
             // TabETops
@@ -324,7 +324,7 @@
             this.TabETops.Location = new System.Drawing.Point(4, 25);
             this.TabETops.Name = "TabETops";
             this.TabETops.Padding = new System.Windows.Forms.Padding(3);
-            this.TabETops.Size = new System.Drawing.Size(779, 520);
+            this.TabETops.Size = new System.Drawing.Size(779, 444);
             this.TabETops.TabIndex = 3;
             this.TabETops.Text = "Tops";
             this.TabETops.UseVisualStyleBackColor = true;
@@ -336,7 +336,7 @@
             this.EquipTopsView.Location = new System.Drawing.Point(3, 3);
             this.EquipTopsView.Margin = new System.Windows.Forms.Padding(5);
             this.EquipTopsView.Name = "EquipTopsView";
-            this.EquipTopsView.Size = new System.Drawing.Size(773, 514);
+            this.EquipTopsView.Size = new System.Drawing.Size(773, 438);
             this.EquipTopsView.TabIndex = 1;
             // 
             // TabEBottoms
@@ -345,7 +345,7 @@
             this.TabEBottoms.Location = new System.Drawing.Point(4, 25);
             this.TabEBottoms.Name = "TabEBottoms";
             this.TabEBottoms.Padding = new System.Windows.Forms.Padding(3);
-            this.TabEBottoms.Size = new System.Drawing.Size(779, 520);
+            this.TabEBottoms.Size = new System.Drawing.Size(779, 444);
             this.TabEBottoms.TabIndex = 4;
             this.TabEBottoms.Text = "Bottoms";
             this.TabEBottoms.UseVisualStyleBackColor = true;
@@ -357,7 +357,7 @@
             this.EquipPantsView.Location = new System.Drawing.Point(3, 3);
             this.EquipPantsView.Margin = new System.Windows.Forms.Padding(5);
             this.EquipPantsView.Name = "EquipPantsView";
-            this.EquipPantsView.Size = new System.Drawing.Size(773, 514);
+            this.EquipPantsView.Size = new System.Drawing.Size(773, 438);
             this.EquipPantsView.TabIndex = 1;
             // 
             // TabEShoes
@@ -366,7 +366,7 @@
             this.TabEShoes.Location = new System.Drawing.Point(4, 25);
             this.TabEShoes.Name = "TabEShoes";
             this.TabEShoes.Padding = new System.Windows.Forms.Padding(3);
-            this.TabEShoes.Size = new System.Drawing.Size(779, 520);
+            this.TabEShoes.Size = new System.Drawing.Size(779, 444);
             this.TabEShoes.TabIndex = 5;
             this.TabEShoes.Text = "Shoes";
             this.TabEShoes.UseVisualStyleBackColor = true;
@@ -378,7 +378,7 @@
             this.EquipShoesView.Location = new System.Drawing.Point(3, 3);
             this.EquipShoesView.Margin = new System.Windows.Forms.Padding(5);
             this.EquipShoesView.Name = "EquipShoesView";
-            this.EquipShoesView.Size = new System.Drawing.Size(773, 514);
+            this.EquipShoesView.Size = new System.Drawing.Size(773, 438);
             this.EquipShoesView.TabIndex = 1;
             // 
             // TabECapes
@@ -387,7 +387,7 @@
             this.TabECapes.Location = new System.Drawing.Point(4, 25);
             this.TabECapes.Name = "TabECapes";
             this.TabECapes.Padding = new System.Windows.Forms.Padding(3);
-            this.TabECapes.Size = new System.Drawing.Size(779, 520);
+            this.TabECapes.Size = new System.Drawing.Size(779, 444);
             this.TabECapes.TabIndex = 6;
             this.TabECapes.Text = "Capes";
             this.TabECapes.UseVisualStyleBackColor = true;
@@ -399,7 +399,7 @@
             this.EquipCapesView.Location = new System.Drawing.Point(3, 3);
             this.EquipCapesView.Margin = new System.Windows.Forms.Padding(5);
             this.EquipCapesView.Name = "EquipCapesView";
-            this.EquipCapesView.Size = new System.Drawing.Size(773, 514);
+            this.EquipCapesView.Size = new System.Drawing.Size(773, 438);
             this.EquipCapesView.TabIndex = 1;
             // 
             // TabEGloves
@@ -408,7 +408,7 @@
             this.TabEGloves.Location = new System.Drawing.Point(4, 25);
             this.TabEGloves.Name = "TabEGloves";
             this.TabEGloves.Padding = new System.Windows.Forms.Padding(3);
-            this.TabEGloves.Size = new System.Drawing.Size(779, 520);
+            this.TabEGloves.Size = new System.Drawing.Size(779, 444);
             this.TabEGloves.TabIndex = 7;
             this.TabEGloves.Text = "Gloves";
             this.TabEGloves.UseVisualStyleBackColor = true;
@@ -420,7 +420,7 @@
             this.EquipGlovesView.Location = new System.Drawing.Point(3, 3);
             this.EquipGlovesView.Margin = new System.Windows.Forms.Padding(5);
             this.EquipGlovesView.Name = "EquipGlovesView";
-            this.EquipGlovesView.Size = new System.Drawing.Size(773, 514);
+            this.EquipGlovesView.Size = new System.Drawing.Size(773, 438);
             this.EquipGlovesView.TabIndex = 1;
             // 
             // TabERings
@@ -429,7 +429,7 @@
             this.TabERings.Location = new System.Drawing.Point(4, 25);
             this.TabERings.Name = "TabERings";
             this.TabERings.Padding = new System.Windows.Forms.Padding(3);
-            this.TabERings.Size = new System.Drawing.Size(779, 520);
+            this.TabERings.Size = new System.Drawing.Size(779, 444);
             this.TabERings.TabIndex = 8;
             this.TabERings.Text = "Rings";
             this.TabERings.UseVisualStyleBackColor = true;
@@ -441,7 +441,7 @@
             this.EquipRingsView.Location = new System.Drawing.Point(3, 3);
             this.EquipRingsView.Margin = new System.Windows.Forms.Padding(5);
             this.EquipRingsView.Name = "EquipRingsView";
-            this.EquipRingsView.Size = new System.Drawing.Size(773, 514);
+            this.EquipRingsView.Size = new System.Drawing.Size(773, 438);
             this.EquipRingsView.TabIndex = 1;
             // 
             // TabEShields
@@ -450,7 +450,7 @@
             this.TabEShields.Location = new System.Drawing.Point(4, 25);
             this.TabEShields.Name = "TabEShields";
             this.TabEShields.Padding = new System.Windows.Forms.Padding(3);
-            this.TabEShields.Size = new System.Drawing.Size(779, 520);
+            this.TabEShields.Size = new System.Drawing.Size(779, 444);
             this.TabEShields.TabIndex = 11;
             this.TabEShields.Text = "Shields";
             this.TabEShields.UseVisualStyleBackColor = true;
@@ -462,7 +462,7 @@
             this.EquipShieldsView.Location = new System.Drawing.Point(3, 3);
             this.EquipShieldsView.Margin = new System.Windows.Forms.Padding(5);
             this.EquipShieldsView.Name = "EquipShieldsView";
-            this.EquipShieldsView.Size = new System.Drawing.Size(773, 514);
+            this.EquipShieldsView.Size = new System.Drawing.Size(773, 438);
             this.EquipShieldsView.TabIndex = 1;
             // 
             // TabETames
@@ -471,7 +471,7 @@
             this.TabETames.Location = new System.Drawing.Point(4, 25);
             this.TabETames.Name = "TabETames";
             this.TabETames.Padding = new System.Windows.Forms.Padding(3);
-            this.TabETames.Size = new System.Drawing.Size(779, 520);
+            this.TabETames.Size = new System.Drawing.Size(779, 444);
             this.TabETames.TabIndex = 13;
             this.TabETames.Text = "Mounts";
             this.TabETames.UseVisualStyleBackColor = true;
@@ -483,7 +483,7 @@
             this.EquipMountsView.Location = new System.Drawing.Point(3, 3);
             this.EquipMountsView.Margin = new System.Windows.Forms.Padding(5);
             this.EquipMountsView.Name = "EquipMountsView";
-            this.EquipMountsView.Size = new System.Drawing.Size(773, 514);
+            this.EquipMountsView.Size = new System.Drawing.Size(773, 438);
             this.EquipMountsView.TabIndex = 1;
             // 
             // TabUsePage
@@ -492,7 +492,7 @@
             this.TabUsePage.Location = new System.Drawing.Point(4, 29);
             this.TabUsePage.Name = "TabUsePage";
             this.TabUsePage.Padding = new System.Windows.Forms.Padding(3);
-            this.TabUsePage.Size = new System.Drawing.Size(787, 549);
+            this.TabUsePage.Size = new System.Drawing.Size(787, 473);
             this.TabUsePage.TabIndex = 1;
             this.TabUsePage.Text = "Use";
             this.TabUsePage.UseVisualStyleBackColor = true;
@@ -506,7 +506,7 @@
             this.TabUse.Location = new System.Drawing.Point(3, 3);
             this.TabUse.Name = "TabUse";
             this.TabUse.SelectedIndex = 0;
-            this.TabUse.Size = new System.Drawing.Size(781, 543);
+            this.TabUse.Size = new System.Drawing.Size(781, 467);
             this.TabUse.TabIndex = 0;
             // 
             // TabUConsumes
@@ -515,7 +515,7 @@
             this.TabUConsumes.Location = new System.Drawing.Point(4, 25);
             this.TabUConsumes.Name = "TabUConsumes";
             this.TabUConsumes.Padding = new System.Windows.Forms.Padding(3);
-            this.TabUConsumes.Size = new System.Drawing.Size(773, 514);
+            this.TabUConsumes.Size = new System.Drawing.Size(773, 438);
             this.TabUConsumes.TabIndex = 0;
             this.TabUConsumes.Text = "Consumes";
             this.TabUConsumes.UseVisualStyleBackColor = true;
@@ -527,7 +527,7 @@
             this.UseConsumeView.Location = new System.Drawing.Point(3, 3);
             this.UseConsumeView.Margin = new System.Windows.Forms.Padding(4);
             this.UseConsumeView.Name = "UseConsumeView";
-            this.UseConsumeView.Size = new System.Drawing.Size(767, 508);
+            this.UseConsumeView.Size = new System.Drawing.Size(767, 432);
             this.UseConsumeView.TabIndex = 0;
             // 
             // TabUScrolls
@@ -536,7 +536,7 @@
             this.TabUScrolls.Location = new System.Drawing.Point(4, 25);
             this.TabUScrolls.Name = "TabUScrolls";
             this.TabUScrolls.Padding = new System.Windows.Forms.Padding(3);
-            this.TabUScrolls.Size = new System.Drawing.Size(773, 514);
+            this.TabUScrolls.Size = new System.Drawing.Size(773, 438);
             this.TabUScrolls.TabIndex = 1;
             this.TabUScrolls.Text = "Scrolls";
             this.TabUScrolls.UseVisualStyleBackColor = true;
@@ -548,7 +548,7 @@
             this.UseScrollsView.Location = new System.Drawing.Point(3, 3);
             this.UseScrollsView.Margin = new System.Windows.Forms.Padding(4);
             this.UseScrollsView.Name = "UseScrollsView";
-            this.UseScrollsView.Size = new System.Drawing.Size(767, 508);
+            this.UseScrollsView.Size = new System.Drawing.Size(767, 432);
             this.UseScrollsView.TabIndex = 0;
             // 
             // TabUProjectiles
@@ -557,7 +557,7 @@
             this.TabUProjectiles.Location = new System.Drawing.Point(4, 25);
             this.TabUProjectiles.Name = "TabUProjectiles";
             this.TabUProjectiles.Padding = new System.Windows.Forms.Padding(3);
-            this.TabUProjectiles.Size = new System.Drawing.Size(773, 514);
+            this.TabUProjectiles.Size = new System.Drawing.Size(773, 438);
             this.TabUProjectiles.TabIndex = 2;
             this.TabUProjectiles.Text = "Projectiles";
             this.TabUProjectiles.UseVisualStyleBackColor = true;
@@ -569,7 +569,7 @@
             this.UseProjectileView.Location = new System.Drawing.Point(3, 3);
             this.UseProjectileView.Margin = new System.Windows.Forms.Padding(4);
             this.UseProjectileView.Name = "UseProjectileView";
-            this.UseProjectileView.Size = new System.Drawing.Size(767, 508);
+            this.UseProjectileView.Size = new System.Drawing.Size(767, 432);
             this.UseProjectileView.TabIndex = 0;
             // 
             // TabSetupPage
@@ -578,7 +578,7 @@
             this.TabSetupPage.Location = new System.Drawing.Point(4, 29);
             this.TabSetupPage.Name = "TabSetupPage";
             this.TabSetupPage.Padding = new System.Windows.Forms.Padding(3);
-            this.TabSetupPage.Size = new System.Drawing.Size(787, 549);
+            this.TabSetupPage.Size = new System.Drawing.Size(787, 473);
             this.TabSetupPage.TabIndex = 2;
             this.TabSetupPage.Text = "Setup";
             this.TabSetupPage.UseVisualStyleBackColor = true;
@@ -591,7 +591,7 @@
             this.TabSetup.Location = new System.Drawing.Point(3, 3);
             this.TabSetup.Name = "TabSetup";
             this.TabSetup.SelectedIndex = 0;
-            this.TabSetup.Size = new System.Drawing.Size(781, 543);
+            this.TabSetup.Size = new System.Drawing.Size(781, 467);
             this.TabSetup.TabIndex = 1;
             // 
             // TabSChairs
@@ -600,7 +600,7 @@
             this.TabSChairs.Location = new System.Drawing.Point(4, 25);
             this.TabSChairs.Name = "TabSChairs";
             this.TabSChairs.Padding = new System.Windows.Forms.Padding(3);
-            this.TabSChairs.Size = new System.Drawing.Size(773, 514);
+            this.TabSChairs.Size = new System.Drawing.Size(773, 438);
             this.TabSChairs.TabIndex = 1;
             this.TabSChairs.Text = "Chairs";
             this.TabSChairs.UseVisualStyleBackColor = true;
@@ -612,7 +612,7 @@
             this.SetupChairsView.Location = new System.Drawing.Point(3, 3);
             this.SetupChairsView.Margin = new System.Windows.Forms.Padding(4);
             this.SetupChairsView.Name = "SetupChairsView";
-            this.SetupChairsView.Size = new System.Drawing.Size(767, 508);
+            this.SetupChairsView.Size = new System.Drawing.Size(767, 432);
             this.SetupChairsView.TabIndex = 0;
             // 
             // TabSOther
@@ -621,7 +621,7 @@
             this.TabSOther.Location = new System.Drawing.Point(4, 25);
             this.TabSOther.Name = "TabSOther";
             this.TabSOther.Padding = new System.Windows.Forms.Padding(3);
-            this.TabSOther.Size = new System.Drawing.Size(773, 514);
+            this.TabSOther.Size = new System.Drawing.Size(773, 438);
             this.TabSOther.TabIndex = 2;
             this.TabSOther.Text = "Others";
             this.TabSOther.UseVisualStyleBackColor = true;
@@ -633,7 +633,7 @@
             this.SetupOthersView.Location = new System.Drawing.Point(3, 3);
             this.SetupOthersView.Margin = new System.Windows.Forms.Padding(4);
             this.SetupOthersView.Name = "SetupOthersView";
-            this.SetupOthersView.Size = new System.Drawing.Size(767, 508);
+            this.SetupOthersView.Size = new System.Drawing.Size(767, 432);
             this.SetupOthersView.TabIndex = 0;
             // 
             // TabEtcPage
@@ -642,7 +642,7 @@
             this.TabEtcPage.Location = new System.Drawing.Point(4, 29);
             this.TabEtcPage.Name = "TabEtcPage";
             this.TabEtcPage.Padding = new System.Windows.Forms.Padding(3);
-            this.TabEtcPage.Size = new System.Drawing.Size(787, 549);
+            this.TabEtcPage.Size = new System.Drawing.Size(787, 473);
             this.TabEtcPage.TabIndex = 4;
             this.TabEtcPage.Text = "Etc";
             this.TabEtcPage.UseVisualStyleBackColor = true;
@@ -654,7 +654,7 @@
             this.EtcView.Location = new System.Drawing.Point(3, 3);
             this.EtcView.Margin = new System.Windows.Forms.Padding(4);
             this.EtcView.Name = "EtcView";
-            this.EtcView.Size = new System.Drawing.Size(781, 543);
+            this.EtcView.Size = new System.Drawing.Size(781, 467);
             this.EtcView.TabIndex = 0;
             // 
             // TabCashPage
@@ -663,7 +663,7 @@
             this.TabCashPage.Location = new System.Drawing.Point(4, 29);
             this.TabCashPage.Name = "TabCashPage";
             this.TabCashPage.Padding = new System.Windows.Forms.Padding(3);
-            this.TabCashPage.Size = new System.Drawing.Size(787, 549);
+            this.TabCashPage.Size = new System.Drawing.Size(787, 473);
             this.TabCashPage.TabIndex = 5;
             this.TabCashPage.Text = "Cash";
             this.TabCashPage.UseVisualStyleBackColor = true;
@@ -675,7 +675,7 @@
             this.CashView.Location = new System.Drawing.Point(3, 3);
             this.CashView.Margin = new System.Windows.Forms.Padding(4);
             this.CashView.Name = "CashView";
-            this.CashView.Size = new System.Drawing.Size(781, 543);
+            this.CashView.Size = new System.Drawing.Size(781, 467);
             this.CashView.TabIndex = 0;
             // 
             // TabMapsPage
@@ -684,7 +684,7 @@
             this.TabMapsPage.Location = new System.Drawing.Point(4, 29);
             this.TabMapsPage.Name = "TabMapsPage";
             this.TabMapsPage.Padding = new System.Windows.Forms.Padding(3);
-            this.TabMapsPage.Size = new System.Drawing.Size(787, 549);
+            this.TabMapsPage.Size = new System.Drawing.Size(787, 473);
             this.TabMapsPage.TabIndex = 6;
             this.TabMapsPage.Text = "Maps";
             this.TabMapsPage.UseVisualStyleBackColor = true;
@@ -696,7 +696,7 @@
             this.MapsView.Location = new System.Drawing.Point(3, 3);
             this.MapsView.Margin = new System.Windows.Forms.Padding(4);
             this.MapsView.Name = "MapsView";
-            this.MapsView.Size = new System.Drawing.Size(781, 543);
+            this.MapsView.Size = new System.Drawing.Size(781, 467);
             this.MapsView.TabIndex = 0;
             // 
             // TabMobsPage
@@ -705,7 +705,7 @@
             this.TabMobsPage.Location = new System.Drawing.Point(4, 29);
             this.TabMobsPage.Name = "TabMobsPage";
             this.TabMobsPage.Padding = new System.Windows.Forms.Padding(3);
-            this.TabMobsPage.Size = new System.Drawing.Size(787, 549);
+            this.TabMobsPage.Size = new System.Drawing.Size(787, 473);
             this.TabMobsPage.TabIndex = 7;
             this.TabMobsPage.Text = "Mobs";
             this.TabMobsPage.UseVisualStyleBackColor = true;
@@ -717,7 +717,7 @@
             this.MobsView.Location = new System.Drawing.Point(3, 3);
             this.MobsView.Margin = new System.Windows.Forms.Padding(4);
             this.MobsView.Name = "MobsView";
-            this.MobsView.Size = new System.Drawing.Size(781, 543);
+            this.MobsView.Size = new System.Drawing.Size(781, 467);
             this.MobsView.TabIndex = 0;
             // 
             // TabSkillsPage
@@ -726,7 +726,7 @@
             this.TabSkillsPage.Location = new System.Drawing.Point(4, 29);
             this.TabSkillsPage.Name = "TabSkillsPage";
             this.TabSkillsPage.Padding = new System.Windows.Forms.Padding(3);
-            this.TabSkillsPage.Size = new System.Drawing.Size(787, 549);
+            this.TabSkillsPage.Size = new System.Drawing.Size(787, 473);
             this.TabSkillsPage.TabIndex = 8;
             this.TabSkillsPage.Text = "Skills";
             this.TabSkillsPage.UseVisualStyleBackColor = true;
@@ -738,7 +738,7 @@
             this.SkillsView.Location = new System.Drawing.Point(3, 3);
             this.SkillsView.Margin = new System.Windows.Forms.Padding(4);
             this.SkillsView.Name = "SkillsView";
-            this.SkillsView.Size = new System.Drawing.Size(781, 543);
+            this.SkillsView.Size = new System.Drawing.Size(781, 467);
             this.SkillsView.TabIndex = 0;
             // 
             // TabNPCsPage
@@ -747,7 +747,7 @@
             this.TabNPCsPage.Location = new System.Drawing.Point(4, 29);
             this.TabNPCsPage.Name = "TabNPCsPage";
             this.TabNPCsPage.Padding = new System.Windows.Forms.Padding(3);
-            this.TabNPCsPage.Size = new System.Drawing.Size(787, 549);
+            this.TabNPCsPage.Size = new System.Drawing.Size(787, 473);
             this.TabNPCsPage.TabIndex = 9;
             this.TabNPCsPage.Text = "NPCs";
             this.TabNPCsPage.UseVisualStyleBackColor = true;
@@ -759,7 +759,7 @@
             this.NPCView.Location = new System.Drawing.Point(3, 3);
             this.NPCView.Margin = new System.Windows.Forms.Padding(4);
             this.NPCView.Name = "NPCView";
-            this.NPCView.Size = new System.Drawing.Size(781, 543);
+            this.NPCView.Size = new System.Drawing.Size(781, 467);
             this.NPCView.TabIndex = 0;
             // 
             // TabPetsPage
@@ -768,7 +768,7 @@
             this.TabPetsPage.Location = new System.Drawing.Point(4, 29);
             this.TabPetsPage.Name = "TabPetsPage";
             this.TabPetsPage.Padding = new System.Windows.Forms.Padding(3);
-            this.TabPetsPage.Size = new System.Drawing.Size(787, 549);
+            this.TabPetsPage.Size = new System.Drawing.Size(787, 473);
             this.TabPetsPage.TabIndex = 10;
             this.TabPetsPage.Text = "Pets";
             this.TabPetsPage.UseVisualStyleBackColor = true;
@@ -780,7 +780,7 @@
             this.PetsView.Location = new System.Drawing.Point(3, 3);
             this.PetsView.Margin = new System.Windows.Forms.Padding(4);
             this.PetsView.Name = "PetsView";
-            this.PetsView.Size = new System.Drawing.Size(781, 543);
+            this.PetsView.Size = new System.Drawing.Size(781, 467);
             this.PetsView.TabIndex = 0;
             // 
             // TabReactors
@@ -789,7 +789,7 @@
             this.TabReactors.Location = new System.Drawing.Point(4, 29);
             this.TabReactors.Name = "TabReactors";
             this.TabReactors.Padding = new System.Windows.Forms.Padding(3);
-            this.TabReactors.Size = new System.Drawing.Size(787, 549);
+            this.TabReactors.Size = new System.Drawing.Size(787, 473);
             this.TabReactors.TabIndex = 11;
             this.TabReactors.Text = "Reactors";
             this.TabReactors.UseVisualStyleBackColor = true;
@@ -801,105 +801,115 @@
             this.ReactorView.Location = new System.Drawing.Point(3, 3);
             this.ReactorView.Margin = new System.Windows.Forms.Padding(4);
             this.ReactorView.Name = "ReactorView";
-            this.ReactorView.Size = new System.Drawing.Size(781, 543);
+            this.ReactorView.Size = new System.Drawing.Size(781, 467);
             this.ReactorView.TabIndex = 0;
             // 
-            // wzPathTextbox
+            // menuStrip1
             // 
-            this.wzPathTextbox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.wzPathTextbox.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.wzPathTextbox.Location = new System.Drawing.Point(49, 6);
-            this.wzPathTextbox.Name = "wzPathTextbox";
-            this.wzPathTextbox.Size = new System.Drawing.Size(222, 20);
-            this.wzPathTextbox.TabIndex = 3;
-            this.wzPathTextbox.Click += new System.EventHandler(this.TextWzPath_Click);
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.fileToolStripMenuItem,
+            this.searchToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(795, 24);
+            this.menuStrip1.TabIndex = 13;
+            this.menuStrip1.Text = "menuStrip1";
             // 
-            // searchTextbox
+            // fileToolStripMenuItem
             // 
-            this.searchTextbox.AcceptsReturn = true;
-            this.searchTextbox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.searchTextbox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.searchTextbox.Location = new System.Drawing.Point(584, 6);
-            this.searchTextbox.Name = "searchTextbox";
-            this.searchTextbox.Size = new System.Drawing.Size(132, 20);
-            this.searchTextbox.TabIndex = 6;
-            this.searchTextbox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.SearchTextBox_KeyPress);
+            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.OpenMenu,
+            this.SaveMenuItem,
+            this.saveAllToolStripMenuItem,
+            this.ExportPicturesMenuItem,
+            this.exportTocsvToolStripMenuItem});
+            this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
+            this.fileToolStripMenuItem.Text = "File";
             // 
-            // wzPathLabel
+            // OpenMenu
             // 
-            this.wzPathLabel.AutoSize = true;
-            this.wzPathLabel.Location = new System.Drawing.Point(7, 9);
-            this.wzPathLabel.Name = "wzPathLabel";
-            this.wzPathLabel.Size = new System.Drawing.Size(36, 13);
-            this.wzPathLabel.TabIndex = 7;
-            this.wzPathLabel.Text = "Folder";
-            this.wzPathLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.OpenMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.OpenCurrentMenuItem,
+            this.OpenAllMenuItem});
+            this.OpenMenu.Name = "OpenMenu";
+            this.OpenMenu.Size = new System.Drawing.Size(180, 22);
+            this.OpenMenu.Text = "Load";
+            this.OpenMenu.DropDownOpening += new System.EventHandler(this.OnOpenningMainToolstrip);
             // 
-            // loadButton
+            // OpenCurrentMenuItem
             // 
-            this.loadButton.Location = new System.Drawing.Point(278, 6);
-            this.loadButton.Name = "loadButton";
-            this.loadButton.Size = new System.Drawing.Size(61, 20);
-            this.loadButton.TabIndex = 8;
-            this.loadButton.Text = "Load";
-            this.loadButton.UseVisualStyleBackColor = true;
-            this.loadButton.Click += new System.EventHandler(this.BtnWzLoad_Click);
+            this.OpenCurrentMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("OpenCurrentMenuItem.Image")));
+            this.OpenCurrentMenuItem.Name = "OpenCurrentMenuItem";
+            this.OpenCurrentMenuItem.Size = new System.Drawing.Size(121, 22);
+            this.OpenCurrentMenuItem.Text = "Load Tab";
+            this.OpenCurrentMenuItem.Click += new System.EventHandler(this.OnLoadCurrentTabPage);
             // 
-            // searchButton
+            // OpenAllMenuItem
             // 
-            this.searchButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.searchButton.Location = new System.Drawing.Point(720, 6);
-            this.searchButton.Name = "searchButton";
-            this.searchButton.Size = new System.Drawing.Size(64, 20);
-            this.searchButton.TabIndex = 9;
-            this.searchButton.Text = "Search";
-            this.searchButton.UseVisualStyleBackColor = true;
-            this.searchButton.Click += new System.EventHandler(this.BtnSearch_Click);
+            this.OpenAllMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("OpenAllMenuItem.Image")));
+            this.OpenAllMenuItem.Name = "OpenAllMenuItem";
+            this.OpenAllMenuItem.Size = new System.Drawing.Size(121, 22);
+            this.OpenAllMenuItem.Text = "Load All";
+            this.OpenAllMenuItem.Click += new System.EventHandler(this.OnLoadEverything);
             // 
-            // saveButton
+            // SaveMenuItem
             // 
-            this.saveButton.Location = new System.Drawing.Point(345, 6);
-            this.saveButton.Name = "saveButton";
-            this.saveButton.Size = new System.Drawing.Size(61, 20);
-            this.saveButton.TabIndex = 10;
-            this.saveButton.Text = "Save";
-            this.saveButton.UseVisualStyleBackColor = true;
-            this.saveButton.Click += new System.EventHandler(this.BtnSave_Click);
+            this.SaveMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("SaveMenuItem.Image")));
+            this.SaveMenuItem.Name = "SaveMenuItem";
+            this.SaveMenuItem.ShortcutKeyDisplayString = "CTRL+S";
+            this.SaveMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
+            this.SaveMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.SaveMenuItem.Text = "Save";
+            this.SaveMenuItem.Click += new System.EventHandler(this.OnSaveCurrentTabPage);
             // 
-            // exportButton
+            // saveAllToolStripMenuItem
             // 
-            this.exportButton.Location = new System.Drawing.Point(412, 6);
-            this.exportButton.Name = "exportButton";
-            this.exportButton.Size = new System.Drawing.Size(85, 20);
-            this.exportButton.TabIndex = 11;
-            this.exportButton.Text = "Export Images";
-            this.exportButton.UseVisualStyleBackColor = true;
-            this.exportButton.Click += new System.EventHandler(this.BtnExport_Click);
+            this.saveAllToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("saveAllToolStripMenuItem.Image")));
+            this.saveAllToolStripMenuItem.Name = "saveAllToolStripMenuItem";
+            this.saveAllToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.saveAllToolStripMenuItem.Text = "Save All";
+            this.saveAllToolStripMenuItem.Click += new System.EventHandler(this.OnSaveEverything);
             // 
-            // mainFormBindingSource
+            // ExportPicturesMenuItem
             // 
-            this.mainFormBindingSource.DataSource = typeof(WzVisualizer.GUI.MainForm);
+            this.ExportPicturesMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("ExportPicturesMenuItem.Image")));
+            this.ExportPicturesMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.ExportPicturesMenuItem.Name = "ExportPicturesMenuItem";
+            this.ExportPicturesMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.ExportPicturesMenuItem.Text = "Export Pictures";
+            this.ExportPicturesMenuItem.Click += new System.EventHandler(this.OnExportPictures);
+            // 
+            // searchToolStripMenuItem
+            // 
+            this.searchToolStripMenuItem.Name = "searchToolStripMenuItem";
+            this.searchToolStripMenuItem.ShortcutKeyDisplayString = "CTRL+F";
+            this.searchToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F)));
+            this.searchToolStripMenuItem.Size = new System.Drawing.Size(54, 20);
+            this.searchToolStripMenuItem.Text = "Search";
+            this.searchToolStripMenuItem.Click += new System.EventHandler(this.OnShowSearchForm);
+            // 
+            // exportTocsvToolStripMenuItem
+            // 
+            this.exportTocsvToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("exportTocsvToolStripMenuItem.Image")));
+            this.exportTocsvToolStripMenuItem.Name = "exportTocsvToolStripMenuItem";
+            this.exportTocsvToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.exportTocsvToolStripMenuItem.Text = "Export As CSV";
+            this.exportTocsvToolStripMenuItem.Click += new System.EventHandler(this.exportTocsvToolStripMenuItem_Click);
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(795, 611);
-            this.Controls.Add(this.exportButton);
-            this.Controls.Add(this.saveButton);
-            this.Controls.Add(this.searchButton);
-            this.Controls.Add(this.loadButton);
-            this.Controls.Add(this.wzPathLabel);
-            this.Controls.Add(this.searchTextbox);
-            this.Controls.Add(this.wzPathTextbox);
+            this.ClientSize = new System.Drawing.Size(795, 530);
+            this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.TabControlMain);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
+            this.MainMenuStrip = this.menuStrip1;
             this.Name = "MainForm";
-            this.Text = "WzVisualizer - v1.6.7";
+            this.Text = "WzVisualizer - v1.7.0";
             this.Load += new System.EventHandler(this.MainForm_Load);
-            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MainForm_KeyDown);
-            this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.MainForm_KeyUp);
             this.TabControlMain.ResumeLayout(false);
             this.TabEquipsPage.ResumeLayout(false);
             this.EquipTab.ResumeLayout(false);
@@ -934,11 +944,15 @@
             this.TabNPCsPage.ResumeLayout(false);
             this.TabPetsPage.ResumeLayout(false);
             this.TabReactors.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.mainFormBindingSource)).EndInit();
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
+        private System.Windows.Forms.ToolStripMenuItem saveAllToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem OpenCurrentMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem OpenAllMenuItem;
         public WzVisualizer.GUI.Controls.DataViewport CashView;
         public WzVisualizer.GUI.Controls.DataViewport EquipAccessoryView;
         public WzVisualizer.GUI.Controls.DataViewport EquipCapesView;
@@ -956,13 +970,11 @@
         public WzVisualizer.GUI.Controls.DataViewport EquipTopsView;
         public WzVisualizer.GUI.Controls.DataViewport EquipWeaponsView;
         public WzVisualizer.GUI.Controls.DataViewport EtcView;
-        private System.Windows.Forms.BindingSource mainFormBindingSource;
         public WzVisualizer.GUI.Controls.DataViewport MapsView;
         public WzVisualizer.GUI.Controls.DataViewport MobsView;
         public WzVisualizer.GUI.Controls.DataViewport NPCView;
         public WzVisualizer.GUI.Controls.DataViewport PetsView;
         public WzVisualizer.GUI.Controls.DataViewport ReactorView;
-        private System.Windows.Forms.TextBox searchTextbox;
         public WzVisualizer.GUI.Controls.DataViewport SetupChairsView;
         public WzVisualizer.GUI.Controls.DataViewport SetupOthersView;
         public WzVisualizer.GUI.Controls.DataViewport SkillsView;
@@ -999,17 +1011,18 @@
         private System.Windows.Forms.TabPage TabUScrolls;
         public System.Windows.Forms.TabControl TabUse;
         private System.Windows.Forms.TabPage TabUsePage;
-        private System.Windows.Forms.TextBox wzPathTextbox;
         public WzVisualizer.GUI.Controls.DataViewport UseConsumeView;
         public WzVisualizer.GUI.Controls.DataViewport UseProjectileView;
         public WzVisualizer.GUI.Controls.DataViewport UseScrollsView;
 
         #endregion
-        private System.Windows.Forms.Label wzPathLabel;
-        private System.Windows.Forms.Button loadButton;
-        private System.Windows.Forms.Button saveButton;
-        private System.Windows.Forms.Button searchButton;
-        private System.Windows.Forms.Button exportButton;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem OpenMenu;
+        private System.Windows.Forms.ToolStripMenuItem SaveMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem ExportPicturesMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem searchToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem exportTocsvToolStripMenuItem;
     }
 }
 

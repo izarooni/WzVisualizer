@@ -107,7 +107,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BinData.cs" />
+    <Compile Include="IO\BinData.cs" />
     <Compile Include="GUI\Controls\ComboBoxItem.cs" />
     <Compile Include="GUI\Controls\DataViewport.cs">
       <SubType>UserControl</SubType>
@@ -181,7 +181,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="icon.ico" />
+    <Content Include="Resources\disk.png" />
+    <Content Include="Resources\excel.png" />
+    <Content Include="Resources\folder.png" />
     <Content Include="Resources\icon.ico" />
+    <Content Include="Resources\image.png" />
     <None Include="Resources\missingno.png" />
   </ItemGroup>
   <ItemGroup>

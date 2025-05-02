@@ -26,6 +26,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SearchForm));
             this.emptyBmpFilterCheckbox = new System.Windows.Forms.CheckBox();
             this.searchButton = new System.Windows.Forms.Button();
+            this.SearchBox = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // emptyBmpFilterCheckbox
@@ -49,11 +50,20 @@
             this.searchButton.UseVisualStyleBackColor = true;
             this.searchButton.Click += new System.EventHandler(this.OnSearchButton_Click);
             // 
+            // SearchBox
+            // 
+            this.SearchBox.Location = new System.Drawing.Point(12, 85);
+            this.SearchBox.Name = "SearchBox";
+            this.SearchBox.Size = new System.Drawing.Size(236, 20);
+            this.SearchBox.TabIndex = 2;
+            this.SearchBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SearchBox_KeyDown);
+            // 
             // SearchForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(341, 118);
+            this.Controls.Add(this.SearchBox);
             this.Controls.Add(this.searchButton);
             this.Controls.Add(this.emptyBmpFilterCheckbox);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
@@ -62,10 +72,11 @@
             this.Name = "SearchForm";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
-            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
-            this.Text = "Advanced Search";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.Text = "Search Filters";
             this.TopMost = true;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.SearchForm_FormClosing);
+            this.Shown += new System.EventHandler(this.SearchForm_Shown);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SearchForm_KeyDown);
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.SearchForm_KeyUp);
             this.ResumeLayout(false);
@@ -76,5 +87,6 @@
         #endregion
         internal System.Windows.Forms.Button searchButton;
         internal System.Windows.Forms.CheckBox emptyBmpFilterCheckbox;
+        internal System.Windows.Forms.TextBox SearchBox;
     }
 }
